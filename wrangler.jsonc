@@ -1,0 +1,44 @@
+{
+  // Cloudflare Workers configuration.
+  //
+  // The build (`bun run build`) uses Nitro's cloudflare-module preset, which
+  // emits a Worker plus static assets and writes .output/server/wrangler.json.
+  // Values here are merged into that file.
+  //
+  // Without this, the Worker name is auto-generated from the local checkout
+  // path — which both leaks a local directory name into a public URL and gives
+  // every machine a different deployment target.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rahulvelapure",
+  "compatibility_date": "2026-08-12",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Attach the production domain on deploy. Requires the domain to be an
+  // active zone in the same Cloudflare account — see the README.
+  // Comment this out for the first deploy if the zone is not set up yet; the
+  // Worker is still reachable at its workers.dev URL.
+  //
+  // ---------------------------------------------------------------------
+  // DISABLED FOR THE workers.dev PREVIEW DEPLOY.
+  //
+  // rahulvelapure.dpdns.org currently serves a DIFFERENT live site. Deploying
+  // with this route active attaches the custom domain and replaces that site
+  // immediately. It stays commented out until the preview is approved.
+  //
+  // TO GO LIVE ON THE DOMAIN: uncomment this block and redeploy.
+  // ---------------------------------------------------------------------
+  // "routes": [
+  //   {
+  //     "pattern": "rahulvelapure.dpdns.org",
+  //     "custom_domain": true,
+  //   },
+  // ],
+
+  // Explicit so the preview is reachable at <name>.<subdomain>.workers.dev
+  // rather than depending on the account default.
+  "workers_dev": true,
+
+  "observability": {
+    "enabled": true,
+  },
+}

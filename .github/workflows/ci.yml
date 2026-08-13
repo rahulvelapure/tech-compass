@@ -1,0 +1,205 @@
+name: CI
+
+# Runs on every push and pull request, and again on every deployment via the
+# `deployment` workflow. Cheap static checks fail fast in `verify`; the
+# browser-level jobs share one production build so Chrome is launched against
+# exactly the bundle that would ship.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  merge_group:
+  workflow_call:
+    inputs:
+      target-url:
+        description: >-
+          Audit this deployed origin instead of a locally built preview.
+          Used by the deployment workflow to validate the real thing.
+        required: false
+        type: string
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Server, Lighthouse targets and Playwright all agree on this port.
+  PORT: "4173"
+
+jobs:
+  verify:
+    name: Types, lint and unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Fails fast and with a clear message when an article file was added
+      # without regenerating the barrel. The unit suite also covers this, but
+      # a dedicated step makes the cause obvious in the job log.
+      - name: Check the article index is up to date
+        run: |
+          bun run content:index
+          if [ -n "$(git status --porcelain src/content/articles/index.ts)" ]; then
+            echo "::error file=src/content/articles/index.ts::Article index is stale. Run: bun run content:index"
+            git --no-pager diff -- src/content/articles/index.ts
+            exit 1
+          fi
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Scan for secrets, personal data and local paths
+        run: bun run scan:secrets
+
+      - name: Validate content schema and metadata
+        run: bun run validate:content
+
+      - name: Unit tests
+        run: bun run test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  build:
+    name: Production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Independent of `verify` so a lint nit does not hide a build break.
+    # Skipped when auditing an already-deployed origin — there is nothing to serve.
+    if: ${{ !inputs.target-url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # The Node adapter, not the Cloudflare one: same application and client
+      # bundle, but a server the runner can start without cloud credentials.
+      - name: Build
+        run: bun run build:node
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: .output/
+          include-hidden-files: true
+          retention-days: 1
+
+  accessibility:
+    name: Accessibility (axe)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: build
+    # `build` is skipped in deployment mode; a skipped dependency must not
+    # skip this job too.
+    if: ${{ always() && needs.build.result != 'failure' && needs.build.result != 'cancelled' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - uses: actions/download-artifact@v4
+        if: ${{ !inputs.target-url }}
+        with:
+          name: build-output
+          path: .output
+
+      - name: Install browser
+        run: bunx playwright install --with-deps chromium
+
+      - name: Run axe accessibility suite
+        run: bun run test:a11y
+        env:
+          # When auditing a deployment, skip the local server entirely.
+          PREVIEW_URL: ${{ inputs.target-url }}
+
+      # Asserts on what actually reaches the browser: status codes, one H1,
+      # canonical, og:image, valid JSON-LD, noindex/sitemap consistency, and
+      # the absence of build-machine paths or ad scripts.
+      - name: Crawl routes and audit HTML
+        run: |
+          if [ -n "${{ inputs.target-url }}" ]; then
+            bun run crawl:check "${{ inputs.target-url }}"
+          else
+            node .output/server/index.mjs &
+            npx --yes wait-on "http://127.0.0.1:$PORT" --timeout 120000
+            bun run crawl:check "http://127.0.0.1:$PORT"
+          fi
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-report
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  lighthouse:
+    name: Lighthouse and Core Web Vitals
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: build
+    if: ${{ always() && needs.build.result != 'failure' && needs.build.result != 'cancelled' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - uses: actions/download-artifact@v4
+        if: ${{ !inputs.target-url }}
+        with:
+          name: build-output
+          path: .output
+
+      - name: Run Lighthouse CI
+        run: bun run test:lighthouse
+        env:
+          LHCI_TARGET_URL: ${{ inputs.target-url }}
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/
+          if-no-files-found: ignore
+          retention-days: 14

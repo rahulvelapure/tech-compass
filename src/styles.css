@@ -1,0 +1,304 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system — "Modernist editorial"
+ *
+ * Light theme is the primary identity. Dark theme is a designed
+ * counterpart (warm-neutral ink, not inverted).
+ *
+ * Type: Merriweather (editorial headlines, long-form) + Inter (UI, body meta)
+ * Accent: a single editorial blue, used for links, category marks, ticks.
+ */
+
+@theme inline {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: Merriweather, ui-serif, Georgia, Cambria, serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Editorial semantic tokens */
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-rule: var(--rule);
+  --color-link: var(--link);
+  --color-note: var(--note);
+  --color-note-foreground: var(--note-foreground);
+  --color-warn: var(--warn);
+  --color-warn-foreground: var(--warn-foreground);
+  --color-code-bg: var(--code-bg);
+  --color-code-fg: var(--code-fg);
+
+  --container-editorial: 44rem;
+}
+
+:root {
+  --radius: 0.375rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.23 0.036 261.7);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.23 0.036 261.7);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.23 0.036 261.7);
+
+  --primary: oklch(0.23 0.036 261.7);
+  --primary-foreground: oklch(0.99 0.002 247.9);
+  --secondary: oklch(0.977 0.004 247.9);
+  --secondary-foreground: oklch(0.23 0.036 261.7);
+  --muted: oklch(0.977 0.004 247.9);
+  /*
+   * Lightness is held at 0.52, not lighter. Secondary text lands on three
+   * backgrounds — page white, --surface and --surface-strong — and the
+   * strongest surface is the binding constraint: at 0.554 the small uppercase
+   * eyebrow on a table header measured 4.27:1, under the 4.5:1 that 11px bold
+   * text requires. 0.52 clears it on every surface with margin.
+   */
+  --muted-foreground: oklch(0.52 0.036 256.8);
+  --accent: oklch(0.546 0.215 262.9);
+  --accent-foreground: oklch(0.99 0.002 247.9);
+  --destructive: oklch(0.55 0.21 25.5);
+  --destructive-foreground: oklch(0.99 0.002 247.9);
+
+  --border: oklch(0.918 0.008 247.9);
+  --input: oklch(0.918 0.008 247.9);
+  --ring: oklch(0.546 0.215 262.9);
+
+  --surface: oklch(0.984 0.003 247.9);
+  --surface-strong: oklch(0.962 0.006 247.9);
+  --rule: oklch(0.918 0.008 247.9);
+  --link: oklch(0.5 0.212 262.9);
+  --note: oklch(0.975 0.014 250);
+  --note-foreground: oklch(0.38 0.11 262.9);
+  --warn: oklch(0.972 0.037 92);
+  --warn-foreground: oklch(0.44 0.1 70);
+  --code-bg: oklch(0.21 0.03 261.7);
+  --code-fg: oklch(0.93 0.008 247.9);
+}
+
+.dark {
+  --background: oklch(0.166 0.018 264);
+  --foreground: oklch(0.945 0.006 247.9);
+  --card: oklch(0.203 0.02 264);
+  --card-foreground: oklch(0.945 0.006 247.9);
+  --popover: oklch(0.203 0.02 264);
+  --popover-foreground: oklch(0.945 0.006 247.9);
+
+  --primary: oklch(0.945 0.006 247.9);
+  --primary-foreground: oklch(0.166 0.018 264);
+  --secondary: oklch(0.24 0.022 264);
+  --secondary-foreground: oklch(0.945 0.006 247.9);
+  --muted: oklch(0.24 0.022 264);
+  --muted-foreground: oklch(0.7 0.024 256.8);
+  --accent: oklch(0.68 0.15 258);
+  --accent-foreground: oklch(0.166 0.018 264);
+  --destructive: oklch(0.65 0.18 25.5);
+  --destructive-foreground: oklch(0.166 0.018 264);
+
+  --border: oklch(0.29 0.022 264);
+  --input: oklch(0.32 0.024 264);
+  --ring: oklch(0.68 0.15 258);
+
+  --surface: oklch(0.196 0.019 264);
+  --surface-strong: oklch(0.235 0.021 264);
+  --rule: oklch(0.29 0.022 264);
+  --link: oklch(0.75 0.13 250);
+  --note: oklch(0.235 0.035 258);
+  --note-foreground: oklch(0.83 0.08 250);
+  --warn: oklch(0.26 0.045 80);
+  --warn-foreground: oklch(0.86 0.09 85);
+  --code-bg: oklch(0.13 0.015 264);
+  --code-fg: oklch(0.9 0.008 247.9);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 18%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------- Editorial utilities ---------- */
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@utility rule-top {
+  border-top: 1px solid var(--color-rule);
+}
+
+@utility headline {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+  &:hover {
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+/* Long-form article typography */
+@utility article-prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-foreground);
+
+  & > p {
+    margin-block: 1.35em;
+    text-wrap: pretty;
+  }
+
+  & a {
+    color: var(--color-link);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  & strong {
+    font-weight: 600;
+  }
+
+  & h2 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-top: 2.75em;
+    margin-bottom: 0.75em;
+    padding-top: 0.9em;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  & h3 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+  }
+
+  & ul,
+  & ol {
+    margin-block: 1.35em;
+    padding-inline-start: 1.35em;
+  }
+
+  & ul {
+    list-style: disc;
+  }
+
+  & ol {
+    list-style: decimal;
+  }
+
+  & li {
+    margin-block: 0.45em;
+    padding-inline-start: 0.15em;
+  }
+
+  & li::marker {
+    color: var(--color-muted-foreground);
+  }
+
+  /*
+   * Inline code only. Without the :not(pre) guard this also chipped every
+   * <code> inside a code block, painting a light surface behind light
+   * --code-fg text (1.1:1) and boxing each block in a stray border.
+   */
+  & :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    padding: 0.1em 0.3em;
+  }
+
+  @media (width >= 40rem) {
+    font-size: 1.125rem;
+    line-height: 1.78;
+
+    & h2 {
+      font-size: 1.75rem;
+    }
+  }
+}

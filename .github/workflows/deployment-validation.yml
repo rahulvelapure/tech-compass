@@ -1,0 +1,59 @@
+name: Deployment validation
+
+# Re-runs the validation suite against the origin that was actually deployed.
+#
+# Cloudflare Pages and Vercel both report back to GitHub with a deployment
+# status, so this fires automatically once a deploy goes live — preview and
+# production alike. Auditing the real origin catches what a loopback build
+# cannot: CDN behaviour, compression, caching headers, redirects and TLS.
+on:
+  deployment_status:
+  # Manual re-run, e.g. after a DNS or caching change that no commit reflects.
+  workflow_dispatch:
+    inputs:
+      target-url:
+        description: "Origin to validate (defaults to the production site)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  deployments: read
+
+concurrency:
+  group: deployment-validation-${{ github.event.deployment_status.target_url || inputs.target-url || 'production' }}
+  cancel-in-progress: true
+
+jobs:
+  resolve:
+    name: Resolve target
+    runs-on: ubuntu-latest
+    # A deployment_status fires for every state transition; only audit a live one.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.deployment_status.state == 'success'
+    outputs:
+      url: ${{ steps.pick.outputs.url }}
+    steps:
+      - id: pick
+        run: |
+          url="${{ github.event.deployment_status.target_url || inputs.target-url }}"
+          # Falls back to the repository variable so moving to a custom domain
+          # is a settings change, not a code change.
+          if [ -z "$url" ]; then
+            url="${{ vars.PUBLIC_SITE_URL }}"
+          fi
+          if [ -z "$url" ]; then
+            url="https://rahulvelapure.dpdns.org"
+          fi
+          # Trailing slashes break URL concatenation in the Lighthouse config.
+          url="${url%/}"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Validating $url"
+
+  validate:
+    name: Validate deployment
+    needs: resolve
+    uses: ./.github/workflows/ci.yml
+    with:
+      target-url: ${{ needs.resolve.outputs.url }}
