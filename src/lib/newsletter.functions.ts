@@ -48,6 +48,51 @@ function confirmationRedirectUrl(): string {
 }
 
 /* ------------------------------------------------------------------ */
+/* Configuration                                                       */
+/* ------------------------------------------------------------------ */
+
+interface NewsletterConfig {
+  secret: string;
+  brevoKey: string;
+  lovableKey: string;
+  templateId: number;
+  listId: number;
+}
+
+/**
+ * The single definition of "configured".
+ *
+ * Both the token endpoint and the subscribe handler read this, so the form can
+ * never offer to take an address the handler is going to reject. Splitting the
+ * checks across the two was the original defect: the form had no idea the
+ * backend was unusable until a reader had already typed their address in.
+ *
+ * Returns the missing variable's name rather than a bare boolean so the server
+ * log stays diagnosable. That name is never sent to the browser.
+ */
+function newsletterConfig():
+  { ok: true; config: NewsletterConfig } | { ok: false; missing: string } {
+  const secret = formSecret();
+  const brevoKey = process.env["BREVO_API_KEY"];
+  const lovableKey = process.env["LOVABLE_API_KEY"];
+  const templateId = Number(process.env["BREVO_DOI_TEMPLATE_ID"] ?? "");
+  const listId = Number(process.env["BREVO_LIST_ID"] ?? "");
+
+  if (!secret || !brevoKey || !lovableKey) return { ok: false, missing: "credentials" };
+  // Confirmed opt-in cannot be faked: without a template and a list there is no
+  // confirmation email to send, and adding the contact directly would be
+  // exactly the single opt-in behaviour we are avoiding.
+  if (!Number.isInteger(templateId) || templateId <= 0) {
+    return { ok: false, missing: "BREVO_DOI_TEMPLATE_ID" };
+  }
+  if (!Number.isInteger(listId) || listId <= 0) {
+    return { ok: false, missing: "BREVO_LIST_ID" };
+  }
+
+  return { ok: true, config: { secret, brevoKey, lovableKey, templateId, listId } };
+}
+
+/* ------------------------------------------------------------------ */
 /* Token issuance                                                      */
 /* ------------------------------------------------------------------ */
 
@@ -55,12 +100,20 @@ function confirmationRedirectUrl(): string {
  * Minted when a visitor first engages with the form rather than on page load,
  * so the common case — a reader who never subscribes — costs no extra request
  * and the token's clock starts at genuine intent.
+ *
+ * Also reports whether subscribing is possible at all, which is what lets the
+ * form withdraw itself on first interaction instead of accepting an address it
+ * cannot do anything with. `configured` is a plain boolean: which variable is
+ * missing is a deployment detail and stays in the server log.
  */
 export const issueNewsletterToken = createServerFn({ method: "GET" }).handler(
-  async (): Promise<{ token: string | null }> => {
-    const secret = formSecret();
-    if (!secret) return { token: null };
-    return { token: await issueFormToken(secret) };
+  async (): Promise<{ token: string | null; configured: boolean }> => {
+    const result = newsletterConfig();
+    if (!result.ok) {
+      logSubscribeOutcome("unconfigured", { missingConfig: result.missing });
+      return { token: null, configured: false };
+    }
+    return { token: await issueFormToken(result.config.secret), configured: true };
   },
 );
 
@@ -105,24 +158,9 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
       return SILENT_SUCCESS;
     }
 
-    const secret = formSecret();
-    const brevoKey = process.env["BREVO_API_KEY"];
-    const lovableKey = process.env["LOVABLE_API_KEY"];
-    const templateId = Number(process.env["BREVO_DOI_TEMPLATE_ID"] ?? "");
-    const listId = Number(process.env["BREVO_LIST_ID"] ?? "");
-
-    if (!secret || !brevoKey || !lovableKey) {
-      return unconfigured("credentials");
-    }
-    // Confirmed opt-in cannot be faked: without a template and a list there is
-    // no confirmation email to send, and adding the contact directly would be
-    // exactly the single opt-in behaviour we are avoiding.
-    if (!Number.isInteger(templateId) || templateId <= 0) {
-      return unconfigured("BREVO_DOI_TEMPLATE_ID");
-    }
-    if (!Number.isInteger(listId) || listId <= 0) {
-      return unconfigured("BREVO_LIST_ID");
-    }
+    const configResult = newsletterConfig();
+    if (!configResult.ok) return unconfigured(configResult.missing);
+    const { secret, brevoKey, lovableKey, templateId, listId } = configResult.config;
 
     const verdict = data.token
       ? await verifyFormToken(secret, data.token)
@@ -239,10 +277,16 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
     }
   });
 
+/**
+ * A reader does not need to know the site is missing an environment variable —
+ * that is our problem, and naming it publicly is unnecessary disclosure about
+ * the deployment. The specific missing variable goes to the server log, which
+ * is where someone can act on it.
+ */
 function unconfigured(missing: string): SubscribeResult {
   logSubscribeOutcome("unconfigured", { missingConfig: missing });
   return {
     ok: false,
-    message: "The mailing list is not configured yet. Please try again later.",
+    message: "Subscriptions are unavailable at the moment. Please try again later.",
   };
 }

@@ -23,7 +23,9 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
   const getToken = useServerFn(issueNewsletterToken);
 
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "done" | "error" | "unavailable">(
+    "idle",
+  );
   const [message, setMessage] = useState("");
 
   /** Kept in a ref: the token is never rendered and must not trigger a redraw. */
@@ -40,6 +42,11 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
     tokenRequest.current = getToken()
       .then((result) => {
         token.current = result.token;
+        // The provider is not configured, so no confirmation email can be sent.
+        // Withdraw the form on first interaction rather than collect an address
+        // and fail after the reader has typed it — and say nothing about why,
+        // since the cause is a deployment detail.
+        if (!result.configured) setStatus("unavailable");
       })
       .catch(() => {
         // Leave the token null; the server decides how to treat its absence.
@@ -103,9 +110,11 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
           {site.newsletter.detail}
         </p>
 
-        {status === "done" ? (
+        {status === "done" || status === "unavailable" ? (
           <p className="mt-6 text-sm font-medium text-foreground" role="status">
-            {message}
+            {status === "done"
+              ? message
+              : "Subscriptions are unavailable at the moment. Please check back soon."}
           </p>
         ) : (
           <form
@@ -173,7 +182,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
           {status === "error" ? message : ""}
         </p>
 
-        {status !== "done" && (
+        {status !== "done" && status !== "unavailable" && (
           <p
             id={`${fieldId}-consent`}
             className={`mt-4 text-xs leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
