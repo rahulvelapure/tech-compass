@@ -16,16 +16,16 @@ counts, targets, priorities or research tracks.
 
 Measured, not estimated:
 
-| Measure                 | Start   | After 3a | After 3b (Windows) |
-| ----------------------- | ------- | -------- | ------------------ |
-| Backlog topics          | 106     | 174      | **215**            |
-| Intune share of backlog | **71%** | 43%      | **35%**            |
-| Segments with a backlog | 3 of 16 | 6 of 18  | **7 of 18**        |
-| Subjects with a pillar  | 1       | 5        | **6**              |
-| Pillar and hub topics   | 7       | 21       | **27**             |
-| Topics with sources     | 33      | 70       | **86**             |
-| Diagram opportunities   | 15      | 38       | **49**             |
-| Unique target keywords  | 106/106 | 174/174  | **215/215**        |
+| Measure                 | Start   | 3a      | 3b (Windows) | 3c (Networking) |
+| ----------------------- | ------- | ------- | ------------ | --------------- |
+| Backlog topics          | 106     | 174     | 215          | **257**         |
+| Intune share of backlog | **71%** | 43%     | 35%          | **29%**         |
+| Segments with a backlog | 3 of 16 | 6 of 18 | 7 of 18      | **8 of 18**     |
+| Subjects with a pillar  | 1       | 5       | 6            | **7**           |
+| Pillar and hub topics   | 7       | 21      | 27           | **34**          |
+| Topics with sources     | 33      | 70      | 86           | **107**         |
+| Diagram opportunities   | 15      | 38      | 49           | **70**          |
+| Unique target keywords  | 106/106 | 174/174 | 215/215      | **257/257**     |
 
 Tech Compass was an Intune site with fifteen empty rooms attached. The
 architecture was sound and the Intune work good, but continuing at that ratio
@@ -80,6 +80,73 @@ documentation; CSP reference; WSL and dev-environment docs.
 discovery and the rest for a second pass on server boundaries, storage and
 deployment tooling once the first cluster is written.
 
+### Networking research status (Phase 3c)
+
+42 topics, 7 pillars, 11 researched, 21 carrying primary sources, 21 diagram
+opportunities.
+
+**Strategic role, not priority order.** Networking is P2 by priority but was
+sequenced third because it is the site's **lowest-volatility subject and its most
+durable internal-link target**. Protocol fundamentals do not churn, so these
+articles cost almost nothing to maintain — while cybersecurity, Windows, cloud
+and Intune all already reference networking concepts that do not exist yet.
+
+**Pillars:** `how-a-packet-crosses-a-network` (hub) → Ethernet and switching ·
+IP addressing and routing · core network services · transport · wireless ·
+diagnostics and performance.
+
+**Rejected pillar candidates**, with reasons:
+
+| Rejected                                             | Why                                              | Owner instead                                                                                      |
+| ---------------------------------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| Network security                                     | Would compete with cybersecurity for one intent  | `cybersecurity-ciso` owns architecture and risk; networking owns protocol mechanism (WPA3, 802.1X) |
+| SD-WAN, SASE, enterprise networking                  | Corporate architecture, not protocol             | `enterprise-networking`                                                                            |
+| Cloud networking                                     | Provider-specific implementation                 | `cloud`                                                                                            |
+| Network automation                                   | Splits cleanly rather than forming a pillar      | `devops` (IaC) and `it-automation` (ops scripting)                                                 |
+| Network monitoring _(separate from troubleshooting)_ | Monitoring exists to answer diagnostic questions | Merged into one diagnostics pillar                                                                 |
+
+**Sources:** IETF RFCs (1034/1035, 1122, 1191, 2131, 4271, 4632, 4890, 7858,
+8200, 8484, 9000, 9114, 9250, 9293, draft-ietf-tls-ecdhe-mlkem) · IEEE 802.3,
+802.1Q, 802.1X, 802.11be-2024 and 802.11 working-group status · Wi-Fi Alliance ·
+Cloudflare PQC documentation.
+
+**Findings that changed the plan:**
+
+- **IEEE Std 802.11be-2024 (Wi-Fi 7) was published 2025-07-22**, specifying at
+  least 30 Gbit/s maximum throughput.
+- **Wi-Fi 8 (802.11bn) is not ratified.** TGbn had resolved ~75% of D1.0
+  comments and expected to ballot D2.0 in July 2026. `net-54` exists precisely
+  because consumer coverage routinely reports it as shipping.
+- **Post-quantum TLS became a transport problem.** Hybrid X25519MLKEM768 carries
+  a 1216-byte client share (1184 ML-KEM-768 + 32 X25519), typically splitting
+  the ClientHello across two packets. TLS 1.3 permits it; middleboxes assuming
+  one packet do not. That is `net-44`, and it is a networking failure mode, not
+  a cryptography topic.
+- **Encrypted DNS is settled and citable:** DoT RFC 7858 (2016), DoH RFC 8484
+  (2018), DoQ RFC 9250 (2022).
+
+**Coverage gap:** 42 of a 60 target. The remaining ~18 are held for discovery
+once the first cluster is written, rather than pre-specified now.
+
+### Duplicate intent resolved this phase
+
+| Overlap                                                                    | Decision                                                                                                                                                                                                                                                                                                                                                                                            |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sec-11` microsegmentation vs the `zero-trust-network-segmentation` draft  | **Real duplicate** — both promised segmentation "without breaking the business". Split pinned: `sec-11` owns microsegmentation (east-west, workload and identity, per-flow); the draft owns segmentation architecture (zones, VLANs, coarse boundaries) when `enterprise-networking` gets a backlog; `net-11` owns the 802.1Q mechanism beneath both. If either starts explaining the other, merge. |
+| `net-44` PQC transport vs `sec-51` TLS handshake vs `sec-52` PQC migration | Distinct readers: `sec-51` how TLS works, `sec-52` what to plan, `net-44` why connections started failing. Kept.                                                                                                                                                                                                                                                                                    |
+| `net-30` DNS resolution vs `win-51` Windows resolution order               | Protocol versus Windows client order (mDNS, LLMNR, hosts). Kept.                                                                                                                                                                                                                                                                                                                                    |
+| `net-52` WPA3 vs `intune-112` certificate Wi-Fi profiles                   | Protocol versus deployment. Kept.                                                                                                                                                                                                                                                                                                                                                                   |
+| `net-45` VPN protocols vs enterprise remote-access architecture            | Protocol comparison here; architecture in `enterprise-networking`. Kept.                                                                                                                                                                                                                                                                                                                            |
+| `net-71` 802.1X vs NAC at scale                                            | Protocol here; deployment in `enterprise-networking`. Kept.                                                                                                                                                                                                                                                                                                                                         |
+
+### Draft ownership decided
+
+| Draft                             | Owner                     | Reasoning                                                                                                                                     |
+| --------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `wifi-6-vs-wifi-7`                | **networking** (`net-50`) | Wi-Fi standards are protocol territory. Now mapped.                                                                                           |
+| `wifi-troubleshooting`            | **windows** (`win-46`)    | Client-side diagnosis, not protocol. Not taken.                                                                                               |
+| `zero-trust-network-segmentation` | **enterprise-networking** | Corporate segmentation architecture. Deliberately _not_ pulled into networking despite the name — the primary intent is design, not protocol. |
+
 ---
 
 ## 2. Master coverage table
@@ -100,7 +167,7 @@ is below 100, the reason is stated in §4.
 | `devops`                 |      0 |      0 |       0 |         80 |  80 | P1          | Medium        |
 | `development`            |      0 |      0 |       0 |         80 |  80 | P1          | Medium        |
 | `it-automation`          |      0 |      1 |       0 |         70 |  70 | P1          | Medium        |
-| `networking`             |      0 |      1 |       0 |         60 |  60 | P2          | **Low**       |
+| `networking`             |      0 |      1 |  **42** |         60 |  60 | P2          | **Low**       |
 | `electronics`            |      0 |      1 |       0 |         60 |  60 | P2          | Medium        |
 | `software`               |      1 |      0 |       8 |         60 |  59 | P2          | Medium        |
 | `ai-enterprise-it`       |      0 |      2 |       0 |         55 |  55 | P1          | **Very high** |
@@ -108,7 +175,7 @@ is below 100, the reason is stated in §4.
 | `technology-leadership`  |      0 |      1 |       0 |         50 |  50 | P2          | **Low**       |
 | `emerging-tech`          |      0 |      0 |       0 |         40 |  40 | P3          | **Very high** |
 | `gadgets`                |      0 |      2 |       0 |         40 |  40 | P3          | High          |
-| **Total**                | **17** | **18** | **215** | **~1,205** |     |             |               |
+| **Total**                | **17** | **18** | **257** | **~1,205** |     |             |               |
 
 **~1,205 genuinely distinct articles** is the honest long-term ceiling across
 eighteen subjects. Not 1,600, and not padded to reach it.
