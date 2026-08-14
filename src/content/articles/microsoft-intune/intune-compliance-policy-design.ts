@@ -14,7 +14,6 @@ export const article: Article = {
     "Compliance is not a report. It is the input to Conditional Access, and its defaults are strict. What the built-in action does, how the seven-day Error window protects you, and how to roll out a policy without generating an incident.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 9,
   primaryKeyword: "intune compliance policy best practices",
   secondaryKeywords: [

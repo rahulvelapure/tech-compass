@@ -14,7 +14,6 @@ export const article: Article = {
     "Device preparation removes the registration step and grades reliability over flexibility. Windows Autopilot keeps hybrid join, pre-provisioning and a far larger app budget. Where each one fits, and the precedence rule that decides which actually runs.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 7,
   primaryKeyword: "autopilot device preparation policy",
   secondaryKeywords: [

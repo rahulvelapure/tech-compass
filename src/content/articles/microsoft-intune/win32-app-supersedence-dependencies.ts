@@ -14,7 +14,6 @@ export const article: Article = {
     "Dependencies and supersedence look like two ways of relating apps. They follow different targeting rules, resolve in different orders, and produce a documented conflict state when combined carelessly.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 8,
   primaryKeyword: "intune win32 app supersedence",
   secondaryKeywords: [

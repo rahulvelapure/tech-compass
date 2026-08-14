@@ -14,7 +14,6 @@ export const article: Article = {
     "The technician flow inherits its behaviour from self-deploying mode, which is why it is strict about TPM 2.0 and device attestation. Decoding the failures, the network dependency people miss, and why Reset makes the retry worse.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 9,
   primaryKeyword: "autopilot pre-provisioning failed",
   secondaryKeywords: [

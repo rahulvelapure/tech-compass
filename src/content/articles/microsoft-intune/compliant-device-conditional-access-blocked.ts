@@ -14,7 +14,6 @@ export const article: Article = {
     "The device is enrolled, the compliance report is green, and the user is still blocked. Working through the chain: licensing, device identity, token timing, and the sign-in log detail that settles it.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 8,
   primaryKeyword: "device compliant but conditional access blocks",
   secondaryKeywords: [

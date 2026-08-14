@@ -14,7 +14,6 @@ export const article: Article = {
     "Platform restrictions, device limits and ownership rules — how Intune decides whether a device is corporate or personal, why that decision differs on every platform, and the enrollment errors these settings produce.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 8,
   primaryKeyword: "intune enrollment restrictions",
   secondaryKeywords: [

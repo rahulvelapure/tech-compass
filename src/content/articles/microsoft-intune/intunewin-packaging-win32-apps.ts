@@ -14,7 +14,6 @@ export const article: Article = {
     "The Content Prep Tool is simple. The choices around it — what to include, how to reference files, which command lines to use, and why powershell.exe is not the executable you think — are where packaging succeeds or fails.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 10,
   primaryKeyword: "intunewinapputil",
   secondaryKeywords: [

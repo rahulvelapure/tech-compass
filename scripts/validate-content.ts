@@ -192,6 +192,51 @@ const NESTED_INLINE_MARKUP = [
 ] as const;
 
 /**
+ * Mojibake: UTF-8 bytes that were decoded as Windows-1252 and re-encoded as
+ * UTF-8, so `—` becomes `â€"` and `’` becomes `â€™`.
+ *
+ * This reached the rendered site once, across 26 files, and nothing caught it:
+ * the result is *valid* UTF-8, so every encoding check passes. It is only
+ * visible by reading the page. Hence a content rule.
+ *
+ * The patterns are deliberately anchored on the specific lead bytes that
+ * double-encoding produces (`Â`, `Ã`, `â€`) followed by a continuation
+ * character. A bare `Ã` or `Â` is not flagged on its own, because those are
+ * legitimate letters in French, Portuguese and Welsh text, and a rule that
+ * fires on "Ão" would train people to ignore it.
+ */
+const MOJIBAKE_PATTERNS: { label: string; pattern: RegExp }[] = [
+  /*
+   * â€ is the signature of any U+2000-block character (em dash, curly quotes,
+   * ellipsis, bullet) that has been round-tripped: its UTF-8 lead bytes E2 80
+   * decode under cp1252 to â and €. The third character varies with the
+   * original, so it is not constrained here. The pair does not occur in real
+   * prose in any language.
+   */
+  { label: "double-encoded punctuation", pattern: /â€/ },
+  /*
+   * Ã and Â are real letters, so these fire only when followed by a character
+   * in U+0080-U+00BF — where a UTF-8 continuation byte lands under cp1252.
+   * "São", "Ângela" and similar are unaffected: the next character is an
+   * ordinary letter, not a continuation.
+   */
+  { label: "double-encoded Latin-1", pattern: /Â[\u0080-\u00bf]/ },
+  { label: "double-encoded accented letter", pattern: /Ã[\u0080-\u00bf]/ },
+  /* Information was already lost before it reached the file. */
+  { label: "Unicode replacement character", pattern: /\ufffd/ },
+  /* A byte-order mark has no business in a .ts source file. */
+  { label: "byte-order mark", pattern: /\ufeff/ },
+];
+
+/**
+ * Returns the kinds of encoding corruption present in a string. Exported so
+ * the rule can be tested directly rather than only through the content store.
+ */
+export function findMojibake(text: string): string[] {
+  return MOJIBAKE_PATTERNS.filter(({ pattern }) => pattern.test(text)).map(({ label }) => label);
+}
+
+/**
  * Returns the kinds of nested inline markup present in a string, or an empty
  * array when it is safe. Exported so the rule can be tested directly rather
  * than only through the content store.
@@ -547,6 +592,27 @@ function validateArticle(
       add(
         `Nested inline markup (${kind}) in ${where}. The renderer does not parse nested markup, so the inner delimiters render literally. Move the inner construct outside the bold or italic run.`,
         "body",
+      );
+    }
+  }
+
+  // Encoding corruption. Valid UTF-8, wrong characters — invisible to every
+  // other check and only detectable by reading the rendered page.
+  const encodingScope: [string, string][] = [
+    ["title", article.title],
+    ["seoTitle", article.seoTitle ?? ""],
+    ["metaDescription", article.metaDescription],
+    ["standfirst", article.standfirst],
+    ["excerpt", article.excerpt],
+    ["methodology", article.methodology ?? ""],
+    ["body", articleText(article)],
+    ["sources", (article.sources ?? []).map((s) => `${s.title} ${s.publisher}`).join(" ")],
+  ];
+  for (const [field, value] of encodingScope) {
+    for (const kind of findMojibake(value)) {
+      add(
+        `Encoding corruption (${kind}). The text is valid UTF-8 but the characters are wrong — this is a Windows-1252 round-trip and it renders literally on the page.`,
+        field,
       );
     }
   }

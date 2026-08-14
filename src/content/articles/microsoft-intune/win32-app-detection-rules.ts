@@ -14,7 +14,6 @@ export const article: Article = {
     "An app that reports success but is not installed, or reinstalls every day, is almost always a detection problem. What each rule type actually checks, the STDERR trap in script detection, and how to choose a rule that survives a version bump.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 10,
   primaryKeyword: "intune win32 app detection rule",
   secondaryKeywords: [

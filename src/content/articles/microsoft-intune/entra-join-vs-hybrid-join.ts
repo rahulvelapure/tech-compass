@@ -14,7 +14,6 @@ export const article: Article = {
     "The decision looks like a preference and behaves like a one-way door. What breaks without line of sight to a domain controller, why existing devices cannot be converted without a reset, and how to sequence the move.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 8,
   primaryKeyword: "entra join vs hybrid join",
   secondaryKeywords: [

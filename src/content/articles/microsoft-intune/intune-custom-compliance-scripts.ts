@@ -14,7 +14,6 @@ export const article: Article = {
     "A discovery script plus a JSON rules file, bound one-to-one to a policy. What the script must return, why it runs in a 32-bit host by default, what the 65007 to 65010 errors mean, and why every change takes eight hours to see.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-14",
-  draft: true,
   readingMinutes: 11,
   primaryKeyword: "intune custom compliance script",
   secondaryKeywords: [

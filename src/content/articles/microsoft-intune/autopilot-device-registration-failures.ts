@@ -15,7 +15,6 @@ export const article: Article = {
     "The device shows the normal Windows out-of-box experience instead of your branded Autopilot screen. Here is the order to check things in, what each Ztd import error actually means, and why a repaired device stops being recognised.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 10,
   primaryKeyword: "autopilot device not registering",
   secondaryKeywords: [

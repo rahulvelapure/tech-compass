@@ -14,7 +14,6 @@ export const article: Article = {
     "A practical guide to the Intune Management Extension logs: what each file covers, the order the agent processes a Win32 app in, and how to work backwards from a failure to the step that produced it.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 9,
   primaryKeyword: "intune management extension log",
   secondaryKeywords: [

@@ -14,7 +14,6 @@ export const article: Article = {
     "A persona-based structure for Conditional Access that keeps the policy count low, makes exclusions auditable, and stays readable after two years of change — built around how the platform actually evaluates policy.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  draft: true,
   readingMinutes: 14,
   primaryKeyword: "conditional access framework",
   secondaryKeywords: [
