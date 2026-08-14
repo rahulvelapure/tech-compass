@@ -178,7 +178,8 @@ export const segment: Segment = {
       updateClass: "evergreen",
       pillarSlug: "zero-trust-for-a-microsoft-estate",
       relatedTopics: ["sec-01"],
-      notes: "Cross-domain: pairs with the enterprise-networking segmentation cluster.",
+      notes:
+        "OWNERSHIP RESOLVED (networking phase): this was close enough to the existing `zero-trust-network-segmentation` draft to be a duplicate — both promised segmentation 'without breaking the business'. The split is now explicit and must hold. This topic owns **microsegmentation**: east-west, workload- and identity-based, per-flow policy. The draft, when enterprise-networking gets a backlog, owns **network segmentation architecture**: zones, VLANs and the coarse boundaries a corporate network is actually built from. `net-11` owns the 802.1Q mechanism underneath both. If either article starts explaining the other, merge them.",
     },
     {
       id: "sec-12",
