@@ -147,6 +147,30 @@ export const categories: Category[] = [
     related: ["gadgets", "networking", "emerging-tech"],
   },
   {
+    slug: "development",
+    title: "Development",
+    label: "Development",
+    group: "technology",
+    intro:
+      "Writing software: languages, APIs, frameworks and the web platform — with the trade-offs that only show up once something is in production and has to be maintained.",
+    description:
+      "Development coverage: TypeScript, Python, Go and Rust, API design, testing, web performance and dependency risk.",
+    subcategories: ["Languages", "APIs", "Web platform", "Testing", "Architecture"],
+    related: ["devops", "software", "ai"],
+  },
+  {
+    slug: "devops",
+    title: "DevOps and platform",
+    label: "DevOps",
+    group: "technology",
+    intro:
+      "How software gets built, shipped and observed: pipelines, containers, Kubernetes and infrastructure as code, assessed on what they cost to operate rather than how they demo.",
+    description:
+      "DevOps coverage: CI/CD, Docker and Kubernetes, Terraform and infrastructure as code, GitOps and observability.",
+    subcategories: ["CI/CD", "Containers", "Kubernetes", "Infrastructure as code", "Observability"],
+    related: ["cloud", "development", "it-automation"],
+  },
+  {
     slug: "windows",
     title: "Windows",
     label: "Windows",
@@ -310,6 +334,8 @@ export const footerColumns: { heading: string; slugs: string[] }[] = [
     slugs: [
       "ai",
       "software",
+      "development",
+      "devops",
       "windows",
       "gadgets",
       "electronics",
