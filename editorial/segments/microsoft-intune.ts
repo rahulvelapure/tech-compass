@@ -7,11 +7,296 @@ import type { Segment } from "../types";
  * search, not by product feature. Every entry is a distinct problem with a
  * distinct answer — where two topics would resolve to the same article, only
  * one is listed.
+ *
+ * The 100-series is the foundation layer: one hub and six cluster pillars that
+ * everything else reports to. It was added last, which is the wrong order and
+ * shows — 15 articles were published before anything existed for them to link
+ * back to.
+ *
+ * Researched against Microsoft Learn in August 2026. Three findings changed
+ * what is planned here rather than merely confirming it:
+ *
+ * 1. Intune Suite capabilities were redistributed across Microsoft 365 tiers in
+ *    July 2026. Microsoft 365 E3 now includes Plan 2, Remote Help and Advanced
+ *    Analytics; E5 and E7 add Endpoint Privilege Management, Microsoft Cloud PKI
+ *    and Enterprise App Management. Any licensing guidance written from memory
+ *    is now wrong, which is why intune-107 is P0 and volatile.
+ * 2. Windows Autopatch is embedded in Intune rather than a separate service to
+ *    register with, and hotpatch security updates are enabled by default for
+ *    eligible devices.
+ * 3. Microsoft now recommends feature update policies over update-ring feature
+ *    deferrals, with a specific transition order to avoid devices being offered
+ *    an unintended build. That is intune-54.
  */
 export const segment: Segment = {
   name: "Microsoft Intune",
   category: "microsoft-intune",
   topics: [
+    /* ---------------- Foundations: hub and cluster pillars ---------------- */
+    {
+      id: "intune-100",
+      title: "What Microsoft Intune manages",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "what is microsoft intune",
+      secondaryKeywords: ["what does intune do", "intune vs entra vs defender"],
+      requiredSources: [
+        "https://learn.microsoft.com/intune/fundamentals/what-is-intune",
+        "https://learn.microsoft.com/intune/fundamentals/licensing",
+        "https://learn.microsoft.com/intune/fundamentals/planning-guide",
+      ],
+      updateClass: "annual",
+      pillar: "Microsoft Intune",
+      plannedSlug: "what-microsoft-intune-manages",
+      plannedInternalLinks: [
+        "how-intune-delivers-policy",
+        "windows-device-management-with-intune",
+        "intune-application-management",
+        "intune-compliance-and-conditional-access",
+        "conditional-access-framework",
+      ],
+      diagramOpportunity:
+        "Service boundary: what Intune owns versus Entra ID (identity and Conditional Access), Defender (threat signal) and Purview (data), and where the signals cross.",
+      notes:
+        "The site's hub. All 15 published Intune articles link up to this. Must define the boundary precisely — the most common reader confusion is assuming Intune enforces Conditional Access, which Entra does.",
+    },
+    {
+      id: "intune-101",
+      title: "How Intune delivers policy to a device",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "how does intune work",
+      secondaryKeywords: ["intune policy refresh", "intune check in cycle", "intune csp"],
+      requiredSources: [
+        "https://learn.microsoft.com/windows/client-management/mdm-overview",
+        "https://learn.microsoft.com/windows/client-management/mdm/configuration-service-provider-reference",
+        "https://learn.microsoft.com/intune/intune-service/configuration/device-profile-troubleshoot",
+      ],
+      updateClass: "evergreen",
+      pillar: "Policy delivery",
+      plannedSlug: "how-intune-delivers-policy",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-10", "intune-21"],
+      plannedInternalLinks: [
+        "intune-policy-conflicts",
+        "intune-management-extension-logs",
+        "group-policy-to-settings-catalog-migration",
+      ],
+      diagramOpportunity:
+        "Sequence from device check-in through MDM channel, CSP application, IME execution and result reporting — with the point each existing troubleshooting article addresses marked on it.",
+      notes:
+        "The mechanism article. Deliberately distinct from intune-100: that one is scope, this is how a setting actually reaches a device. Explains why conflicts and refresh timing behave as they do.",
+    },
+    {
+      id: "intune-102",
+      title: "Windows device management with Intune",
+      category: "microsoft-intune",
+      subcategory: "Autopilot",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "intune windows device management",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/enrollment/windows-enrollment-methods",
+        "https://learn.microsoft.com/autopilot/overview",
+        "https://learn.microsoft.com/entra/identity/devices/concept-directory-join",
+      ],
+      updateClass: "annual",
+      pillar: "Device lifecycle",
+      plannedSlug: "windows-device-management-with-intune",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-62", "intune-60", "intune-01"],
+      plannedInternalLinks: [
+        "entra-join-vs-hybrid-join",
+        "intune-enrollment-restrictions",
+        "enrollment-status-page-troubleshooting",
+        "autopilot-device-registration-failures",
+      ],
+      diagramOpportunity:
+        "Device lifecycle: hardware -> identity (join type) -> enrollment -> provisioning -> policy -> compliance -> retirement, with each existing troubleshooting article pinned to the stage it covers.",
+      notes:
+        "Rescues two orphans by construction: entra-join-vs-hybrid-join and intune-enrollment-restrictions currently have zero inbound links.",
+    },
+    {
+      id: "intune-103",
+      title: "Intune application management",
+      category: "microsoft-intune",
+      subcategory: "App delivery",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "intune application management",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/app-management/",
+        "https://learn.microsoft.com/intune/app-management/deployment/create-win32-package",
+        "https://learn.microsoft.com/intune/app-management/deployment/enterprise-app-management",
+      ],
+      updateClass: "annual",
+      pillar: "Application delivery",
+      plannedSlug: "intune-application-management",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-20", "intune-23", "intune-24"],
+      plannedInternalLinks: [
+        "win32-app-detection-rules",
+        "intunewin-packaging-win32-apps",
+        "win32-app-supersedence-dependencies",
+        "intune-management-extension-logs",
+      ],
+      diagramOpportunity:
+        "Decision tree for app packaging type — Win32, LOB/MSI, Microsoft Store, Enterprise App Catalog — against the constraints that actually decide it (update mechanism, detection, dependencies, context).",
+    },
+    {
+      id: "intune-104",
+      title: "Intune compliance and Conditional Access",
+      category: "microsoft-intune",
+      subcategory: "Compliance",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "intune compliance conditional access",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/protect/device-compliance-get-started",
+        "https://learn.microsoft.com/entra/identity/conditional-access/concept-conditional-access-grant",
+        "https://learn.microsoft.com/intune/intune-service/protect/actions-for-noncompliance",
+      ],
+      updateClass: "annual",
+      pillar: "Compliance and access",
+      plannedSlug: "intune-compliance-and-conditional-access",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-30", "intune-32"],
+      plannedInternalLinks: [
+        "intune-compliance-policy-design",
+        "compliant-device-conditional-access-blocked",
+        "intune-custom-compliance-scripts",
+        "conditional-access-framework",
+      ],
+      diagramOpportunity:
+        "Signal path: device state -> Intune compliance evaluation -> device object in Entra -> token issuance -> Conditional Access grant or block, with the latency at each hop.",
+      notes:
+        "Distinct from intune-30, which is compliance policy design. This is the cross-service architecture — where the compliance signal goes and why a compliant device can still be blocked. Rescues the intune-custom-compliance-scripts orphan.",
+    },
+    {
+      id: "intune-105",
+      title: "Intune endpoint security architecture",
+      category: "microsoft-intune",
+      subcategory: "Compliance",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune endpoint security",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/protect/endpoint-security",
+        "https://learn.microsoft.com/intune/intune-service/protect/security-baselines",
+      ],
+      updateClass: "annual",
+      pillar: "Endpoint security",
+      plannedSlug: "intune-endpoint-security-architecture",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-40", "intune-43", "intune-44", "intune-45"],
+      diagramOpportunity:
+        "Layered view of the endpoint security surface: baselines, Defender policy, disk encryption, account protection and firewall, showing which are Intune-native and which are Defender features surfaced through Intune.",
+      notes:
+        "Deferred until its cluster exists. A pillar with nothing beneath it is an orphan with a grand title — write after intune-45 and intune-12 are published.",
+    },
+    {
+      id: "intune-106",
+      title: "MDM and MAM: choosing the management model",
+      category: "microsoft-intune",
+      subcategory: "App delivery",
+      contentType: "decision-framework",
+      searchIntent: "decision",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "mdm vs mam intune",
+      secondaryKeywords: ["app protection policy without enrollment", "byod intune management"],
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/fundamentals/what-is-device-management",
+        "https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy",
+      ],
+      updateClass: "evergreen",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-28", "intune-90"],
+      diagramOpportunity:
+        "Decision tree from device ownership and data sensitivity to the management model, showing what each model can and cannot enforce.",
+    },
+    {
+      id: "intune-107",
+      title: "Intune licensing after the 2026 Suite redistribution",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "reference",
+      searchIntent: "decision",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "intune plan 1 vs plan 2 vs suite",
+      secondaryKeywords: ["intune licensing", "what is included in intune suite"],
+      requiredSources: [
+        "https://learn.microsoft.com/intune/fundamentals/licensing",
+        "https://learn.microsoft.com/intune/fundamentals/advanced-capabilities",
+        "https://learn.microsoft.com/intune/fundamentals/planning-guide",
+      ],
+      updateClass: "volatile",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-110", "intune-47"],
+      diagramOpportunity:
+        "Matrix of capability against licence tier, marking which capabilities moved in July 2026.",
+      notes:
+        "Verified August 2026: from July 2026 Microsoft 365 E3 includes Plan 2, Remote Help and Advanced Analytics; E5 and E7 add Endpoint Privilege Management, Microsoft Cloud PKI and Enterprise App Management. Highest-volatility topic in the segment — recheck every review without exception.",
+    },
+    {
+      id: "intune-108",
+      title: "Where Intune ends and Entra, Defender and Purview begin",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "intune vs defender vs purview responsibilities",
+      updateClass: "annual",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-46"],
+      notes:
+        "Only write if intune-100 cannot carry the boundary explanation on its own. Flagged as a possible merge — do not publish both.",
+    },
+    {
+      id: "intune-109",
+      title: "Managing Android, iOS and macOS with Intune",
+      category: "microsoft-intune",
+      subcategory: "App delivery",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune cross platform device management",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/enrollment/android-enroll",
+        "https://learn.microsoft.com/intune/intune-service/enrollment/ios-enroll",
+        "https://learn.microsoft.com/intune/intune-service/enrollment/macos-enroll",
+      ],
+      updateClass: "annual",
+      pillar: "Cross-platform management",
+      plannedSlug: "managing-android-ios-macos-with-intune",
+      pillarSlug: "what-microsoft-intune-manages",
+      relatedTopics: ["intune-90", "intune-91", "intune-92", "intune-93"],
+      diagramOpportunity:
+        "Enrollment and management capability per platform, side by side, showing where the Windows mental model does not transfer.",
+      notes:
+        "Added because the first five pillars were all Windows-centric, leaving the four non-Windows topics with no parent. The gap only became visible when the cluster map was drawn.",
+    },
+
     /* ---------------- Autopilot and provisioning ---------------- */
     {
       id: "intune-01",
@@ -24,6 +309,7 @@ export const segment: Segment = {
       status: "PUBLISHED",
       targetKeyword: "enrollment status page stuck",
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
       articleSlug: "enrollment-status-page-troubleshooting",
     },
     {
@@ -40,6 +326,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-01", "intune-03"],
       requiredSources: ["Microsoft Learn: Windows Autopilot registration overview"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
       articleSlug: "autopilot-device-registration-failures",
       notes: "Written 2026-08-13, 2,238 words. Published.",
     },
@@ -56,6 +343,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-01"],
       requiredSources: ["Microsoft Learn: Windows Autopilot device preparation"],
       updateClass: "volatile",
+      pillarSlug: "windows-device-management-with-intune",
       articleSlug: "autopilot-device-preparation-vs-autopilot",
       notes:
         "Written 2026-08-13, 1,678 words. Published. Volatile area — recheck feature parity at each review.",
@@ -72,6 +360,7 @@ export const segment: Segment = {
       targetKeyword: "autopilot pre-provisioning failed",
       relatedTopics: ["intune-01"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
       articleSlug: "autopilot-pre-provisioning-failures",
       notes: "Written 2026-08-13, 1,946 words. Published.",
     },
@@ -86,6 +375,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "autopilot reset vs wipe",
       updateClass: "evergreen",
+      pillarSlug: "windows-device-management-with-intune",
     },
     {
       id: "intune-06",
@@ -98,6 +388,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "intune device naming template",
       updateClass: "evergreen",
+      pillarSlug: "windows-device-management-with-intune",
     },
     {
       id: "intune-07",
@@ -111,6 +402,7 @@ export const segment: Segment = {
       targetKeyword: "autopilot self-deploying mode",
       relatedTopics: ["intune-01"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
     },
 
     /* ---------------- Configuration policy ---------------- */
@@ -125,6 +417,7 @@ export const segment: Segment = {
       status: "PUBLISHED",
       targetKeyword: "intune policy conflict",
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
       articleSlug: "intune-policy-conflicts",
     },
     {
@@ -138,6 +431,7 @@ export const segment: Segment = {
       status: "PUBLISHED",
       targetKeyword: "group policy to intune migration",
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
       articleSlug: "group-policy-to-settings-catalog-migration",
     },
     {
@@ -153,6 +447,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-10", "intune-11", "intune-13"],
       requiredSources: ["Microsoft Learn: Settings catalog", "Microsoft Learn: Custom settings"],
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
     },
     {
       id: "intune-13",
@@ -168,6 +463,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-12"],
       requiredSources: ["Microsoft Learn: Win32 and Desktop Bridge app ADMX policy CSP"],
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
     },
     {
       id: "intune-14",
@@ -181,6 +477,7 @@ export const segment: Segment = {
       targetKeyword: "intune assignment filters",
       relatedTopics: ["intune-10"],
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
     },
     {
       id: "intune-15",
@@ -194,6 +491,7 @@ export const segment: Segment = {
       targetKeyword: "intune user vs device assignment",
       relatedTopics: ["intune-10", "intune-14"],
       updateClass: "evergreen",
+      pillarSlug: "how-intune-delivers-policy",
     },
     {
       id: "intune-16",
@@ -206,6 +504,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "intune scope tags",
       updateClass: "evergreen",
+      pillarSlug: "how-intune-delivers-policy",
     },
     {
       id: "intune-17",
@@ -218,6 +517,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "intune config refresh",
       updateClass: "volatile",
+      pillarSlug: "how-intune-delivers-policy",
     },
 
     /* ---------------- Application delivery ---------------- */
@@ -235,6 +535,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-21", "intune-01"],
       requiredSources: ["Microsoft Learn: Win32 app management"],
       updateClass: "evergreen",
+      pillarSlug: "intune-application-management",
       notes: "The 'app reinstalls every cycle' failure is a high-volume, low-competition query.",
       articleSlug: "win32-app-detection-rules",
     },
@@ -251,6 +552,7 @@ export const segment: Segment = {
       secondaryKeywords: ["IntuneManagementExtension.log", "intune app install failed 0x"],
       relatedTopics: ["intune-20", "intune-01"],
       updateClass: "annual",
+      pillarSlug: "intune-application-management",
       articleSlug: "intune-management-extension-logs",
     },
     {
@@ -265,6 +567,7 @@ export const segment: Segment = {
       targetKeyword: "intune app supersedence",
       relatedTopics: ["intune-20"],
       updateClass: "annual",
+      pillarSlug: "intune-application-management",
       articleSlug: "win32-app-supersedence-dependencies",
     },
     {
@@ -279,6 +582,7 @@ export const segment: Segment = {
       targetKeyword: "intunewinapputil packaging",
       relatedTopics: ["intune-20", "intune-21"],
       updateClass: "evergreen",
+      pillarSlug: "intune-application-management",
       articleSlug: "intunewin-packaging-win32-apps",
     },
     {
@@ -292,6 +596,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "intune enterprise app catalog",
       updateClass: "volatile",
+      pillarSlug: "intune-application-management",
     },
     {
       id: "intune-25",
@@ -304,6 +609,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "intune app assignment types",
       updateClass: "evergreen",
+      pillarSlug: "intune-application-management",
     },
 
     /* ---------------- Compliance ---------------- */
@@ -320,6 +626,7 @@ export const segment: Segment = {
       secondaryKeywords: ["compliance grace period", "mark device noncompliant"],
       relatedTopics: ["intune-31", "intune-10"],
       updateClass: "annual",
+      pillarSlug: "intune-compliance-and-conditional-access",
       articleSlug: "intune-compliance-policy-design",
     },
     {
@@ -335,6 +642,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-30", "intune-41"],
       requiredSources: ["Microsoft Learn: Custom compliance settings"],
       updateClass: "annual",
+      pillarSlug: "intune-compliance-and-conditional-access",
       articleSlug: "intune-custom-compliance-scripts",
     },
     {
@@ -349,6 +657,7 @@ export const segment: Segment = {
       targetKeyword: "device compliant but conditional access blocks",
       relatedTopics: ["intune-30"],
       updateClass: "annual",
+      pillarSlug: "intune-compliance-and-conditional-access",
       notes: "Cross-pillar: strong internal link target for the Entra Conditional Access article.",
       articleSlug: "compliant-device-conditional-access-blocked",
     },
@@ -371,6 +680,7 @@ export const segment: Segment = {
         "Microsoft Learn: Disk encryption policy",
       ],
       updateClass: "annual",
+      pillarSlug: "intune-endpoint-security-architecture",
     },
     {
       id: "intune-41",
@@ -385,6 +695,7 @@ export const segment: Segment = {
       secondaryKeywords: ["proactive remediations", "intune detection script"],
       relatedTopics: ["intune-31", "intune-42"],
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
     },
     {
       id: "intune-42",
@@ -398,6 +709,7 @@ export const segment: Segment = {
       targetKeyword: "intune powershell script vs remediation",
       relatedTopics: ["intune-41", "intune-23"],
       updateClass: "evergreen",
+      pillarSlug: "how-intune-delivers-policy",
     },
     {
       id: "intune-43",
@@ -413,6 +725,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-10"],
       requiredSources: ["Microsoft Learn: Attack surface reduction rules deployment"],
       updateClass: "annual",
+      pillarSlug: "intune-endpoint-security-architecture",
     },
     {
       id: "intune-44",
@@ -425,6 +738,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "windows laps intune",
       updateClass: "annual",
+      pillarSlug: "intune-endpoint-security-architecture",
     },
 
     /* ---------------- Updates ---------------- */
@@ -440,6 +754,7 @@ export const segment: Segment = {
       targetKeyword: "intune update rings",
       secondaryKeywords: ["windows update for business deferral", "pause windows updates intune"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
     },
     {
       id: "intune-51",
@@ -453,6 +768,7 @@ export const segment: Segment = {
       targetKeyword: "intune feature update policy",
       relatedTopics: ["intune-50"],
       updateClass: "volatile",
+      pillarSlug: "windows-device-management-with-intune",
     },
     {
       id: "intune-52",
@@ -466,6 +782,7 @@ export const segment: Segment = {
       targetKeyword: "intune device not getting updates",
       relatedTopics: ["intune-50"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
     },
 
     /* ---------------- Enrollment ---------------- */
@@ -481,6 +798,7 @@ export const segment: Segment = {
       targetKeyword: "intune enrollment restrictions",
       relatedTopics: ["intune-02"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
       articleSlug: "intune-enrollment-restrictions",
       notes: "Written 2026-08-13, 1,806 words. Published.",
     },
@@ -495,6 +813,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "intune corporate device identifiers",
       updateClass: "evergreen",
+      pillarSlug: "windows-device-management-with-intune",
     },
     {
       id: "intune-62",
@@ -508,6 +827,7 @@ export const segment: Segment = {
       targetKeyword: "entra join vs hybrid join",
       relatedTopics: ["intune-11", "intune-02"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
       articleSlug: "entra-join-vs-hybrid-join",
       notes:
         "High-intent decision query. Must be careful to describe current guidance, not history.",
@@ -526,6 +846,7 @@ export const segment: Segment = {
       targetKeyword: "intune collect diagnostics",
       relatedTopics: ["intune-01", "intune-21"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
     },
     {
       id: "intune-71",
@@ -540,6 +861,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-10"],
       requiredSources: ["Microsoft Graph documentation: deviceManagement resources"],
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
       articleSlug: "graph-api-intune-reporting",
       notes: "Existing 128-word stub. Needs full rewrite, not expansion.",
     },
@@ -554,6 +876,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "intune endpoint analytics",
       updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
     },
 
     /* ---------------- Co-management and migration ---------------- */
@@ -570,6 +893,7 @@ export const segment: Segment = {
       relatedTopics: ["intune-11", "intune-10"],
       requiredSources: ["Microsoft Learn: Co-management workloads"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
     },
     {
       id: "intune-81",
@@ -583,6 +907,7 @@ export const segment: Segment = {
       targetKeyword: "configmgr tenant attach",
       relatedTopics: ["intune-80"],
       updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
     },
 
     /* ---------------- Non-Windows platforms ---------------- */
@@ -597,6 +922,7 @@ export const segment: Segment = {
       status: "IDEA",
       targetKeyword: "android enterprise enrollment modes",
       updateClass: "annual",
+      pillarSlug: "managing-android-ios-macos-with-intune",
     },
     {
       id: "intune-91",
@@ -610,6 +936,7 @@ export const segment: Segment = {
       targetKeyword: "apple business manager intune",
       relatedTopics: ["intune-90"],
       updateClass: "annual",
+      pillarSlug: "managing-android-ios-macos-with-intune",
     },
     {
       id: "intune-92",
@@ -623,6 +950,7 @@ export const segment: Segment = {
       targetKeyword: "intune macos management",
       relatedTopics: ["intune-91"],
       updateClass: "volatile",
+      pillarSlug: "managing-android-ios-macos-with-intune",
     },
     {
       id: "intune-93",
@@ -636,6 +964,402 @@ export const segment: Segment = {
       targetKeyword: "platform sso macos intune",
       relatedTopics: ["intune-92"],
       updateClass: "volatile",
+      pillarSlug: "managing-android-ios-macos-with-intune",
+    },
+
+    /* ================================================================
+     * Added in the August 2026 Microsoft Learn research pass.
+     * Grouped here rather than merged into the sections above so the
+     * research increment stays reviewable as one diff.
+     * ================================================================ */
+
+    /* ---------------- Enrollment ---------------- */
+    {
+      id: "intune-63",
+      title: "Windows enrollment methods compared",
+      category: "microsoft-intune",
+      subcategory: "Autopilot",
+      contentType: "decision-framework",
+      searchIntent: "decision",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "intune windows enrollment methods",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/enrollment/windows-enrollment-methods",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-62", "intune-60"],
+      diagramOpportunity:
+        "Selection matrix: enrollment method against device ownership, join type, OS version and whether the device is already deployed.",
+    },
+    {
+      id: "intune-64",
+      title: "Enrollment time grouping: why device preparation does not use the ESP",
+      category: "microsoft-intune",
+      subcategory: "Autopilot",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "RESEARCHED",
+      targetKeyword: "enrollment time grouping intune",
+      requiredSources: [
+        "https://learn.microsoft.com/autopilot/device-preparation/overview",
+        "https://learn.microsoft.com/autopilot/device-preparation/faq",
+      ],
+      updateClass: "volatile",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-03", "intune-01"],
+      diagramOpportunity:
+        "Side-by-side provisioning sequence: Autopilot with ESP versus device preparation with enrollment time grouping.",
+      notes:
+        "Verified August 2026: device preparation adds the device to a security group at enrollment time and delivers configuration immediately; it does not use the ESP. If the ESP appears, the device is running classic Autopilot instead — Autopilot profiles take precedence over device preparation policies. That is a genuinely useful diagnostic and is not obvious.",
+    },
+    {
+      id: "intune-65",
+      title: "Windows enrollment failures: a diagnostic order of operations",
+      category: "microsoft-intune",
+      subcategory: "Autopilot",
+      contentType: "troubleshooting",
+      searchIntent: "failure-mode",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune enrollment failed windows",
+      updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-60", "intune-02", "intune-70"],
+    },
+
+    /* ---------------- Configuration policy ---------------- */
+    {
+      id: "intune-18",
+      title: "How often Intune policy actually refreshes, and how to force it",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "reference",
+      searchIntent: "question",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune policy refresh interval",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/configuration/device-profile-troubleshoot",
+      ],
+      updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
+      relatedTopics: ["intune-101", "intune-10"],
+      notes:
+        "High-volume question with a genuinely useful answer. Must distinguish the MDM check-in cycle from IME's own schedule — they are different, and conflating them is the usual reason a forced sync appears not to work.",
+    },
+    {
+      id: "intune-19",
+      title: "Reading a settings catalog setting back to its CSP",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "how-to",
+      searchIntent: "architecture",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "settings catalog csp mapping",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/client-management/mdm/configuration-service-provider-reference",
+      ],
+      updateClass: "evergreen",
+      pillarSlug: "how-intune-delivers-policy",
+      relatedTopics: ["intune-12", "intune-101"],
+    },
+
+    /* ---------------- Application delivery ---------------- */
+    {
+      id: "intune-26",
+      title: "Win32 app exit codes, return codes and restart behaviour",
+      category: "microsoft-intune",
+      subcategory: "App delivery",
+      contentType: "reference",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune win32 app return codes",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/app-management/deployment/create-win32-package",
+      ],
+      updateClass: "evergreen",
+      pillarSlug: "intune-application-management",
+      relatedTopics: ["intune-23", "intune-21"],
+    },
+    {
+      id: "intune-28",
+      title: "App protection policies without enrollment",
+      category: "microsoft-intune",
+      subcategory: "App delivery",
+      contentType: "how-to",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune app protection policy unenrolled devices",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy",
+      ],
+      updateClass: "annual",
+      pillarSlug: "intune-application-management",
+      relatedTopics: ["intune-106"],
+    },
+
+    /* ---------------- Compliance ---------------- */
+    {
+      id: "intune-33",
+      title: "Compliance evaluation timing, grace periods and the noncompliance sequence",
+      category: "microsoft-intune",
+      subcategory: "Compliance",
+      contentType: "reference",
+      searchIntent: "question",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune compliance evaluation time",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/protect/actions-for-noncompliance",
+      ],
+      updateClass: "annual",
+      pillarSlug: "intune-compliance-and-conditional-access",
+      relatedTopics: ["intune-30", "intune-32", "intune-104"],
+      notes:
+        "The timing question underneath the most common support call: the device says compliant, the portal disagrees, and access is blocked in between.",
+    },
+
+    /* ---------------- Endpoint security ---------------- */
+    {
+      id: "intune-45",
+      title: "Security baselines: versioning, drift and safe reassignment",
+      category: "microsoft-intune",
+      subcategory: "Compliance",
+      contentType: "how-to",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "intune security baseline version update",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/intune-service/protect/security-baselines",
+      ],
+      updateClass: "annual",
+      pillarSlug: "intune-endpoint-security-architecture",
+      relatedTopics: ["intune-10", "intune-105"],
+      diagramOpportunity:
+        "What happens to assigned settings when a baseline version changes, and where drift becomes invisible.",
+    },
+    {
+      id: "intune-46",
+      title: "The Defender for Endpoint connector: what it actually enables in Intune",
+      category: "microsoft-intune",
+      subcategory: "Compliance",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "defender for endpoint intune connector",
+      updateClass: "annual",
+      pillarSlug: "intune-endpoint-security-architecture",
+      relatedTopics: ["intune-30", "intune-108"],
+    },
+    {
+      id: "intune-47",
+      title: "Endpoint Privilege Management: removing local admin without blocking work",
+      category: "microsoft-intune",
+      subcategory: "Compliance",
+      contentType: "how-to",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune endpoint privilege management",
+      requiredSources: ["https://learn.microsoft.com/intune/fundamentals/advanced-capabilities"],
+      updateClass: "volatile",
+      pillarSlug: "intune-endpoint-security-architecture",
+      relatedTopics: ["intune-107"],
+      notes:
+        "Licence-gated. As of July 2026 this sits in Microsoft 365 E5/E7 or the Intune Suite — state that plainly, because the feature is invisible without it.",
+    },
+
+    /* ---------------- Certificates and network ---------------- */
+    {
+      id: "intune-110",
+      title: "Microsoft Cloud PKI: architecture and what it replaces",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "microsoft cloud pki intune",
+      secondaryKeywords: ["cloud pki vs ndes", "intune certificate authority"],
+      requiredSources: [
+        "https://learn.microsoft.com/intune/cloud-pki/",
+        "https://learn.microsoft.com/intune/cloud-pki/fundamentals",
+        "https://learn.microsoft.com/intune/cloud-pki/deployment-models",
+      ],
+      updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
+      relatedTopics: ["intune-107", "intune-111"],
+      diagramOpportunity:
+        "Certificate issuance flow: device check-in, SCEP profile, CSR with private key never leaving the device, challenge validation by the registration authority, issuing CA signature, delivery.",
+      notes:
+        "Verified August 2026: two-tier root and issuing CA, or BYOCA anchored to an existing private root. SCEP only. RSA 2048/3072/4096, SHA-256/384/512. HSM-backed keys via Azure Managed HSM with no Azure subscription required; trial CAs use software keys and cannot later be converted. Intune hosts the CRL distribution point (7-day validity, 3.5-day refresh) and the AIA endpoint. Replaces on-premises CA, NDES and the Intune certificate connector.",
+    },
+    {
+      id: "intune-111",
+      title: "Cloud PKI or NDES and the certificate connector: choosing a certificate path",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "comparison",
+      searchIntent: "decision",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "cloud pki vs ndes scep intune",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/cloud-pki/deployment-models",
+        "https://learn.microsoft.com/intune/intune-service/protect/certificates-scep-configure",
+      ],
+      updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
+      relatedTopics: ["intune-110", "intune-107"],
+    },
+    {
+      id: "intune-112",
+      title: "Certificate-based Wi-Fi profiles for managed devices",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune wifi profile certificate authentication",
+      updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
+      relatedTopics: ["intune-110"],
+    },
+
+    /* ---------------- Updates ---------------- */
+    {
+      id: "intune-53",
+      title: "Windows Autopatch groups or update policies: which to manage updates with",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "decision-framework",
+      searchIntent: "decision",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows autopatch groups vs update policies",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/device-updates/windows/",
+        "https://learn.microsoft.com/windows/deployment/windows-autopatch/overview/windows-autopatch-faq",
+      ],
+      updateClass: "volatile",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-50", "intune-54"],
+      diagramOpportunity:
+        "What Autopatch groups automate versus what update policies leave to the administrator, per content type.",
+      notes:
+        "Verified August 2026: Autopatch is embedded in Intune with no separate registration flow — registration happens through policy assignment. Autopatch groups automate distribution into Entra groups and create the underlying policies; policies require managing assignment yourself.",
+    },
+    {
+      id: "intune-54",
+      title: "Moving from update ring deferrals to feature update policies",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "feature update policy vs update ring deferral",
+      requiredSources: [
+        "https://learn.microsoft.com/intune/device-updates/windows/configure-feature-update-policy",
+        "https://learn.microsoft.com/intune/device-updates/windows/manage-feature-updates",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-50", "intune-51", "intune-53"],
+      diagramOpportunity:
+        "Ordered transition: create and assign the feature update policy, wait for OfferReady, then zero the ring deferral — with the failure that happens if the order is reversed.",
+      notes:
+        "Verified August 2026: Microsoft recommends feature update policies over ring deferrals and documents a specific order — confirm targeted devices report OfferReady before setting the ring's feature update deferral to 0. Reversing that order can offer devices a build you did not intend. Feature update policies also do not apply during Autopilot OOBE; they take effect at the first scan after provisioning.",
+    },
+    {
+      id: "intune-55",
+      title: "Hotpatch updates: security fixes without the restart",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "RESEARCHED",
+      targetKeyword: "windows hotpatch updates intune",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/deployment/windows-autopatch/manage/windows-autopatch-hotpatch-updates",
+      ],
+      updateClass: "volatile",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-50", "intune-53"],
+      notes:
+        "Verified August 2026: Autopatch enables hotpatch security updates by default for eligible devices in Intune, with tenant-wide or per-group opt-out through quality update policies. A default-on behaviour change is exactly the kind of thing administrators discover late.",
+    },
+    {
+      id: "intune-56",
+      title: "Driver and firmware update policies",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "intune driver update policy",
+      updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-50"],
+    },
+
+    /* ---------------- Reporting and operations ---------------- */
+    {
+      id: "intune-73",
+      title: "Intune audit logs: what is recorded and how to query it",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "reference",
+      searchIntent: "how-to",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "intune audit logs",
+      updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
+      relatedTopics: ["intune-71"],
+    },
+    {
+      id: "intune-74",
+      title: "Device cleanup rules and stale device hygiene",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "intune device cleanup rules",
+      updateClass: "annual",
+      pillarSlug: "windows-device-management-with-intune",
+      relatedTopics: ["intune-60"],
+      notes:
+        "Stale device objects distort every compliance report on the site's other topics. Worth writing early for that reason alone.",
+    },
+    {
+      id: "intune-82",
+      title: "Group Policy analytics: reading the report honestly",
+      category: "microsoft-intune",
+      subcategory: "Configuration policy",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "group policy analytics intune",
+      updateClass: "annual",
+      pillarSlug: "how-intune-delivers-policy",
+      relatedTopics: ["intune-11", "intune-80"],
+      notes:
+        "A high coverage percentage is not the same as a working migration. The gap between the two is the article.",
     },
   ],
 };

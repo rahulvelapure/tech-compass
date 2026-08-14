@@ -95,11 +95,58 @@ export interface Topic {
   /** Other topic ids this should link to or be linked from. */
   relatedTopics?: string[];
   /**
-   * Primary sources that must be consulted before writing. Naming them at
-   * planning time is what stops an article being written from memory.
+   * The primary sources that must be consulted before writing — titles, or
+   * direct URLs where known, first-party first. Naming them at planning time is
+   * what stops an article later being written from memory.
+   *
+   * This is the topic's primary-source record; there is deliberately no second
+   * field for the same idea.
    */
   requiredSources?: string[];
   updateClass: UpdateClass;
+
+  /**
+   * The cluster this topic will anchor, named. Mirrors `Article.pillar`.
+   *
+   * Set on the hub and on cluster pillars. A hub has `pillar` and no
+   * `pillarSlug`; a cluster pillar has both, because it anchors its own cluster
+   * while reporting to the hub above it.
+   */
+  pillar?: string;
+  /**
+   * The slug this topic's article will have once written.
+   *
+   * Distinct from `articleSlug`, which only appears when the article actually
+   * exists. A cluster has to be plannable before anything in it is written, and
+   * that means a pillar needs a stable name for its children to point at.
+   */
+  plannedSlug?: string;
+  /**
+   * Slug of the article that anchors this topic's cluster — matching the
+   * pillar's `plannedSlug`, or its `articleSlug` once published.
+   *
+   * Planning intent, so it may name a pillar that does not exist yet; that is
+   * the normal case while a cluster is being built. Once the target article
+   * does exist it must actually be a pillar, which `tests/editorial.test.ts`
+   * checks.
+   */
+  pillarSlug?: string;
+  /**
+   * Slugs or topic ids this article should link to, decided at planning time.
+   *
+   * The roadmap requires every substantial article to link up to its pillar and
+   * across to siblings. Deciding that here rather than at the end is what makes
+   * the link graph deliberate instead of whatever the writer happened to
+   * remember.
+   */
+  plannedInternalLinks?: string[];
+  /**
+   * What a diagram would show, if one would genuinely help — the mechanism, not
+   * "an architecture diagram". Empty means prose is sufficient, which is a
+   * legitimate and common answer.
+   */
+  diagramOpportunity?: string;
+
   /** Set when status reaches PUBLISHED. Must match a real article slug. */
   articleSlug?: string;
   /** Anything a future writer needs that the title does not convey. */

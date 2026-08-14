@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { articles } from "@/content/articles";
 import { categories } from "@/content/categories";
 import { allTopics, segments } from "../editorial";
+import type { Topic } from "../editorial";
 
 /**
  * The editorial backlog is planning data. It has no runtime effect, which is
@@ -86,6 +87,57 @@ describe("editorial backlog", () => {
         articleBySlug.has(topic.articleSlug!),
         `${topic.id} -> unknown article ${topic.articleSlug}`,
       ).toBe(true);
+    }
+  });
+
+  it("keeps the planned pillar hierarchy coherent", () => {
+    /** The slug a topic's article has, or will have. */
+    const slugOf = (t: Topic) => t.articleSlug ?? t.plannedSlug;
+
+    // Every pillar needs a stable name before its cluster can point at it.
+    for (const pillarTopic of topics.filter((t) => t.pillar)) {
+      expect(
+        slugOf(pillarTopic),
+        `pillar ${pillarTopic.id} has no plannedSlug or articleSlug, so nothing can reference it`,
+      ).toBeDefined();
+    }
+
+    const pillarSlugs = new Set(
+      topics
+        .filter((t) => t.pillar)
+        .map(slugOf)
+        .filter(Boolean) as string[],
+    );
+
+    for (const topic of topics) {
+      if (!topic.pillarSlug) continue;
+
+      expect(topic.pillarSlug, `${topic.id} points at itself`).not.toBe(slugOf(topic));
+
+      // If the pillar already exists as an article it must really be a pillar;
+      // otherwise some topic must be planning to write it. A pillarSlug that
+      // matches neither is a dangling cluster.
+      const asArticle = articleBySlug.get(topic.pillarSlug);
+      if (asArticle) {
+        expect(
+          asArticle.pillar,
+          `${topic.id} -> "${topic.pillarSlug}" exists as an article but is not a pillar`,
+        ).toBeTruthy();
+      } else {
+        expect(
+          pillarSlugs.has(topic.pillarSlug),
+          `${topic.id} -> "${topic.pillarSlug}" is neither a published pillar nor a planned one`,
+        ).toBe(true);
+      }
+    }
+
+    // A pillar with nothing beneath it is an orphan with a grand title.
+    for (const pillarTopic of topics.filter((t) => t.pillar)) {
+      const children = topics.filter((t) => t.pillarSlug === slugOf(pillarTopic));
+      expect(
+        children.length,
+        `pillar ${pillarTopic.id} has no planned supporting topics`,
+      ).toBeGreaterThan(0);
     }
   });
 
