@@ -15,7 +15,7 @@ export const article: Article = {
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
   draft: true,
-  readingMinutes: 10,
+  readingMinutes: 8,
   primaryKeyword: "intune win32 app supersedence",
   secondaryKeywords: [
     "intune app dependencies",
@@ -198,11 +198,7 @@ export const article: Article = {
           "Gone. There is one object and you have changed it.",
           "Retained. The older app object still exists.",
         ],
-        [
-          "Uninstall of the old version",
-          "Not applicable.",
-          "Optional, via the uninstall toggle.",
-        ],
+        ["Uninstall of the old version", "Not applicable.", "Optional, via the uninstall toggle."],
       ],
     },
     {
@@ -262,7 +258,8 @@ export const article: Article = {
         "The most common cause is that the superseding app has no assignment. Microsoft documents that superseding apps do not get automatic targeting, that each app must be explicitly targeted, and that untargeted superseding apps are ignored by the agent. This is the opposite of dependencies, which do not require targeting.",
     },
     {
-      question: "What is the difference between an app update and an app replacement in supersedence?",
+      question:
+        "What is the difference between an app update and an app replacement in supersedence?",
       answer:
         "It is the Uninstall previous version toggle. Left off, the superseding app's installer handles the upgrade and Intune sends no uninstall command — this is an app update. Turned on, Intune uninstalls the superseded app using its configured uninstall command and then installs the new one — this is an app replacement.",
     },

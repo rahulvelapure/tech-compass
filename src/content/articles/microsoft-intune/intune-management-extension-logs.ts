@@ -15,7 +15,7 @@ export const article: Article = {
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
   draft: true,
-  readingMinutes: 10,
+  readingMinutes: 9,
   primaryKeyword: "intune management extension log",
   secondaryKeywords: [
     "AppWorkload.log",
@@ -237,7 +237,7 @@ x86 clients:
     {
       type: "ul",
       items: [
-        "**Reading `IntuneManagementExtension.log` for app problems.** It covers the agent and policy processing. `AppWorkload.log` covers apps.",
+        "**Reading the wrong log for app problems.** `IntuneManagementExtension.log` covers the agent and policy processing. `AppWorkload.log` covers apps.",
         "**Searching by app name.** The logs identify apps by GUID. Search the ID.",
         "**Treating three consecutive failures as three problems.** Documented retry logic is three attempts, five minutes apart.",
         "**Ignoring the rollover file.** If the timeline starts after the incident, the rest is in the file with the leading underscore.",

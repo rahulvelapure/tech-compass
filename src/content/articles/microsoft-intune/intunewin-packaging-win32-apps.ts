@@ -15,7 +15,7 @@ export const article: Article = {
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
   draft: true,
-  readingMinutes: 9,
+  readingMinutes: 7,
   primaryKeyword: "intunewinapputil",
   secondaryKeywords: [
     "microsoft win32 content prep tool",
@@ -93,11 +93,20 @@ export const article: Article = {
       caption: "Content Prep Tool command-line parameters",
       head: ["Parameter", "Meaning"],
       rows: [
-        ["`-c <setup_folder>`", "The folder containing all setup files. Everything in it is compressed."],
+        [
+          "`-c <setup_folder>`",
+          "The folder containing all setup files. Everything in it is compressed.",
+        ],
         ["`-s <setup_file>`", "The setup file itself, such as `setup.exe` or `setup.msi`."],
-        ["`-o <output_folder>`", "Where the generated `.intunewin` is written. Created automatically if absent."],
+        [
+          "`-o <output_folder>`",
+          "Where the generated `.intunewin` is written. Created automatically if absent.",
+        ],
         ["`-q`", "Quiet mode."],
-        ["`-a <catalog_folder>`", "A separate folder of catalog files, used for Windows S mode packaging."],
+        [
+          "`-a <catalog_folder>`",
+          "A separate folder of catalog files, used for Windows S mode packaging.",
+        ],
         ["`-h`", "Usage information."],
       ],
     },
@@ -200,7 +209,7 @@ export const article: Article = {
       items: [
         "**Running the tool from inside the source folder.** Everything in that folder is compressed, including the tool itself.",
         "**Using absolute paths from the packaging machine.** Reference supporting files by relative path from the setup folder.",
-        "**Calling `powershell.exe` and expecting 64-bit.** Use the `Sysnative` path, or accept the redirected registry and file system views.",
+        "**Expecting 64-bit PowerShell by default.** A bare `powershell.exe` call launches the 32-bit host. Use the `Sysnative` path, or accept the redirected registry and file system views.",
         "**Putting environment variables in the uninstall command.** Expansion is not supported there; use a wrapper script.",
         "**Leaving the timeout at 60 minutes for a large suite.** The maximum is 1440 minutes and the failure looks like a hang.",
         "**Targeting a user-context app that needs admin rights.** Documented to fail, and the log does not make the reason obvious.",
