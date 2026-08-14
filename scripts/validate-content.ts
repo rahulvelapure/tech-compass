@@ -172,6 +172,69 @@ function articleText(article: Article): string {
   return parts.join(" ");
 }
 
+/**
+ * The renderer parses inline markup with a single non-recursive pass
+ * (`RichText` in src/components/article/ArticleBody.tsx). Whichever construct
+ * matches first consumes its whole run, so anything nested inside it is
+ * emitted as literal characters — `**bold with `code` inside**` ships the
+ * backticks to the page.
+ *
+ * This has reached production three times. It survives typecheck, lint and
+ * every other content rule, because the string is valid and the markers are
+ * balanced; only the rendered DOM shows it. Detecting it here makes it a
+ * build-blocking error instead of something a human has to spot.
+ */
+const NESTED_INLINE_MARKUP = [
+  { label: "inline code inside bold", pattern: /\*\*[^*]*`[^*]*\*\*/ },
+  { label: "inline code inside italic", pattern: /(?<!\*)\*[^*\n]*`[^*\n]*\*(?!\*)/ },
+  { label: "a link inside bold", pattern: /\*\*[^*]*\[[^\]]*\]\([^)]*\)[^*]*\*\*/ },
+  { label: "italic inside bold", pattern: /\*\*[^*]*\*[^*]+\*[^*]*\*\*/ },
+] as const;
+
+/**
+ * Returns the kinds of nested inline markup present in a string, or an empty
+ * array when it is safe. Exported so the rule can be tested directly rather
+ * than only through the content store.
+ */
+export function findNestedInlineMarkup(text: string): string[] {
+  return NESTED_INLINE_MARKUP.filter(({ pattern }) => pattern.test(text)).map(({ label }) => label);
+}
+
+/**
+ * Only the fields `RichText` actually parses. Headings, table captions, quotes
+ * and FAQ answers render raw, so markup there is a separate (visible) problem
+ * and not what this rule is looking for.
+ */
+function richTextStrings(article: Article): { where: string; text: string }[] {
+  const out: { where: string; text: string }[] = [];
+  article.body.forEach((block, i) => {
+    switch (block.type) {
+      case "p":
+        out.push({ where: `body[${i}] p`, text: block.text });
+        break;
+      case "ul":
+      case "ol":
+        block.items.forEach((item, j) =>
+          out.push({ where: `body[${i}] ${block.type}[${j}]`, text: item }),
+        );
+        break;
+      case "table":
+        block.rows.forEach((row, r) =>
+          row.forEach((cell, c) =>
+            out.push({ where: `body[${i}] table row ${r} cell ${c}`, text: cell }),
+          ),
+        );
+        break;
+      case "callout":
+        out.push({ where: `body[${i}] callout`, text: block.text });
+        break;
+      default:
+        break;
+    }
+  });
+  return out;
+}
+
 /** Non-article routes an inline link may legitimately point at. */
 const KNOWN_STATIC_PATHS = [
   "/",
@@ -475,6 +538,17 @@ function validateArticle(
       `Unbalanced inline-code markers (${backticks} backticks). An unclosed backtick renders literally.`,
       "body",
     );
+  }
+
+  // Nested inline markup. Balanced, valid-looking, and renders its delimiters
+  // as literal characters because the renderer does not recurse.
+  for (const { where, text: value } of richTextStrings(article)) {
+    for (const kind of findNestedInlineMarkup(value)) {
+      add(
+        `Nested inline markup (${kind}) in ${where}. The renderer does not parse nested markup, so the inner delimiters render literally. Move the inner construct outside the bold or italic run.`,
+        "body",
+      );
+    }
   }
 
   // A long article with no subheadings cannot be scanned, has no table of

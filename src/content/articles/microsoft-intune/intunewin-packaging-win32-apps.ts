@@ -15,7 +15,7 @@ export const article: Article = {
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
   draft: true,
-  readingMinutes: 7,
+  readingMinutes: 10,
   primaryKeyword: "intunewinapputil",
   secondaryKeywords: [
     "microsoft win32 content prep tool",
@@ -144,7 +144,42 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Install behaviour is either System or User.** System applies to all users of the device; User applies to the specific user. This interacts with targeting in a way that produces a documented failure: a Win32 app deployed with user targeting that requires administrative privileges the standard user does not have will fail to install. That failure reads like a packaging problem and is a context problem.",
+      text: "**Install behaviour is either System or User.** System applies to all users of the device; User applies to the specific user. This interacts with targeting in a way that produces a documented failure: a Win32 app deployed with user targeting that requires administrative privileges the standard user does not have will fail to install. That failure reads like a packaging problem and is a context problem. Two related details are worth knowing: for a device that is Microsoft Entra registered, Microsoft's guidance is to select System — and users do not need to be signed in for Win32 apps to install.",
+    },
+    {
+      type: "p",
+      text: "**Silent installation is a hard requirement, not a preference.** Microsoft states that Intune does not support interactive application installations: applications deployed through Intune must install silently and cannot require dialog boxes, prompts or any user input. The documentation goes further and names the workaround people reach for — techniques that force interaction with the signed-in user session, such as `serviceui.exe` — as unsupported, with the caveat that even where they appear to work the behaviour should not be relied on in production. If a vendor installer genuinely cannot run silently, the answer is a different package, not a cleverer wrapper.",
+    },
+
+    {
+      type: "h2",
+      id: "transforms",
+      text: "Transforms, and why relative paths work",
+    },
+    {
+      type: "p",
+      text: "For MSI packages, an MST transform applies customisation — a licence key, a suppressed feature, a disabled auto-updater — without repackaging the vendor's installer. It is the difference between a package you can rebuild in five minutes when the vendor ships an update, and one somebody has to reverse-engineer.",
+    },
+    {
+      type: "code",
+      language: "text",
+      filename: "Applying transforms from an install command",
+      command: true,
+      code: `msiexec /i "VendorApp.msi" TRANSFORMS="site.mst;nofeatures.mst" /qn /norestart`,
+    },
+    {
+      type: "p",
+      text: "Transforms are applied **in the order listed**, filenames and full paths cannot be mixed in one list, and because the delimiter is a semicolon, a semicolon must never appear in a transform filename.",
+    },
+    {
+      type: "p",
+      text: "The reason a bare filename works here explains a lot of packaging behaviour more generally. Intune extracts the package content to `C:\\Windows\\IMECache\\<app id>` and runs the installer from there, so the extracted folder is the working directory. Anything shipped inside the package is reachable by relative path — `site.mst`, `.\\Install.ps1`, `licenses\\license.txt` — with no need to know where the content landed. That is why Microsoft's own update-package example uses `wusa.exe .\\update.msu` rather than an absolute path.",
+    },
+    {
+      type: "callout",
+      variant: "tip",
+      title: "Ship the transform inside the package",
+      text: "A transform referenced from a network share is a runtime dependency on a file server being reachable from the system context, on a device that may be on a home network. Put the `.mst` in the source folder so it is compressed into the `.intunewin`. Windows Installer also supports transforms embedded in the MSI itself, referenced by prefixing the name with a colon.",
     },
 
     {
@@ -194,9 +229,25 @@ export const article: Article = {
       type: "p",
       text: "For a genuinely transient failure — a file lock, a service still stopping — that is exactly right. For a deterministic failure mapped to retry by mistake, it means every failing device runs your installer three times per cycle. On a package that makes changes before failing, that is not a neutral outcome.",
     },
+
+    {
+      type: "h2",
+      id: "validate",
+      text: "Validate before you upload, not after",
+    },
     {
       type: "p",
-      text: "The related judgement is about wrapper scripts. A wrapper that swallows the installer's exit code and always returns `0` guarantees Intune reports success regardless of what happened. Wrappers should pass the underlying exit code through, and any translation should be deliberate and documented in the package rather than implicit.",
+      text: "Every failure described so far is cheaper to find on a test machine than in a deployment report, because once a package is assigned each correction costs a check-in cycle to observe. This sequence is engineering practice rather than documented guidance, but each step tests something specific that goes wrong on managed endpoints.",
+    },
+    {
+      type: "ol",
+      items: [
+        "**Run the exact install command in the system context, not as yourself.** This reproduces the account the agent uses. An installer that works from your elevated prompt and fails under `NT AUTHORITY\\SYSTEM` — because it expects a user profile, a mapped drive, or `HKCU` — fails on every managed device and passes every test you do the easy way.",
+        "**Run it from a copied folder.** Copy the content somewhere neutral first. This catches absolute paths and hard-coded references that happen to resolve on the packaging machine.",
+        "**Check the exit code explicitly** with `echo %ERRORLEVEL%`. A wrapper reporting success while the installer failed is invisible from the installer's own output.",
+        "**Confirm the artefact your detection rule will look for**, in the context that rule will run in. A 32-bit installer writing to the redirected registry is the mismatch that produces a daily reinstall.",
+        "**Test the uninstall command too.** It is the command nobody validates until a supersedence replacement stalls because removal never worked.",
+      ],
     },
 
     {
@@ -208,12 +259,14 @@ export const article: Article = {
       type: "ul",
       items: [
         "**Running the tool from inside the source folder.** Everything in that folder is compressed, including the tool itself.",
-        "**Using absolute paths from the packaging machine.** Reference supporting files by relative path from the setup folder.",
+        "**Using absolute paths from the packaging machine.** Reference supporting files by relative path from the setup folder — the extracted content folder is the working directory.",
+        "**Referencing a transform from a network share.** It becomes a runtime dependency on a file server reachable from the system context. Ship the `.mst` inside the package.",
         "**Expecting 64-bit PowerShell by default.** A bare `powershell.exe` call launches the 32-bit host. Use the `Sysnative` path, or accept the redirected registry and file system views.",
         "**Putting environment variables in the uninstall command.** Expansion is not supported there; use a wrapper script.",
         "**Leaving the timeout at 60 minutes for a large suite.** The maximum is 1440 minutes and the failure looks like a hang.",
         "**Targeting a user-context app that needs admin rights.** Documented to fail, and the log does not make the reason obvious.",
         "**Writing a wrapper that always exits 0.** Intune then reports success for every outcome, including the failures.",
+        "**Testing only as an interactive administrator.** The agent installs as SYSTEM, and that is where the difference shows up.",
         "**Packaging before installing manually once.** You lose the only reliable source of truth for the detection rule.",
       ],
     },
@@ -267,6 +320,11 @@ export const article: Article = {
       answer:
         "Place it in a subfolder of the setup folder and reference it by relative path. Microsoft's example puts a licence file at licenses\\license.txt inside the setup folder and references it with that relative path. Absolute paths from the packaging machine will not resolve on the target device.",
     },
+    {
+      question: "How do I apply an MSI transform in an Intune Win32 app?",
+      answer:
+        'Pass the TRANSFORMS property on the install command, for example msiexec /i "App.msi" TRANSFORMS="custom.mst" /qn. Multiple transforms are separated by semicolons and applied in the order listed, filenames and full paths cannot be mixed in the same list, and a transform filename must never contain a semicolon. Ship the .mst inside the package so a bare filename resolves against the extracted content folder rather than depending on a network share.',
+    },
   ],
   sources: [
     {
@@ -293,6 +351,16 @@ export const article: Article = {
       title: "Microsoft Win32 Content Prep Tool",
       publisher: "GitHub (Microsoft)",
       url: "https://github.com/Microsoft/Microsoft-Win32-Content-Prep-Tool",
+    },
+    {
+      title: "TRANSFORMS property",
+      publisher: "Microsoft Learn",
+      url: "https://learn.microsoft.com/windows/win32/msi/transforms",
+    },
+    {
+      title: "msiexec command-line options",
+      publisher: "Microsoft Learn",
+      url: "https://learn.microsoft.com/windows/win32/msi/command-line-options",
     },
     {
       title: "Enable Win32 Apps on S Mode Devices",

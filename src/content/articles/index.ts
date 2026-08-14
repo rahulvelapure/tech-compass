@@ -30,6 +30,7 @@ import { article as enrollmentStatusPageTroubleshooting } from "./microsoft-intu
 import { article as entraJoinVsHybridJoin } from "./microsoft-intune/entra-join-vs-hybrid-join";
 import { article as groupPolicyToSettingsCatalogMigration } from "./microsoft-intune/group-policy-to-settings-catalog-migration";
 import { article as intuneCompliancePolicyDesign } from "./microsoft-intune/intune-compliance-policy-design";
+import { article as intuneCustomComplianceScripts } from "./microsoft-intune/intune-custom-compliance-scripts";
 import { article as intuneEnrollmentRestrictions } from "./microsoft-intune/intune-enrollment-restrictions";
 import { article as intuneManagementExtensionLogs } from "./microsoft-intune/intune-management-extension-logs";
 import { article as intunePolicyConflicts } from "./microsoft-intune/intune-policy-conflicts";
@@ -66,6 +67,7 @@ export const articles: Article[] = [
   entraJoinVsHybridJoin,
   groupPolicyToSettingsCatalogMigration,
   intuneCompliancePolicyDesign,
+  intuneCustomComplianceScripts,
   intuneEnrollmentRestrictions,
   intuneManagementExtensionLogs,
   intunePolicyConflicts,

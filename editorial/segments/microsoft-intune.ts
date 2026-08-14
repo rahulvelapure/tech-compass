@@ -330,11 +330,12 @@ export const segment: Segment = {
       contentType: "how-to",
       searchIntent: "how-to",
       priority: "P1",
-      status: "IDEA",
+      status: "EDITORIAL_REVIEW",
       targetKeyword: "intune custom compliance script",
       relatedTopics: ["intune-30", "intune-41"],
       requiredSources: ["Microsoft Learn: Custom compliance settings"],
       updateClass: "annual",
+      articleSlug: "intune-custom-compliance-scripts",
     },
     {
       id: "intune-32",
