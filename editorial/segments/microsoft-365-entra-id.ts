@@ -19,7 +19,7 @@ export const segment: Segment = {
       contentType: "decision-framework",
       searchIntent: "architecture",
       priority: "P0",
-      status: "EDITORIAL_REVIEW",
+      status: "PUBLISHED",
       targetKeyword: "conditional access framework",
       secondaryKeywords: ["conditional access policy design", "conditional access naming standard"],
       relatedTopics: ["m365-02", "m365-03", "intune-32"],

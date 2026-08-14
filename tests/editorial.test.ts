@@ -59,6 +59,27 @@ describe("editorial backlog", () => {
     }
   });
 
+  it("keeps a topic's status consistent with its article's actual state", () => {
+    // The dashboard is only as honest as this field, and it drifted: 13 topics
+    // sat in EDITORIAL_REVIEW while their articles were live, so `bun run
+    // inventory` reported 4 published against a real 17. Nothing caught it,
+    // because the other checks only ask whether an article exists.
+    const wrong: string[] = [];
+    for (const topic of topics) {
+      if (!topic.articleSlug) continue;
+      const article = articleBySlug.get(topic.articleSlug);
+      if (!article) continue;
+      const published = !(article.draft ?? false);
+      if (published && topic.status !== "PUBLISHED") {
+        wrong.push(`${topic.id} is ${topic.status} but ${article.slug} is published`);
+      }
+      if (!published && topic.status === "PUBLISHED") {
+        wrong.push(`${topic.id} is PUBLISHED but ${article.slug} is a draft`);
+      }
+    }
+    expect(wrong).toEqual([]);
+  });
+
   it("links any topic that names an article to a real one", () => {
     for (const topic of topics.filter((t) => t.articleSlug)) {
       expect(
