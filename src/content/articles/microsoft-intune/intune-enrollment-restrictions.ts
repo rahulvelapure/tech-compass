@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "intune-enrollment-restrictions",
   category: "microsoft-intune",
+  contentType: "explainer",
   subcategory: "Compliance",
   title: "Intune enrollment restrictions: what they actually block, and what they only discourage",
   seoTitle: "Intune Enrollment Restrictions: What They Really Block",

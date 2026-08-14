@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "iso-27001-microsoft-365-mapping",
   category: "cybersecurity-ciso",
+  contentType: "reference",
   subcategory: "Governance",
   title: "Mapping ISO 27001 Annex A controls to Microsoft 365 capabilities",
   metaDescription:

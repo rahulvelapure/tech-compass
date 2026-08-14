@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "intune-custom-compliance-scripts",
   category: "microsoft-intune",
+  contentType: "how-to",
   subcategory: "Compliance",
   title: "Intune custom compliance: writing a discovery script that actually reports",
   seoTitle: "Intune Custom Compliance Scripts: Script and JSON in Practice",

@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "intune-policy-conflicts",
   category: "microsoft-intune",
+  contentType: "troubleshooting",
   subcategory: "Configuration policy",
   title: "Intune policy conflicts: how to detect, diagnose and prevent them",
   seoTitle: "Intune Policy Conflicts: Detect, Diagnose and Prevent",

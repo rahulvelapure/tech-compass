@@ -2,8 +2,9 @@ import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "choosing-a-business-laptop",
-  category: "buying-guides",
-  subcategory: "Endpoints",
+  category: "gadgets",
+  contentType: "buying-guide",
+  subcategory: "Laptops",
   title: "How to choose a business laptop fleet without regretting it",
   seoTitle: "Choosing a business laptop fleet",
   metaDescription:

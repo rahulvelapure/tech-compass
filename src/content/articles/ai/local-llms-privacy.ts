@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "local-llms-privacy",
   category: "ai",
+  contentType: "analysis",
   subcategory: "Local AI",
   title: "Running local LLMs: what you gain, what you give up",
   metaDescription:

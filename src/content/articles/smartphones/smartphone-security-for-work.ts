@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "smartphone-security-for-work",
   category: "smartphones",
+  contentType: "how-to",
   subcategory: "Mobile security",
   title: "Personal phones at work: the settings that actually reduce risk",
   seoTitle: "Personal phones at work: key settings",

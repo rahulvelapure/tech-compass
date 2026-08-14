@@ -1,9 +1,10 @@
 import type { Article } from "../../types";
 
 export const article: Article = {
-  slug: "windows-11-wifi-troubleshooting",
-  category: "how-to",
-  subcategory: "Windows",
+  slug: "wifi-troubleshooting",
+  category: "windows",
+  contentType: "troubleshooting",
+  subcategory: "Troubleshooting",
   title: "Windows 11 Wi-Fi problems: a diagnostic order that finds the cause",
   metaDescription:
     "Fix Windows 11 Wi-Fi problems methodically: isolate the layer, check the adapter and driver state, and reset only the setting that is actually broken.",

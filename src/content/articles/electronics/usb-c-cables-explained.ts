@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "usb-c-cables-explained",
   category: "electronics",
+  contentType: "explainer",
   subcategory: "Standards",
   title: "USB-C, explained: why identical cables behave differently",
   seoTitle: "USB-C cables, explained",

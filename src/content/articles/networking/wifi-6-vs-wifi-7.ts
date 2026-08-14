@@ -2,7 +2,8 @@ import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "wifi-6-vs-wifi-7",
-  category: "comparisons",
+  category: "networking",
+  contentType: "comparison",
   title: "Wi-Fi 6 vs Wi-Fi 7: what actually changes, and when to upgrade",
   metaDescription:
     "Wi-Fi 6 vs Wi-Fi 7 compared: 320 MHz channels, Multi-Link Operation and 4K-QAM explained, with a clear recommendation on when the upgrade is worth it.",

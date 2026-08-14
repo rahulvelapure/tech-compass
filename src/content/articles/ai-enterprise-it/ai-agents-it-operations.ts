@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "ai-agents-it-operations",
   category: "ai-enterprise-it",
+  contentType: "analysis",
   subcategory: "Agents",
   title: "What AI agents can actually do in IT operations right now",
   metaDescription:

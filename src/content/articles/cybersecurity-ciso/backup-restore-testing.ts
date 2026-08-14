@@ -2,7 +2,8 @@ import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "backup-restore-testing",
-  category: "how-to",
+  category: "cybersecurity-ciso",
+  contentType: "how-to",
   subcategory: "Resilience",
   title: "How to test backups properly: a restore drill you can run quarterly",
   seoTitle: "How to test backups: a restore drill",

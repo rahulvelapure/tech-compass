@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "raspberry-pi-home-server",
   category: "gadgets",
+  contentType: "analysis",
   subcategory: "Home lab",
   title: "A small home server: what a single-board computer can and cannot do",
   seoTitle: "Single-board computer home servers",

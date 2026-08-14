@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "documentation-that-gets-read",
   category: "technology-leadership",
+  contentType: "how-to",
   subcategory: "Practice",
   title: "Writing internal documentation people actually read",
   seoTitle: "Internal documentation people read",

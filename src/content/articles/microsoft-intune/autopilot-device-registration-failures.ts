@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "autopilot-device-registration-failures",
   category: "microsoft-intune",
+  contentType: "troubleshooting",
   subcategory: "Autopilot",
   title:
     "Autopilot device registration failures: hashes, duplicates and devices that ignore the profile",

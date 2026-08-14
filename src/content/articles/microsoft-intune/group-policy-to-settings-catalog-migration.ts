@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "group-policy-to-settings-catalog-migration",
   category: "microsoft-intune",
+  contentType: "how-to",
   subcategory: "Configuration policy",
   title: "Migrating from Group Policy to the Intune settings catalog",
   seoTitle: "Group Policy to Intune Settings Catalog: A Migration Method",

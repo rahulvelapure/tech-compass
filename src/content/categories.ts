@@ -39,7 +39,13 @@ export const categories: Category[] = [
       "Security architecture and governance for people who have to operate it: identity-first controls, endpoint and network security, incident readiness, and reporting that survives a board meeting.",
     description:
       "Cybersecurity and security leadership: Zero Trust, identity, endpoint and network security, governance, ISO 27001 and risk reporting.",
-    subcategories: ["Zero Trust", "Identity security", "Governance", "Security operations"],
+    subcategories: [
+      "Zero Trust",
+      "Identity security",
+      "Governance",
+      "Security operations",
+      "Resilience",
+    ],
     related: ["microsoft-365-entra-id", "enterprise-networking", "technology-leadership"],
   },
   {
@@ -126,7 +132,7 @@ export const categories: Category[] = [
     description:
       "Gadget coverage: laptops, smartphones, audio, displays, storage and accessories, with clear labelling of what was tested.",
     subcategories: ["Laptops", "Audio", "Displays", "Accessories", "Home lab"],
-    related: ["laptops", "smartphones", "electronics"],
+    related: ["smartphones", "electronics", "buying-guides"],
   },
   {
     slug: "electronics",
@@ -141,15 +147,16 @@ export const categories: Category[] = [
     related: ["gadgets", "networking", "emerging-tech"],
   },
   {
-    slug: "laptops",
-    title: "Laptops",
-    label: "Laptops",
+    slug: "windows",
+    title: "Windows",
+    label: "Windows",
     group: "technology",
     intro:
-      "Portable computing: thermals, keyboards, displays, battery behaviour, repairability and manageability for business fleets.",
+      "The Windows client platform itself: deployment and servicing, the security surface, performance behaviour, and the failure modes that show up on real estates.",
     description:
-      "Laptop coverage: business laptops, developer machines, thermals, displays, battery behaviour and fleet manageability.",
-    related: ["gadgets", "buying-guides", "electronics"],
+      "Windows coverage: deployment, servicing and update behaviour, security hardening, performance and troubleshooting.",
+    subcategories: ["Deployment", "Servicing", "Security", "Performance", "Troubleshooting"],
+    related: ["microsoft-intune", "software", "how-to"],
   },
   {
     slug: "smartphones",
@@ -208,6 +215,7 @@ export const categories: Category[] = [
       "Step-by-step technology guides for Windows, Android, iPhone, Microsoft 365, networking, security and AI tools.",
     subcategories: ["Windows", "Mobile", "Microsoft 365", "Troubleshooting", "Resilience"],
     related: ["software", "networking", "microsoft-intune"],
+    contentTypeIndex: "how-to",
   },
   {
     slug: "reviews",
@@ -219,6 +227,7 @@ export const categories: Category[] = [
     description:
       "Technology reviews of hardware, software, AI tools and networking equipment, with the basis of assessment stated up front.",
     related: ["gadgets", "software", "comparisons"],
+    contentTypeIndex: "review",
   },
   {
     slug: "comparisons",
@@ -230,6 +239,7 @@ export const categories: Category[] = [
     description:
       "Technology comparisons with clear recommendations: platforms, standards, licences, tools and hardware, side by side.",
     related: ["buying-guides", "reviews", "software"],
+    contentTypeIndex: "comparison",
   },
   {
     slug: "buying-guides",
@@ -240,7 +250,8 @@ export const categories: Category[] = [
       "Selection criteria first, product shortlists second. Prices change, so guides are written to be updated and always show when they were last checked.",
     description:
       "Evidence-based technology buying guides for laptops, monitors, networking equipment, storage and accessories.",
-    related: ["laptops", "gadgets", "comparisons"],
+    related: ["gadgets", "comparisons", "electronics"],
+    contentTypeIndex: "buying-guide",
   },
 ];
 
@@ -248,6 +259,25 @@ export const categoryMap = new Map(categories.map((c) => [c.slug, c]));
 
 export function getCategory(slug: string): Category | undefined {
   return categoryMap.get(slug);
+}
+
+/**
+ * Categories that own article URLs.
+ *
+ * The complement — `contentTypeIndexCategories` — are derived listings over
+ * `contentType`. Keeping the two apart is what guarantees one article has one
+ * canonical address.
+ */
+export const subjectCategories: Category[] = categories.filter((c) => !c.contentTypeIndex);
+
+/** Categories that list by `contentType` instead of holding articles. */
+export const contentTypeIndexCategories: Category[] = categories.filter(
+  (c) => c.contentTypeIndex !== undefined,
+);
+
+export function isSubjectCategory(slug: string): boolean {
+  const category = categoryMap.get(slug);
+  return category !== undefined && category.contentTypeIndex === undefined;
 }
 
 /** Primary navigation — deliberately short. */
@@ -280,9 +310,9 @@ export const footerColumns: { heading: string; slugs: string[] }[] = [
     slugs: [
       "ai",
       "software",
+      "windows",
       "gadgets",
       "electronics",
-      "laptops",
       "smartphones",
       "networking",
       "cloud",

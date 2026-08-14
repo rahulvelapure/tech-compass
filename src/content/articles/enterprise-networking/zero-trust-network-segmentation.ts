@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "zero-trust-network-segmentation",
   category: "enterprise-networking",
+  contentType: "explainer",
   subcategory: "Zero Trust",
   title: "Network segmentation that survives contact with the business",
   seoTitle: "Network segmentation that works",

@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "win32-app-supersedence-dependencies",
   category: "microsoft-intune",
+  contentType: "how-to",
   subcategory: "App delivery",
   title: "Win32 app supersedence and dependencies: how the relationships actually behave",
   seoTitle: "Intune Win32 Supersedence and Dependencies Explained",

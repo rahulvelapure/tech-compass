@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "win32-app-detection-rules",
   category: "microsoft-intune",
+  contentType: "troubleshooting",
   subcategory: "App delivery",
   title: "Win32 app detection rules: the four types and when each one lies to you",
   seoTitle: "Intune Win32 App Detection Rules: Getting Them Right",

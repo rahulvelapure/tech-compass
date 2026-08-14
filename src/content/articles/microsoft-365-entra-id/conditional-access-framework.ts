@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "conditional-access-framework",
   category: "microsoft-365-entra-id",
+  contentType: "decision-framework",
   subcategory: "Conditional Access",
   title: "A Conditional Access framework that survives contact with users",
   seoTitle: "Conditional Access Framework: Policies That Stay Maintainable",

@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "intunewin-packaging-win32-apps",
   category: "microsoft-intune",
+  contentType: "how-to",
   subcategory: "App delivery",
   title: "Packaging Win32 apps for Intune: the .intunewin file and the decisions around it",
   seoTitle: "Intune Win32 Packaging: IntuneWinAppUtil in Practice",

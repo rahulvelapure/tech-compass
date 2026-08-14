@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "conditional-access-break-glass-accounts",
   category: "microsoft-365-entra-id",
+  contentType: "how-to",
   subcategory: "Entra ID",
   title: "Break-glass accounts: the configuration most tenants get wrong",
   seoTitle: "Break-glass accounts in Entra ID",

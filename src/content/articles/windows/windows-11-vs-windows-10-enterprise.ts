@@ -2,8 +2,9 @@ import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "windows-11-vs-windows-10-enterprise",
-  category: "comparisons",
-  subcategory: "Operating systems",
+  category: "windows",
+  contentType: "comparison",
+  subcategory: "Deployment",
   title: "Windows 11 versus Windows 10 for enterprise fleets",
   seoTitle: "Windows 11 vs Windows 10 for enterprise",
   metaDescription:

@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "intune-management-extension-logs",
   category: "microsoft-intune",
+  contentType: "troubleshooting",
   subcategory: "App delivery",
   title: "Reading the Intune Management Extension logs to diagnose app failures",
   seoTitle: "Intune Management Extension Logs: Reading App Failures",

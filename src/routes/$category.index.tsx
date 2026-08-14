@@ -4,7 +4,7 @@ import { ArticleCard } from "@/components/site/ArticleCard";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { NewsletterCTA } from "@/components/site/NewsletterCTA";
 import { InFeedAdSlot } from "@/components/monetization/AdSlot";
-import { articlesByCategory, getCategory, latestArticles } from "@/lib/content";
+import { articlesForCategory, getCategory, latestArticles } from "@/lib/content";
 import { breadcrumbSchema, canonical, collectionSchema, ldScript, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/$category/")({
     }
     const { category } = loaderData;
     const path = `/${params.category}`;
-    const published = articlesByCategory(category.slug);
+    const published = articlesForCategory(category);
 
     return {
       meta: [
@@ -62,7 +62,7 @@ export const Route = createFileRoute("/$category/")({
 function CategoryPage() {
   const params = Route.useParams();
   const category = getCategory(params.category)!;
-  const articles = articlesByCategory(category.slug);
+  const articles = articlesForCategory(category);
   const [featured, ...rest] = articles;
   const elsewhere = latestArticles(
     4,

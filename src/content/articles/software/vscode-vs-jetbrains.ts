@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "vscode-vs-jetbrains",
   category: "software",
+  contentType: "comparison",
   subcategory: "Developer tools",
   title: "VS Code or a JetBrains IDE: choosing by workload, not preference",
   seoTitle: "VS Code or JetBrains: how to choose",

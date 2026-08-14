@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "graph-api-intune-reporting",
   category: "it-automation",
+  contentType: "how-to",
   subcategory: "Microsoft Graph",
   title: "Building Intune reports with Microsoft Graph and PowerShell",
   metaDescription:

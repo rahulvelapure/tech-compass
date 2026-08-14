@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "compliant-device-conditional-access-blocked",
   category: "microsoft-intune",
+  contentType: "troubleshooting",
   subcategory: "Compliance",
   title: "Why a compliant device still fails Conditional Access",
   seoTitle: "Device Compliant But Conditional Access Blocks Access",

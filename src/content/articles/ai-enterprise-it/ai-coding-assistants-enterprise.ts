@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "ai-coding-assistants-enterprise",
   category: "ai-enterprise-it",
+  contentType: "how-to",
   subcategory: "Adoption",
   title: "Rolling out AI coding assistants without creating a review problem",
   seoTitle: "Rolling out AI coding assistants",

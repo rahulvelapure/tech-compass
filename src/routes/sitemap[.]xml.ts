@@ -4,7 +4,7 @@ import type {} from "@tanstack/react-start";
 import {
   allArticles,
   articlePath,
-  articlesByCategory,
+  articlesForCategory,
   authors,
   categories,
   indexableTags,
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         // category page is noindex, so listing it here would contradict the
         // page's own directive.
         for (const category of categories) {
-          if (articlesByCategory(category.slug).length === 0) continue;
+          if (articlesForCategory(category).length === 0) continue;
           urls.push(
             `  <url>\n    <loc>${site.url}/${category.slug}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`,
           );

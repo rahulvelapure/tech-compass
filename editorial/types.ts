@@ -37,16 +37,20 @@ export const statusOrder = (status: TopicStatus): number => TOPIC_STATUSES.index
  * What kind of article this is. Drives the template the writer reaches for and,
  * more usefully, stops the backlog filling with fifteen explainers on one
  * subject when what is missing is a troubleshooting piece.
+ *
+ * Re-exported from the content model rather than declared here. A topic's
+ * `contentType` becomes the published article's `contentType`, so one
+ * definition has to serve both — two lists would drift the first time a format
+ * was added to one and not the other.
+ *
+ * The dependency deliberately runs editorial -> src and never the reverse:
+ * `tests/editorial.test.ts` fails the build if anything under `src/` imports
+ * this directory. As a type-only import it is erased at compile time and costs
+ * neither bundle anything.
  */
-export type ContentType =
-  | "troubleshooting" // a specific failure and how to diagnose it
-  | "how-to" // a procedure with a defined end state
-  | "explainer" // how something works and why it behaves that way
-  | "decision-framework" // choosing between options against stated criteria
-  | "comparison" // X vs Y, on the dimensions that change a decision
-  | "buying-guide" // what to buy and the criteria that actually matter
-  | "reference" // lookup material: tables, mappings, matrices
-  | "analysis"; // argument or assessment, clearly labelled as such
+import type { ContentType } from "../src/content/types";
+
+export type { ContentType };
 
 /**
  * The shape of the query, not the funnel stage. This publication's SEO strategy

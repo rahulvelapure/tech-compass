@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "cloud-cost-controls",
   category: "cloud",
+  contentType: "how-to",
   subcategory: "FinOps",
   title: "Cloud cost controls that work without slowing engineering down",
   seoTitle: "Cloud cost controls that work",

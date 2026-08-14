@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "autopilot-pre-provisioning-failures",
   category: "microsoft-intune",
+  contentType: "troubleshooting",
   subcategory: "Autopilot",
   title: "Autopilot pre-provisioning failures: TPM attestation, reseal and the technician flow",
   seoTitle: "Autopilot Pre-Provisioning Failures: TPM and Reseal",

@@ -63,6 +63,30 @@ const STUB_WORD_COUNT = 300;
 /** An article this long with no subheadings is an unnavigable wall of text. */
 const HEADINGS_REQUIRED_ABOVE = 400;
 
+/** Inline SVG ships in the HTML, so a heavy diagram is paid for on every load. */
+const FIGURE_MAX_KB = 8;
+
+/** Above this, an article is substantial enough to owe deliberate relationships. */
+const SUBSTANTIAL_WORD_COUNT = 1800;
+
+/**
+ * Anchor text that tells the reader nothing about the destination — bad for
+ * comprehension, screen readers and the link graph alike.
+ */
+const GENERIC_ANCHORS = [
+  "click here",
+  "here",
+  "read more",
+  "this article",
+  "learn more",
+  "more",
+  "this",
+  "link",
+  "see here",
+  "this post",
+  "this guide",
+];
+
 /**
  * Phrases that signal generated filler rather than a practitioner writing.
  *
@@ -738,6 +762,71 @@ function validateArticle(
     if (block.type === "diagram" && !block.ascii.trim()) {
       add("Diagram has no content.", at);
     }
+
+    if (block.type === "figure") {
+      const svg = block.svg;
+
+      if (!svg.trim()) add("Figure has no SVG.", at);
+
+      // Responsive: a viewBox scales, fixed pixel dimensions do not.
+      if (!/viewBox\s*=/.test(svg)) {
+        add("Figure SVG has no viewBox — it cannot scale responsively.", at);
+      }
+      if (/<svg[^>]*\s(width|height)\s*=/.test(svg)) {
+        add(
+          "Figure SVG sets width/height on the root element. Use viewBox alone so it scales to the column.",
+          at,
+        );
+      }
+
+      // The markup is injected as raw HTML. These are the guards that make
+      // that safe, and they hold regardless of the content being trusted.
+      if (/<script/i.test(svg)) add("Figure SVG contains <script>.", at);
+      if (/<foreignObject/i.test(svg)) {
+        add("Figure SVG contains <foreignObject> — it can carry arbitrary HTML.", at);
+      }
+      if (/<image/i.test(svg)) {
+        add("Figure SVG embeds a raster <image>. Diagrams must be authored vector.", at);
+      }
+      if (/\son\w+\s*=/i.test(svg)) add("Figure SVG contains an inline event handler.", at);
+      if (/(?:href|src)\s*=\s*["']?(?:https?:)?\/\//i.test(svg)) {
+        add("Figure SVG references an external resource. Everything must be inline.", at);
+      }
+
+      // Accessibility: the wrapper takes its accessible name from `alt`.
+      if (!block.alt.trim()) {
+        add("Figure has no alt text — it would be an unlabelled image.", at);
+      } else if (block.alt.trim().toLowerCase() === block.title.trim().toLowerCase()) {
+        add(
+          "Figure alt text repeats the title. Describe what the diagram shows, not what it is called.",
+          at,
+        );
+      } else if (/^(diagram|image|figure|illustration|chart)\.?$/i.test(block.alt.trim())) {
+        add(`Figure alt text "${block.alt}" describes nothing.`, at);
+      }
+
+      // Theme-aware: a hard-coded colour breaks one of the two themes, and
+      // the house style is monochrome by way of currentColor.
+      const hardCoded = svg.match(
+        /(?:fill|stroke|stop-color|color)\s*[:=]\s*["']?\s*(#[0-9a-f]{3,8}|rgba?\(|hsla?\()/gi,
+      );
+      if (hardCoded) {
+        add(
+          `Figure SVG hard-codes ${hardCoded.length} colour value(s). Use currentColor so it works in both themes.`,
+          at,
+          "warning",
+        );
+      }
+
+      const kb = Buffer.byteLength(svg, "utf8") / 1024;
+      if (kb > FIGURE_MAX_KB) {
+        add(
+          `Figure SVG is ${kb.toFixed(1)} KB, over the ${FIGURE_MAX_KB} KB budget.`,
+          at,
+          "warning",
+        );
+      }
+    }
   }
 
   if (h2Count === 0) {
@@ -885,6 +974,216 @@ function validateUniqueness(issues: Issue[]): void {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Knowledge-graph checks                                              */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The structural relationships between articles: pillar hierarchy, inbound
+ * links, and the anchor text that carries them.
+ *
+ * These are corpus-wide rather than per-article, which is the point. An orphan
+ * is invisible from inside the article that is orphaned — it can only be seen
+ * by asking what links *to* it, and that question was never asked before this
+ * check existed.
+ */
+function validateGraph(issues: Issue[]): void {
+  const bySlug = new Map(articles.map((a) => [a.slug, a]));
+  const categoryMap = new Map(categories.map((c) => [c.slug, c]));
+  const published = articles.filter((a) => !a.draft);
+  const publishedSlugs = new Set(published.map((a) => a.slug));
+
+  const add = (
+    article: Article,
+    message: string,
+    field: string,
+    severity: Issue["severity"] = "error",
+  ) => issues.push({ severity, subject: `article:${article.slug}`, field, message });
+
+  /* --- an article may never live in a derived index category --- */
+  for (const article of articles) {
+    const category = categoryMap.get(article.category);
+    if (category?.contentTypeIndex) {
+      add(
+        article,
+        `category "${article.category}" is a derived ${category.contentTypeIndex} index, not a subject. ` +
+          `Move the article to its subject category and set contentType: "${category.contentTypeIndex}".`,
+        "category",
+      );
+    }
+  }
+
+  /* --- pillar hierarchy --- */
+  for (const article of articles) {
+    if (article.pillarSlug === undefined) continue;
+
+    if (article.pillarSlug === article.slug) {
+      add(article, "pillarSlug points at itself.", "pillarSlug");
+      continue;
+    }
+    const parent = bySlug.get(article.pillarSlug);
+    if (!parent) {
+      add(article, `pillarSlug "${article.pillarSlug}" is not a known article.`, "pillarSlug");
+      continue;
+    }
+    if (!parent.pillar) {
+      add(
+        article,
+        `pillarSlug points at "${parent.slug}", which is not a pillar (it has no \`pillar\` name).`,
+        "pillarSlug",
+      );
+    }
+    if (!article.draft && parent.draft) {
+      add(
+        article,
+        `published article reports to draft pillar "${parent.slug}". A published cluster cannot hang off an unpublished parent.`,
+        "pillarSlug",
+      );
+    }
+
+    // Walk up: cycles hang the renderer, and more than hub -> pillar ->
+    // supporting stops being a hierarchy anyone can hold in their head.
+    const seen = new Set<string>([article.slug]);
+    let cursor: Article | undefined = parent;
+    let depth = 1;
+    while (cursor) {
+      if (seen.has(cursor.slug)) {
+        add(article, `pillar chain forms a cycle at "${cursor.slug}".`, "pillarSlug");
+        break;
+      }
+      seen.add(cursor.slug);
+      depth += 1;
+      if (depth > 3) {
+        add(
+          article,
+          `pillar chain is ${depth} deep. The model is hub -> pillar -> supporting, no deeper.`,
+          "pillarSlug",
+        );
+        break;
+      }
+      cursor = cursor.pillarSlug ? bySlug.get(cursor.pillarSlug) : undefined;
+    }
+  }
+
+  /* --- clusters must be populated --- */
+  const supportersOf = new Map<string, number>();
+  for (const article of published) {
+    if (article.pillarSlug) {
+      supportersOf.set(article.pillarSlug, (supportersOf.get(article.pillarSlug) ?? 0) + 1);
+    }
+  }
+  for (const article of published) {
+    if (!article.pillar) continue;
+    const count = supportersOf.get(article.slug) ?? 0;
+    if (count < 3) {
+      add(
+        article,
+        `pillar "${article.pillar}" has ${count} supporting article(s). A pillar with fewer than 3 is not yet a cluster.`,
+        "pillar",
+        "warning",
+      );
+    }
+  }
+
+  /* --- every published article should sit somewhere in the hierarchy --- */
+  // Only checked once a subject has a pillar. Before that the article is not
+  // unplaced, the structure simply does not exist yet, and a warning nobody
+  // can action is a warning everybody learns to ignore.
+  const categoriesWithPillar = new Set(published.filter((a) => a.pillar).map((a) => a.category));
+  for (const article of published) {
+    if (article.pillar || article.pillarSlug) continue;
+    if (!categoriesWithPillar.has(article.category)) continue;
+    add(
+      article,
+      `not attached to the ${article.category} pillar structure — set pillarSlug, or pillar if it anchors a cluster.`,
+      "pillarSlug",
+      "warning",
+    );
+  }
+
+  /* --- relatedSlugs --- */
+  for (const article of articles) {
+    for (const slug of article.relatedSlugs ?? []) {
+      if (slug === article.slug) {
+        add(article, "relatedSlugs contains the article itself.", "relatedSlugs");
+        continue;
+      }
+      const target = bySlug.get(slug);
+      if (!target) {
+        add(article, `relatedSlugs references unknown article "${slug}".`, "relatedSlugs");
+      } else if (!article.draft && target.draft) {
+        add(
+          article,
+          `relatedSlugs references draft "${slug}" — it would never render, and the slot is wasted.`,
+          "relatedSlugs",
+        );
+      }
+      if (slug === article.pillarSlug) {
+        add(
+          article,
+          `relatedSlugs repeats the pillar "${slug}". The upward link renders separately; use the slot for a sibling.`,
+          "relatedSlugs",
+          "warning",
+        );
+      }
+    }
+
+    if (
+      !article.draft &&
+      articleWordCount(article) >= SUBSTANTIAL_WORD_COUNT &&
+      (article.relatedSlugs ?? []).length === 0
+    ) {
+      add(
+        article,
+        "no relatedSlugs — related articles fall back to tag similarity, which is a coincidence rather than an editorial choice.",
+        "relatedSlugs",
+        "warning",
+      );
+    }
+  }
+
+  /* --- inbound links: the orphan check --- */
+  const inbound = new Map<string, number>();
+  for (const article of published) {
+    const seen = new Set<string>();
+    for (const target of inlineLinks(article).internalTargets) {
+      const slug = target.split("#")[0]?.replace(/\/$/, "").split("/").filter(Boolean).pop();
+      if (!slug || slug === article.slug || !publishedSlugs.has(slug)) continue;
+      seen.add(slug);
+    }
+    for (const slug of seen) inbound.set(slug, (inbound.get(slug) ?? 0) + 1);
+  }
+  for (const article of published) {
+    if ((inbound.get(article.slug) ?? 0) === 0) {
+      add(
+        article,
+        "no inbound internal links from any published article — it is an orphan in the knowledge graph.",
+        "body",
+        "warning",
+      );
+    }
+    if (inlineLinks(article).internalTargets.length === 0) {
+      add(article, "no outbound internal links — it is a dead end.", "body", "warning");
+    }
+  }
+
+  /* --- anchor text --- */
+  for (const article of articles) {
+    for (const { where, text } of richTextStrings(article)) {
+      for (const match of text.matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)) {
+        const label = match[1]?.trim() ?? "";
+        if (GENERIC_ANCHORS.includes(label.toLowerCase().replace(/[.,;:!?]+$/, ""))) {
+          add(
+            article,
+            `link anchor "${label}" says nothing about the destination. Name the topic being linked to.`,
+            where,
+          );
+        }
+      }
+    }
+  }
+}
+
 export function validateContent(): Issue[] {
   const issues: Issue[] = [];
 
@@ -916,6 +1215,7 @@ export function validateContent(): Issue[] {
   }
 
   validateUniqueness(issues);
+  validateGraph(issues);
 
   if (articles.length === 0) {
     issues.push({

@@ -1,7 +1,7 @@
 import { articles } from "@/content/articles";
 import { categories, getCategory } from "@/content/categories";
 import { authors, getAuthor } from "@/content/authors";
-import type { Article, Block } from "@/content/types";
+import type { Article, Block, Category, ContentType } from "@/content/types";
 
 export { articles, categories, getCategory, getAuthor, authors };
 
@@ -25,6 +25,28 @@ export function getArticle(category: string, slug: string): Article | undefined 
 
 export function articlesByCategory(slug: string): Article[] {
   return allArticles.filter((a) => a.category === slug);
+}
+
+/**
+ * Published articles of one editorial format, wherever they live.
+ *
+ * Backs the derived index routes (`/comparisons`, `/how-to`, …). These pages
+ * list articles they do not own — the canonical URL always stays under the
+ * article's subject category, so nothing is reachable at two addresses.
+ */
+export function articlesByContentType(contentType: ContentType): Article[] {
+  return allArticles.filter((a) => a.contentType === contentType);
+}
+
+/**
+ * Everything a category page should list, whichever kind of category it is.
+ *
+ * A subject category lists what it owns; a derived index lists by format.
+ */
+export function articlesForCategory(category: Category): Article[] {
+  return category.contentTypeIndex
+    ? articlesByContentType(category.contentTypeIndex)
+    : articlesByCategory(category.slug);
 }
 
 export function latestArticles(limit = 6, excludeSlugs: string[] = []): Article[] {
@@ -148,6 +170,12 @@ function blockWords(block: Block): number {
       text = `${block.title} ${block.text}`;
       break;
     case "diagram":
+      text = `${block.title} ${block.caption ?? ""}`;
+      break;
+    case "figure":
+      // Title and caption only, matching `diagram`. The alt text is an
+      // accessibility affordance, not prose — counting it would let a
+      // diagram-heavy article inflate its way past the thin-content check.
       text = `${block.title} ${block.caption ?? ""}`;
       break;
     default:
@@ -353,6 +381,10 @@ function blockText(block: Block): string {
       return `${block.title} ${block.text}`;
     case "diagram":
       return `${block.title} ${block.caption ?? ""}`;
+    case "figure":
+      // Alt text is indexed here, unlike in the word count: describing what a
+      // diagram shows is exactly the phrasing a reader would search for.
+      return `${block.title} ${block.alt} ${block.caption ?? ""}`;
     case "quote":
       return block.text;
     case "code":

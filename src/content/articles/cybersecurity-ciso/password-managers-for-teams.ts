@@ -2,8 +2,9 @@ import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "password-managers-for-teams",
-  category: "reviews",
-  subcategory: "Security tooling",
+  category: "cybersecurity-ciso",
+  contentType: "decision-framework",
+  subcategory: "Identity security",
   title: "Team password managers: what to assess before you standardise",
   seoTitle: "Team password managers: what to assess",
   metaDescription:

@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "entra-join-vs-hybrid-join",
   category: "microsoft-intune",
+  contentType: "decision-framework",
   subcategory: "Configuration policy",
   title: "Microsoft Entra join vs hybrid join: choosing for a Windows estate today",
   seoTitle: "Entra Join vs Hybrid Join: Choosing for a Windows Estate",

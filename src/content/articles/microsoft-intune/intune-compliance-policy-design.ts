@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "intune-compliance-policy-design",
   category: "microsoft-intune",
+  contentType: "decision-framework",
   subcategory: "Compliance",
   title: "Designing Intune compliance policies that do not lock people out",
   seoTitle: "Intune Compliance Policy Design: Grace Periods and Actions",

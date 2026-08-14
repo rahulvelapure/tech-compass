@@ -194,6 +194,38 @@ function Diagram({ title, ascii, caption }: Extract<Block, { type: "diagram" }>)
   );
 }
 
+/**
+ * Hand-authored technical diagram.
+ *
+ * The SVG is inlined rather than loaded, so it costs no request, shifts no
+ * layout, and inherits `currentColor` — one drawing that reads correctly in
+ * both themes instead of a light and a dark copy.
+ *
+ * `dangerouslySetInnerHTML` is the only way to inline authored SVG. The markup
+ * comes from this repository, never from a reader, and the content validator
+ * rejects `<script>`, `<image>` and external references before a build can
+ * ship. The wrapper carries the accessible name so screen readers get the
+ * described meaning rather than a list of shape elements.
+ */
+function Figure({ title, svg, alt, caption }: Extract<Block, { type: "figure" }>) {
+  return (
+    <figure className="my-8 border border-border bg-surface">
+      <figcaption className="eyebrow border-b border-border px-4 py-2 text-muted-foreground">
+        {title}
+      </figcaption>
+      <div
+        role="img"
+        aria-label={alt}
+        className="[&>svg]:h-auto [&>svg]:w-full [&>svg]:max-w-full px-4 py-5 text-foreground"
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
+      {caption && (
+        <p className="border-t border-border px-4 py-2 text-xs text-muted-foreground">{caption}</p>
+      )}
+    </figure>
+  );
+}
+
 export function ArticleBody({ body }: { body: Block[] }) {
   return (
     <div className="article-prose">
@@ -245,6 +277,8 @@ export function ArticleBody({ body }: { body: Block[] }) {
             return <Callout key={index} {...block} />;
           case "diagram":
             return <Diagram key={index} {...block} />;
+          case "figure":
+            return <Figure key={index} {...block} />;
           case "quote":
             return (
               <blockquote

@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "enrollment-status-page-troubleshooting",
   category: "microsoft-intune",
+  contentType: "troubleshooting",
   subcategory: "Autopilot",
   title: "Enrollment Status Page stuck: a systematic troubleshooting method",
   seoTitle: "Intune Enrollment Status Page Stuck: How to Diagnose It",

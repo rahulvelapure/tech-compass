@@ -5,7 +5,7 @@ import { SectionHeader } from "@/components/site/SectionHeader";
 import { NewsletterCTA } from "@/components/site/NewsletterCTA";
 import { HeaderAdSlot, InFeedAdSlot } from "@/components/monetization/AdSlot";
 import {
-  articlesByCategory,
+  articlesForCategory,
   featuredArticle,
   getAuthor,
   getCategory,
@@ -82,7 +82,7 @@ function HomePage() {
       {/* Category sections */}
       {SECTIONS.map(({ slug, title }) => {
         const category = getCategory(slug);
-        const items = articlesByCategory(slug).slice(0, 3);
+        const items = (category ? articlesForCategory(category) : []).slice(0, 3);
         if (!category || items.length === 0) return null;
 
         return (

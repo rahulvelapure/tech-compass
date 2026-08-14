@@ -3,6 +3,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "autopilot-device-preparation-vs-autopilot",
   category: "microsoft-intune",
+  contentType: "explainer",
   subcategory: "Autopilot",
   title: "Autopilot device preparation vs Windows Autopilot: which provisioning model to use",
   seoTitle: "Autopilot Device Preparation vs Autopilot: How to Choose",
