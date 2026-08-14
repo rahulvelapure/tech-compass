@@ -4,8 +4,14 @@ The editorial and structural plan for Tech Compass. This document is the record
 of the taxonomy, the pillar architecture, the content-type model, the linking
 rules and the visual standard.
 
-Newsletter architecture is a separate workstream —
-[`docs/NEWSLETTER-ARCHITECTURE.md`](./NEWSLETTER-ARCHITECTURE.md).
+Companion documents:
+
+| Document                                                     | Answers                                                                                                                           |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| [`RESEARCH-STANDARD.md`](./RESEARCH-STANDARD.md)             | How an article is researched, produced and kept correct — source hierarchy, Microsoft research matrix, quality gates, maintenance |
+| [`TECHNOLOGY-COVERAGE.md`](./TECHNOLOGY-COVERAGE.md)         | What each subject must eventually cover, and where the backlog stands against it                                                  |
+| [`PUBLISHING.md`](./PUBLISHING.md)                           | Commands, field rules, PR checklist                                                                                               |
+| [`NEWSLETTER-ARCHITECTURE.md`](./NEWSLETTER-ARCHITECTURE.md) | Separate workstream                                                                                                               |
 
 > **Status: architecture implemented and verified. No articles written.**
 > The taxonomy, content-type model, pillar data model, SVG figure block and
@@ -36,8 +42,7 @@ conflict, connectivity wins.
 | 8   | Authored SVG diagrams — accurate, responsive, accessible, monochrome stencil.          | 7                                            |
 | 9   | Diagrams only where they aid understanding. No decorative images.                      | 7                                            |
 | 10  | Newsletter independent of Lovable; direct Brevo; `newsletterEnabled` wired.            | [separate doc](./NEWSLETTER-ARCHITECTURE.md) |
-
-| 11 | Consolidate `laptops`; no `laptops` subject category. | 2 |
+| 11  | Consolidate `laptops`; no `laptops` subject category.                                  | 2                                            |
 
 `laptops` is retired: it held no articles, `gadgets` already carries a "Laptops"
 subcategory, and `buying-guide` is now a content type rather than a destination.
@@ -460,6 +465,30 @@ known.
 5. **`IDEA` until researched.** Status reflects reality or the dashboard lies.
 6. **Name required sources at planning time.** That is what stops an article
    later being written from memory.
+7. **Check [`TECHNOLOGY-COVERAGE.md`](./TECHNOLOGY-COVERAGE.md) before planning
+   a segment.** It is the map of what the subject owes a reader; the backlog is
+   the subset actually committed to.
+
+### 9.3 Backlog improvements
+
+The backlog is the authoritative planning surface, so its accuracy is not
+cosmetic.
+
+**Fixed:** 13 topics sat in `EDITORIAL_REVIEW` while their articles were live,
+so `bun run inventory` reported 4 published against a real 17 — anything planned
+from that dashboard would have started from a wrong picture. Statuses are
+reconciled and `tests/editorial.test.ts` now fails if a topic's status
+contradicts its article's actual draft state. The previous tests only asked
+whether the article _existed_, which is why this drifted unnoticed.
+
+**Still to do, in priority order:**
+
+| #   | Improvement                                                                                                | Why                                                                                                     |
+| --- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 1   | Extend the `Topic` model with `pillarSlug`, `plannedInternalLinks`, `diagramOpportunity`, `primarySources` | The article schema now carries pillar data; the backlog cannot plan a cluster it has no field for       |
+| 2   | Extend `scripts/inventory.ts` with pillar, orphan, contentType and coverage reporting                      | One dashboard, not the ad-hoc scripts used during the audit                                             |
+| 3   | Build the 13 missing segment backlogs                                                                      | 13 of 16 subjects have no plan at all                                                                   |
+| 4   | Near-duplicate intent detection                                                                            | The uniqueness test catches exact `targetKeyword` collisions only; near-duplicates still need judgement |
 
 ### 9.3 Order
 
