@@ -9,7 +9,7 @@ Companion documents:
 | Document                                                     | Answers                                                                                                                           |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | [`RESEARCH-STANDARD.md`](./RESEARCH-STANDARD.md)             | How an article is researched, produced and kept correct — source hierarchy, Microsoft research matrix, quality gates, maintenance |
-| [`TECHNOLOGY-COVERAGE.md`](./TECHNOLOGY-COVERAGE.md)         | What each subject must eventually cover, and where the backlog stands against it                                                  |
+| [`MASTER-COVERAGE-PLAN.md`](./MASTER-COVERAGE-PLAN.md)       | Balanced scope across all subjects: counts, targets, gaps, clusters, research tracks                                              |
 | [`PUBLISHING.md`](./PUBLISHING.md)                           | Commands, field rules, PR checklist                                                                                               |
 | [`NEWSLETTER-ARCHITECTURE.md`](./NEWSLETTER-ARCHITECTURE.md) | Separate workstream                                                                                                               |
 
@@ -465,7 +465,7 @@ known.
 5. **`IDEA` until researched.** Status reflects reality or the dashboard lies.
 6. **Name required sources at planning time.** That is what stops an article
    later being written from memory.
-7. **Check [`TECHNOLOGY-COVERAGE.md`](./TECHNOLOGY-COVERAGE.md) before planning
+7. **Check [`MASTER-COVERAGE-PLAN.md`](./MASTER-COVERAGE-PLAN.md) before planning
    a segment.** It is the map of what the subject owes a reader; the backlog is
    the subset actually committed to.
 
