@@ -16,26 +16,69 @@ counts, targets, priorities or research tracks.
 
 Measured, not estimated:
 
-| Measure                 | Before Phase 3a | After Phase 3a |
-| ----------------------- | --------------- | -------------- |
-| Backlog topics          | 106             | **174**        |
-| Intune share of backlog | **71%**         | **43%**        |
-| Segments with a backlog | 3 of 16         | **6 of 18**    |
-| Subjects with a pillar  | 1               | **5**          |
-| Pillar and hub topics   | 7               | **21**         |
-| Unique target keywords  | 106/106         | **174/174**    |
+| Measure                 | Start   | After 3a | After 3b (Windows) |
+| ----------------------- | ------- | -------- | ------------------ |
+| Backlog topics          | 106     | 174      | **215**            |
+| Intune share of backlog | **71%** | 43%      | **35%**            |
+| Segments with a backlog | 3 of 16 | 6 of 18  | **7 of 18**        |
+| Subjects with a pillar  | 1       | 5        | **6**              |
+| Pillar and hub topics   | 7       | 21       | **27**             |
+| Topics with sources     | 33      | 70       | **86**             |
+| Diagram opportunities   | 15      | 38       | **49**             |
+| Unique target keywords  | 106/106 | 174/174  | **215/215**        |
 
 Tech Compass was an Intune site with fifteen empty rooms attached. The
 architecture was sound and the Intune work good, but continuing at that ratio
 produced a product nobody described wanting.
 
 **Phase 3a added 68 researched topics without touching Intune** — cybersecurity
-(39), cloud (15), AI (14). Intune fell from 71% of the backlog to 43% because
-everything else grew, not because anything was removed.
+(39), cloud (15), AI (14). **Phase 3b added Windows (41).** Intune fell from
+71% of the backlog to 35% because everything else grew, not because anything
+was removed. The 75 Intune topics are untouched.
 
-**The freeze holds.** Intune receives no further backlog expansion until at
-least four other subjects have a researched cluster. Three now exist; one more
-before Intune reopens.
+**The freeze is satisfied.** Four subjects — cybersecurity, cloud, AI and
+Windows — now have researched clusters with pillars. Intune is eligible to
+reopen, but §5 sequencing says it should not be next: eleven subjects still have
+no backlog at all.
+
+### Windows research status (Phase 3b)
+
+41 topics, 6 pillars, 10 researched, 16 carrying primary sources.
+
+**Pillars, validated against research rather than assumed:** `windows-in-the-enterprise`
+(hub) → servicing and lifecycle · Windows security · identity and sign-in ·
+operations and troubleshooting · developer platform.
+
+**Three candidate pillars were rejected.** "Windows enterprise management" would
+have collided head-on with `microsoft-intune` — Windows owns OS behaviour,
+Intune owns cloud delivery. "Windows hardware/platform" splits cleanly instead:
+TPM and Secure Boot to security, components to `electronics`. "Windows Server
+boundaries" is a boundary rule, not a subject.
+
+**Sources:** Microsoft Learn — Windows release health, lifecycle and servicing;
+the Windows security book; Credential Guard, HVCI and Secured-core PC
+documentation; CSP reference; WSL and dev-environment docs.
+
+**Findings that changed the plan:**
+
+- **Windows 11 26H1 is not an annual feature update.** Build 28000, released
+  2026-02-10, preinstalled only on selected new hardware starting with Qualcomm
+  Snapdragon X2 Series. Not offered through Windows Update, not installable in
+  place, and built on a different core to 24H2/25H2 — so those devices cannot
+  take the H2 2026 annual update. `win-10` exists because the natural assumption
+  that a higher version number is newer and better is wrong here.
+- **24H2 Home/Pro updates end 2026-10-13**, weeks away. 25H2 runs to 2027-10-12
+  and 2028-10-10; 23H2 Enterprise ends 2026-11-10; LTSC 2024 to 2034-10-10.
+- **25H2 installs from 24H2 as an enablement package** — files already present
+  and dormant under temporary enterprise feature control.
+- **Credential Guard has been on by default since Windows 11 22H2** on
+  domain-joined non-DC systems, auto-enabling VBS, without UEFI lock — and it
+  does _not_ override an explicit pre-upgrade disable. That exception is what
+  makes real estates inconsistent.
+
+**Coverage gap:** 41 of a 90 target, deliberately. ~30 slots are reserved for
+discovery and the rest for a second pass on server boundaries, storage and
+deployment tooling once the first cluster is written.
 
 ---
 
@@ -51,7 +94,7 @@ is below 100, the reason is stated in §4.
 | `cybersecurity-ciso`     |      0 |      3 |  **39** |        100 | 100 | **P0**      | Medium        |
 | `cloud`                  |      0 |      1 |  **15** |        100 | 100 | **P0**      | Medium        |
 | `microsoft-365-entra-id` |      1 |      1 |      23 |        100 |  99 | **P0**      | High          |
-| `windows`                |      0 |      2 |       0 |         90 |  90 | **P0**      | Medium        |
+| `windows`                |      0 |      2 |  **41** |         90 |  90 | **P0**      | Medium        |
 | `ai`                     |      0 |      1 |  **14** |         85 |  85 | **P0**      | **Very high** |
 | `enterprise-networking`  |      0 |      1 |       0 |         80 |  80 | P1          | Low           |
 | `devops`                 |      0 |      0 |       0 |         80 |  80 | P1          | Medium        |
@@ -65,7 +108,7 @@ is below 100, the reason is stated in §4.
 | `technology-leadership`  |      0 |      1 |       0 |         50 |  50 | P2          | **Low**       |
 | `emerging-tech`          |      0 |      0 |       0 |         40 |  40 | P3          | **Very high** |
 | `gadgets`                |      0 |      2 |       0 |         40 |  40 | P3          | High          |
-| **Total**                | **17** | **18** | **174** | **~1,205** |     |             |               |
+| **Total**                | **17** | **18** | **215** | **~1,205** |     |             |               |
 
 **~1,205 genuinely distinct articles** is the honest long-term ceiling across
 eighteen subjects. Not 1,600, and not padded to reach it.
