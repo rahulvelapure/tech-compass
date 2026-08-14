@@ -22,9 +22,20 @@ import { article as windows11WifiTroubleshooting } from "./how-to/windows-11-wif
 import { article as graphApiIntuneReporting } from "./it-automation/graph-api-intune-reporting";
 import { article as conditionalAccessBreakGlassAccounts } from "./microsoft-365-entra-id/conditional-access-break-glass-accounts";
 import { article as conditionalAccessFramework } from "./microsoft-365-entra-id/conditional-access-framework";
+import { article as autopilotDevicePreparationVsAutopilot } from "./microsoft-intune/autopilot-device-preparation-vs-autopilot";
+import { article as autopilotDeviceRegistrationFailures } from "./microsoft-intune/autopilot-device-registration-failures";
+import { article as autopilotPreProvisioningFailures } from "./microsoft-intune/autopilot-pre-provisioning-failures";
+import { article as compliantDeviceConditionalAccessBlocked } from "./microsoft-intune/compliant-device-conditional-access-blocked";
 import { article as enrollmentStatusPageTroubleshooting } from "./microsoft-intune/enrollment-status-page-troubleshooting";
+import { article as entraJoinVsHybridJoin } from "./microsoft-intune/entra-join-vs-hybrid-join";
 import { article as groupPolicyToSettingsCatalogMigration } from "./microsoft-intune/group-policy-to-settings-catalog-migration";
+import { article as intuneCompliancePolicyDesign } from "./microsoft-intune/intune-compliance-policy-design";
+import { article as intuneEnrollmentRestrictions } from "./microsoft-intune/intune-enrollment-restrictions";
+import { article as intuneManagementExtensionLogs } from "./microsoft-intune/intune-management-extension-logs";
 import { article as intunePolicyConflicts } from "./microsoft-intune/intune-policy-conflicts";
+import { article as intunewinPackagingWin32Apps } from "./microsoft-intune/intunewin-packaging-win32-apps";
+import { article as win32AppDetectionRules } from "./microsoft-intune/win32-app-detection-rules";
+import { article as win32AppSupersedenceDependencies } from "./microsoft-intune/win32-app-supersedence-dependencies";
 import { article as passwordManagersForTeams } from "./reviews/password-managers-for-teams";
 import { article as smartphoneSecurityForWork } from "./smartphones/smartphone-security-for-work";
 import { article as vscodeVsJetbrains } from "./software/vscode-vs-jetbrains";
@@ -47,9 +58,20 @@ export const articles: Article[] = [
   graphApiIntuneReporting,
   conditionalAccessBreakGlassAccounts,
   conditionalAccessFramework,
+  autopilotDevicePreparationVsAutopilot,
+  autopilotDeviceRegistrationFailures,
+  autopilotPreProvisioningFailures,
+  compliantDeviceConditionalAccessBlocked,
   enrollmentStatusPageTroubleshooting,
+  entraJoinVsHybridJoin,
   groupPolicyToSettingsCatalogMigration,
+  intuneCompliancePolicyDesign,
+  intuneEnrollmentRestrictions,
+  intuneManagementExtensionLogs,
   intunePolicyConflicts,
+  intunewinPackagingWin32Apps,
+  win32AppDetectionRules,
+  win32AppSupersedenceDependencies,
   passwordManagersForTeams,
   smartphoneSecurityForWork,
   vscodeVsJetbrains,

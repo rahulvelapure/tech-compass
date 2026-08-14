@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { getRequestIP } from "@tanstack/react-start/server";
 import { z } from "zod";
 
+import { logProviderAttempt, logSubscribeOutcome } from "./newsletter.log";
+import { DEFAULT_RETRY_CONFIG, categorizeProviderOutcome, sendWithRetry } from "./newsletter.retry";
 import { site } from "./site";
 import {
   HONEYPOT_FIELD,
@@ -98,7 +100,10 @@ const SILENT_SUCCESS: SubscribeResult = { ok: true, state: "confirmation-sent" }
 export const subscribeToNewsletter = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => schema.parse(data))
   .handler(async ({ data }): Promise<SubscribeResult> => {
-    if (data[HONEYPOT_FIELD]) return SILENT_SUCCESS;
+    if (data[HONEYPOT_FIELD]) {
+      logSubscribeOutcome("rejected-bot-honeypot");
+      return SILENT_SUCCESS;
+    }
 
     const secret = formSecret();
     const brevoKey = process.env["BREVO_API_KEY"];
@@ -125,77 +130,117 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
 
     if (!verdict.valid) {
       if (verdict.reason === "too-fast") {
+        logSubscribeOutcome("rejected-too-fast");
         return { ok: false, message: "That was too quick — please try once more." };
       }
       if (verdict.reason === "expired") {
+        logSubscribeOutcome("rejected-token-expired");
         return { ok: false, message: "This form expired. Reload the page and try again." };
       }
       // Malformed or badly signed: automated, near certainly.
+      logSubscribeOutcome("rejected-bot-token");
       return SILENT_SUCCESS;
     }
 
     const ip = getRequestIP({ xForwardedFor: true }) ?? "unknown";
     if (!withinRateLimit(await ipKey(ip, secret))) {
+      logSubscribeOutcome("rejected-rate-limited");
       return { ok: false, message: "Too many attempts. Try again in a few minutes." };
     }
 
     const email = normaliseEmail(data.email);
     if (!hasDeliverableShape(email)) {
+      logSubscribeOutcome("rejected-invalid-email");
       return { ok: false, message: "Enter a valid email address." };
     }
     if (isDisposableDomain(emailDomain(email))) {
+      logSubscribeOutcome("rejected-disposable-domain");
       return {
         ok: false,
         message: "Please use a permanent email address — disposable ones are not accepted.",
       };
     }
 
-    let response: Response;
-    try {
-      response = await fetch(`${BREVO_GATEWAY}/v3/contacts/doubleOptinConfirmation`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${lovableKey}`,
-          "X-Connection-Api-Key": brevoKey,
+    // Transient provider/network failures (429, 5xx, fetch errors) are
+    // retried with bounded exponential backoff. Anything the provider
+    // rejected outright — bad address, bad credentials, wrong ids — is not:
+    // a second try would fail identically and only delays the response.
+    const { outcome, attempts } = await sendWithRetry(
+      async () => {
+        const response = await fetch(`${BREVO_GATEWAY}/v3/contacts/doubleOptinConfirmation`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${lovableKey}`,
+            "X-Connection-Api-Key": brevoKey,
+          },
+          body: JSON.stringify({
+            email,
+            includeListIds: [listId],
+            templateId,
+            redirectionUrl: confirmationRedirectUrl(),
+            attributes: { SOURCE: data.source ?? "website", OPT_IN: "double" },
+          }),
+        });
+        // Never read/log the body on success: Brevo echoes the request back.
+        const bodyText = response.ok ? "" : await response.text();
+        return { status: response.status, bodyText };
+      },
+      {
+        onAttempt: (attempt, attemptOutcome) => {
+          logProviderAttempt({
+            attempt,
+            maxAttempts: DEFAULT_RETRY_CONFIG.maxAttempts,
+            providerStatusCategory: categorizeProviderOutcome(attemptOutcome),
+            ...("status" in attemptOutcome && attemptOutcome.status !== undefined
+              ? { providerStatus: attemptOutcome.status }
+              : {}),
+            ...(attemptOutcome.kind === "transient" && attemptOutcome.errorType !== undefined
+              ? { errorType: attemptOutcome.errorType }
+              : {}),
+          });
         },
-        body: JSON.stringify({
-          email,
-          includeListIds: [listId],
-          templateId,
-          redirectionUrl: confirmationRedirectUrl(),
-          attributes: { SOURCE: data.source ?? "website", OPT_IN: "double" },
-        }),
-      });
-    } catch (error) {
-      console.error("Newsletter confirmation request failed", error);
-      return { ok: false, message: "Could not reach the mailing list. Try again shortly." };
+      },
+    );
+
+    switch (outcome.kind) {
+      case "success":
+        logSubscribeOutcome("confirmation-sent", { attempt: attempts });
+        return { ok: true, state: "confirmation-sent" };
+
+      case "duplicate":
+        // Brevo reports an address that has already completed confirmation as
+        // a duplicate. Re-sending would be noise, so treat it as done.
+        logSubscribeOutcome("already-confirmed", { attempt: attempts });
+        return { ok: true, state: "already-confirmed" };
+
+      case "permanent":
+        logSubscribeOutcome("rejected-provider-permanent", {
+          attempt: attempts,
+          providerStatus: outcome.status,
+          providerStatusCategory: "client-error",
+        });
+        return outcome.reason === "invalid-parameter"
+          ? { ok: false, message: "That email address was rejected. Check it and try again." }
+          : {
+              ok: false,
+              message: "Subscription failed. Please try again, or try a different address.",
+            };
+
+      case "transient":
+        logSubscribeOutcome("failed-provider-transient", {
+          attempt: attempts,
+          maxAttempts: DEFAULT_RETRY_CONFIG.maxAttempts,
+          providerStatusCategory: categorizeProviderOutcome(outcome),
+          ...(outcome.status !== undefined ? { providerStatus: outcome.status } : {}),
+          ...(outcome.errorType !== undefined ? { errorType: outcome.errorType } : {}),
+        });
+        return { ok: false, message: "Could not reach the mailing list. Try again shortly." };
     }
-
-    if (response.ok) return { ok: true, state: "confirmation-sent" };
-
-    const text = await response.text();
-
-    // Brevo reports an address that has already completed confirmation as a
-    // duplicate. Re-sending would be noise, so treat it as done.
-    if (response.status === 400 && text.includes("duplicate_parameter")) {
-      return { ok: true, state: "already-confirmed" };
-    }
-
-    if (response.status === 400 && text.includes("invalid_parameter")) {
-      return { ok: false, message: "That email address was rejected. Check it and try again." };
-    }
-
-    // Never log the address: it is personal data and the status tells us enough.
-    console.error(`Brevo double opt-in failed [${response.status}]`);
-    return {
-      ok: false,
-      message: "Subscription failed. Please try again, or try a different address.",
-    };
   });
 
 function unconfigured(missing: string): SubscribeResult {
-  console.error(`Newsletter is not configured: missing ${missing}`);
+  logSubscribeOutcome("unconfigured", { missingConfig: missing });
   return {
     ok: false,
     message: "The mailing list is not configured yet. Please try again later.",
