@@ -3,6 +3,9 @@ import type { Segment, Topic } from "./types";
 import { segment as microsoftIntune } from "./segments/microsoft-intune";
 import { segment as microsoft365EntraId } from "./segments/microsoft-365-entra-id";
 import { segment as software } from "./segments/software";
+import { segment as cybersecurityCiso } from "./segments/cybersecurity-ciso";
+import { segment as cloud } from "./segments/cloud";
+import { segment as ai } from "./segments/ai";
 
 /**
  * The editorial backlog, one entry per planned segment.
@@ -11,7 +14,14 @@ import { segment as software } from "./segments/software";
  * short, changes rarely, and an explicit array makes it obvious which segments
  * have a backlog and which are still unplanned.
  */
-export const segments: Segment[] = [microsoftIntune, microsoft365EntraId, software];
+export const segments: Segment[] = [
+  microsoftIntune,
+  microsoft365EntraId,
+  cybersecurityCiso,
+  cloud,
+  ai,
+  software,
+];
 
 export const allTopics = (): Topic[] => segments.flatMap((s) => s.topics);
 

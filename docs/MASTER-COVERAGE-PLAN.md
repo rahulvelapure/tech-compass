@@ -16,21 +16,26 @@ counts, targets, priorities or research tracks.
 
 Measured, not estimated:
 
-| Measure                                                  | Value                             |
-| -------------------------------------------------------- | --------------------------------- |
-| Published articles                                       | 17 — **15 of them Intune (88%)**  |
-| Backlog topics                                           | 106 — **75 of them Intune (71%)** |
-| Subjects with a pillar                                   | **1 of 16**                       |
-| Subjects with any backlog                                | **3 of 16**                       |
-| Subjects with zero published, zero backlog, zero pillars | **13 of 16**                      |
+| Measure                 | Before Phase 3a | After Phase 3a |
+| ----------------------- | --------------- | -------------- |
+| Backlog topics          | 106             | **174**        |
+| Intune share of backlog | **71%**         | **43%**        |
+| Segments with a backlog | 3 of 16         | **6 of 18**    |
+| Subjects with a pillar  | 1               | **5**          |
+| Pillar and hub topics   | 7               | **21**         |
+| Unique target keywords  | 106/106         | **174/174**    |
 
-Tech Compass is currently an Intune site with fifteen empty rooms attached. The
-architecture is sound and the Intune work is good, but continuing at this ratio
-produces a product nobody described wanting.
+Tech Compass was an Intune site with fifteen empty rooms attached. The
+architecture was sound and the Intune work good, but continuing at that ratio
+produced a product nobody described wanting.
 
-**This plan rebalances deliberately.** Intune stays one track of nine. It gets
-no further backlog expansion until at least four other subjects have a
-researched cluster of their own.
+**Phase 3a added 68 researched topics without touching Intune** — cybersecurity
+(39), cloud (15), AI (14). Intune fell from 71% of the backlog to 43% because
+everything else grew, not because anything was removed.
+
+**The freeze holds.** Intune receives no further backlog expansion until at
+least four other subjects have a researched cluster. Three now exist; one more
+before Intune reopens.
 
 ---
 
@@ -40,39 +45,40 @@ Target is the realistic ceiling — the count of genuinely distinct, individuall
 useful articles the subject supports without near-duplicate intent. Where that
 is below 100, the reason is stated in §4.
 
-| Subject                    |    Pub |  Draft | Backlog |     Target | Gap | Priority | Volatility    |
-| -------------------------- | -----: | -----: | ------: | ---------: | --: | -------- | ------------- |
-| `microsoft-intune`         |     15 |      0 |      75 |        100 |  85 | P1       | High          |
-| `cybersecurity-ciso`       |      0 |      3 |       0 |        100 | 100 | **P0**   | Medium        |
-| `cloud`                    |      0 |      1 |       0 |        100 | 100 | **P0**   | Medium        |
-| `microsoft-365-entra-id`   |      1 |      1 |      23 |        100 |  99 | **P0**   | High          |
-| `windows`                  |      0 |      2 |       0 |         90 |  90 | **P0**   | Medium        |
-| `ai`                       |      0 |      1 |       0 |         85 |  85 | **P0**   | **Very high** |
-| `enterprise-networking`    |      0 |      1 |       0 |         80 |  80 | P1       | Low           |
-| `devops` _(proposed)_      |      0 |      0 |       0 |         80 |  80 | P1       | Medium        |
-| `development` _(proposed)_ |      0 |      0 |       0 |         80 |  80 | P1       | Medium        |
-| `it-automation`            |      0 |      1 |       0 |         70 |  70 | P1       | Medium        |
-| `networking`               |      0 |      1 |       0 |         60 |  60 | P2       | **Low**       |
-| `electronics`              |      0 |      1 |       0 |         60 |  60 | P2       | Medium        |
-| `software`                 |      1 |      0 |       8 |         60 |  59 | P2       | Medium        |
-| `ai-enterprise-it`         |      0 |      2 |       0 |         55 |  55 | P1       | **Very high** |
-| `smartphones`              |      0 |      1 |       0 |         55 |  55 | P2       | High          |
-| `technology-leadership`    |      0 |      1 |       0 |         50 |  50 | P2       | **Low**       |
-| `emerging-tech`            |      0 |      0 |       0 |         40 |  40 | P3       | **Very high** |
-| `gadgets`                  |      0 |      2 |       0 |         40 |  40 | P3       | High          |
-| **Total**                  | **17** | **18** | **106** | **~1,205** |     |          |               |
+| Subject                  |    Pub |  Draft | Backlog |     Target | Gap | Priority    | Volatility    |
+| ------------------------ | -----: | -----: | ------: | ---------: | --: | ----------- | ------------- |
+| `microsoft-intune`       |     15 |      0 |  **75** |        100 |  85 | P1 (frozen) | High          |
+| `cybersecurity-ciso`     |      0 |      3 |  **39** |        100 | 100 | **P0**      | Medium        |
+| `cloud`                  |      0 |      1 |  **15** |        100 | 100 | **P0**      | Medium        |
+| `microsoft-365-entra-id` |      1 |      1 |      23 |        100 |  99 | **P0**      | High          |
+| `windows`                |      0 |      2 |       0 |         90 |  90 | **P0**      | Medium        |
+| `ai`                     |      0 |      1 |  **14** |         85 |  85 | **P0**      | **Very high** |
+| `enterprise-networking`  |      0 |      1 |       0 |         80 |  80 | P1          | Low           |
+| `devops`                 |      0 |      0 |       0 |         80 |  80 | P1          | Medium        |
+| `development`            |      0 |      0 |       0 |         80 |  80 | P1          | Medium        |
+| `it-automation`          |      0 |      1 |       0 |         70 |  70 | P1          | Medium        |
+| `networking`             |      0 |      1 |       0 |         60 |  60 | P2          | **Low**       |
+| `electronics`            |      0 |      1 |       0 |         60 |  60 | P2          | Medium        |
+| `software`               |      1 |      0 |       8 |         60 |  59 | P2          | Medium        |
+| `ai-enterprise-it`       |      0 |      2 |       0 |         55 |  55 | P1          | **Very high** |
+| `smartphones`            |      0 |      1 |       0 |         55 |  55 | P2          | High          |
+| `technology-leadership`  |      0 |      1 |       0 |         50 |  50 | P2          | **Low**       |
+| `emerging-tech`          |      0 |      0 |       0 |         40 |  40 | P3          | **Very high** |
+| `gadgets`                |      0 |      2 |       0 |         40 |  40 | P3          | High          |
+| **Total**                | **17** | **18** | **174** | **~1,205** |     |             |               |
 
 **~1,205 genuinely distinct articles** is the honest long-term ceiling across
 eighteen subjects. Not 1,600, and not padded to reach it.
 
 ---
 
-## 3. Proposed new subject categories
+## 3. New subject categories
 
-The current sixteen leave real domains homeless. Three additions, in order of
-confidence. **None costs a URL migration** — no article exists in any of them.
+The original sixteen left real domains homeless. `development` and `devops` are
+**added**; `databases` is held as a promotion candidate. No URL migration was
+required — nothing was published in any of them.
 
-### `development` — recommended
+### `development` — added
 
 Programming languages, frameworks, APIs, and the craft of building software.
 Currently nowhere: `software` is tooling, licensing and productivity, not
@@ -83,7 +89,7 @@ Rust · API design (REST, GraphQL) · frameworks · testing · performance ·
 architecture patterns · package management and supply chain · accessibility ·
 web platform standards.
 
-### `devops` — recommended
+### `devops` — added
 
 Software delivery and the platforms underneath it. Currently split awkwardly:
 `it-automation` is IT-operations scripting, `cloud` is infrastructure. Neither
@@ -469,7 +475,81 @@ and the best long-term internal-link target.
 
 ---
 
-## 8. Open decisions
+## 8. The 38 validation warnings, classified
+
+None is a defect. They are the backlog telling the truth about unfinished work,
+and they should not be silenced to make the validator green.
+
+| Class                                               | Count | Warning                                              | Resolution                                                                                                                                                                           |
+| --------------------------------------------------- | ----: | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **B** — resolves naturally when articles are linked |    16 | No `relatedSlugs` on a substantial published article | Fixed as each cluster is written and reciprocal links are added. No action now.                                                                                                      |
+| **B**                                               |     4 | Orphan: no inbound internal links                    | The three Intune orphans are adopted by pillars `intune-102` and `intune-104`. `vscode-vs-jetbrains` needs a `software` companion — the only one not yet solved by an existing plan. |
+| **C** — draft to expand                             |     7 | Draft below 600 words                                | Mapped to a topic and a cluster. See below.                                                                                                                                          |
+| **E** — legitimately stays a draft                  |    11 | Draft below 600 words                                | Real intent but no cluster yet; expand when their subject's backlog is built.                                                                                                        |
+
+### The 18 drafts, individually
+
+**Class C — mapped to a cluster, expand when that cluster is written (7)**
+
+| Draft                                     | Topic       | Cluster            | Note                                                      |
+| ----------------------------------------- | ----------- | ------------------ | --------------------------------------------------------- |
+| `iso-27001-microsoft-365-mapping`         | `sec-103`   | Governance         | Strongest stub at 287 words. Full rewrite, not expansion. |
+| `backup-restore-testing`                  | `sec-104`   | Incident response  | Needs a real drill procedure.                             |
+| `password-managers-for-teams`             | `sec-105`   | Identity security  | Stays `decision-framework` — nothing was tested.          |
+| `cloud-cost-controls`                     | `cloud-04`  | Cost and FinOps    | Designated cluster pillar.                                |
+| `local-llms-privacy`                      | `ai-04`     | Local AI           | Designated cluster pillar.                                |
+| `graph-api-intune-reporting`              | `intune-71` | Policy delivery    | Rewrite, not expansion.                                   |
+| `conditional-access-break-glass-accounts` | `m365-02`   | Conditional Access | Sound intent.                                             |
+
+**Class E — keep as drafts until their subject has a backlog (11)**
+
+`ai-agents-it-operations` · `ai-coding-assistants-enterprise` (both
+`ai-enterprise-it`, no backlog yet) · `documentation-that-gets-read`
+(`technology-leadership`) · `zero-trust-network-segmentation`
+(`enterprise-networking` — but its subject anchor `sec-11` now exists) ·
+`wifi-6-vs-wifi-7`, `wifi-troubleshooting` (`networking`, `windows`) ·
+`windows-11-vs-windows-10-enterprise` (`windows`) ·
+`smartphone-security-for-work` (`smartphones` — parent `sec-101` now exists) ·
+`usb-c-cables-explained` (`electronics`) · `raspberry-pi-home-server`
+(`gadgets`) · `choosing-a-business-laptop` (`gadgets`).
+
+**Class D — merge candidates: none yet.** Two overlaps were caught at planning
+time instead: `sec-42` against `software-04` (dependency risk) and `sec-100`
+against `m365-43` (SPF/DKIM/DMARC). Both are flagged in the topic notes with the
+ownership split to decide before either is written.
+
+**Class F — promote to published: none.** No draft has been researched to the
+standard yet. Promotion happens after research, not before.
+
+---
+
+## 9. Cross-domain knowledge graph
+
+The links that stop the subjects becoming silos. Each is recorded in the topics
+themselves via `plannedInternalLinks`, `relatedTopics` and cluster notes, not
+just described here.
+
+| From                                      | To                                             | Connection                                                                                      |
+| ----------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `ai` RAG (`ai-02`)                        | `cybersecurity-ciso` (`sec-90`)                | Prompt injection enters through retrieval. One article owns it — security — and AI links to it. |
+| `ai` agents (`ai-03`, `ai-10`)            | `development`, `devops`                        | MCP is a protocol developers implement.                                                         |
+| `cloud` identity (`cloud-02`)             | `microsoft-365-entra-id`, `cybersecurity-ciso` | Workload identity is the same problem as user identity, one layer down.                         |
+| `cloud` observability (`cloud-16`)        | `devops`                                       | Ownership to be decided before either is written.                                               |
+| `cybersecurity-ciso` (`sec-31`, `sec-61`) | `microsoft-intune`, `windows`                  | Security decides the control; Intune delivers it.                                               |
+| `cybersecurity-ciso` (`sec-11`)           | `enterprise-networking`                        | Microsegmentation is one topic seen from two disciplines.                                       |
+| `cybersecurity-ciso` (`sec-101`)          | `smartphones`, `microsoft-intune`              | BYOD policy is the parent of the mobile-security draft.                                         |
+| `cybersecurity-ciso` (`sec-51`)           | `networking`, `development`                    | TLS and certificates: low volatility, high link value.                                          |
+| `cybersecurity-ciso` (`sec-82`)           | `technology-leadership`                        | Board reporting is the bridge to the leadership subject.                                        |
+| `cybersecurity-ciso` (`sec-52`)           | `emerging-tech`                                | Post-quantum migration.                                                                         |
+| `ai` hardware (`ai-16`)                   | `electronics`, `emerging-tech`                 | NPUs and AI PCs.                                                                                |
+
+**Rule applied throughout:** where two subjects could both own a topic, one owns
+it and the other links. AI security lives in `cybersecurity-ciso` and is
+referenced from `ai` — not written twice.
+
+---
+
+## 10. Open decisions
 
 | #   | Decision                                                          | Recommendation                                                           |
 | --- | ----------------------------------------------------------------- | ------------------------------------------------------------------------ |

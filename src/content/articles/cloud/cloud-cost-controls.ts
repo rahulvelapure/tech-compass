@@ -16,6 +16,7 @@ export const article: Article = {
   authorId: "rahul-velapure",
   publishedAt: "2026-06-26",
   draft: true,
+  pillar: "Cost and FinOps",
   readingMinutes: 1,
   primaryKeyword: "cloud cost optimisation",
   secondaryKeywords: ["finops practices", "reduce cloud spend"],

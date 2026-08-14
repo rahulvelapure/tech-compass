@@ -15,6 +15,7 @@ export const article: Article = {
   authorId: "rahul-velapure",
   publishedAt: "2026-07-25",
   draft: true,
+  pillar: "Local AI",
   readingMinutes: 1,
   primaryKeyword: "local llm privacy",
   secondaryKeywords: ["run llm locally", "local ai vs cloud ai"],
