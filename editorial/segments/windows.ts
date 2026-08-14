@@ -1,0 +1,766 @@
+import type { Segment } from "../types";
+
+/**
+ * Windows backlog.
+ *
+ * Researched against Microsoft Learn in August 2026. The research changed the
+ * pillar structure rather than confirming a guess — see the rejected pillars
+ * below.
+ *
+ * Currency findings that shaped the plan:
+ *
+ * 1. Windows 11 26H1 (build 28000, released 2026-02-10) is NOT an annual
+ *    feature update. It ships only preinstalled on selected new hardware —
+ *    first with Qualcomm Snapdragon X2 Series — is not offered through Windows
+ *    Update, and cannot be installed in place on an existing device. It is
+ *    built on a different Windows core to 24H2 and 25H2, so 26H1 devices cannot
+ *    take the next annual feature update in H2 2026 and must wait for a later
+ *    release. Microsoft's guidance is that 24H2 and 25H2 remain the enterprise
+ *    releases. This is the single most misunderstandable fact in Windows
+ *    servicing right now.
+ * 2. 24H2 (build 26100) reaches end of updates for Home/Pro on 2026-10-13 —
+ *    weeks away — and 2027-10-12 for Enterprise/Education. 25H2 (build 26200)
+ *    runs to 2027-10-12 and 2028-10-10. 23H2 is already out of updates for
+ *    Home/Pro, with Enterprise ending 2026-11-10. LTSC 2024 runs to 2034-10-10.
+ *    Servicing is 24 months for Pro and 36 for Enterprise, annual, H2.
+ * 3. 25H2 installs from 24H2 as an enablement package: the files are already
+ *    present and dormant under temporary enterprise feature control, and the
+ *    package is a switch rather than a full OS swap.
+ * 4. Credential Guard has been on by default since Windows 11 22H2 on
+ *    domain-joined, non-domain-controller systems meeting the hardware bar, and
+ *    it auto-enables VBS. It is enabled without UEFI lock, so it can be turned
+ *    off remotely — and if it was explicitly disabled before the upgrade, the
+ *    default does not override that.
+ * 5. VBS and HVCI (memory integrity) are on by default on clean installs of
+ *    Windows 11 on compatible hardware, and on all Secured-core PCs.
+ *
+ * Windows 10 reached end of support on 2025-10-14. It remains an "allowed"
+ * version in Intune but is not guaranteed. Every article states the version it
+ * describes.
+ *
+ * PILLAR STRUCTURE — validated, not assumed. Three candidate pillars were
+ * rejected:
+ *
+ * - "Windows enterprise management" would collide head-on with
+ *   `microsoft-intune`. The boundary is that Windows owns OS behaviour and
+ *   Intune owns cloud delivery, so policy mechanics live in the servicing and
+ *   security clusters and Intune keeps management.
+ * - "Windows hardware/platform" splits cleanly instead: TPM, Secure Boot and
+ *   VBS belong to the security pillar, and component-level hardware belongs to
+ *   `electronics`.
+ * - "Windows Server boundaries" is a boundary rule, not a subject. Server
+ *   appears only where client behaviour depends on it.
+ */
+export const segment: Segment = {
+  name: "Windows",
+  category: "windows",
+  topics: [
+    /* ---------------- Hub and cluster pillars ---------------- */
+    {
+      id: "win-01",
+      title: "Windows in the enterprise: editions, licensing and lifecycle",
+      category: "windows",
+      subcategory: "Deployment",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows 11 enterprise editions licensing",
+      secondaryKeywords: ["windows 11 pro vs enterprise", "windows edition comparison"],
+      requiredSources: [
+        "https://learn.microsoft.com/windows/release-health/windows11-release-information",
+        "https://learn.microsoft.com/windows/whats-new/windows-11-plan",
+      ],
+      updateClass: "annual",
+      pillar: "Windows",
+      plannedSlug: "windows-in-the-enterprise",
+      plannedInternalLinks: [
+        "windows-servicing-and-lifecycle",
+        "windows-security-architecture",
+        "windows-identity-and-sign-in",
+      ],
+      diagramOpportunity:
+        "Edition capability matrix against the management and security features each unlocks — the honest version of what Pro cannot do.",
+      notes:
+        "Subject hub. Edition differences are the single most common source of guidance that does not work for the reader, so this doubles as the licensing gate for the whole segment.",
+    },
+    {
+      id: "win-02",
+      title: "Windows servicing and lifecycle",
+      category: "windows",
+      subcategory: "Servicing",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows 11 servicing model",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/release-health/supported-versions-windows-client",
+        "https://learn.microsoft.com/windows/whats-new/temporary-enterprise-feature-control",
+      ],
+      updateClass: "volatile",
+      pillar: "Servicing and lifecycle",
+      plannedSlug: "windows-servicing-and-lifecycle",
+      pillarSlug: "windows-in-the-enterprise",
+      diagramOpportunity:
+        "Servicing timeline showing every supported version, its build, and both end-of-update dates — the artefact an admin actually wants bookmarked.",
+      notes:
+        "Verified August 2026. Annual cadence, H2 release, 24 months Pro and 36 months Enterprise. 24H2 build 26100 ends Home/Pro updates 2026-10-13; 25H2 build 26200 runs to 2027-10-12 and 2028-10-10; 23H2 Enterprise ends 2026-11-10; LTSC 2024 to 2034-10-10. Volatile by definition — this article is wrong the moment a date passes.",
+    },
+    {
+      id: "win-03",
+      title: "Windows security architecture",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows 11 security architecture",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/security/book/hardware-security-silicon-assisted-security",
+        "https://learn.microsoft.com/windows-hardware/design/device-experiences/oem-hvci-enablement",
+      ],
+      updateClass: "annual",
+      pillar: "Windows security",
+      plannedSlug: "windows-security-architecture",
+      pillarSlug: "windows-in-the-enterprise",
+      plannedInternalLinks: ["zero-trust-for-a-microsoft-estate"],
+      diagramOpportunity:
+        "The trust chain from silicon upward: TPM, Secure Boot, DRTM, hypervisor, VTL1/VTL0 separation, HVCI, and where each attack class is stopped.",
+      notes:
+        "Verified August 2026: VBS and HVCI are on by default on clean Windows 11 installs on compatible hardware and on all Secured-core PCs. VBS implements VTL1 at higher privilege than the VTL0 kernel. Cross-domain: cybersecurity-ciso owns the risk framing, Windows owns the mechanism.",
+    },
+    {
+      id: "win-04",
+      title: "Windows identity and sign-in",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows authentication architecture",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/security/identity-protection/credential-guard/",
+        "https://learn.microsoft.com/windows/security/identity-protection/hello-for-business/",
+      ],
+      updateClass: "annual",
+      pillar: "Identity and sign-in",
+      plannedSlug: "windows-identity-and-sign-in",
+      pillarSlug: "windows-in-the-enterprise",
+      plannedInternalLinks: ["entra-join-vs-hybrid-join", "identity-is-the-security-perimeter"],
+      diagramOpportunity:
+        "Sign-in flow for an Entra-joined device: Hello gesture, key attestation, PRT issuance, and what Credential Guard isolates along the way.",
+      notes:
+        "Cross-domain bridge to microsoft-365-entra-id and microsoft-intune. Windows owns the client mechanism; Entra owns the directory and Conditional Access.",
+    },
+    {
+      id: "win-05",
+      title: "Windows troubleshooting: a diagnostic method",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows troubleshooting methodology",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/client-management/troubleshoot-windows-startup",
+      ],
+      updateClass: "evergreen",
+      pillar: "Operations and troubleshooting",
+      plannedSlug: "windows-troubleshooting-method",
+      pillarSlug: "windows-in-the-enterprise",
+      diagramOpportunity:
+        "Layered diagnostic order — firmware, boot, kernel, drivers, services, session, application — with the cheapest test at each layer.",
+      notes:
+        "The method article the other troubleshooting topics hang from. Evergreen because the layers do not change even when the tools do.",
+    },
+    {
+      id: "win-06",
+      title: "Windows as a developer platform",
+      category: "windows",
+      subcategory: "Performance",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows developer environment setup",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/wsl/",
+        "https://learn.microsoft.com/windows/dev-environment/",
+      ],
+      updateClass: "annual",
+      pillar: "Developer platform",
+      plannedSlug: "windows-as-a-developer-platform",
+      pillarSlug: "windows-in-the-enterprise",
+      notes:
+        "Cross-domain: development owns languages and frameworks; Windows owns the environment they run in. Deliberately narrow.",
+    },
+
+    /* ---------------- Servicing and lifecycle ---------------- */
+    {
+      id: "win-10",
+      title: "Windows 11 26H1: why it is not a feature update",
+      category: "windows",
+      subcategory: "Servicing",
+      contentType: "explainer",
+      searchIntent: "question",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows 11 26h1 explained",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/whats-new/windows-11-version-26h1",
+        "https://learn.microsoft.com/windows/release-health/windows11-release-information",
+      ],
+      updateClass: "volatile",
+      pillarSlug: "windows-servicing-and-lifecycle",
+      relatedTopics: ["win-02"],
+      diagramOpportunity:
+        "Branch diagram: 24H2 and 25H2 on one core continuing to the next annual update, 26H1 on a separate core with no path to it.",
+      notes:
+        "Verified August 2026. Released 2026-02-10, build 28000, preinstalled only on selected new devices starting with Qualcomm Snapdragon X2 Series. Not offered via Windows Update and not installable in place. Built on a different Windows core to 24H2/25H2, so these devices cannot take the H2 2026 annual update and get a path in a later release. Highest-value Windows topic in the segment because the natural assumption — that a higher version number is newer and better — is wrong here.",
+    },
+    {
+      id: "win-11",
+      title: "Enablement packages: how a feature update that is already installed works",
+      category: "windows",
+      subcategory: "Servicing",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "RESEARCHED",
+      targetKeyword: "windows enablement package",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/whats-new/whats-new-windows-11-version-25h2",
+        "https://learn.microsoft.com/windows/whats-new/temporary-enterprise-feature-control",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-servicing-and-lifecycle",
+      relatedTopics: ["win-02"],
+      notes:
+        "Verified August 2026: 25H2 ships to 24H2 devices as an enablement package. The binaries are already present from monthly updates but held dormant by temporary enterprise feature control; the package flips the switch. Explains why the 'upgrade' takes minutes.",
+    },
+    {
+      id: "win-12",
+      title: "Choosing between General Availability Channel and LTSC",
+      category: "windows",
+      subcategory: "Servicing",
+      contentType: "decision-framework",
+      searchIntent: "decision",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows ltsc vs general availability channel",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/release-health/supported-versions-windows-client",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-servicing-and-lifecycle",
+      relatedTopics: ["win-02"],
+      notes: "LTSC 2024 runs to 2034-10-10 but excludes the feature set most estates expect.",
+    },
+    {
+      id: "win-13",
+      title: "Windows 10 after end of support: the options that remain",
+      category: "windows",
+      subcategory: "Servicing",
+      contentType: "decision-framework",
+      searchIntent: "decision",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "windows 10 end of support options",
+      requiredSources: [
+        "https://learn.microsoft.com/lifecycle/announcements/windows-10-end-of-support",
+      ],
+      updateClass: "volatile",
+      pillarSlug: "windows-servicing-and-lifecycle",
+      notes:
+        "Windows 10 ended support 2025-10-14. High intent, and the honest answer includes ESU cost and the hardware wall.",
+    },
+    {
+      id: "win-14",
+      title: "Windows 11 hardware requirements and the devices they exclude",
+      category: "windows",
+      subcategory: "Deployment",
+      contentType: "reference",
+      searchIntent: "question",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows 11 hardware requirements tpm",
+      updateClass: "annual",
+      pillarSlug: "windows-in-the-enterprise",
+      relatedTopics: ["win-13", "win-20"],
+      notes: "Cross-domain: electronics for the TPM and CPU generation detail.",
+    },
+    {
+      id: "win-15",
+      title: "Windows on ARM: what runs and what does not",
+      category: "windows",
+      subcategory: "Deployment",
+      contentType: "analysis",
+      searchIntent: "decision",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows on arm application compatibility",
+      updateClass: "volatile",
+      pillarSlug: "windows-in-the-enterprise",
+      relatedTopics: ["win-10"],
+      notes: "Newly relevant: 26H1 launches on Snapdragon X2. Cross-domain: electronics.",
+    },
+
+    /* ---------------- Security ---------------- */
+    {
+      id: "win-20",
+      title: "The Windows boot and trust chain: TPM, Secure Boot and DRTM",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "windows secure boot tpm trust chain",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/security/operating-system-security/system-security/secure-the-windows-10-boot-process",
+        "https://learn.microsoft.com/windows-hardware/design/device-experiences/oem-highly-secure-11",
+      ],
+      updateClass: "evergreen",
+      pillarSlug: "windows-security-architecture",
+      diagramOpportunity: "Measured boot from firmware to kernel, with what each stage attests.",
+    },
+    {
+      id: "win-21",
+      title: "VBS and memory integrity: what HVCI actually stops",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "hvci memory integrity windows",
+      requiredSources: [
+        "https://learn.microsoft.com/windows-hardware/design/device-experiences/oem-hvci-enablement",
+        "https://learn.microsoft.com/windows/security/book/hardware-security-silicon-assisted-security",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-security-architecture",
+      relatedTopics: ["win-20"],
+      notes:
+        "Verified August 2026: memory integrity is on by default on clean Windows 11 installs on compatible hardware and on all Secured-core PCs. The driver-compatibility cost is the honest part most coverage omits.",
+    },
+    {
+      id: "win-22",
+      title: "Credential Guard: default enablement and the upgrade edge case",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "credential guard default enabled",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/security/identity-protection/credential-guard/",
+        "https://learn.microsoft.com/windows/security/identity-protection/credential-guard/considerations-known-issues",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-identity-and-sign-in",
+      relatedTopics: ["win-04", "win-21"],
+      notes:
+        "Verified August 2026: on by default since Windows 11 22H2 and Windows Server 2025, on domain-joined non-DC systems meeting the hardware bar, and it auto-enables VBS. Enabled without UEFI lock, so it can be disabled remotely. If it was explicitly disabled before the upgrade, default enablement does not override — that exception is exactly what makes estates inconsistent.",
+    },
+    {
+      id: "win-23",
+      title: "BitLocker: key protectors, recovery and the escrow question",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "bitlocker key protectors recovery",
+      updateClass: "annual",
+      pillarSlug: "windows-security-architecture",
+      relatedTopics: ["win-20"],
+      diagramOpportunity:
+        "Key hierarchy: TPM, PIN, recovery key, and what unseals the volume when.",
+      notes:
+        "Cross-domain: Intune owns silent-encryption delivery (intune-40); Windows owns the mechanism.",
+    },
+    {
+      id: "win-24",
+      title: "App Control for Business: allow-listing that survives contact with users",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "how-to",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "app control for business wdac",
+      updateClass: "annual",
+      pillarSlug: "windows-security-architecture",
+      notes: "Formerly WDAC. Naming has moved; the article must say both.",
+    },
+    {
+      id: "win-25",
+      title: "Windows Firewall: rule precedence and profile behaviour",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "reference",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows firewall rule precedence",
+      updateClass: "evergreen",
+      pillarSlug: "windows-security-architecture",
+      notes: "Cross-domain: networking for the profile-detection behaviour.",
+    },
+    {
+      id: "win-26",
+      title: "Hardware-enforced stack protection and exploit mitigations",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "hardware enforced stack protection windows",
+      updateClass: "annual",
+      pillarSlug: "windows-security-architecture",
+      relatedTopics: ["win-21"],
+      notes: "Intel CET and AMD Shadow Stacks. Cross-domain: electronics.",
+    },
+    {
+      id: "win-27",
+      title: "Local administrator rights: removing them without breaking the estate",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "decision-framework",
+      searchIntent: "decision",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "remove local admin rights windows",
+      updateClass: "evergreen",
+      pillarSlug: "windows-security-architecture",
+      notes:
+        "Cross-domain: Intune EPM (intune-47) is one delivery mechanism, not the whole answer.",
+    },
+
+    /* ---------------- Identity and sign-in ---------------- */
+    {
+      id: "win-30",
+      title: "Windows Hello for Business: deployment models compared",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "comparison",
+      searchIntent: "decision",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "windows hello for business deployment models",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/security/identity-protection/hello-for-business/deploy/",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-identity-and-sign-in",
+      relatedTopics: ["win-04"],
+    },
+    {
+      id: "win-31",
+      title: "Primary Refresh Tokens: how Windows stays signed in",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "primary refresh token windows",
+      updateClass: "annual",
+      pillarSlug: "windows-identity-and-sign-in",
+      relatedTopics: ["win-04"],
+      notes: "The mechanism behind most 'why is it not prompting' and SSO questions.",
+    },
+    {
+      id: "win-32",
+      title: "Kerberos and NTLM on a modern Windows estate",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "kerberos ntlm windows authentication",
+      updateClass: "annual",
+      pillarSlug: "windows-identity-and-sign-in",
+      notes:
+        "NTLM deprecation direction matters here. Cross-domain: cybersecurity identity attacks.",
+    },
+    {
+      id: "win-33",
+      title: "Local accounts, LAPS and the built-in administrator",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows laps local administrator password",
+      updateClass: "annual",
+      pillarSlug: "windows-identity-and-sign-in",
+      notes:
+        "Overlaps intune-44 (Windows LAPS with Intune). Split: Windows owns the mechanism and the audit trail, Intune owns policy delivery. Decide before writing.",
+    },
+
+    /* ---------------- Operations and troubleshooting ---------------- */
+    {
+      id: "win-40",
+      title: "Event logs: finding the entry that explains the failure",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "windows event log troubleshooting",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+      relatedTopics: ["win-05"],
+    },
+    {
+      id: "win-41",
+      title: "Slow boot and slow sign-in: finding the actual cause",
+      category: "windows",
+      subcategory: "Performance",
+      contentType: "troubleshooting",
+      searchIntent: "failure-mode",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "windows slow boot sign in troubleshooting",
+      updateClass: "annual",
+      pillarSlug: "windows-troubleshooting-method",
+      relatedTopics: ["win-05"],
+      diagramOpportunity: "Boot and logon phases with the measurement available at each.",
+    },
+    {
+      id: "win-42",
+      title: "Reading a crash: memory dumps and driver faults",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "troubleshooting",
+      searchIntent: "failure-mode",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows memory dump analysis bugcheck",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+    },
+    {
+      id: "win-43",
+      title: "Windows recovery: WinRE, reset and the repair options that work",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows recovery environment winre repair",
+      updateClass: "annual",
+      pillarSlug: "windows-troubleshooting-method",
+    },
+    {
+      id: "win-44",
+      title: "Windows performance: where the time actually goes",
+      category: "windows",
+      subcategory: "Performance",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows performance troubleshooting",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+      relatedTopics: ["win-41"],
+    },
+    {
+      id: "win-45",
+      title: "The registry: structure, permissions and safe change",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "reference",
+      searchIntent: "architecture",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "windows registry structure explained",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+    },
+    {
+      id: "win-46",
+      title: "Windows 11 Wi-Fi problems: a diagnostic order that finds the cause",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "troubleshooting",
+      searchIntent: "failure-mode",
+      priority: "P1",
+      status: "DRAFT",
+      targetKeyword: "windows 11 wifi troubleshooting",
+      updateClass: "annual",
+      pillarSlug: "windows-troubleshooting-method",
+      articleSlug: "wifi-troubleshooting",
+      relatedTopics: ["win-05", "win-50"],
+      notes:
+        "Existing 252-word draft with a sound layered approach. Needs research depth and a link up to win-05. Cross-domain: networking owns the protocol explanation.",
+    },
+    {
+      id: "win-47",
+      title: "Windows 11 versus Windows 10 for enterprise fleets",
+      category: "windows",
+      subcategory: "Deployment",
+      contentType: "comparison",
+      searchIntent: "comparison",
+      priority: "P1",
+      status: "DRAFT",
+      targetKeyword: "windows 11 vs windows 10 enterprise",
+      updateClass: "annual",
+      pillarSlug: "windows-in-the-enterprise",
+      articleSlug: "windows-11-vs-windows-10-enterprise",
+      relatedTopics: ["win-13", "win-14"],
+      notes:
+        "Existing 174-word draft. The comparison changed character once Windows 10 hit end of support on 2025-10-14 — it is now a migration decision, not a preference. Rewrite with that framing.",
+    },
+
+    /* ---------------- Networking on Windows ---------------- */
+    {
+      id: "win-50",
+      title: "The Windows networking stack: where a connection actually fails",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows networking stack explained",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+      diagramOpportunity: "Adapter, driver, TCP/IP stack, name resolution, proxy, application.",
+      notes: "Cross-domain: networking owns protocols, Windows owns client behaviour.",
+    },
+    {
+      id: "win-51",
+      title: "Name resolution on Windows: DNS, mDNS, LLMNR and the resolution order",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "reference",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows dns resolution order",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+      relatedTopics: ["win-50"],
+    },
+    {
+      id: "win-52",
+      title: "Certificates on Windows: stores, trust and the errors they produce",
+      category: "windows",
+      subcategory: "Security",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "windows certificate store trust errors",
+      updateClass: "evergreen",
+      pillarSlug: "windows-security-architecture",
+      notes: "Cross-domain: cybersecurity owns TLS (sec-51), Intune owns delivery (intune-110).",
+    },
+
+    /* ---------------- Configuration and platform ---------------- */
+    {
+      id: "win-60",
+      title: "Group Policy and CSPs: two ways to configure the same setting",
+      category: "windows",
+      subcategory: "Deployment",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "IDEA",
+      targetKeyword: "group policy vs csp windows",
+      requiredSources: [
+        "https://learn.microsoft.com/windows/client-management/mdm/configuration-service-provider-reference",
+      ],
+      updateClass: "annual",
+      pillarSlug: "windows-in-the-enterprise",
+      diagramOpportunity: "One setting, two delivery paths, and what happens when both apply.",
+      notes:
+        "The boundary article between Windows and Intune. Windows owns what the setting does; Intune owns how it is delivered. Links to intune-101 and intune-11.",
+    },
+    {
+      id: "win-61",
+      title: "Windows services and scheduled tasks: what runs and why",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "reference",
+      searchIntent: "architecture",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "windows services scheduled tasks explained",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+    },
+    {
+      id: "win-62",
+      title: "Hyper-V on the client: when a local VM is the right answer",
+      category: "windows",
+      subcategory: "Performance",
+      contentType: "how-to",
+      searchIntent: "decision",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "hyper-v windows client virtual machine",
+      updateClass: "annual",
+      pillarSlug: "windows-as-a-developer-platform",
+    },
+    {
+      id: "win-63",
+      title: "WSL2 in a managed estate: networking, security and the support boundary",
+      category: "windows",
+      subcategory: "Performance",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "wsl2 enterprise security boundary",
+      requiredSources: ["https://learn.microsoft.com/windows/wsl/"],
+      updateClass: "annual",
+      pillarSlug: "windows-as-a-developer-platform",
+      notes:
+        "Overlaps software-06 in the software segment, which predates the windows category. Windows now owns this; software-06 should be archived or narrowed. Decide before either is written.",
+    },
+    {
+      id: "win-64",
+      title: "PowerShell for Windows administration: the parts that matter",
+      category: "windows",
+      subcategory: "Troubleshooting",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P1",
+      status: "IDEA",
+      targetKeyword: "powershell windows administration basics",
+      updateClass: "evergreen",
+      pillarSlug: "windows-troubleshooting-method",
+      notes:
+        "Boundary with it-automation: that segment owns automation at estate scale and Microsoft Graph; this is single-machine administration and diagnostics.",
+    },
+    {
+      id: "win-65",
+      title: "Windows Terminal and the modern console",
+      category: "windows",
+      subcategory: "Performance",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P2",
+      status: "IDEA",
+      targetKeyword: "windows terminal configuration",
+      updateClass: "annual",
+      pillarSlug: "windows-as-a-developer-platform",
+    },
+  ],
+};
