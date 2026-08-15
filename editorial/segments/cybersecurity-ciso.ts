@@ -682,7 +682,7 @@ export const segment: Segment = {
       contentType: "reference",
       searchIntent: "architecture",
       priority: "P1",
-      status: "DRAFT",
+      status: "PUBLISHED",
       targetKeyword: "iso 27001 microsoft 365 mapping",
       updateClass: "annual",
       pillarSlug: "security-governance-and-frameworks",

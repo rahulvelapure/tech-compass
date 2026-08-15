@@ -37,7 +37,7 @@ export const segment: Segment = {
       contentType: "how-to",
       searchIntent: "architecture",
       priority: "P0",
-      status: "DRAFT",
+      status: "PUBLISHED",
       targetKeyword: "break glass account entra id",
       relatedTopics: ["m365-01"],
       requiredSources: ["Microsoft Learn: Manage emergency access accounts"],

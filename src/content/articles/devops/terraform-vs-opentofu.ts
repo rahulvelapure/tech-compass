@@ -15,7 +15,8 @@ export const article: Article = {
     "OpenTofu and Terraform still share a configuration language, provider protocol and state model. The differences that matter are licensing, governance and a small set of divergent features.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-15",
-  draft: true,
+  lastReviewedAt: "2026-08-15",
+  nextReviewAt: "2027-02-15",
   readingMinutes: 3,
   primaryKeyword: "terraform vs opentofu decision",
   secondaryKeywords: [

@@ -15,7 +15,8 @@ export const article: Article = {
     "High-risk obligations were deferred to December 2027 and August 2028. The Article 50 transparency duties were not deferred and apply now. Here is the current shape of the timeline.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-15",
-  draft: true,
+  lastReviewedAt: "2026-08-15",
+  nextReviewAt: "2027-02-15",
   readingMinutes: 3,
   primaryKeyword: "eu ai act obligations timeline 2026",
   secondaryKeywords: [

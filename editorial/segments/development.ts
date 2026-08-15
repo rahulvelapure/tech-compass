@@ -232,7 +232,7 @@ export const segment: Segment = {
       contentType: "explainer",
       searchIntent: "architecture",
       priority: "P0",
-      status: "DRAFT",
+      status: "PUBLISHED",
       targetKeyword: "nodejs release schedule change lts",
       secondaryKeywords: ["node 26 lts", "node js version support 2026"],
       updateClass: "volatile",

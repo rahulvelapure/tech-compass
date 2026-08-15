@@ -345,7 +345,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Use Group Policy analytics as an inventory and triage tool, not as a migration engine. Import everything, generate the readiness report, and spend the first pass deleting: deprecated settings, settings that assume an on-premises dependency you are removing, and settings nobody can name an owner for. Most estates lose a meaningful fraction of their GPO surface at this step, and every setting removed here is one you never have to migrate, test or support.",
+      text: "Use Group Policy analytics as an inventory and triage tool, not as a migration engine. Import everything, generate the readiness report, and spend the first pass deleting: deprecated settings, settings that assume an on-premises dependency you are removing, and settings nobody can name an owner for. Most estates lose a meaningful fraction of their GPO surface at this step, and every setting removed here is one you never have to migrate, test or support. Check the minimum OS version on what survives, too: a setting that maps cleanly but requires a newer build is blocked on the [Windows 11 fleet migration](/windows/windows-11-vs-windows-10-enterprise) rather than on Intune.",
     },
     {
       type: "p",

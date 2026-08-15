@@ -617,7 +617,7 @@ export const segment: Segment = {
       contentType: "comparison",
       searchIntent: "comparison",
       priority: "P1",
-      status: "DRAFT",
+      status: "PUBLISHED",
       targetKeyword: "windows 11 vs windows 10 enterprise",
       updateClass: "annual",
       pillarSlug: "windows-in-the-enterprise",

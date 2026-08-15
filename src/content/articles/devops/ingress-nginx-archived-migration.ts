@@ -15,7 +15,8 @@ export const article: Article = {
     "The most widely deployed Kubernetes ingress controller is now read-only and will receive no further security updates. Here is how to assess the exposure and plan the move.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-15",
-  draft: true,
+  lastReviewedAt: "2026-08-15",
+  nextReviewAt: "2027-02-15",
   readingMinutes: 4,
   primaryKeyword: "ingress nginx archived migration",
   secondaryKeywords: [
@@ -35,7 +36,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That last sentence is the one that changes the shape of the problem. An ingress controller is not a peripheral component. It terminates TLS, parses untrusted HTTP from the public internet, and sits in the request path of every service routed through it. A component in that position with no route to a security fix is a different category of risk from a merely outdated dependency, and it should not be tracked as technical debt.",
+      text: "That last sentence is the one that changes the shape of the problem. An ingress controller is not a peripheral component. It terminates TLS, parses untrusted HTTP from the public internet, and sits in the request path of every service routed through it. A component in that position with no route to a security fix is a different category of risk from a merely outdated dependency, and it should not be tracked as technical debt. The same test applies to anything else in the stack that has left support, including [a language runtime past its end of life](/development/nodejs-release-schedule-change).",
     },
     {
       type: "callout",

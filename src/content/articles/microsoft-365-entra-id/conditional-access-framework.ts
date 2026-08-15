@@ -212,7 +212,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
       type: "callout",
       variant: "warning",
       title: "Block plus all resources can lock you out of the fix",
-      text: "Microsoft's guidance is explicit that combining **block** with **all resources** in a single policy risks locking out administrators, and that exclusions cannot be configured for some important endpoints — Microsoft Graph among them. A block policy scoped that broadly can therefore remove the route you would use to correct it. This is the single configuration that most justifies report-only mode and an emergency access account.",
+      text: "Microsoft's guidance is explicit that combining **block** with **all resources** in a single policy risks locking out administrators, and that exclusions cannot be configured for some important endpoints — Microsoft Graph among them. A block policy scoped that broadly can therefore remove the route you would use to correct it. This is the single configuration that most justifies report-only mode and a tested [emergency access account](/microsoft-365-entra-id/conditional-access-break-glass-accounts).",
     },
     {
       type: "p",
