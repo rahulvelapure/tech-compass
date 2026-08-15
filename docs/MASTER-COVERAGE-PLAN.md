@@ -16,16 +16,16 @@ counts, targets, priorities or research tracks.
 
 Measured, not estimated:
 
-| Measure                 | Start   | 3a      | 3b (Windows) | 3c (Networking) |
-| ----------------------- | ------- | ------- | ------------ | --------------- |
-| Backlog topics          | 106     | 174     | 215          | **257**         |
-| Intune share of backlog | **71%** | 43%     | 35%          | **29%**         |
-| Segments with a backlog | 3 of 16 | 6 of 18 | 7 of 18      | **8 of 18**     |
-| Subjects with a pillar  | 1       | 5       | 6            | **7**           |
-| Pillar and hub topics   | 7       | 21      | 27           | **34**          |
-| Topics with sources     | 33      | 70      | 86           | **107**         |
-| Diagram opportunities   | 15      | 38      | 49           | **70**          |
-| Unique target keywords  | 106/106 | 174/174 | 215/215      | **257/257**     |
+| Measure                 | Start   | 3a      | 3b (Windows) | 3c (Networking) | 3d (Five subjects) |
+| ----------------------- | ------- | ------- | ------------ | --------------- | ------------------ |
+| Backlog topics          | 106     | 174     | 215          | 257             | **327**            |
+| Intune share of backlog | **71%** | 43%     | 35%          | 29%             | **23%**            |
+| Segments with a backlog | 3 of 16 | 6 of 18 | 7 of 18      | 8 of 18         | **13 of 18**       |
+| Subjects with a pillar  | 1       | 5       | 6            | 7               | **11**             |
+| Pillar and hub topics   | 7       | 21      | 27           | 34              | **51**             |
+| Topics with sources     | 33      | 70      | 86           | 107             | **157**            |
+| Diagram opportunities   | 15      | 38      | 49           | 70              | **78**             |
+| Unique target keywords  | 106/106 | 174/174 | 215/215      | 257/257         | **327/327**        |
 
 Tech Compass was an Intune site with fifteen empty rooms attached. The
 architecture was sound and the Intune work good, but continuing at that ratio
@@ -38,8 +38,14 @@ was removed. The 75 Intune topics are untouched.
 
 **The freeze is satisfied.** Four subjects — cybersecurity, cloud, AI and
 Windows — now have researched clusters with pillars. Intune is eligible to
-reopen, but §5 sequencing says it should not be next: eleven subjects still have
-no backlog at all.
+reopen, but §5 sequencing says it should not be next.
+
+**Phase 3d opened the five remaining P1 subjects** — development, DevOps, IT
+automation, enterprise networking and AI for enterprise IT — adding 70 topics
+and taking Intune to 23%. Five subjects still hold no backlog: `electronics`,
+`smartphones`, `technology-leadership`, `gadgets` and `emerging-tech`. Four of
+those five already contain a draft with nothing around it, which makes them the
+natural next phase.
 
 ### Windows research status (Phase 3b)
 
@@ -128,6 +134,52 @@ Cloudflare PQC documentation.
 **Coverage gap:** 42 of a 60 target. The remaining ~18 are held for discovery
 once the first cluster is written, rather than pre-specified now.
 
+### Five-subject research status (Phase 3d)
+
+`development`, `devops`, `it-automation`, `enterprise-networking` and
+`ai-enterprise-it` opened together: 70 topics in 16 clusters. Chosen because all
+five had a category and no backlog, and because two of them —
+`development` and `devops` — are where a general technology publication is
+least credible when it has nothing.
+
+**Findings that changed the plan rather than confirming it:**
+
+- **Ingress NGINX is archived.** The repository went read-only on 24 March 2026
+  with no further releases, bugfixes or security updates, and the project tells
+  new users not to deploy it. This converts a slow modernisation topic into a
+  dated migration with a security deadline, and it is why the Gateway API
+  cluster is the segment's P0 rather than a P2 explainer.
+- **The EU AI Act timeline moved.** Amendments approved on 16 June 2026 deferred
+  Annex III high-risk obligations to 2 December 2027 and Annex I to 2 August
+  2028 — but Article 50 transparency duties were **not** deferred and apply from
+  2 August 2026. Writing "high-risk obligations begin in August 2026" would have
+  been flatly wrong, and a great deal of published guidance still says it.
+- **MCP became stateless.** The 2026-07-28 revision removed protocol-level
+  sessions and the `Mcp-Session-Id` header. An article written from earlier
+  knowledge would have described session affinity as an operational constraint
+  that no longer exists.
+- **Node.js is changing its release model.** From October 2026: one major a
+  year, calendar-aligned numbering, every release an LTS, plus an Alpha channel.
+  The even/odd LTS convention that has held since 2015 ends with Node 26.
+- **Terraform's owner changed.** Terraform is BUSL 1.1 under IBM ownership;
+  OpenTofu is MPL 2.0 under the Linux Foundation, currently 1.12, still
+  state-compatible. The decision is governance, not features — and the BUSL
+  restriction is narrower than commonly described, which matters because teams
+  migrate for reasons that do not apply to them.
+- **Wi-Fi 8 remains unratified.** 802.11bn (Ultra High Reliability) targets
+  ratification around mid-to-late 2028, and its emphasis is reliability rather
+  than throughput. No enterprise-networking topic was written against it.
+
+**Ownership conflicts found and resolved before creating anything:** three
+intended topics were already owned elsewhere and were dropped rather than
+duplicated — supply-chain security and dependency risk to `sec-41`/`sec-42`,
+post-quantum migration to `sec-52` with wire behaviour at `net-44`, and AI
+governance policy to `sec-91`. The new clusters link across to those instead.
+
+**Coverage gap:** deliberately short of target in all five. 70 topics with
+research behind them is worth more than 300 keyword variations, and the
+remainder is held for discovery once the first articles in each cluster exist.
+
 ### Duplicate intent resolved this phase
 
 | Overlap                                                                    | Decision                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -141,11 +193,14 @@ once the first cluster is written, rather than pre-specified now.
 
 ### Draft ownership decided
 
-| Draft                             | Owner                     | Reasoning                                                                                                                                     |
-| --------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `wifi-6-vs-wifi-7`                | **networking** (`net-50`) | Wi-Fi standards are protocol territory. Now mapped.                                                                                           |
-| `wifi-troubleshooting`            | **windows** (`win-46`)    | Client-side diagnosis, not protocol. Not taken.                                                                                               |
-| `zero-trust-network-segmentation` | **enterprise-networking** | Corporate segmentation architecture. Deliberately _not_ pulled into networking despite the name — the primary intent is design, not protocol. |
+| Draft                             | Owner                              | Reasoning                                                                                                                                                                                                                                                                   |
+| --------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `wifi-6-vs-wifi-7`                | **networking** (`net-50`)          | Wi-Fi standards are protocol territory. Now mapped.                                                                                                                                                                                                                         |
+| `wifi-troubleshooting`            | **windows** (`win-46`)             | Client-side diagnosis, not protocol. Not taken.                                                                                                                                                                                                                             |
+| `zero-trust-network-segmentation` | **enterprise-networking**          | Corporate segmentation architecture. Deliberately _not_ pulled into networking despite the name — the primary intent is design, not protocol. **Now mapped to `entnet-02`** under the segmentation-architecture pillar, which removes its orphan status.                    |
+| `ai-agents-it-operations`         | **ai-enterprise-it**               | Mapped to `aient-06` under the agents-and-tool-protocols pillar. Was an orphan.                                                                                                                                                                                             |
+| `ai-coding-assistants-enterprise` | **ai-enterprise-it**               | Mapped to `aient-10` under the coding-assistants pillar. Was an orphan.                                                                                                                                                                                                     |
+| `graph-api-intune-reporting`      | **microsoft-intune** (`intune-71`) | Unresolved: the topic exists and is DRAFT, but carries no `articleSlug`, so the dashboard does not connect the two. The article's category is `it-automation` while its topic sits in the Intune segment. Left alone this phase to avoid touching Intune; needs a decision. |
 
 ---
 
@@ -163,22 +218,42 @@ is below 100, the reason is stated in §4.
 | `microsoft-365-entra-id` |      1 |      1 |      23 |        100 |  99 | **P0**      | High          |
 | `windows`                |      0 |      2 |  **41** |         90 |  90 | **P0**      | Medium        |
 | `ai`                     |      0 |      1 |  **14** |         85 |  85 | **P0**      | **Very high** |
-| `enterprise-networking`  |      0 |      1 |       0 |         80 |  80 | P1          | Low           |
-| `devops`                 |      0 |      0 |       0 |         80 |  80 | P1          | Medium        |
-| `development`            |      0 |      0 |       0 |         80 |  80 | P1          | Medium        |
-| `it-automation`          |      0 |      1 |       0 |         70 |  70 | P1          | Medium        |
+| `enterprise-networking`  |      0 |      1 |  **12** |         80 |  80 | P1          | Low           |
+| `devops`                 |      0 |      2 |  **16** |         80 |  80 | P1          | Medium        |
+| `development`            |      0 |      1 |  **18** |         80 |  80 | P1          | Medium        |
+| `it-automation`          |      0 |      1 |  **12** |         70 |  70 | P1          | Medium        |
 | `networking`             |      0 |      1 |  **42** |         60 |  60 | P2          | **Low**       |
 | `electronics`            |      0 |      1 |       0 |         60 |  60 | P2          | Medium        |
 | `software`               |      1 |      0 |       8 |         60 |  59 | P2          | Medium        |
-| `ai-enterprise-it`       |      0 |      2 |       0 |         55 |  55 | P1          | **Very high** |
+| `ai-enterprise-it`       |      0 |      4 |  **12** |         55 |  55 | P1          | **Very high** |
 | `smartphones`            |      0 |      1 |       0 |         55 |  55 | P2          | High          |
 | `technology-leadership`  |      0 |      1 |       0 |         50 |  50 | P2          | **Low**       |
 | `emerging-tech`          |      0 |      0 |       0 |         40 |  40 | P3          | **Very high** |
 | `gadgets`                |      0 |      2 |       0 |         40 |  40 | P3          | High          |
-| **Total**                | **17** | **18** | **257** | **~1,205** |     |             |               |
+| **Total**                | **17** | **23** | **327** | **~1,205** |     |             |               |
 
 **~1,205 genuinely distinct articles** is the honest long-term ceiling across
 eighteen subjects. Not 1,600, and not padded to reach it.
+
+Four subjects still hold no backlog: `electronics`, `smartphones`,
+`technology-leadership`, `gadgets` — plus `emerging-tech`, which is P3 by
+design. Each has a draft already sitting in it except `emerging-tech`, so each
+is a candidate for the next phase rather than a gap that has been forgotten.
+
+### Portfolio balance
+
+Diversification is measured as the largest subject's share of the backlog.
+
+| Phase                                | Backlog | Intune share |
+| ------------------------------------ | ------: | -----------: |
+| After the Intune-only phase          |     100 |     **100%** |
+| After security, cloud, M365          |     177 |          42% |
+| After Windows and networking         |     257 |          29% |
+| **After this phase (five subjects)** | **327** |      **23%** |
+
+Intune's share has fallen every phase without a single Intune topic being
+removed. That is the intended mechanism: the portfolio rebalances by growing
+the other subjects, not by cutting the strongest one.
 
 ---
 
@@ -379,7 +454,7 @@ prompt-injection attack path.
 `cybersecurity-ciso` (AI security) · `development` (AI in the toolchain) ·
 `cloud` (GPU infrastructure).
 
-### `enterprise-networking` — target 80, P1
+### `enterprise-networking` — target 80, P1, 12 topics exist
 
 **Clusters:** campus and branch architecture · routing · switching · VLAN and
 VXLAN · segmentation and microsegmentation · SD-WAN · SASE and ZTNA · NAC and
@@ -396,7 +471,7 @@ IETF RFCs · IEEE 802 standards · Cloudflare docs.
 **Diagrams:** segmentation reference architecture · 802.1X authentication flow ·
 SD-WAN vs MPLS path selection · WLAN channel and cell planning.
 
-### `devops` _(proposed)_ — target 80, P1
+### `devops` — target 80, P1, 16 topics exist
 
 **Clusters:** CI/CD fundamentals · GitHub Actions · containers and Docker ·
 Kubernetes architecture and operations · IaC with Terraform · Bicep and ARM ·
@@ -413,7 +488,7 @@ fundamentals_.
 **Diagrams:** pipeline stages with gates · Kubernetes control plane and node
 components · Terraform state and plan/apply lifecycle · trace propagation.
 
-### `development` _(proposed)_ — target 80, P1
+### `development` — target 80, P1, 18 topics exist
 
 **Clusters:** language fundamentals · TypeScript · Python · Go and Rust · API
 design (REST, GraphQL) · web platform and browser standards · frameworks ·
@@ -426,7 +501,7 @@ strategy_ · _Web performance_ · _Dependency and supply-chain risk_.
 **Primary sources:** MDN and WHATWG/W3C · official language and framework docs ·
 official GitHub repositories · IETF RFCs for HTTP and TLS.
 
-### `it-automation` — target 70, P1
+### `it-automation` — target 70, P1, 12 topics exist
 
 **Clusters:** PowerShell for IT · Microsoft Graph · Intune automation · Entra
 automation · reporting and dashboards · scheduled and event-driven automation ·
@@ -475,7 +550,7 @@ macOS and Linux for Windows-centric teams · SaaS vs self-hosting.
 **Narrowed** by the `development` and `devops` proposals — this becomes tooling,
 licensing and platform choice rather than everything software-shaped.
 
-### `ai-enterprise-it` — target 55, P1, very high volatility
+### `ai-enterprise-it` — target 55, P1, 12 topics exist, very high volatility
 
 Copilot readiness and permissions hygiene · Copilot deployment · AI governance ·
 data prerequisites and oversharing · agents in IT operations · securing AI
