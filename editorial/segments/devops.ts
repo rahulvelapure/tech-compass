@@ -49,12 +49,13 @@ export const segment: Segment = {
       contentType: "how-to",
       searchIntent: "failure-mode",
       priority: "P0",
-      status: "RESEARCHED",
+      status: "DRAFT",
       targetKeyword: "ingress nginx archived migration",
       secondaryKeywords: ["ingress-nginx end of life", "ingress nginx no security updates"],
       updateClass: "volatile",
       pillarSlug: "kubernetes-gateway-api-transition",
       relatedTopics: ["devops-01", "devops-03", "devops-04"],
+      articleSlug: "ingress-nginx-archived-migration",
       requiredSources: [
         "https://github.com/kubernetes/ingress-nginx",
         "https://github.com/kubernetes-sigs/ingress2gateway",
@@ -93,7 +94,8 @@ export const segment: Segment = {
       pillarSlug: "kubernetes-gateway-api-transition",
       relatedTopics: ["devops-01", "devops-02"],
       requiredSources: ["https://gateway-api.sigs.k8s.io/implementations/"],
-      notes: "Conformance level and governance model are the criteria that would have predicted the ingress-nginx outcome.",
+      notes:
+        "Conformance level and governance model are the criteria that would have predicted the ingress-nginx outcome.",
     },
 
     // ------------------------------------------------------------------ IaC
@@ -122,12 +124,13 @@ export const segment: Segment = {
       contentType: "comparison",
       searchIntent: "decision",
       priority: "P0",
-      status: "RESEARCHED",
+      status: "DRAFT",
       targetKeyword: "terraform vs opentofu decision",
       secondaryKeywords: ["opentofu migration", "terraform bsl licence enterprise"],
       updateClass: "volatile",
       pillarSlug: "infrastructure-as-code-at-scale",
       relatedTopics: ["devops-05", "devops-07"],
+      articleSlug: "terraform-vs-opentofu",
       requiredSources: [
         "https://opentofu.org/docs/",
         "https://developer.hashicorp.com/terraform/docs",
@@ -166,6 +169,7 @@ export const segment: Segment = {
       updateClass: "annual",
       pillarSlug: "infrastructure-as-code-at-scale",
       relatedTopics: ["devops-05", "devops-07"],
+      articleSlug: "terraform-vs-opentofu",
     },
     {
       id: "devops-09",
@@ -255,7 +259,8 @@ export const segment: Segment = {
       pillarSlug: "cicd-pipeline-security",
       relatedTopics: ["devops-10"],
       requiredSources: ["SLSA specification", "Sigstore documentation"],
-      notes: "Operational how-to. sec-41 owns what SBOM and provenance *prove*; do not repeat that argument.",
+      notes:
+        "Operational how-to. sec-41 owns what SBOM and provenance *prove*; do not repeat that argument.",
     },
 
     // ----------------------------------------------------------- Containers

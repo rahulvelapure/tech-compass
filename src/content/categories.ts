@@ -57,7 +57,15 @@ export const categories: Category[] = [
       "Wired and wireless infrastructure, segmentation, remote access and the trade-offs behind each architecture decision — including the ones that only show up under load.",
     description:
       "Enterprise networking: wireless design, segmentation, SD-WAN, remote access and network security architecture.",
-    subcategories: ["Wireless", "Segmentation", "Zero Trust", "Remote access", "Monitoring"],
+    subcategories: [
+      "Wireless",
+      "Segmentation",
+      "Zero Trust",
+      "WAN",
+      "Transport security",
+      "Remote access",
+      "Monitoring",
+    ],
     related: ["networking", "cybersecurity-ciso", "cloud"],
   },
   {

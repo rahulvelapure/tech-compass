@@ -8,11 +8,16 @@ import type { Article } from "../types";
 
 import { article as aiAgentsItOperations } from "./ai-enterprise-it/ai-agents-it-operations";
 import { article as aiCodingAssistantsEnterprise } from "./ai-enterprise-it/ai-coding-assistants-enterprise";
+import { article as euAiActObligationsTimeline } from "./ai-enterprise-it/eu-ai-act-obligations-timeline";
+import { article as modelContextProtocolExplained } from "./ai-enterprise-it/model-context-protocol-explained";
 import { article as localLlmsPrivacy } from "./ai/local-llms-privacy";
 import { article as cloudCostControls } from "./cloud/cloud-cost-controls";
 import { article as backupRestoreTesting } from "./cybersecurity-ciso/backup-restore-testing";
 import { article as iso27001Microsoft365Mapping } from "./cybersecurity-ciso/iso-27001-microsoft-365-mapping";
 import { article as passwordManagersForTeams } from "./cybersecurity-ciso/password-managers-for-teams";
+import { article as nodejsReleaseScheduleChange } from "./development/nodejs-release-schedule-change";
+import { article as ingressNginxArchivedMigration } from "./devops/ingress-nginx-archived-migration";
+import { article as terraformVsOpentofu } from "./devops/terraform-vs-opentofu";
 import { article as usbCCablesExplained } from "./electronics/usb-c-cables-explained";
 import { article as zeroTrustNetworkSegmentation } from "./enterprise-networking/zero-trust-network-segmentation";
 import { article as choosingABusinessLaptop } from "./gadgets/choosing-a-business-laptop";
@@ -45,11 +50,16 @@ import { article as windows11VsWindows10Enterprise } from "./windows/windows-11-
 export const articles: Article[] = [
   aiAgentsItOperations,
   aiCodingAssistantsEnterprise,
+  euAiActObligationsTimeline,
+  modelContextProtocolExplained,
   localLlmsPrivacy,
   cloudCostControls,
   backupRestoreTesting,
   iso27001Microsoft365Mapping,
   passwordManagersForTeams,
+  nodejsReleaseScheduleChange,
+  ingressNginxArchivedMigration,
+  terraformVsOpentofu,
   usbCCablesExplained,
   zeroTrustNetworkSegmentation,
   choosingABusinessLaptop,

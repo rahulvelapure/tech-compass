@@ -112,7 +112,8 @@ export const segment: Segment = {
       pillar: "Enterprise WAN and edge",
       plannedSlug: "enterprise-wan-and-edge",
       plannedInternalLinks: ["entnet-06", "entnet-07", "entnet-08"],
-      notes: "Cluster anchor. Traffic no longer returns to a datacentre; the design has to admit that.",
+      notes:
+        "Cluster anchor. Traffic no longer returns to a datacentre; the design has to admit that.",
     },
     {
       id: "entnet-06",
@@ -129,7 +130,8 @@ export const segment: Segment = {
       pillarSlug: "enterprise-wan-and-edge",
       relatedTopics: ["entnet-05", "entnet-04"],
       requiredSources: ["Vendor primary documentation for the platforms compared"],
-      notes: "Volatile: vendor category definitions shift. Anchor on the functions, not the marketing term.",
+      notes:
+        "Volatile: vendor category definitions shift. Anchor on the functions, not the marketing term.",
     },
     {
       id: "entnet-07",
@@ -161,7 +163,8 @@ export const segment: Segment = {
       pillarSlug: "enterprise-wan-and-edge",
       relatedTopics: ["entnet-05"],
       requiredSources: ["RFC 4786 Operation of Anycast Services", "RIPE routing documentation"],
-      notes: "Links across to the networking segment's BGP fundamentals rather than re-teaching BGP.",
+      notes:
+        "Links across to the networking segment's BGP fundamentals rather than re-teaching BGP.",
     },
 
     // --------------------------------------------------- Transport security

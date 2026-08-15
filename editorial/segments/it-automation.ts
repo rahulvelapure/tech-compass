@@ -64,7 +64,8 @@ export const segment: Segment = {
     },
     {
       id: "itauto-03",
-      title: "Delegated or application permissions: the choice that decides what your script can do",
+      title:
+        "Delegated or application permissions: the choice that decides what your script can do",
       category: "it-automation",
       subcategory: "Microsoft Graph",
       contentType: "explainer",
@@ -110,13 +111,16 @@ export const segment: Segment = {
       id: "itauto-05",
       title: "Choosing an automation platform in Azure without regretting it in a year",
       category: "it-automation",
-      subcategory: "Azure automation",
+      subcategory: "Orchestration",
       contentType: "decision-framework",
       searchIntent: "decision",
       priority: "P0",
       status: "RESEARCHED",
       targetKeyword: "azure automation platform choice",
-      secondaryKeywords: ["logic apps vs functions vs automation", "which azure automation service"],
+      secondaryKeywords: [
+        "logic apps vs functions vs automation",
+        "which azure automation service",
+      ],
       updateClass: "volatile",
       pillar: "Automation platform choice",
       plannedSlug: "azure-automation-platform-choice",
@@ -133,7 +137,7 @@ export const segment: Segment = {
       id: "itauto-06",
       title: "Logic Apps, Functions or Automation runbooks for an operational task",
       category: "it-automation",
-      subcategory: "Azure automation",
+      subcategory: "Orchestration",
       contentType: "comparison",
       searchIntent: "decision",
       priority: "P1",
@@ -149,7 +153,7 @@ export const segment: Segment = {
       id: "itauto-07",
       title: "Azure Automation runtime environments and the PowerShell version problem",
       category: "it-automation",
-      subcategory: "Azure automation",
+      subcategory: "Orchestration",
       contentType: "how-to",
       searchIntent: "how-to",
       priority: "P2",
@@ -159,14 +163,17 @@ export const segment: Segment = {
       updateClass: "volatile",
       pillarSlug: "azure-automation-platform-choice",
       relatedTopics: ["itauto-05", "itauto-06"],
-      requiredSources: ["https://learn.microsoft.com/azure/automation/runtime-environment-overview"],
-      notes: "Runtime environment was still labelled preview at last check — verify state before drafting.",
+      requiredSources: [
+        "https://learn.microsoft.com/azure/automation/runtime-environment-overview",
+      ],
+      notes:
+        "Runtime environment was still labelled preview at last check — verify state before drafting.",
     },
     {
       id: "itauto-08",
       title: "Where Power Automate stops and Logic Apps starts",
       category: "it-automation",
-      subcategory: "Azure automation",
+      subcategory: "Orchestration",
       contentType: "explainer",
       searchIntent: "decision",
       priority: "P2",
@@ -176,9 +183,7 @@ export const segment: Segment = {
       updateClass: "volatile",
       pillarSlug: "azure-automation-platform-choice",
       relatedTopics: ["itauto-05"],
-      requiredSources: [
-        "https://learn.microsoft.com/azure/logic-apps/power-automate-migration",
-      ],
+      requiredSources: ["https://learn.microsoft.com/azure/logic-apps/power-automate-migration"],
       notes: "The governance angle — who owns a flow when its author leaves — is the durable part.",
     },
 
@@ -193,7 +198,10 @@ export const segment: Segment = {
       priority: "P1",
       status: "IDEA",
       targetKeyword: "unattended powershell automation design",
-      secondaryKeywords: ["production powershell script standards", "powershell automation reliability"],
+      secondaryKeywords: [
+        "production powershell script standards",
+        "powershell automation reliability",
+      ],
       updateClass: "evergreen",
       pillar: "Operational PowerShell",
       plannedSlug: "operational-powershell",
@@ -216,7 +224,8 @@ export const segment: Segment = {
       pillarSlug: "operational-powershell",
       relatedTopics: ["itauto-09", "dev-04"],
       requiredSources: ["PowerShell about_Try_Catch_Finally documentation"],
-      notes: "Deliberate cross-domain link to dev-04: the same idea, one in an API and one in a script.",
+      notes:
+        "Deliberate cross-domain link to dev-04: the same idea, one in an API and one in a script.",
     },
     {
       id: "itauto-11",
@@ -236,7 +245,8 @@ export const segment: Segment = {
         "https://learn.microsoft.com/azure/key-vault/general/overview",
         "https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview",
       ],
-      notes: "Cross-domain link to devops-11: the same problem solved in a pipeline instead of a script.",
+      notes:
+        "Cross-domain link to devops-11: the same problem solved in a pipeline instead of a script.",
     },
     {
       id: "itauto-12",
