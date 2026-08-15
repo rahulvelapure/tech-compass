@@ -8,6 +8,11 @@ import { segment as cloud } from "./segments/cloud";
 import { segment as ai } from "./segments/ai";
 import { segment as windows } from "./segments/windows";
 import { segment as networking } from "./segments/networking";
+import { segment as enterpriseNetworking } from "./segments/enterprise-networking";
+import { segment as aiEnterpriseIt } from "./segments/ai-enterprise-it";
+import { segment as itAutomation } from "./segments/it-automation";
+import { segment as development } from "./segments/development";
+import { segment as devops } from "./segments/devops";
 
 /**
  * The editorial backlog, one entry per planned segment.
@@ -22,8 +27,13 @@ export const segments: Segment[] = [
   cybersecurityCiso,
   cloud,
   ai,
+  aiEnterpriseIt,
   windows,
   networking,
+  enterpriseNetworking,
+  itAutomation,
+  development,
+  devops,
   software,
 ];
 
