@@ -577,7 +577,7 @@ export const segment: Segment = {
       contentType: "comparison",
       searchIntent: "comparison",
       priority: "P0",
-      status: "DRAFT",
+      status: "PUBLISHED",
       targetKeyword: "wifi 6 vs wifi 7",
       requiredSources: [
         "https://standards.ieee.org/ieee/802.11be/7516/",

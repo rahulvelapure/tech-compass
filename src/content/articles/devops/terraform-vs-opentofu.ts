@@ -83,7 +83,7 @@ export const article: Article = {
     { type: "h2", id: "deciding", text: "How to decide" },
     {
       type: "p",
-      text: "The question that separates them cleanly is whether a single vendor controlling the licence is an acceptable dependency for this part of your estate. Infrastructure as code sits underneath everything else you run; the cost of being forced to move later is high, and the 2023 relicensing demonstrated that the terms can change without warning. The [archiving of the Ingress NGINX controller](/devops/ingress-nginx-archived-migration) is the same lesson arriving from the opposite direction: there, the risk was not a licence change but a maintainer walking away.",
+      text: "The question that separates them cleanly is whether a single vendor controlling the licence is an acceptable dependency for this part of your estate. Infrastructure as code sits underneath everything else you run — including the deploy-time guardrails that keep [cloud spend predictable](/cloud/cloud-cost-controls) — so the cost of being forced to move later is high, and the 2023 relicensing demonstrated that the terms can change without warning. The [archiving of the Ingress NGINX controller](/devops/ingress-nginx-archived-migration) is the same lesson arriving from the opposite direction: there, the risk was not a licence change but a maintainer walking away.",
     },
     {
       type: "ul",

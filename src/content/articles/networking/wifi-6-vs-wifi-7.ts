@@ -5,6 +5,7 @@ export const article: Article = {
   category: "networking",
   contentType: "comparison",
   title: "Wi-Fi 6 vs Wi-Fi 7: what actually changes, and when to upgrade",
+  seoTitle: "Wi-Fi 6 vs Wi-Fi 7: what actually changes",
   metaDescription:
     "Wi-Fi 7 is ratified and shipping, but the upgrade decision is decided by your spectrum allocation and client fleet — not by the access point you buy.",
   standfirst:
@@ -12,8 +13,9 @@ export const article: Article = {
   excerpt:
     "The three mechanisms that separate Wi-Fi 7 from Wi-Fi 6, why the 6 GHz allocation in your country decides most of the outcome, and who should skip the upgrade.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-08-01",
-  draft: true,
+  publishedAt: "2026-08-20",
+  lastReviewedAt: "2026-08-20",
+  nextReviewAt: "2027-08-20",
   readingMinutes: 5,
   primaryKeyword: "wifi 6 vs wifi 7",
   secondaryKeywords: [
@@ -99,10 +101,6 @@ export const article: Article = {
       type: "p",
       text: "The first row is the finding that should change a deployment plan. One 320 MHz channel serves one access point. The moment a second AP within earshot also wants 320 MHz, the two occupy the same spectrum and contend with each other, and the wide channel costs more in interference than it returns in throughput. In a multi-AP estate under the EU allocation, the correct configuration is usually a narrower channel — meaning the flagship feature is one you deliberately turn off.",
     },
-    {
-      type: "p",
-      text: "Positions are not static, nor uniform even within a region: national regulators diverge from the regional default, the upper band is contested between Wi-Fi and mobile use, and permitted power levels differ in ways that affect outdoor coverage independently of channel width.",
-    },
     { type: "h2", id: "certification", text: "The badge is not a feature list" },
     {
       type: "p",
@@ -143,7 +141,7 @@ export const article: Article = {
     { type: "h2", id: "waiting", text: "Is it worth waiting for the next generation?" },
     {
       type: "p",
-      text: "No, and for an unusually clear reason. The next generation, 802.11bn, is not ratified — the working group is still resolving draft comments, with ratification targeted for around 2028 — and its stated emphasis is reliability rather than peak throughput. A standard two years from ratification is at least three from a mature client fleet, so deferring a needed refresh means running old equipment for several more years to gain benefits that are, by the working group's own framing, consistency-focused rather than transformative.",
+      text: "No, and the working group's own schedule is the reason. The next amendment, 802.11bn, was authorised in September 2023 and is still in draft — the published IEEE 802.11 project timeline shows Draft 2.0, with sponsor balloting ahead of it and Standards Board approval projected for May 2028. Its designation, Ultra High Reliability, signals where the effort is going: consistency rather than peak rate. A standard still two years from approval is longer than that from a mature client fleet, so deferring a needed refresh buys nothing you can deploy.",
     },
     { type: "h2", id: "recommendation", text: "Recommendation" },
     {
@@ -178,6 +176,11 @@ export const article: Article = {
       title: "Wi-Fi CERTIFIED 7",
       publisher: "Wi-Fi Alliance",
       url: "https://www.wi-fi.org/discover-wi-fi/wi-fi-certified-7",
+    },
+    {
+      title: "IEEE 802.11 Working Group project timelines",
+      publisher: "IEEE 802.11",
+      url: "https://www.ieee802.org/11/Reports/802.11_Timelines.htm",
     },
     {
       title:

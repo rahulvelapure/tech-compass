@@ -14,12 +14,18 @@ export const article: Article = {
   excerpt:
     "Visibility is not a control. Where cloud spend actually originates, the three points at which a control can sit, and the trade-off each one carries.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-06-26",
-  draft: true,
+  publishedAt: "2026-08-20",
+  lastReviewedAt: "2026-08-20",
+  nextReviewAt: "2027-08-20",
   pillar: "Cost and FinOps",
   readingMinutes: 5,
-  primaryKeyword: "cloud cost optimisation",
-  secondaryKeywords: ["finops practices", "reduce cloud spend", "azure cost management budgets"],
+  primaryKeyword: "cloud cost controls",
+  secondaryKeywords: [
+    "cloud cost optimisation",
+    "finops practices",
+    "reduce cloud spend",
+    "azure cost management budgets",
+  ],
   tags: ["Cloud", "FinOps", "Architecture", "Azure"],
   reviewStatus: "research-based",
   relatedSlugs: ["terraform-vs-opentofu"],
@@ -41,7 +47,8 @@ export const article: Article = {
     },
     {
       type: "table",
-      caption: "What the report shows, and what is usually underneath it",
+      caption:
+        "Patterns worth checking rather than measured frequencies: what the report shows, and what is often underneath it",
       head: ["Symptom", "Common root cause"],
       rows: [
         [
@@ -95,7 +102,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The common failure is to invest almost entirely at run time, because that is where the tooling is, and then to wonder why the same overspend reappears next quarter under different resource names. The second failure is to over-invest at deploy time without an exception path, which is how a guardrail becomes a ticket queue and engineering starts routing around it.",
+      text: "Two failure modes are worth naming. The first is investing almost entirely at run time, because that is where the tooling is, and then wondering why the same overspend reappears next quarter under different resource names. The second is over-investing at deploy time without an exception path, which is how a guardrail becomes a ticket queue and engineering starts routing around it.",
     },
     {
       type: "p",

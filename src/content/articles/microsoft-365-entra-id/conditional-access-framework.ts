@@ -15,7 +15,7 @@ export const article: Article = {
     "A persona-based structure for Conditional Access that keeps the policy count low, makes exclusions auditable, and stays readable after two years of change — built around how the platform actually evaluates policy.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
-  readingMinutes: 14,
+  readingMinutes: 15,
   primaryKeyword: "conditional access framework",
   secondaryKeywords: [
     "Entra ID conditional access",
@@ -50,7 +50,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A Conditional Access policy is an if-then statement of **assignments** and **access controls**. To be enforced it needs at minimum a name, the users or groups it applies to, the target resources, and a grant or block control. Everything else — network, device platform, client app, risk, device filters — narrows the *if*.",
+      text: "A Conditional Access policy is an if-then statement of **assignments** and **access controls**. To be enforced it needs at minimum a name, the users or groups it applies to, the target resources, and a grant or block control. Everything else — network, device platform, client app, risk, device filters — narrows the *if*. Network appears here as a condition rather than as a control; what a compromised session can actually reach is decided by [how the network is segmented](/enterprise-networking/zero-trust-network-segmentation).",
     },
     {
       type: "p",

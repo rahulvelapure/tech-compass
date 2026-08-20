@@ -83,7 +83,7 @@ export const segment: Segment = {
       contentType: "decision-framework",
       searchIntent: "architecture",
       priority: "P0",
-      status: "DRAFT",
+      status: "PUBLISHED",
       targetKeyword: "cloud cost controls finops",
       updateClass: "annual",
       pillar: "Cost and FinOps",

@@ -51,7 +51,7 @@ export const segment: Segment = {
       contentType: "explainer",
       searchIntent: "architecture",
       priority: "P0",
-      status: "DRAFT",
+      status: "PUBLISHED",
       targetKeyword: "network segmentation best practices",
       secondaryKeywords: ["zero trust segmentation", "flat network risk"],
       updateClass: "evergreen",

@@ -14,8 +14,9 @@ export const article: Article = {
   excerpt:
     "Zero trust reframes what segmentation is for. Where boundaries still belong, how to choose them, and the design mistakes that make a rule set unmaintainable.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-07-16",
-  draft: true,
+  publishedAt: "2026-08-20",
+  lastReviewedAt: "2026-08-20",
+  nextReviewAt: "2028-08-20",
   readingMinutes: 5,
   primaryKeyword: "network segmentation best practices",
   secondaryKeywords: ["zero trust segmentation", "flat network risk", "security zones design"],
@@ -50,7 +51,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The third job is the one that decides your design",
-      text: "Most enterprise estates contain a meaningful population of devices that will never authenticate per session. Zero trust guidance does not pretend otherwise — SP 800-207 presents its tenets as an ideal goal and acknowledges that not all of them will be fully implemented for a given strategy. Segmentation is where that gap gets managed.",
+      text: "Enterprise estates routinely contain devices that will never authenticate per session. Zero trust guidance does not pretend otherwise — SP 800-207 presents its tenets as an ideal goal and acknowledges that not all of them will be fully implemented for a given strategy. Segmentation is where that gap gets managed.",
     },
     { type: "h2", id: "where-to-draw", text: "Choosing where the boundary goes" },
     {
@@ -131,7 +132,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The other limit is timing. SP 800-207 devotes a section to hybrid zero trust and perimeter-based architecture precisely because the transition is long and most enterprises operate both models at once for years. Designs that assume a clean end state tend to strand the awkward third of the estate — the part with the oldest equipment and the least documentation — outside any coherent model at all.",
+      text: "It is also worth resisting the idea that there is a reference design to copy. NIST's companion practice guide, SP 1800-35, was built with twenty-four technology collaborators and documents nineteen separate example implementations of a zero trust architecture. That variety is the point: the products differ, and the boundary decisions stay yours.",
+    },
+    {
+      type: "p",
+      text: "The other limit is timing. SP 800-207 devotes a section to hybrid zero trust and perimeter-based architecture precisely because the transition is long and enterprises commonly operate both models at once for years. Designs that assume a clean end state tend to strand the least tractable part of the estate — the oldest equipment, with the least documentation — outside any coherent model at all.",
     },
     {
       type: "p",

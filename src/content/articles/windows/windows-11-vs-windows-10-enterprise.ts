@@ -119,7 +119,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The hardware floor is what turns a software migration into a procurement project. Devices failing the TPM or CPU check cannot be upgraded in place at all, and in most estates that group is larger than the first audit suggests — because the audit is usually run against an asset register rather than against what is actually checking in.",
+      text: "The hardware floor is what turns a software migration into a procurement project. Devices failing the TPM or CPU check cannot be upgraded in place at all, and in most estates that group is larger than the first audit suggests — because the audit is usually run against an asset register rather than against what is actually checking in. Since this becomes a buying exercise, it is also the cheapest moment to settle adjacent specifications that otherwise get decided by default, [the wireless generation among them](/networking/wifi-6-vs-wifi-7).",
     },
     { type: "h2", id: "migration-cost", text: "Where the migration effort actually is" },
     {
