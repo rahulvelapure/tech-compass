@@ -101,7 +101,7 @@ function ArticlePage() {
   const url = absoluteUrl(articlePath(article));
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[78rem] px-4 sm:px-6 lg:px-8">
       <div className="py-8">
         <Breadcrumbs
           items={[
@@ -131,18 +131,16 @@ function ArticlePage() {
         </aside>
 
         <article className="lg:col-span-6">
-          <header className="border-b border-border pb-6">
-            <p className="eyebrow text-accent">
+          <header className="border-b border-border pb-7">
+            <p className="eyebrow text-brand">
               {category?.label}
               {article.subcategory && (
-                <span className="text-muted-foreground"> · {article.subcategory}</span>
+                <span className="text-muted-foreground"> / {article.subcategory}</span>
               )}
             </p>
-            <h1 className="headline mt-3 text-3xl sm:text-[2.5rem]">{article.title}</h1>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              {article.standfirst}
-            </p>
-            <ArticleMeta article={article} className="mt-6" />
+            <h1 className="display-1 mt-4">{article.title}</h1>
+            <p className="standfirst mt-5">{article.standfirst}</p>
+            <ArticleMeta article={article} className="mt-7" />
             {article.updatedAt && article.updatedAt !== article.publishedAt && (
               <p className="mt-1 text-sm text-muted-foreground">
                 Last updated {formatDate(article.updatedAt)}
@@ -194,7 +192,7 @@ function ArticlePage() {
                           href={source.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-accent hover:underline"
+                          className="text-brand hover:underline"
                         >
                           {source.title}
                         </a>
@@ -214,7 +212,7 @@ function ArticlePage() {
                   <Link
                     to="/tag/$tag"
                     params={{ tag: tagSlug(tag) }}
-                    className="inline-block border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                    className="inline-block border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-brand hover:text-brand"
                   >
                     {tag}
                   </Link>
@@ -241,7 +239,7 @@ function ArticlePage() {
                 className="group border border-border p-5"
               >
                 <span className="eyebrow text-muted-foreground">Previous</span>
-                <span className="mt-2 block font-serif font-bold group-hover:text-accent">
+                <span className="mt-2 block font-serif font-bold group-hover:text-brand">
                   {previous.title}
                 </span>
               </Link>
@@ -253,7 +251,7 @@ function ArticlePage() {
                 className="group border border-border p-5 sm:text-right"
               >
                 <span className="eyebrow text-muted-foreground">Next</span>
-                <span className="mt-2 block font-serif font-bold group-hover:text-accent">
+                <span className="mt-2 block font-serif font-bold group-hover:text-brand">
                   {next.title}
                 </span>
               </Link>
@@ -277,7 +275,7 @@ function ArticlePage() {
               <Link
                 to="/$category"
                 params={{ category: article.category }}
-                className="text-sm font-medium text-accent hover:underline"
+                className="text-sm font-medium text-brand hover:underline"
               >
                 All {category?.label} articles →
               </Link>

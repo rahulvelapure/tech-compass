@@ -16,7 +16,7 @@
 
 @theme inline {
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: Merriweather, ui-serif, Georgia, Cambria, serif;
+  --font-serif: Newsreader, ui-serif, Georgia, Cambria, serif;
   --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -57,11 +57,22 @@
   --color-code-bg: var(--code-bg);
   --color-code-fg: var(--code-fg);
 
-  --container-editorial: 44rem;
+  /*
+   * Brand is deliberately NOT the link colour. Conflating them was the
+   * original weakness: every link became a brand mark and the accent stopped
+   * meaning anything. Brand marks identity (wordmark, kickers, section rules);
+   * --link stays an ink blue because link legibility is a usability property.
+   */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+
+  /* Measures. Prose sits near 68ch; the wide container is the outer frame. */
+  --container-editorial: 42rem;
+  --container-wide: 78rem;
 }
 
 :root {
-  --radius: 0.375rem;
+  --radius: 0.125rem;
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.23 0.036 261.7);
@@ -102,6 +113,13 @@
   --warn-foreground: oklch(0.44 0.1 70);
   --code-bg: oklch(0.21 0.03 261.7);
   --code-fg: oklch(0.93 0.008 247.9);
+
+  /*
+   * Vermilion. 5.9:1 on page white, so it clears AA for the small bold
+   * uppercase kickers it is used on, which is the tightest case.
+   */
+  --brand: oklch(0.52 0.19 32);
+  --brand-foreground: oklch(0.99 0.002 247.9);
 }
 
 .dark {
@@ -137,6 +155,10 @@
   --warn-foreground: oklch(0.86 0.09 85);
   --code-bg: oklch(0.13 0.015 264);
   --code-fg: oklch(0.9 0.008 247.9);
+
+  /* Lifted and desaturated so it reads on ink without vibrating. */
+  --brand: oklch(0.68 0.16 34);
+  --brand-foreground: oklch(0.166 0.018 264);
 }
 
 @layer base {
@@ -192,15 +214,92 @@
   text-transform: uppercase;
 }
 
+/*
+ * Section kicker. The brand mark appears as a short rule before the label
+ * rather than as coloured text — colour on small uppercase type is the first
+ * thing to fail contrast, and a rule reads as a publication device.
+ */
+@utility kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-foreground);
+
+  &::before {
+    content: "";
+    width: 1.5rem;
+    height: 2px;
+    flex: none;
+    background: var(--color-brand);
+  }
+}
+
+/*
+ * Display scale. Three steps, each with its own tracking — headline sizes need
+ * progressively tighter letterfit or large type looks loose and small type
+ * looks cramped.
+ */
+@utility display-1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+
+@utility display-2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.125rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@utility display-3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.1875rem;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+/* Standfirst under a lead headline. */
+@utility standfirst {
+  font-family: var(--font-serif);
+  font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+  line-height: 1.5;
+  font-weight: 400;
+  color: color-mix(in oklab, var(--color-foreground) 78%, transparent);
+  text-wrap: pretty;
+}
+
+/* Numerals in an index list: tabular, quiet, unmistakably an index. */
+@utility index-num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-foreground);
+}
+
 @utility rule-top {
   border-top: 1px solid var(--color-rule);
 }
 
 @utility headline {
   font-family: var(--font-serif);
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
   text-wrap: balance;
 }
 
@@ -219,6 +318,22 @@
   font-size: 1.0625rem;
   line-height: 1.75;
   color: var(--color-foreground);
+
+  /*
+   * Reading measure.
+   *
+   * Capped on the text blocks rather than the container, so tables, figures
+   * and code keep the full column while prose stays inside a comfortable
+   * line length. Without this the article ran the full width between the sm
+   * and lg breakpoints — 87 characters a line, where long-form wants 60-75
+   * and the eye starts losing its place on the return sweep.
+   */
+  & > p,
+  & > ul,
+  & > ol,
+  & > h3 {
+    max-width: var(--container-editorial);
+  }
 
   & > p {
     margin-block: 1.35em;

@@ -13,6 +13,17 @@
  */
 
 const PORT = process.env.PORT || "4173";
+
+/*
+ * Publish the port back to the environment.
+ *
+ * `startServerCommand` below spawns a child that inherits this process's
+ * environment, so setting PORT here is what makes the server listen on the
+ * port LHCI is about to audit. Doing it in the config rather than as a
+ * `PORT=… lhci` prefix in package.json keeps the npm script shell-agnostic —
+ * that prefix is not valid syntax in cmd.exe and broke the command on Windows.
+ */
+process.env.PORT = PORT;
 const targetUrl = (process.env.LHCI_TARGET_URL || "").replace(/\/$/, "");
 
 /** Audited on every run: one URL per page archetype, not per article. */

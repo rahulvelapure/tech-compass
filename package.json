@@ -23,7 +23,7 @@
     "scan:secrets": "node scripts/scan-secrets.mjs",
     "crawl:check": "node scripts/crawl-check.mjs",
     "test:a11y": "playwright test",
-    "test:lighthouse": "PORT=4173 lhci autorun",
+    "test:lighthouse": "lhci autorun",
     "verify": "bun run typecheck && bun run lint && bun run test"
   },
   "dependencies": {

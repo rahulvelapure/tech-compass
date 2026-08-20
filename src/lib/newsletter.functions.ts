@@ -29,7 +29,17 @@ import {
  * No subscriber data is stored in this application.
  */
 
-const BREVO_GATEWAY = "https://connector-gateway.lovable.dev/brevo";
+/*
+ * Brevo's own REST API.
+ *
+ * This previously went through a Lovable connector gateway, which put a
+ * third-party proxy in the subscription path and required a second
+ * credential. The project deploys to Cloudflare Workers and no longer uses
+ * Lovable, so the hop was pure risk: an extra dependency that could fail or
+ * change independently of both us and Brevo. Calling the provider directly
+ * removes it and drops LOVABLE_API_KEY from the required configuration.
+ */
+const BREVO_API = "https://api.brevo.com/v3";
 
 /**
  * Secret used to sign form tokens and to derive rate-limit keys.
@@ -54,7 +64,6 @@ function confirmationRedirectUrl(): string {
 interface NewsletterConfig {
   secret: string;
   brevoKey: string;
-  lovableKey: string;
   templateId: number;
   listId: number;
 }
@@ -74,11 +83,10 @@ function newsletterConfig():
   { ok: true; config: NewsletterConfig } | { ok: false; missing: string } {
   const secret = formSecret();
   const brevoKey = process.env["BREVO_API_KEY"];
-  const lovableKey = process.env["LOVABLE_API_KEY"];
   const templateId = Number(process.env["BREVO_DOI_TEMPLATE_ID"] ?? "");
   const listId = Number(process.env["BREVO_LIST_ID"] ?? "");
 
-  if (!secret || !brevoKey || !lovableKey) return { ok: false, missing: "credentials" };
+  if (!secret || !brevoKey) return { ok: false, missing: "credentials" };
   // Confirmed opt-in cannot be faked: without a template and a list there is no
   // confirmation email to send, and adding the contact directly would be
   // exactly the single opt-in behaviour we are avoiding.
@@ -89,7 +97,7 @@ function newsletterConfig():
     return { ok: false, missing: "BREVO_LIST_ID" };
   }
 
-  return { ok: true, config: { secret, brevoKey, lovableKey, templateId, listId } };
+  return { ok: true, config: { secret, brevoKey, templateId, listId } };
 }
 
 /* ------------------------------------------------------------------ */
@@ -160,7 +168,7 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
 
     const configResult = newsletterConfig();
     if (!configResult.ok) return unconfigured(configResult.missing);
-    const { secret, brevoKey, lovableKey, templateId, listId } = configResult.config;
+    const { secret, brevoKey, templateId, listId } = configResult.config;
 
     const verdict = data.token
       ? await verifyFormToken(secret, data.token)
@@ -205,12 +213,12 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
     // a second try would fail identically and only delays the response.
     const { outcome, attempts } = await sendWithRetry(
       async () => {
-        const response = await fetch(`${BREVO_GATEWAY}/v3/contacts/doubleOptinConfirmation`, {
+        const response = await fetch(`${BREVO_API}/contacts/doubleOptinConfirmation`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${lovableKey}`,
-            "X-Connection-Api-Key": brevoKey,
+            accept: "application/json",
+            "api-key": brevoKey,
           },
           body: JSON.stringify({
             email,

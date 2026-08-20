@@ -11,7 +11,7 @@ export function ShareLinks({ url, title }: { url: string; title: string }) {
         href={`https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-muted-foreground transition-colors hover:text-accent"
+        className="text-sm text-muted-foreground transition-colors hover:text-brand"
       >
         X
       </a>
@@ -20,7 +20,7 @@ export function ShareLinks({ url, title }: { url: string; title: string }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Share on LinkedIn"
-        className="text-muted-foreground transition-colors hover:text-accent"
+        className="text-muted-foreground transition-colors hover:text-brand"
       >
         <Linkedin className="h-4 w-4" aria-hidden="true" />
       </a>
@@ -31,7 +31,7 @@ export function ShareLinks({ url, title }: { url: string; title: string }) {
           setCopied(true);
           window.setTimeout(() => setCopied(false), 2000);
         }}
-        className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-accent"
+        className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-brand"
       >
         <Link2 className="h-4 w-4" aria-hidden="true" />
         {copied ? "Copied" : "Copy link"}
