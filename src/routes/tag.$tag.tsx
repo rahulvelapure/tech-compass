@@ -72,7 +72,7 @@ function TagPage() {
       <Breadcrumbs items={[{ name: tag.name }]} />
 
       <header className="mt-8 border-b border-border pb-6">
-        <p className="eyebrow text-accent">Tag</p>
+        <p className="eyebrow text-brand">Tag</p>
         <h1 className="headline mt-3 text-3xl sm:text-4xl">{tag.name}</h1>
         <p className="mt-3 text-muted-foreground">
           {tag.articles.length} {tag.articles.length === 1 ? "article" : "articles"}
@@ -87,7 +87,7 @@ function TagPage() {
                   <Link
                     to="/$category"
                     params={{ category: category.slug }}
-                    className="underline hover:text-accent"
+                    className="underline hover:text-brand"
                   >
                     {category.label}
                   </Link>
@@ -116,7 +116,7 @@ function TagPage() {
                 <Link
                   to="/tag/$tag"
                   params={{ tag: sibling.slug }}
-                  className="inline-block border border-border px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                  className="inline-block border border-border px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-brand hover:text-brand"
                 >
                   {sibling.name}
                 </Link>

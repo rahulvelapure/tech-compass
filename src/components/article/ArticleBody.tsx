@@ -73,7 +73,7 @@ export function RichText({ text }: { text: string }) {
 
 function CodeBlock({ language, filename, code, command }: Extract<Block, { type: "code" }>) {
   return (
-    <figure className="my-8 overflow-hidden rounded-md border border-border">
+    <figure className="my-8 overflow-hidden rounded-none border border-border">
       <figcaption className="flex items-center justify-between gap-4 border-b border-border bg-surface-strong px-4 py-2">
         <span className="eyebrow text-muted-foreground">{command ? "Command" : language}</span>
         {filename && (

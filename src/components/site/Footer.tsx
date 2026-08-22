@@ -8,35 +8,35 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 border-t border-border bg-surface">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+    <footer className="mt-20 border-t-2 border-foreground bg-surface">
+      <div className="mx-auto max-w-[78rem] px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-2">
-            <Link to="/" className="font-serif text-lg font-bold tracking-tight">
+            <span aria-hidden="true" className="mb-2 block h-[3px] w-7 bg-brand" />
+            <Link to="/" className="font-serif text-xl font-semibold tracking-[-0.03em]">
               {site.name}
-              <span className="text-accent">.</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               {site.description}
             </p>
             <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
               <li>
-                <Link to="/about" className="hover:text-accent">
+                <Link to="/about" className="hover:text-brand">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/resources" className="hover:text-accent">
+                <Link to="/resources" className="hover:text-brand">
                   Resources
                 </Link>
               </li>
               <li>
-                <Link to="/newsletter" className="hover:text-accent">
+                <Link to="/newsletter" className="hover:text-brand">
                   Newsletter
                 </Link>
               </li>
               <li>
-                <a href="/rss.xml" className="hover:text-accent">
+                <a href="/rss.xml" className="hover:text-brand">
                   RSS
                 </a>
               </li>
@@ -45,7 +45,7 @@ export function Footer() {
 
           {footerColumns.map((column) => (
             <nav key={column.heading} aria-label={column.heading}>
-              <h2 className="eyebrow mb-4 text-muted-foreground">{column.heading}</h2>
+              <h2 className="eyebrow mb-4 text-foreground">{column.heading}</h2>
               <ul className="space-y-2.5">
                 {column.slugs.map((slug) => {
                   const category = getCategory(slug);
@@ -55,7 +55,7 @@ export function Footer() {
                       <Link
                         to="/$category"
                         params={{ category: slug }}
-                        className="text-sm text-muted-foreground hover:text-accent"
+                        className="text-sm text-muted-foreground hover:text-brand"
                       >
                         {category.label}
                       </Link>
@@ -73,17 +73,17 @@ export function Footer() {
           </p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
             <li>
-              <Link to="/privacy" className="hover:text-accent">
+              <Link to="/privacy" className="hover:text-brand">
                 Privacy
               </Link>
             </li>
             <li>
-              <Link to="/terms" className="hover:text-accent">
+              <Link to="/terms" className="hover:text-brand">
                 Terms
               </Link>
             </li>
             <li>
-              <Link to="/disclaimer" className="hover:text-accent">
+              <Link to="/disclaimer" className="hover:text-brand">
                 Disclaimer
               </Link>
             </li>

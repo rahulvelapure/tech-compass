@@ -25,7 +25,7 @@ export function SectionHeader({
         <Link
           to="/$category"
           params={{ category: href }}
-          className="shrink-0 text-sm font-medium text-accent hover:underline"
+          className="shrink-0 text-sm font-medium text-brand hover:underline"
         >
           {linkLabel} →
         </Link>

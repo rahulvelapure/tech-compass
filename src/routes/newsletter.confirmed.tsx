@@ -27,7 +27,7 @@ function NewsletterConfirmedPage() {
 
   return (
     <div className="mx-auto max-w-editorial px-4 py-14 sm:px-6">
-      <p className="eyebrow text-accent">Newsletter</p>
+      <p className="eyebrow text-brand">Newsletter</p>
       <h1 className="headline mt-3 text-3xl sm:text-4xl">Subscription confirmed</h1>
 
       <div className="article-prose mt-6">

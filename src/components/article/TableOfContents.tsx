@@ -39,7 +39,7 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
               aria-current={active === item.id ? "true" : undefined}
               className={
                 active === item.id
-                  ? "font-medium text-accent"
+                  ? "font-medium text-brand"
                   : "text-muted-foreground hover:text-foreground"
               }
             >

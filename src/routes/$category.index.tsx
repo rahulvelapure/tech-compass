@@ -70,7 +70,7 @@ function CategoryPage() {
   );
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[78rem] px-4 sm:px-6 lg:px-8">
       <div className="border-b border-border py-8">
         <Breadcrumbs items={[{ name: category.title }]} />
         <h1 className="headline mt-5 text-3xl sm:text-4xl">{category.title}</h1>
@@ -149,7 +149,7 @@ function CategoryPage() {
                   <Link
                     to="/$category"
                     params={{ category: slug }}
-                    className="text-sm font-medium text-accent hover:underline"
+                    className="text-sm font-medium text-brand hover:underline"
                   >
                     {related.title}
                   </Link>
