@@ -3,18 +3,30 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArticleCard } from "@/components/site/ArticleCard";
 import { NewsletterCTA } from "@/components/site/NewsletterCTA";
 import { HeaderAdSlot, InFeedAdSlot } from "@/components/monetization/AdSlot";
-import {
-  articlesForCategory,
-  featuredArticle,
-  formatDate,
-  getAuthor,
-  getCategory,
-  latestArticles,
-} from "@/lib/content";
+import { allArticles, formatDate, getAuthor, getCategory, lastPublishedAt } from "@/lib/content";
+import { HOMEPAGE_SECTIONS, selectHomepageComposition } from "@/lib/homepage.functions";
 import { canonical, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
+  /**
+   * The composition is chosen on the server, once per request, and passed down
+   * as slugs.
+   *
+   * Choosing while rendering would mean the server and the browser each ran the
+   * selection and disagreed — the classic hydration mismatch. Resolved here,
+   * both renders read the same answer.
+   *
+   * Only slugs cross the wire. The component looks each article up from the
+   * content store it already has, so no article body is serialised twice.
+   */
+  loader: () => selectHomepageComposition(),
+
+  /**
+   * Metadata is fixed and does not read the lead. The front page's title,
+   * description and canonical must not move when the rotation does — that is
+   * the difference between a fresh homepage and an unstable one.
+   */
   head: () => ({
     meta: pageMeta({
       title: `${site.name} — Technology, explained properly`,
@@ -26,19 +38,12 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-/**
- * Front-page sections.
- *
- * `form` is deliberate: a page that renders every section as the same card
- * grid reads as generated. Each section below gets a different shape, so the
- * front page has the rhythm of something edited.
+/*
+ * The section list lives with the selection logic (homepage.functions.ts), so
+ * the server picks articles for exactly the sections this page renders. `form`
+ * stays here because it is presentation: each section gets a different shape,
+ * so the front page reads as edited rather than generated.
  */
-const SECTIONS: { slug: string; title: string; form: "feature" | "grid" | "briefs" }[] = [
-  { slug: "ai", title: "AI", form: "feature" },
-  { slug: "microsoft-intune", title: "Enterprise IT", form: "grid" },
-  { slug: "cybersecurity-ciso", title: "Cybersecurity", form: "briefs" },
-  { slug: "how-to", title: "How-to and troubleshooting", form: "grid" },
-];
 
 function Shell({ children }: { children: React.ReactNode }) {
   return <div className="mx-auto max-w-[78rem] px-4 sm:px-6 lg:px-8">{children}</div>;
@@ -76,9 +81,17 @@ function SectionHead({
 }
 
 function HomePage() {
-  const lead = featuredArticle();
-  const secondary = latestArticles(3, [lead.slug]);
-  const latest = latestArticles(6, [lead.slug, ...secondary.map((a) => a.slug)]);
+  const { leadSlug, secondarySlugs, latestSlugs, sectionSlugs } = Route.useLoaderData();
+
+  const bySlug = new Map(allArticles.map((article) => [article.slug, article]));
+  const resolve = (slugs: string[]) =>
+    slugs.map((slug) => bySlug.get(slug)).filter((article) => article !== undefined);
+
+  // The fallback covers only a composition referencing an article that has since
+  // left the store, which static content makes near-impossible.
+  const lead = bySlug.get(leadSlug) ?? allArticles[0]!;
+  const secondary = resolve(secondarySlugs);
+  const latest = resolve(latestSlugs);
   const author = getAuthor("rahul-velapure");
 
   return (
@@ -98,7 +111,7 @@ function HomePage() {
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-border py-3">
           <h1 className="eyebrow text-muted-foreground">{site.tagline}</h1>
           <p className="text-xs tabular-nums text-muted-foreground">
-            Updated {formatDate(lead.publishedAt)}
+            Updated {formatDate(lastPublishedAt())}
           </p>
         </div>
       </Shell>
@@ -137,9 +150,9 @@ function HomePage() {
       )}
 
       {/* ---- Subject sections, each in a different form ---- */}
-      {SECTIONS.map(({ slug, title, form }) => {
+      {HOMEPAGE_SECTIONS.map(({ slug, title, form }) => {
         const category = getCategory(slug);
-        const all = category ? articlesForCategory(category) : [];
+        const all = resolve(sectionSlugs[slug] ?? []);
         if (!category || all.length === 0) return null;
 
         /*

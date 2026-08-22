@@ -16,6 +16,7 @@ import { article as backupRestoreTesting } from "./cybersecurity-ciso/backup-res
 import { article as iso27001Microsoft365Mapping } from "./cybersecurity-ciso/iso-27001-microsoft-365-mapping";
 import { article as passwordManagersForTeams } from "./cybersecurity-ciso/password-managers-for-teams";
 import { article as nodejsReleaseScheduleChange } from "./development/nodejs-release-schedule-change";
+import { article as ebpfProductionObservabilitySecurityBoundaries } from "./devops/ebpf-production-observability-security-boundaries";
 import { article as ingressNginxArchivedMigration } from "./devops/ingress-nginx-archived-migration";
 import { article as terraformVsOpentofu } from "./devops/terraform-vs-opentofu";
 import { article as usbCCablesExplained } from "./electronics/usb-c-cables-explained";
@@ -58,6 +59,7 @@ export const articles: Article[] = [
   iso27001Microsoft365Mapping,
   passwordManagersForTeams,
   nodejsReleaseScheduleChange,
+  ebpfProductionObservabilitySecurityBoundaries,
   ingressNginxArchivedMigration,
   terraformVsOpentofu,
   usbCCablesExplained,

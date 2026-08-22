@@ -1,6 +1,7 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 
 import { ArticleBody } from "@/components/article/ArticleBody";
+import { ArticleReactions } from "@/components/article/ArticleReactions";
 import { TableOfContents } from "@/components/article/TableOfContents";
 import { ShareLinks } from "@/components/article/ShareLinks";
 import { ArticleCard, ArticleMeta } from "@/components/site/ArticleCard";
@@ -219,7 +220,11 @@ function ArticlePage() {
                 </li>
               ))}
             </ul>
-            <ShareLinks url={url} title={article.title} />
+            <div className="flex items-center gap-5">
+              {/* Drafts are unlisted and unindexed; there is nothing to react to yet. */}
+              {!article.draft && <ArticleReactions slug={article.slug} />}
+              <ShareLinks url={url} title={article.title} />
+            </div>
           </div>
 
           <div className="mt-10">
