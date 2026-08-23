@@ -314,7 +314,7 @@ export function isSubjectCategory(slug: string): boolean {
 
 /** Primary navigation — deliberately short. */
 export const primaryNav: { label: string; slug: string }[] = [
-  { label: "AI", slug: "ai" },
+  { label: "AI", slug: "ai-enterprise-it" },
   { label: "Enterprise IT", slug: "microsoft-intune" },
   { label: "Cybersecurity", slug: "cybersecurity-ciso" },
   { label: "Gadgets", slug: "gadgets" },

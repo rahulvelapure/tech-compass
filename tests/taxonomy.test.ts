@@ -1,11 +1,14 @@
 import { describe, expect, it } from "vitest";
 
+import { primaryNav } from "@/content/categories";
 import {
   TAG_INDEX_THRESHOLD,
   allArticles,
   allTags,
   articlesByAuthor,
+  articlesForCategory,
   authors,
+  getCategory,
   getTag,
   indexableTags,
   tagSlug,
@@ -109,5 +112,55 @@ describe("authors", () => {
     for (const author of authors) {
       expect(author.id).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
     }
+  });
+});
+
+/**
+ * The primary navigation is the third routing surface, and the one a reader
+ * meets first. A nav entry pointing at a category with nothing published in it
+ * renders a page reading "No articles" — the link resolves, so nothing 404s and
+ * nothing throws, which is exactly why it can sit there unnoticed.
+ *
+ * This happened: the AI entry pointed at "ai", a category holding a single
+ * draft, while every published AI article lives in "ai-enterprise-it".
+ */
+describe("primary navigation", () => {
+  it("points every entry at a category that exists", () => {
+    for (const item of primaryNav) {
+      expect(
+        getCategory(item.slug),
+        `nav "${item.label}" -> /${item.slug} has no category`,
+      ).toBeDefined();
+    }
+  });
+
+  /**
+   * Two entries are empty today and are not a regression: no article anywhere
+   * carries the "gadgets" category or the "review" content type, so there is
+   * nowhere populated to point them at. Whether to write that coverage or drop
+   * the entries is an editorial call, so the debt is pinned here rather than
+   * hidden — this fails if the set grows, and equally if it shrinks without
+   * the list being updated.
+   */
+  const KNOWN_EMPTY = ["gadgets", "reviews"];
+
+  it("has no empty entry other than the known-empty ones", () => {
+    const empty = primaryNav
+      .filter((item) => {
+        const category = getCategory(item.slug);
+        return !category || articlesForCategory(category).length === 0;
+      })
+      .map((item) => item.slug)
+      .sort();
+
+    expect(empty, 'a nav entry renders "No articles"').toEqual([...KNOWN_EMPTY].sort());
+  });
+
+  it("sends AI to the category that actually holds the AI articles", () => {
+    // Pinned rather than merely implied by the check above: "ai" could gain a
+    // published article later, which would quietly make a regression pass.
+    const ai = primaryNav.find((item) => item.label === "AI");
+    expect(ai, "the AI nav entry was removed or relabelled").toBeDefined();
+    expect(ai!.slug).toBe("ai-enterprise-it");
   });
 });
