@@ -255,11 +255,13 @@ describe("dislike counts stay private", () => {
     // The column may only be named where it is written. If it appears anywhere
     // else under src/ — a component, a loader, a response type — something is
     // on its way to the browser.
-    const offenders = sourceFiles().filter((file) =>
-      /genuine_dislikes|genuineDislikes|dislikeTotal|dislikeCount/.test(readFileSync(file, "utf8")),
-    );
+    const offenders = sourceFilesWithContents()
+      .filter(({ source }) =>
+        /genuine_dislikes|genuineDislikes|dislikeTotal|dislikeCount/.test(source),
+      )
+      .map(({ file }) => file);
     expect(offenders.map(relative)).toEqual(["src/lib/reactions.db.ts"]);
-  });
+  }, 30_000);
 
   it("exposes no server function that could return a dislike total", () => {
     const fns = readFileSync(srcPath("lib/reactions.functions.ts"), "utf8");
@@ -395,13 +397,13 @@ describe("seeded like baselines", () => {
   it("is never written into article content or editorial data", () => {
     // The baseline is a UI value. It must not have leaked into the content
     // store, where it would reach the sitemap, the feed and the JSON-LD.
-    const contentFiles = sourceFiles().filter((f) => f.includes("/content/"));
+    const contentFiles = sourceFilesWithContents().filter(({ file }) => file.includes("/content/"));
     expect(contentFiles.length).toBeGreaterThan(30);
-    const offenders = contentFiles.filter((file) =>
-      /seededLikeCount|likeTotal|reactionCount/.test(readFileSync(file, "utf8")),
-    );
+    const offenders = contentFiles
+      .filter(({ source }) => /seededLikeCount|likeTotal|reactionCount/.test(source))
+      .map(({ file }) => file);
     expect(offenders.map(relative)).toEqual([]);
-  });
+  }, 30_000);
 });
 
 /* ================================================================== */
@@ -536,18 +538,19 @@ describe("clipboard policy", () => {
     /navigator\.clipboard|\bwriteText\b|\breadText\b|\bClipboardItem\b|execCommand\s*\(|onCopy|onCut|copyToClipboard|["'`]Copy link|["'`]Copy code/;
 
   it("contains no clipboard API usage anywhere in the application", () => {
-    const offenders = sourceFiles().filter((file) => FORBIDDEN.test(readFileSync(file, "utf8")));
+    const offenders = sourceFilesWithContents()
+      .filter(({ source }) => FORBIDDEN.test(source))
+      .map(({ file }) => file);
     expect(offenders.map(relative)).toEqual([]);
-  });
+  }, 30_000);
 
   it("does not suppress the reader's own text selection", () => {
     // select-none on a decorative separator is fine; on prose it is not.
-    const offenders = sourceFiles().filter((file) => {
-      const source = readFileSync(file, "utf8");
-      return /user-select:\s*none|onSelectStart|selectstart/.test(source);
-    });
+    const offenders = sourceFilesWithContents()
+      .filter(({ source }) => /user-select:\s*none|onSelectStart|selectstart/.test(source))
+      .map(({ file }) => file);
     expect(offenders.map(relative)).toEqual([]);
-  });
+  }, 30_000);
 
   it("declares no clipboard dependency", () => {
     const pkg = readFileSync(fileURLToPath(new URL("../package.json", import.meta.url)), "utf8");
@@ -594,6 +597,32 @@ describe("existing article URLs are unchanged", () => {
     "/networking/wifi-6-vs-wifi-7",
     "/software/vscode-vs-jetbrains",
     "/windows/windows-11-vs-windows-10-enterprise",
+    "/microsoft-365-entra-id/entra-id-vs-active-directory-differences",
+    "/enterprise-networking/bgp-in-the-cloud-why-it-matters",
+    "/cybersecurity-ciso/passkeys-enterprise-deployment-reality",
+    "/devops/kubernetes-pod-networking-packet-flow",
+    "/cloud/cloud-egress-costs-architecture-problem",
+    "/cybersecurity-ciso/saml-federation-security-risks-trust-boundaries",
+    "/ai-enterprise-it/enterprise-ai-agents-security-governance-reality",
+    "/cloud/aws-vpc-lattice-vs-api-gateway-service-networking",
+    "/cybersecurity-ciso/oauth2-token-theft-dpop-mechanics",
+    "/devops/kubernetes-storage-classes-costs-performance-traps",
+    "/devops/secrets-management-cicd-vault-oidc-reality",
+    "/microsoft-intune/windows-laps-entra-id-architecture-deployment",
+    "/cloud/aws-transit-gateway-vs-vpc-peering",
+    "/cloud/aurora-serverless-v2-scaling-connection-limits",
+    "/cybersecurity-ciso/fido2-discoverable-credentials-resident-keys",
+    "/windows/wdac-vs-applocker-kernel-enforcement",
+    "/devops/karpenter-vs-cluster-autoscaler-node-scaling",
+    "/devops/service-mesh-mtls-operational-overhead",
+    "/cloud/aws-lambda-cold-start-optimization-snapstart",
+    "/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa",
+    "/devops/terraform-state-locking-drift-enterprise-reality",
+    "/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy",
+    "/enterprise-networking/enterprise-dns-security-doh-dot-filtering",
+    "/windows/bitlocker-tpm-failure-recovery-enterprise",
+    "/microsoft-365-entra-id/entra-id-pim-implementation-failures",
+    "/devops/container-image-security-beyond-scanning",
   ];
 
   it("still publishes exactly the same addresses", () => {
@@ -604,7 +633,7 @@ describe("existing article URLs are unchanged", () => {
     // Published count only. The total is deliberately not pinned: adding a
     // draft is a normal editorial act that changes nothing a reader can reach,
     // and a guard that fails on it would just be noise every time one lands.
-    expect(allArticles).toHaveLength(29);
+    expect(allArticles).toHaveLength(55);
     expect(articles.length).toBeGreaterThanOrEqual(allArticles.length);
   });
 });
@@ -619,10 +648,27 @@ function srcPath(relativePath: string): string {
   return `${SRC}/${relativePath}`;
 }
 
-function sourceFiles(): string[] {
-  return readdirSync(SRC, { recursive: true, encoding: "utf8" })
+/**
+ * Every source file under src/, with its contents, read once per run.
+ *
+ * Four separate policy scans below walk src/ and read every file. Re-reading
+ * roughly 150 files once per scan pushed the two largest tests past vitest's
+ * five-second default under full-suite concurrency, so they failed on timing
+ * rather than on substance. Reading each file once and sharing the result
+ * removes that. It changes nothing about what any scan asserts.
+ */
+let sourceCache: { file: string; source: string }[] | undefined;
+
+function sourceFilesWithContents(): { file: string; source: string }[] {
+  sourceCache ??= readdirSync(SRC, { recursive: true, encoding: "utf8" })
     .filter((entry) => /\.(ts|tsx)$/.test(entry))
-    .map((entry) => `${SRC}/${entry}`.replace(/\\/g, "/"));
+    .map((entry) => `${SRC}/${entry}`.replace(/\\/g, "/"))
+    .map((file) => ({ file, source: readFileSync(file, "utf8") }));
+  return sourceCache;
+}
+
+function sourceFiles(): string[] {
+  return sourceFilesWithContents().map((entry) => entry.file);
 }
 
 function relative(file: string): string {

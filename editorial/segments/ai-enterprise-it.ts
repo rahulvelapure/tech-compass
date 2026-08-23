@@ -249,5 +249,25 @@ export const segment: Segment = {
       relatedTopics: ["aient-09", "dev-16"],
       notes: "Cross-domain link to dev-16, which owns general code-review practice.",
     },
+    {
+      id: "aient-13",
+      title: "An agent with tools is not a chatbot, and cannot be secured like one",
+      category: "ai-enterprise-it",
+      subcategory: "Agents",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "PUBLISHED",
+      targetKeyword: "enterprise ai agents security",
+      secondaryKeywords: ["prompt injection tool use", "rag data leakage"],
+      requiredSources: [
+        "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+        "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf",
+      ],
+      updateClass: "volatile",
+      articleSlug: "enterprise-ai-agents-security-governance-reality",
+      notes:
+        "Refined from Qwen batch-002 article 5. Technically sound as drafted. Scoped deliberately to security and governance so it does not overlap ai-agents-it-operations, which covers capability; the two now link to each other. Emphasised indirect prompt injection through data the agent reads, which is the path the draft under-weighted.",
+    },
   ],
 };

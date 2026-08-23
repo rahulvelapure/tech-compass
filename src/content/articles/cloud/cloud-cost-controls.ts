@@ -28,7 +28,7 @@ export const article: Article = {
   ],
   tags: ["Cloud", "FinOps", "Architecture", "Azure"],
   reviewStatus: "research-based",
-  relatedSlugs: ["terraform-vs-opentofu"],
+  relatedSlugs: ["bgp-in-the-cloud-why-it-matters", "terraform-vs-opentofu"],
   methodology:
     "Written from Microsoft Cost Management documentation, the Azure Well-Architected Framework Cost Optimization pillar, Azure Advisor reference documentation and the FinOps Foundation's published principles, verified August 2026. Azure-specific behaviour is labelled as such and kept separate from general cloud principles. No pricing figures, savings percentages or customer spend data are used — those are contract-specific and would not survive contact with a reader's own agreement.",
   body: [

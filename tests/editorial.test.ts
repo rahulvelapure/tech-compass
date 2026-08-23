@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join, sep } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -166,20 +166,23 @@ describe("editorial isolation", () => {
   it("is never imported from src/", () => {
     // A 1,500-entry backlog in the client bundle would be a real regression,
     // and the import would look harmless in review.
-    const offenders: string[] = [];
-    const walk = (dir: string) => {
-      for (const entry of readdirSync(dir)) {
-        const full = join(dir, entry);
-        if (statSync(full).isDirectory()) walk(full);
-        else if (/\.(ts|tsx)$/.test(entry)) {
-          const source = readFileSync(full, "utf8");
-          if (/from\s+["'][^"']*editorial/.test(source)) {
-            offenders.push(full.split(sep).join("/"));
-          }
-        }
-      }
-    };
-    walk("src");
+    // One recursive listing rather than a stat() per directory entry. The
+    // hand-rolled walk cost enough on a cold cache to put this test past
+    // vitest's five-second default under full-suite concurrency; the check
+    // itself is unchanged.
+    const offenders = readdirSync("src", { recursive: true, encoding: "utf8" })
+      .filter((entry) => /\.(ts|tsx)$/.test(entry))
+      .map((entry) => join("src", entry))
+      .filter((file) => /from\s+["'][^"']*editorial/.test(readFileSync(file, "utf8")))
+      .map((file) => file.split(sep).join("/"));
     expect(offenders).toEqual([]);
-  });
+    /*
+     * Generous timeout, not because the scan is slow — it reads roughly 150
+     * files in under half a second — but because vitest runs files in parallel
+     * workers and the timeout is wall-clock. Under a loaded suite this thread
+     * can be starved past five seconds while doing almost no work, which
+     * failed the run on timing rather than on substance. The assertion above
+     * is unchanged.
+     */
+  }, 30_000);
 });
