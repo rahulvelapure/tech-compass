@@ -46,7 +46,13 @@ const SEED_MAX = 2_500;
  * rather than by probing neighbouring values keeps every other article's number
  * untouched, which is the whole point of the seed being stable.
  */
-const SEED_OVERRIDES: Readonly<Record<string, number>> = {};
+const SEED_OVERRIDES: Readonly<Record<string, number>> = {
+  // Collision. This slug and group-policy-to-settings-catalog-migration both
+  // derive to 2233. The older article keeps the derived value — readers have
+  // already seen it — and the newer one is nudged to the next free number.
+  // 2234 was unused, sits inside the band and is not a round number.
+  "eks-pod-identity-vs-irsa-migration": 2234,
+};
 
 /**
  * Hash domain.
@@ -101,18 +107,35 @@ function avalanche(value: number): number {
 }
 
 /**
- * The fixed editorial baseline for an article.
+ * The derived baseline for a slug, before any override is considered.
  *
- * Deterministic: the same slug always yields the same number, on every request,
- * build and deployment.
+ * Exported for one reason: it is the algorithm on its own. `seededLikeCount` is
+ * two layers — a declared override, then this — so a test that pins the hash,
+ * the domain prefix or the band has to reach the derivation directly. Going
+ * through the composed function instead makes a deliberate override
+ * indistinguishable from someone quietly changing the maths.
+ *
+ * Nothing in the application should call this. Callers want the published
+ * baseline, which is `seededLikeCount`.
  *
  * The spread is uniform across the band rather than clustered at the centre.
  * Clustering would put most of the corpus within a few dozen of 2,000, which
  * reads as generated; a flat spread keeps the mean on the centre of the band
  * while letting individual articles look genuinely unalike.
  */
+export function derivedLikeCount(slug: string): number {
+  return SEED_MIN + (avalanche(fnv1a(SEED_DOMAIN + slug)) % (SEED_MAX - SEED_MIN + 1));
+}
+
+/**
+ * The fixed editorial baseline for an article.
+ *
+ * Deterministic: the same slug always yields the same number, on every request,
+ * build and deployment. An explicit entry in `SEED_OVERRIDES` wins; everything
+ * else is derived.
+ */
 export function seededLikeCount(slug: string): number {
   const override = SEED_OVERRIDES[slug];
   if (override !== undefined) return override;
-  return SEED_MIN + (avalanche(fnv1a(SEED_DOMAIN + slug)) % (SEED_MAX - SEED_MIN + 1));
+  return derivedLikeCount(slug);
 }

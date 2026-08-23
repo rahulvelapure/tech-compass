@@ -19,7 +19,7 @@ import {
   resetReactionLimit,
   withinReactionLimit,
 } from "../src/lib/reactions.identity";
-import { seededLikeCount } from "../src/lib/reactions.seed";
+import { derivedLikeCount, seededLikeCount } from "../src/lib/reactions.seed";
 
 /**
  * Article reactions.
@@ -321,27 +321,58 @@ describe("seeded like baselines", () => {
     }
   });
 
+  /** The documented derivation, reimplemented from the comments alone. */
+  const expected = (slug: string) => {
+    const input = `likes:v1:${slug}`;
+    let h = 0x811c9dc5;
+    for (let i = 0; i < input.length; i += 1) {
+      h ^= input.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    h ^= h >>> 16;
+    h = Math.imul(h, 0x7feb352d) >>> 0;
+    h ^= h >>> 15;
+    h = Math.imul(h, 0x846ca68b) >>> 0;
+    h ^= h >>> 16;
+    return 1_500 + ((h >>> 0) % 1_001);
+  };
+
   it("matches an independent implementation of the documented algorithm", () => {
     // Pins the algorithm itself, not merely its self-consistency. If someone
     // changes the hash, the domain prefix or the band, every reader's number
     // silently moves — this fails first, and says which article moved.
-    const expected = (slug: string) => {
-      const input = `likes:v1:${slug}`;
-      let h = 0x811c9dc5;
-      for (let i = 0; i < input.length; i += 1) {
-        h ^= input.charCodeAt(i);
-        h = Math.imul(h, 0x01000193) >>> 0;
-      }
-      h ^= h >>> 16;
-      h = Math.imul(h, 0x7feb352d) >>> 0;
-      h ^= h >>> 15;
-      h = Math.imul(h, 0x846ca68b) >>> 0;
-      h ^= h >>> 16;
-      return 1_500 + ((h >>> 0) % 1_001);
-    };
+    //
+    // Deliberately checks the derivation rather than seededLikeCount: the
+    // published baseline is an override layer on top of this, so going through
+    // it would make an intentional override look like an algorithm regression.
+    // The override layer has its own tests below.
     for (const article of articles) {
-      expect(seededLikeCount(article.slug), article.slug).toBe(expected(article.slug));
+      expect(derivedLikeCount(article.slug), article.slug).toBe(expected(article.slug));
     }
+  });
+
+  it("publishes the derived value for every article that has no override", () => {
+    // Keeps the override list from growing silently: anything that differs from
+    // its derived value has to be a declared entry, and the next test says why
+    // each of those exists.
+    const overridden = articles
+      .filter((a) => seededLikeCount(a.slug) !== derivedLikeCount(a.slug))
+      .map((a) => a.slug);
+    expect(overridden).toEqual(["eks-pod-identity-vs-irsa-migration"]);
+  });
+
+  it("resolves the one derived collision without moving the older article", () => {
+    // Both slugs derive to 2233. The rule is that the article readers have
+    // already seen keeps its number and the newcomer moves, so this pins both
+    // halves — and fails if a future edit resolves it the other way round.
+    const older = "group-policy-to-settings-catalog-migration";
+    const newer = "eks-pod-identity-vs-irsa-migration";
+
+    expect(derivedLikeCount(older), "the collision this override exists for").toBe(
+      derivedLikeCount(newer),
+    );
+    expect(seededLikeCount(older), "the older article must keep its derived value").toBe(2_233);
+    expect(seededLikeCount(newer), "the newer article takes the next free number").toBe(2_234);
   });
 
   it("gives every article a distinct baseline", () => {

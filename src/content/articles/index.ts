@@ -25,14 +25,17 @@ import { article as iso27001Microsoft365Mapping } from "./cybersecurity-ciso/iso
 import { article as oauth2TokenTheftDpopMechanics } from "./cybersecurity-ciso/oauth2-token-theft-dpop-mechanics";
 import { article as passkeysEnterpriseDeploymentReality } from "./cybersecurity-ciso/passkeys-enterprise-deployment-reality";
 import { article as passwordManagersForTeams } from "./cybersecurity-ciso/password-managers-for-teams";
+import { article as ransomwareRecoveryBackupsImmutableAdForest } from "./cybersecurity-ciso/ransomware-recovery-backups-immutable-ad-forest";
 import { article as samlFederationSecurityRisksTrustBoundaries } from "./cybersecurity-ciso/saml-federation-security-risks-trust-boundaries";
 import { article as nodejsReleaseScheduleChange } from "./development/nodejs-release-schedule-change";
 import { article as containerImageSecurityBeyondScanning } from "./devops/container-image-security-beyond-scanning";
 import { article as ebpfProductionObservabilitySecurityBoundaries } from "./devops/ebpf-production-observability-security-boundaries";
+import { article as eksPodIdentityVsIrsaMigration } from "./devops/eks-pod-identity-vs-irsa-migration";
 import { article as ingressNginxArchivedMigration } from "./devops/ingress-nginx-archived-migration";
 import { article as karpenterVsClusterAutoscalerNodeScaling } from "./devops/karpenter-vs-cluster-autoscaler-node-scaling";
 import { article as kubernetesPodNetworkingPacketFlow } from "./devops/kubernetes-pod-networking-packet-flow";
 import { article as kubernetesStorageClassesCostsPerformanceTraps } from "./devops/kubernetes-storage-classes-costs-performance-traps";
+import { article as opentelemetryVsProprietaryApmObservabilityCost } from "./devops/opentelemetry-vs-proprietary-apm-observability-cost";
 import { article as secretsManagementCicdVaultOidcReality } from "./devops/secrets-management-cicd-vault-oidc-reality";
 import { article as serviceMeshMtlsOperationalOverhead } from "./devops/service-mesh-mtls-operational-overhead";
 import { article as terraformStateLockingDriftEnterpriseReality } from "./devops/terraform-state-locking-drift-enterprise-reality";
@@ -40,6 +43,7 @@ import { article as terraformVsOpentofu } from "./devops/terraform-vs-opentofu";
 import { article as usbCCablesExplained } from "./electronics/usb-c-cables-explained";
 import { article as bgpInTheCloudWhyItMatters } from "./enterprise-networking/bgp-in-the-cloud-why-it-matters";
 import { article as enterpriseDnsSecurityDohDotFiltering } from "./enterprise-networking/enterprise-dns-security-doh-dot-filtering";
+import { article as enterpriseIpv6MigrationDualStackSecurity } from "./enterprise-networking/enterprise-ipv6-migration-dual-stack-security";
 import { article as zeroTrustNetworkSegmentation } from "./enterprise-networking/zero-trust-network-segmentation";
 import { article as choosingABusinessLaptop } from "./gadgets/choosing-a-business-laptop";
 import { article as raspberryPiHomeServer } from "./gadgets/raspberry-pi-home-server";
@@ -49,6 +53,7 @@ import { article as conditionalAccessFramework } from "./microsoft-365-entra-id/
 import { article as entraIdAuthenticationContextStepUpMfa } from "./microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa";
 import { article as entraIdPimImplementationFailures } from "./microsoft-365-entra-id/entra-id-pim-implementation-failures";
 import { article as entraIdVsActiveDirectoryDifferences } from "./microsoft-365-entra-id/entra-id-vs-active-directory-differences";
+import { article as microsoft365TenantToTenantMigration } from "./microsoft-365-entra-id/microsoft-365-tenant-to-tenant-migration";
 import { article as autopilotDevicePreparationVsAutopilot } from "./microsoft-intune/autopilot-device-preparation-vs-autopilot";
 import { article as autopilotDeviceRegistrationFailures } from "./microsoft-intune/autopilot-device-registration-failures";
 import { article as autopilotPreProvisioningFailures } from "./microsoft-intune/autopilot-pre-provisioning-failures";
@@ -94,14 +99,17 @@ export const articles: Article[] = [
   oauth2TokenTheftDpopMechanics,
   passkeysEnterpriseDeploymentReality,
   passwordManagersForTeams,
+  ransomwareRecoveryBackupsImmutableAdForest,
   samlFederationSecurityRisksTrustBoundaries,
   nodejsReleaseScheduleChange,
   containerImageSecurityBeyondScanning,
   ebpfProductionObservabilitySecurityBoundaries,
+  eksPodIdentityVsIrsaMigration,
   ingressNginxArchivedMigration,
   karpenterVsClusterAutoscalerNodeScaling,
   kubernetesPodNetworkingPacketFlow,
   kubernetesStorageClassesCostsPerformanceTraps,
+  opentelemetryVsProprietaryApmObservabilityCost,
   secretsManagementCicdVaultOidcReality,
   serviceMeshMtlsOperationalOverhead,
   terraformStateLockingDriftEnterpriseReality,
@@ -109,6 +117,7 @@ export const articles: Article[] = [
   usbCCablesExplained,
   bgpInTheCloudWhyItMatters,
   enterpriseDnsSecurityDohDotFiltering,
+  enterpriseIpv6MigrationDualStackSecurity,
   zeroTrustNetworkSegmentation,
   choosingABusinessLaptop,
   raspberryPiHomeServer,
@@ -118,6 +127,7 @@ export const articles: Article[] = [
   entraIdAuthenticationContextStepUpMfa,
   entraIdPimImplementationFailures,
   entraIdVsActiveDirectoryDifferences,
+  microsoft365TenantToTenantMigration,
   autopilotDevicePreparationVsAutopilot,
   autopilotDeviceRegistrationFailures,
   autopilotPreProvisioningFailures,
