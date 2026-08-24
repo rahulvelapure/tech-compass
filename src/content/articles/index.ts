@@ -8,6 +8,7 @@ import type { Article } from "../types";
 
 import { article as aiAgentsItOperations } from "./ai-enterprise-it/ai-agents-it-operations";
 import { article as aiCodingAssistantsEnterprise } from "./ai-enterprise-it/ai-coding-assistants-enterprise";
+import { article as aiModelServingInfrastructureKvCacheVllm } from "./ai-enterprise-it/ai-model-serving-infrastructure-kv-cache-vllm";
 import { article as enterpriseAiAgentsSecurityGovernanceReality } from "./ai-enterprise-it/enterprise-ai-agents-security-governance-reality";
 import { article as euAiActObligationsTimeline } from "./ai-enterprise-it/eu-ai-act-obligations-timeline";
 import { article as modelContextProtocolExplained } from "./ai-enterprise-it/model-context-protocol-explained";
@@ -18,6 +19,7 @@ import { article as awsTransitGatewayVsVpcPeering } from "./cloud/aws-transit-ga
 import { article as awsVpcLatticeVsApiGatewayServiceNetworking } from "./cloud/aws-vpc-lattice-vs-api-gateway-service-networking";
 import { article as cloudCostControls } from "./cloud/cloud-cost-controls";
 import { article as cloudEgressCostsArchitectureProblem } from "./cloud/cloud-egress-costs-architecture-problem";
+import { article as databaseConnectionFailoverMechanicsTimeouts } from "./cloud/database-connection-failover-mechanics-timeouts";
 import { article as postgresqlConnectionPoolingPgbouncerRdsProxy } from "./cloud/postgresql-connection-pooling-pgbouncer-rds-proxy";
 import { article as backupRestoreTesting } from "./cybersecurity-ciso/backup-restore-testing";
 import { article as fido2DiscoverableCredentialsResidentKeys } from "./cybersecurity-ciso/fido2-discoverable-credentials-resident-keys";
@@ -33,6 +35,7 @@ import { article as ebpfProductionObservabilitySecurityBoundaries } from "./devo
 import { article as eksPodIdentityVsIrsaMigration } from "./devops/eks-pod-identity-vs-irsa-migration";
 import { article as ingressNginxArchivedMigration } from "./devops/ingress-nginx-archived-migration";
 import { article as karpenterVsClusterAutoscalerNodeScaling } from "./devops/karpenter-vs-cluster-autoscaler-node-scaling";
+import { article as kubernetesPodDisruptionBudgetsEvictionMechanics } from "./devops/kubernetes-pod-disruption-budgets-eviction-mechanics";
 import { article as kubernetesPodNetworkingPacketFlow } from "./devops/kubernetes-pod-networking-packet-flow";
 import { article as kubernetesStorageClassesCostsPerformanceTraps } from "./devops/kubernetes-storage-classes-costs-performance-traps";
 import { article as opentelemetryVsProprietaryApmObservabilityCost } from "./devops/opentelemetry-vs-proprietary-apm-observability-cost";
@@ -44,6 +47,7 @@ import { article as usbCCablesExplained } from "./electronics/usb-c-cables-expla
 import { article as bgpInTheCloudWhyItMatters } from "./enterprise-networking/bgp-in-the-cloud-why-it-matters";
 import { article as enterpriseDnsSecurityDohDotFiltering } from "./enterprise-networking/enterprise-dns-security-doh-dot-filtering";
 import { article as enterpriseIpv6MigrationDualStackSecurity } from "./enterprise-networking/enterprise-ipv6-migration-dual-stack-security";
+import { article as saseVsSseSdWanArchitectureReality } from "./enterprise-networking/sase-vs-sse-sd-wan-architecture-reality";
 import { article as zeroTrustNetworkSegmentation } from "./enterprise-networking/zero-trust-network-segmentation";
 import { article as choosingABusinessLaptop } from "./gadgets/choosing-a-business-laptop";
 import { article as raspberryPiHomeServer } from "./gadgets/raspberry-pi-home-server";
@@ -78,10 +82,12 @@ import { article as bitlockerTpmFailureRecoveryEnterprise } from "./windows/bitl
 import { article as wdacVsApplockerKernelEnforcement } from "./windows/wdac-vs-applocker-kernel-enforcement";
 import { article as wifiTroubleshooting } from "./windows/wifi-troubleshooting";
 import { article as windows11VsWindows10Enterprise } from "./windows/windows-11-vs-windows-10-enterprise";
+import { article as windowsServerHardeningSecuredCoreCredentialGuard } from "./windows/windows-server-hardening-secured-core-credential-guard";
 
 export const articles: Article[] = [
   aiAgentsItOperations,
   aiCodingAssistantsEnterprise,
+  aiModelServingInfrastructureKvCacheVllm,
   enterpriseAiAgentsSecurityGovernanceReality,
   euAiActObligationsTimeline,
   modelContextProtocolExplained,
@@ -92,6 +98,7 @@ export const articles: Article[] = [
   awsVpcLatticeVsApiGatewayServiceNetworking,
   cloudCostControls,
   cloudEgressCostsArchitectureProblem,
+  databaseConnectionFailoverMechanicsTimeouts,
   postgresqlConnectionPoolingPgbouncerRdsProxy,
   backupRestoreTesting,
   fido2DiscoverableCredentialsResidentKeys,
@@ -107,6 +114,7 @@ export const articles: Article[] = [
   eksPodIdentityVsIrsaMigration,
   ingressNginxArchivedMigration,
   karpenterVsClusterAutoscalerNodeScaling,
+  kubernetesPodDisruptionBudgetsEvictionMechanics,
   kubernetesPodNetworkingPacketFlow,
   kubernetesStorageClassesCostsPerformanceTraps,
   opentelemetryVsProprietaryApmObservabilityCost,
@@ -118,6 +126,7 @@ export const articles: Article[] = [
   bgpInTheCloudWhyItMatters,
   enterpriseDnsSecurityDohDotFiltering,
   enterpriseIpv6MigrationDualStackSecurity,
+  saseVsSseSdWanArchitectureReality,
   zeroTrustNetworkSegmentation,
   choosingABusinessLaptop,
   raspberryPiHomeServer,
@@ -152,4 +161,5 @@ export const articles: Article[] = [
   wdacVsApplockerKernelEnforcement,
   wifiTroubleshooting,
   windows11VsWindows10Enterprise,
+  windowsServerHardeningSecuredCoreCredentialGuard,
 ];
