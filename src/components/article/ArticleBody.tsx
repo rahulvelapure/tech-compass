@@ -73,7 +73,7 @@ export function RichText({ text }: { text: string }) {
 
 function CodeBlock({ language, filename, code, command }: Extract<Block, { type: "code" }>) {
   return (
-    <figure className="my-8 overflow-hidden rounded-none border border-border">
+    <figure className="my-8 overflow-hidden rounded-lg border border-border">
       <figcaption className="flex items-center justify-between gap-4 border-b border-border bg-surface-strong px-4 py-2">
         <span className="eyebrow text-muted-foreground">{command ? "Command" : language}</span>
         {filename && (
@@ -120,7 +120,7 @@ function Callout({ variant, title, text }: Extract<Block, { type: "callout" }>) 
   const { Icon } = config;
 
   return (
-    <div role="note" className={`my-8 px-5 py-4 ${config.wrap}`}>
+    <div role="note" className={`my-8 rounded-r-lg px-5 py-4 ${config.wrap}`}>
       <p className={`eyebrow flex items-center gap-2 ${config.head}`}>
         <Icon className="h-3.5 w-3.5" aria-hidden="true" />
         {title}
@@ -140,7 +140,7 @@ function DataTable({ caption, head, rows }: Extract<Block, { type: "table" }>) {
         tabIndex={0}
         role="region"
         aria-label={caption ?? "Table"}
-        className="overflow-x-auto border border-border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
+        className="overflow-x-auto rounded-lg border border-border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
       >
         <table className="w-full border-collapse text-left text-sm">
           <thead>
@@ -175,7 +175,7 @@ function DataTable({ caption, head, rows }: Extract<Block, { type: "table" }>) {
 
 function Diagram({ title, ascii, caption }: Extract<Block, { type: "diagram" }>) {
   return (
-    <figure className="my-8 border border-border bg-surface">
+    <figure className="my-8 overflow-hidden rounded-lg border border-border bg-surface">
       <figcaption className="eyebrow border-b border-border px-4 py-2 text-muted-foreground">
         {title}
       </figcaption>
@@ -209,7 +209,7 @@ function Diagram({ title, ascii, caption }: Extract<Block, { type: "diagram" }>)
  */
 function Figure({ title, svg, alt, caption }: Extract<Block, { type: "figure" }>) {
   return (
-    <figure className="my-8 border border-border bg-surface">
+    <figure className="my-8 overflow-hidden rounded-lg border border-border bg-surface">
       <figcaption className="eyebrow border-b border-border px-4 py-2 text-muted-foreground">
         {title}
       </figcaption>

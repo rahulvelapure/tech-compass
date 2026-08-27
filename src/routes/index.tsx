@@ -46,7 +46,7 @@ export const Route = createFileRoute("/")({
  */
 
 function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto max-w-[78rem] px-4 sm:px-6 lg:px-8">{children}</div>;
+  return <div className="wrap">{children}</div>;
 }
 
 /** Section head: brand rule, title, optional standfirst and index link. */

@@ -116,13 +116,13 @@ export function ArticleCard({ article, variant = "card", index }: Props) {
 
   if (variant === "brief") {
     return (
-      <article className="group border-t border-border py-3.5">
-        <h3 className="text-[15px] font-medium leading-snug">
+      <article className="group border-b hairline py-3.5 last:border-0">
+        <h3 className="font-display text-[1.05rem] leading-snug">
           <Link to={to} className="transition-colors group-hover:text-brand">
             {article.title}
           </Link>
         </h3>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="t-caption mt-1">
           {article.subcategory ?? getCategory(article.category)?.label} · {article.readingMinutes}{" "}
           min
         </p>
@@ -131,15 +131,15 @@ export function ArticleCard({ article, variant = "card", index }: Props) {
   }
 
   return (
-    <article className="group flex flex-col border-t-2 border-foreground pt-4">
+    <article className="card-lift group flex flex-col rounded-lg border border-border bg-card p-5">
       <Kicker article={article} />
       <h3 className="display-3 mt-2.5">
         <Link to={to} className="transition-colors group-hover:text-brand">
           {article.title}
         </Link>
       </h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{article.excerpt}</p>
-      <p className="mt-4 text-xs tabular-nums text-muted-foreground">
+      <p className="mt-2 text-sm leading-relaxed text-ink-faint">{article.excerpt}</p>
+      <p className="t-caption mt-auto pt-4 font-mono tabular-nums">
         {formatDate(article.publishedAt)} · {article.readingMinutes} min
       </p>
     </article>

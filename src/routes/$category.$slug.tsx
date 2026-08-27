@@ -102,7 +102,7 @@ function ArticlePage() {
   const url = absoluteUrl(articlePath(article));
 
   return (
-    <div className="mx-auto max-w-[78rem] px-4 sm:px-6 lg:px-8">
+    <div className="wrap">
       <div className="py-8">
         <Breadcrumbs
           items={[

@@ -42,11 +42,11 @@ function SearchPage() {
           type="search"
           defaultValue={query}
           placeholder="Intune, Wi-Fi 7, conditional access…"
-          className="h-11 flex-1 rounded-none border border-border bg-surface px-4 text-sm focus:border-accent focus:outline-none"
+          className="h-11 flex-1 rounded-lg border border-border bg-surface px-4 text-sm focus:border-brand focus:outline-none"
         />
         <button
           type="submit"
-          className="h-11 rounded-none bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-brand hover:text-brand-foreground"
+          className="h-11 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand hover:text-brand-foreground"
         >
           Search
         </button>

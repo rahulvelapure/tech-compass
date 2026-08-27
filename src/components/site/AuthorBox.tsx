@@ -12,7 +12,7 @@ export function AuthorBox({ authorId }: { authorId: string }) {
     >
       <div
         aria-hidden="true"
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-none border border-border bg-background text-xs font-bold"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-xs font-bold"
       >
         {author.initials}
       </div>

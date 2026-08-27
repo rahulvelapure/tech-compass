@@ -67,7 +67,7 @@ function AuthorPage() {
       <header className="mt-8 flex flex-col gap-5 border-b border-border pb-8 sm:flex-row sm:gap-6">
         <div
           aria-hidden="true"
-          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-none border border-border bg-surface font-serif text-lg font-bold"
+          className="flex size-16 shrink-0 items-center justify-center rounded-full border border-border bg-surface font-display text-lg font-medium"
         >
           {author.initials}
         </div>

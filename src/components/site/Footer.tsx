@@ -9,7 +9,7 @@ export function Footer() {
 
   return (
     <footer className="mt-20 border-t-2 border-foreground bg-surface">
-      <div className="mx-auto max-w-[78rem] px-4 py-14 sm:px-6 lg:px-8">
+      <div className="wrap py-14">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-2">
             <span aria-hidden="true" className="mb-2 block h-[3px] w-7 bg-brand" />

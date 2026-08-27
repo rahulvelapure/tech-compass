@@ -98,13 +98,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
       aria-label="Newsletter"
       className={inline ? "border-y border-border py-8" : "border-t-2 border-foreground bg-surface"}
     >
-      <div
-        className={
-          inline
-            ? ""
-            : "mx-auto grid max-w-[78rem] gap-x-12 gap-y-6 px-4 py-12 sm:px-6 lg:grid-cols-12 lg:px-8"
-        }
-      >
+      <div className={inline ? "" : "wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-12"}>
         <div className={inline ? "" : "lg:col-span-5"}>
           <h2 className="kicker">The newsletter</h2>
           <p className="display-2 mt-3">{site.newsletter.pitch}</p>

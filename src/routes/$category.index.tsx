@@ -70,7 +70,7 @@ function CategoryPage() {
   );
 
   return (
-    <div className="mx-auto max-w-[78rem] px-4 sm:px-6 lg:px-8">
+    <div className="wrap">
       <div className="border-b border-border py-8">
         <Breadcrumbs items={[{ name: category.title }]} />
         <h1 className="headline mt-5 text-3xl sm:text-4xl">{category.title}</h1>
