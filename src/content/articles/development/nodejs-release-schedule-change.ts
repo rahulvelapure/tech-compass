@@ -22,7 +22,10 @@ export const article: Article = {
   secondaryKeywords: ["node 26 lts", "node js version support 2026", "node lts policy"],
   tags: ["Development", "Node.js", "Runtimes", "Upgrades"],
   reviewStatus: "research-based",
-  relatedSlugs: ["ingress-nginx-archived-migration"],
+  relatedSlugs: [
+    "graphql-vs-rest-vs-grpc-api-gateway-performance",
+    "ingress-nginx-archived-migration",
+  ],
   methodology:
     "Written from the Node.js project's own release announcements and published release schedule. Version states are given as at August 2026 and will age; the release page is the authority.",
   body: [

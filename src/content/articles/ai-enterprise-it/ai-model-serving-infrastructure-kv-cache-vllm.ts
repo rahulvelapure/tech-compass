@@ -14,7 +14,7 @@ export const article: Article = {
   excerpt:
     "Generation is memory-bandwidth bound, and every concurrent request holds cache proportional to its context. Understanding that explains low GPU utilisation, sudden out-of-memory errors, and why long context is so expensive.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-08-23",
+  publishedAt: "2026-08-27",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 5,
@@ -29,7 +29,6 @@ export const article: Article = {
   tags: ["AI", "Infrastructure", "GPU", "LLM", "Capacity Planning"],
   reviewStatus: "research-based",
   relatedSlugs: ["enterprise-ai-agents-security-governance-reality", "ai-agents-it-operations"],
-  draft: true,
   methodology:
     "Written from the PagedAttention paper (SOSP 2023), vLLM project documentation and NVIDIA inference documentation, verified August 2026. Throughput figures are given only as the paper reports them, against the baselines it names. The source draft's invented utilisation percentages, concurrent-user counts and single-vendor bandwidth figures were removed; the remaining hardware numbers are described by magnitude rather than quoted as specifications.",
   body: [

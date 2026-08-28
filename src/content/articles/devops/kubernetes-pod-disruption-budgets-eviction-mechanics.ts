@@ -14,7 +14,7 @@ export const article: Article = {
   excerpt:
     "The Eviction API asks a budget for permission and takes no for an answer indefinitely. That is the whole design, and it explains both the protection PDBs give and the drains they block forever.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-08-23",
+  publishedAt: "2026-04-06",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 6,
@@ -32,7 +32,6 @@ export const article: Article = {
     "karpenter-vs-cluster-autoscaler-node-scaling",
     "kubernetes-storage-classes-costs-performance-traps",
   ],
-  draft: true,
   methodology:
     "Written from the current Kubernetes disruptions and PDB documentation, verified August 2026. The source draft's claim that rounding always favours the application was corrected — rounding up maxUnavailable permits more disruption than the percentage suggests — along with its description of custom controllers, which are supported when they expose the scale subresource. An invented incident narrative and its timings were removed.",
   body: [
@@ -61,12 +60,12 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Only voluntary disruptions are covered",
-      text: "A PDB constrains things that go through the Eviction API: drains, autoscaler consolidation, anything an operator initiates deliberately. A node that loses power, panics, or is terminated abruptly by the provider does not consult anything. The pods are simply gone and the controller replaces them. Budgets are an availability contract for maintenance, not a fault-tolerance mechanism.",
+      text: "A PDB holds back the things that go through the Eviction API. That means drains, autoscaler consolidation, and anything an operator sets off on purpose. A node that loses power, panics, or is terminated abruptly by the provider does not consult anything. The pods are simply gone and the controller replaces them. Budgets are an availability contract for maintenance, not a fault-tolerance mechanism.",
     },
     {
       type: "h2",
       id: "arithmetic",
-      text: "The arithmetic, including the part that surprises people",
+      text: "The maths, and the part that catches people out",
     },
     {
       type: "p",
@@ -74,7 +73,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "With absolute numbers the behaviour is obvious. With percentages it is worth being precise, because both round up and the consequence differs.",
+      text: "With plain numbers, what happens is obvious. With percentages it pays to be exact. Both of them round up, and what that buys you differs.",
     },
     {
       type: "table",
@@ -88,7 +87,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Rounding up `minAvailable` raises the floor, which protects the application more than the percentage implies. Rounding up `maxUnavailable` raises the ceiling, which permits more disruption than the percentage implies. The documentation says so directly: a disruption can exceed the `maxUnavailable` percentage you defined.",
+      text: "Round up `minAvailable` and you lift the floor. That guards the app more than the percentage suggests. Round up `maxUnavailable` and you lift the ceiling, so more can go at once than you asked for. The documentation says so directly: a disruption can exceed the `maxUnavailable` percentage you defined.",
     },
     {
       type: "p",
@@ -124,7 +123,7 @@ export const article: Article = {
     { type: "h3", id: "controller", text: "A selector over pods nothing owns" },
     {
       type: "p",
-      text: "Budgets work with Deployments, ReplicaSets, ReplicationControllers and StatefulSets, and — since v1.15 — with custom controllers that expose the scale subresource. That last part is often stated wrongly: a custom controller is not automatically unsupported.",
+      text: "Budgets work with the built-in controllers: Deployments, ReplicaSets, ReplicationControllers and StatefulSets. Since v1.15 they work with your own controllers too. Those just have to expose the scale subresource. That last part is often stated wrongly: a custom controller is not automatically unsupported.",
     },
     {
       type: "p",
@@ -170,9 +169,9 @@ export const article: Article = {
       items: [
         "Eviction asks permission. A refusal is not an error, and the retry loop does not end.",
         "Both percentage forms round up, but rounding up a ceiling permits more disruption, not less.",
-        "Budgets cover voluntary disruption only. A node that dies ignores them completely.",
+        "Budgets cover voluntary disruption only. A node that just dies ignores them.",
         "Most stuck drains are really scheduling failures wearing a budget as a disguise.",
-        "A budget that blocks consolidation costs money silently. Alert on disruptions allowed hitting zero.",
+        "A budget that blocks consolidation costs you money, and it does so quietly. Alert when the count of allowed disruptions hits zero.",
         "Spread constraints are what make a budget achievable. Write both or neither.",
       ],
     },

@@ -14,7 +14,7 @@ export const article: Article = {
   excerpt:
     "The useful question is not what SASE means. It is where your traffic gets decrypted, where it gets inspected, how far it travels to get there, and how many consoles you need open to answer that.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-08-23",
+  publishedAt: "2026-03-02",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 5,
@@ -29,7 +29,6 @@ export const article: Article = {
   tags: ["Networking", "Zero Trust", "Security Architecture", "WAN", "SASE"],
   reviewStatus: "research-based",
   relatedSlugs: ["zero-trust-network-segmentation", "enterprise-dns-security-doh-dot-filtering"],
-  draft: true,
   methodology:
     "Written from NIST SP 800-207 for the zero trust access model, industry definitions of the SSE component set, and vendor-neutral architecture documentation, verified August 2026. The source draft's classification of named vendors as native or bolted-on was removed: it is a market claim that cannot be verified from documentation and dates badly. Its latency thresholds and inspection timings were removed for the same reason.",
   body: [

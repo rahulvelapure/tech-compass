@@ -14,7 +14,7 @@ export const article: Article = {
   excerpt:
     "When a primary dies without warning, the client's socket stays open and the kernel retransmits for a very long time. Keepalives do not rescue it, because keepalives only probe idle connections. Here is what actually does.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-08-23",
+  publishedAt: "2026-03-30",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 6,
@@ -32,7 +32,6 @@ export const article: Article = {
     "postgresql-connection-pooling-pgbouncer-rds-proxy",
     "aurora-serverless-v2-scaling-connection-limits",
   ],
-  draft: true,
   methodology:
     "Written from the Linux tcp(7) manual page, PostgreSQL libpq connection documentation and managed-database failover documentation, verified August 2026. The source draft's central recommendation — that aggressive TCP keepalives shorten failover detection — is corrected here: keepalives probe idle connections only, and a connection blocked mid-query is governed by retransmission instead. Invented failover durations, user counts and a fabricated incident narrative were removed.",
   body: [
@@ -97,12 +96,12 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Set all three together. Keepalives stop idle connections rotting in the pool. A user timeout stops a blocked query outliving the incident. A statement timeout covers the rest, because a reachable database is not always a quick one.",
+      text: "Set all three together. Keepalives stop idle connections going stale in the pool. A user timeout stops a blocked query outliving the incident. A statement timeout covers the rest, because a database you can reach is not always a quick one.",
     },
     { type: "h2", id: "dns", text: "The name that still points at a dead node" },
     {
       type: "p",
-      text: "Managed services hide the topology behind an endpoint name and move that name during failover. Which works, provided everyone in the resolution path notices.",
+      text: "Managed services hide the topology behind one name, then move that name when they fail over. That works, so long as everyone in the resolution path notices.",
     },
     {
       type: "p",
@@ -110,7 +109,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "On the JVM this is worth checking explicitly rather than assuming, because DNS caching there is a JVM-level property rather than an OS one. On any platform, the test is straightforward: fail something over deliberately and watch where the reconnection attempts go.",
+      text: "On the JVM, check this rather than assume it. DNS caching there is a JVM setting, not an OS one. On any platform the test is simple. Fail something over on purpose, then watch where the reconnect attempts go.",
     },
     { type: "h2", id: "drivers", text: "What the driver can do about it" },
     {
@@ -134,7 +133,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "This is the strongest argument for putting a proxy between the application and the database. The proxy holds the client connection open, handles the reconnection itself, and the application never sees the half-open socket. That is a different job from the multiplexing and connection-limit work covered in [connection pooling with PgBouncer and RDS Proxy](/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy), though the same components often do both.",
+      text: "This is the best argument for putting a proxy between the app and the database. The proxy holds the client connection open. It deals with the reconnect itself, so the app never sees the half-open socket. That is a different job from the multiplexing and connection-limit work covered in [connection pooling with PgBouncer and RDS Proxy](/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy), though the same components often do both.",
     },
     {
       type: "p",
@@ -148,11 +147,11 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "Trigger a failover in a non-production environment with traffic running, not idle.",
+        "Force a failover outside production while traffic is running, not while the system is idle.",
         "Measure the gap between the database accepting writes again and the application serving requests again. That gap is the number that matters, and it is the one nobody has.",
         "Watch where reconnection attempts are addressed. If they go to the old IP, the problem is resolution, not TCP.",
         "Check whether threads are blocked in the kernel or failing fast. That tells you whether your timeouts are actually in effect.",
-        "Repeat after changing driver, pool or platform versions, because these behaviours are version-specific and change without ceremony.",
+        "Do it again after any driver, pool or platform upgrade. These behaviours are tied to the version, and they change without fanfare.",
       ],
     },
     { type: "h2", id: "takeaways", text: "What to take away" },

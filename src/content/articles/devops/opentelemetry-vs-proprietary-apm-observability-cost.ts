@@ -7,18 +7,18 @@ export const article: Article = {
   subcategory: "Observability",
   title:
     "OpenTelemetry vs proprietary APM: the observability decision that changes your operating model",
-  seoTitle: "OpenTelemetry vs Proprietary APM: Cost, Architecture, and Trade-Offs",
+  seoTitle: "OpenTelemetry vs Proprietary APM: Cost and Architecture",
   metaDescription:
-    "OpenTelemetry gives you vendor-neutral instrumentation and a telemetry pipeline. Proprietary APM gives you a managed observability platform. Compare the architecture and operating trade-offs.",
+    "OpenTelemetry gives you vendor-neutral instrumentation and a pipeline. Proprietary APM gives you a managed platform. Compare the architecture and the trade-offs.",
   standfirst:
-    "OpenTelemetry is not a free Datadog replacement. It is a telemetry standard and pipeline that changes where instrumentation, processing and operations live.",
+    "OpenTelemetry is not a free swap for Datadog. It is a standard and a pipeline, and what it really changes is who runs what.",
   excerpt:
     "The real OpenTelemetry versus proprietary APM decision is about ownership. Decide which layers your team will operate, which backend you want, and where telemetry cost and complexity should live.",
   authorId: "rahul-velapure",
-  publishedAt: "2026-08-23",
+  publishedAt: "2026-04-13",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
-  readingMinutes: 4,
+  readingMinutes: 5,
   primaryKeyword: "OpenTelemetry vs Datadog",
   secondaryKeywords: [
     "OpenTelemetry Collector architecture",
@@ -34,34 +34,33 @@ export const article: Article = {
     "kubernetes-pod-networking-packet-flow",
     "cloud-egress-costs-architecture-problem",
   ],
-  draft: true,
   methodology:
     "Verified against the OpenTelemetry 1.11 OTLP specification and stability documentation, plus current Datadog OpenTelemetry documentation. Vendor prices, unsupported performance percentages and the claim that one deployment model is universally cheapest were removed because they are plan, workload and contract dependent.",
   body: [
     {
       type: "p",
-      text: "Every distributed system eventually reaches the same observability problem. A request crosses services, queues and databases. The team needs enough telemetry to explain the failure.",
+      text: "Every big system hits the same wall in the end. A request crosses services, queues and databases. Then it fails, and you need enough data to say why.",
     },
     {
       type: "p",
-      text: "The architectural choice is often framed as OpenTelemetry versus Datadog. That framing is too narrow. OpenTelemetry is a vendor-neutral set of APIs, SDKs, data models and telemetry components. Datadog and other APM platforms are managed products that can consume that telemetry and add their own processing and analysis.",
+      text: "People frame this as OpenTelemetry against Datadog. That framing is too narrow. OpenTelemetry, or OTel, is a vendor-neutral set of APIs, SDKs, data models and telemetry parts. Datadog and the other APM platforms are managed products. They take that data in and add their own processing and analysis.",
     },
     {
       type: "p",
-      text: "The useful decision is therefore not “open source or SaaS.” It is “which layers do we want to own?” That question produces a much better architecture.",
+      text: "So the real question is not “open source or SaaS”. It is “which layers do we want to run ourselves?” That one leads to a far better design.",
     },
     {
       type: "h2",
       id: "otel",
-      text: "What OpenTelemetry actually provides",
+      text: "What you actually get",
     },
     {
       type: "p",
-      text: "OpenTelemetry standardises how applications create and export observability data. The project covers traces, metrics and logs, with the current OTLP specification marking those signal types as stable. Profiles are at a different maturity level.",
+      text: "OTel sets one way for apps to make and send their data. It covers traces, metrics and logs. The current OTLP spec marks all three as stable. Profiles sit at a different level of maturity.",
     },
     {
       type: "p",
-      text: "The OpenTelemetry Collector is the key operational component. It can receive telemetry, process it and export it to one or more backends. That makes the Collector a policy and routing layer rather than a storage system.",
+      text: "The OTel Collector is the piece you actually run. It takes data in, works on it, and sends it out to one backend or several. So think of it as a policy and routing layer, not a place to keep things.",
     },
     {
       type: "table",
@@ -83,45 +82,45 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "OTLP is the OpenTelemetry Protocol. Current documentation defines it over gRPC and HTTP. The default ports are 4317 for OTLP/gRPC and 4318 for OTLP/HTTP.",
+      text: "OTLP is the OpenTelemetry Protocol. The docs define it over gRPC and over HTTP. Port 4317 is the default for gRPC, and 4318 for HTTP.",
     },
     {
       type: "p",
-      text: "This matters because the application does not need to know which database or dashboard will consume the data. The application exports telemetry in a standard form. The Collector can then route it to a managed vendor, an open-source backend or several destinations.",
+      text: "This matters because the app no longer has to know where its data ends up. It just sends it in a standard form. The Collector then routes it to a vendor, to an open-source backend, or to several at once.",
     },
     {
       type: "p",
-      text: "That separation is useful during a migration. Instrumentation can stay stable while the backend changes. It is also useful when security and operations want different destinations for different signals.",
+      text: "That split helps most during a move. The wiring in the app stays put while the backend changes. It also helps when security and ops want different signals sent to different places.",
     },
     {
       type: "h2",
       id: "proprietary",
-      text: "What a proprietary APM platform adds",
+      text: "What you get from a paid platform",
     },
     {
       type: "p",
-      text: "A managed APM product typically combines collection, storage, indexing, dashboards, alerting, integrations and product-specific analysis. The vendor operates the control plane and the storage service. Your team operates agents, configuration and instrumentation.",
+      text: "A managed APM product rolls a lot into one: collection, storage, indexing, dashboards, alerting, integrations and its own analysis. The vendor runs the control plane and the storage. Your team runs the agents, the config and the wiring in the code.",
     },
     {
       type: "p",
-      text: "That can be a major advantage. Observability is infrastructure. If the team has no capacity to operate collectors, storage, retention, upgrades and failure recovery, a self-hosted stack can create another production system to maintain.",
+      text: "That can be a big win. Observability is infrastructure, and it carries the same [running cost as any other platform layer](/devops/service-mesh-mtls-operational-overhead). If nobody has time to run collectors, storage, retention, upgrades and recovery, a self-hosted stack just hands you one more system to keep alive.",
     },
     {
       type: "p",
-      text: "The trade-off is dependency. The more analysis and dashboards depend on proprietary features, the more expensive a backend change becomes. Vendor-neutral instrumentation reduces that dependency, but it does not eliminate it.",
+      text: "The trade is lock-in. The more your dashboards lean on one vendor's features, the more a backend change costs you later. Vendor-neutral wiring cuts that down. It does not remove it.",
     },
     {
       type: "h2",
       id: "cost",
-      text: "Telemetry cost is a data-shape problem",
+      text: "Cost is about the shape of the data",
     },
     {
       type: "p",
-      text: "Observability cost grows from the shape of the telemetry. High-cardinality attributes, long retention, verbose logs and unsampled traces can create large storage and ingestion requirements.",
+      text: "What you pay follows the shape of the data. High-cardinality attributes push it up. So do long retention, chatty logs, and traces you never sampled. The same pattern drives [egress bills](/cloud/cloud-egress-costs-architecture-problem).",
     },
     {
       type: "p",
-      text: "A useful cost model separates three decisions. First, how much data should be generated? Second, how much should be retained? Third, where should detailed data live? These questions are more durable than a price-per-gigabyte table.",
+      text: "A good cost model splits into three questions. How much data do we make? How much do we keep? And where should the detailed stuff live? Those hold up better than any price-per-gigabyte table.",
     },
     {
       type: "table",
@@ -139,7 +138,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Do not use an invented break-even point",
-      text: "The right cost boundary depends on telemetry volume, team capacity, retention, vendor contract and the value of managed features. A statement such as “self-hosting wins above X GB” is not a general engineering rule.",
+      text: "Where the line falls depends on your volume, your team, your retention, your contract, and what the managed features are worth. “Self-hosting wins above X GB” is a slogan, not a rule.",
     },
     {
       type: "h2",
@@ -148,15 +147,15 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Collecting every trace is often unnecessary. Head sampling decides early and is simple. Tail sampling waits for more of the trace before deciding, so it can preserve traces that show errors or unusual latency.",
+      text: "You rarely need every trace. Head sampling decides up front, and it is simple. Tail sampling waits until more of the trace has arrived, so it can keep the ones with errors or odd latency.",
     },
     {
       type: "p",
-      text: "Tail sampling is especially useful when the interesting traces are rare. The trade-off is operational complexity because the Collector must keep enough trace context to make the decision.",
+      text: "Tail sampling earns its keep when the good traces are rare. The cost is that the Collector has to hold trace context until it can decide, and that is more to run.",
     },
     {
       type: "p",
-      text: "Sampling should be designed with incident response in mind. If every successful request is sampled but rare failures are dropped, the system looks cheap and healthy until the incident that matters.",
+      text: "Design sampling around the incident you will have. Keep every good request and drop the rare failures, and the system looks cheap and healthy right up to the outage that counts.",
     },
     {
       type: "h2",
@@ -165,20 +164,20 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A common enterprise architecture is OpenTelemetry instrumentation feeding a managed backend. The application uses OTel APIs and exports OTLP. A Collector can add batching, filtering, enrichment and sampling before sending data to the vendor.",
+      text: "The common enterprise shape is OTel wiring feeding a managed backend. The app uses OTel APIs and sends OTLP. A Collector then adds batching, filtering, enrichment and sampling before the data reaches the vendor.",
     },
     {
       type: "p",
-      text: "Datadog currently documents several OTel ingestion paths, including Collector-based export, Agent ingestion and direct OTLP intake. The feature set differs by path. That is exactly why the architecture should treat the Collector as an intentional boundary rather than assuming every OTLP path provides identical vendor features.",
+      text: "Datadog documents several ways to take OTel data in. You can export from a Collector, send it through the Agent, or use direct OTLP intake. What you get differs by path. So treat the Collector as a boundary you chose, and do not assume every OTLP path gives you the same vendor features.",
     },
     {
       type: "p",
-      text: "This model keeps instrumentation portable while keeping storage and advanced analysis managed. It also leaves an escape route. If the backend changes, the application does not need to be rewritten simply because the observability vendor changed.",
+      text: "This keeps the wiring portable and leaves storage and deep analysis to someone else. It also leaves you a way out. Change the backend later and the app does not have to be rewritten just because the vendor did.",
     },
     {
       type: "h2",
       id: "decision",
-      text: "Choose the operating model, not the logo",
+      text: "Pick the operating model, not the logo",
     },
     {
       type: "table",
@@ -216,7 +215,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The dangerous migration is a big-bang replacement. Observability is itself an incident-response dependency. Losing the old telemetry before the new pipeline is trustworthy removes the evidence needed to diagnose the migration.",
+      text: "The risky move is the big-bang swap. Observability is itself a thing you lean on during an incident. Turn the old pipe off before you trust the new one, and you have thrown away the evidence you need to debug the move.",
     },
     {
       type: "h2",
@@ -239,12 +238,12 @@ export const article: Article = {
     {
       question: "Does OpenTelemetry replace Datadog?",
       answer:
-        "No. OpenTelemetry provides standard instrumentation and telemetry transport. Datadog can receive that telemetry and provide managed storage, analysis, dashboards and other product features.",
+        "No. OTel gives you the wiring and a way to ship the data. Datadog takes that data and adds storage, dashboards and its own analysis.",
     },
     {
       question: "Does OpenTelemetry store traces and metrics?",
       answer:
-        "Not by itself. The OpenTelemetry Collector can process and export data, but you still choose a backend for storage and analysis.",
+        "Not on its own. The Collector can shape data and send it on. You still pick a backend to store it.",
     },
     {
       question: "What is the default OTLP gRPC port?",
@@ -253,12 +252,12 @@ export const article: Article = {
     {
       question: "Is tail sampling always better than head sampling?",
       answer:
-        "No. Tail sampling can preserve interesting traces more effectively, but it requires more Collector state and operational complexity.",
+        "No. Tail sampling keeps more of the traces you care about. It also asks the Collector to hold more state, and that costs you.",
     },
     {
       question: "What is the safest enterprise migration pattern?",
       answer:
-        "Keep OpenTelemetry instrumentation separate from the backend. Run old and new pipelines in parallel, validate telemetry, then change the destination gradually.",
+        "Keep the wiring apart from the backend. Run both pipes at once. Check the new one, then move over bit by bit.",
     },
   ],
   sources: [

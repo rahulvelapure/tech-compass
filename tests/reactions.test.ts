@@ -358,21 +358,65 @@ describe("seeded like baselines", () => {
     const overridden = articles
       .filter((a) => seededLikeCount(a.slug) !== derivedLikeCount(a.slug))
       .map((a) => a.slug);
-    expect(overridden).toEqual(["eks-pod-identity-vs-irsa-migration"]);
+    expect(overridden.sort()).toEqual([
+      "aws-efs-vs-fsx-lustre-s3-mountpoint",
+      "aws-transit-gateway-multicast-routing",
+      "eks-pod-identity-vs-irsa-migration",
+      "github-actions-self-hosted-runner-security",
+      "kubernetes-ingress-controller-architecture-nginx-traefik-envoy",
+      "oidc-workload-identity-federation-cross-cloud",
+    ]);
   });
 
-  it("resolves the one derived collision without moving the older article", () => {
-    // Both slugs derive to 2233. The rule is that the article readers have
-    // already seen keeps its number and the newcomer moves, so this pins both
-    // halves — and fails if a future edit resolves it the other way round.
-    const older = "group-policy-to-settings-catalog-migration";
-    const newer = "eks-pod-identity-vs-irsa-migration";
+  it("resolves every derived collision without moving the older article", () => {
+    // The rule is that the article readers have already seen keeps its number
+    // and the newcomer moves, so each case pins both halves — and fails if a
+    // future edit resolves one of them the other way round.
+    const collisions: { older: string; newer: string; keeps: number; moves: number }[] = [
+      {
+        older: "group-policy-to-settings-catalog-migration",
+        newer: "eks-pod-identity-vs-irsa-migration",
+        keeps: 2_233,
+        moves: 2_234,
+      },
+      {
+        older: "redis-cluster-vs-sentinel-architecture",
+        newer: "aws-efs-vs-fsx-lustre-s3-mountpoint",
+        keeps: 1_585,
+        moves: 1_586,
+      },
+      {
+        older: "kubernetes-pod-disruption-budgets-eviction-mechanics",
+        newer: "github-actions-self-hosted-runner-security",
+        keeps: 1_949,
+        // 1950 was skipped as too round, so this one takes the next value up.
+        moves: 1_951,
+      },
+      {
+        older: "ransomware-recovery-backups-immutable-ad-forest",
+        newer: "aws-transit-gateway-multicast-routing",
+        keeps: 1_889,
+        // 1890 was skipped as too round, so this one takes the next value up.
+        moves: 1_891,
+      },
+      {
+        // Both halves are drafts, so neither has a number readers have seen.
+        // The Lambda article keeps the derived value on the same rule anyway.
+        older: "aws-lambda-concurrency-reserved-provisioned-throttling",
+        newer: "kubernetes-ingress-controller-architecture-nginx-traefik-envoy",
+        keeps: 1_749,
+        // 1750 was skipped as too round, so this one takes the next value up.
+        moves: 1_751,
+      },
+    ];
 
-    expect(derivedLikeCount(older), "the collision this override exists for").toBe(
-      derivedLikeCount(newer),
-    );
-    expect(seededLikeCount(older), "the older article must keep its derived value").toBe(2_233);
-    expect(seededLikeCount(newer), "the newer article takes the next free number").toBe(2_234);
+    for (const { older, newer, keeps, moves } of collisions) {
+      expect(derivedLikeCount(older), `the collision ${newer} exists for`).toBe(
+        derivedLikeCount(newer),
+      );
+      expect(seededLikeCount(older), `${older} must keep its derived value`).toBe(keeps);
+      expect(seededLikeCount(newer), `${newer} takes the next free number`).toBe(moves);
+    }
   });
 
   it("gives every article a distinct baseline", () => {
@@ -600,16 +644,85 @@ describe("existing article URLs are unchanged", () => {
    */
   const EXPECTED = [
     "/ai-enterprise-it/ai-agents-it-operations",
+    "/ai-enterprise-it/ai-model-serving-infrastructure-kv-cache-vllm",
+    "/ai-enterprise-it/enterprise-ai-agents-security-governance-reality",
     "/ai-enterprise-it/eu-ai-act-obligations-timeline",
     "/ai-enterprise-it/model-context-protocol-explained",
+    "/ai-enterprise-it/nvidia-mig-vs-mps-time-slicing-kubernetes",
+    "/cloud/aurora-serverless-v2-scaling-connection-limits",
+    "/cloud/aws-control-tower-multi-account-governance-scp",
+    "/cloud/aws-efs-vs-fsx-lustre-s3-mountpoint",
+    "/cloud/aws-iam-roles-anywhere-certificate-authentication",
+    "/cloud/aws-lambda-cold-start-optimization-snapstart",
+    "/cloud/aws-lambda-concurrency-reserved-provisioned-throttling",
+    "/cloud/aws-transit-gateway-vs-vpc-peering",
+    "/cloud/aws-vpc-ipam-overlapping-cidr-management",
+    "/cloud/aws-vpc-lattice-vs-api-gateway-service-networking",
+    "/cloud/azure-managed-identities-vs-app-registrations-secrets",
     "/cloud/cloud-cost-controls",
+    "/cloud/cloud-egress-costs-architecture-problem",
+    "/cloud/database-connection-failover-mechanics-timeouts",
+    "/cloud/mongodb-sharding-jumbo-chunk-trap",
+    "/cloud/postgresql-autovacuum-wraparound-freezing-tuning",
+    "/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy",
+    "/cloud/postgresql-declarative-partitioning-query-pruning",
+    "/cloud/postgresql-index-types-btree-gin-brin-gist",
+    "/cloud/postgresql-pitr-wal-archiving-lsn-mechanics",
+    "/cloud/redis-cluster-vs-sentinel-architecture",
+    "/cybersecurity-ciso/backup-restore-testing",
+    "/cybersecurity-ciso/fido2-discoverable-credentials-resident-keys",
     "/cybersecurity-ciso/iso-27001-microsoft-365-mapping",
+    "/cybersecurity-ciso/linux-ebpf-security-monitoring-kernel-probes",
+    "/cybersecurity-ciso/linux-file-permissions-posix-acls-capabilities",
+    "/cybersecurity-ciso/linux-security-modules-selinux-apparmor-seccomp-containers",
+    "/cybersecurity-ciso/oauth-2-device-authorization-grant-iot-cli",
+    "/cybersecurity-ciso/oauth-2-pushed-authorization-requests-par-fapi",
+    "/cybersecurity-ciso/oauth2-token-theft-dpop-mechanics",
+    "/cybersecurity-ciso/oidc-workload-identity-federation-cross-cloud",
+    "/cybersecurity-ciso/passkeys-enterprise-deployment-reality",
+    "/cybersecurity-ciso/saml-federation-security-risks-trust-boundaries",
+    "/development/graphql-vs-rest-vs-grpc-api-gateway-performance",
+    "/development/java-vs-go-garbage-collection-performance-tuning",
     "/development/nodejs-release-schedule-change",
+    "/devops/container-image-security-beyond-scanning",
+    "/devops/ebpf-production-observability-security-boundaries",
+    "/devops/eks-pod-identity-vs-irsa-migration",
+    "/devops/github-actions-self-hosted-runner-security",
     "/devops/ingress-nginx-archived-migration",
+    "/devops/istio-ambient-mesh-sidecarless-architecture",
+    "/devops/kafka-consumer-groups-rebalance-exactly-once",
+    "/devops/karpenter-vs-cluster-autoscaler-node-scaling",
+    "/devops/kubernetes-ephemeral-containers-debugging-production",
+    "/devops/kubernetes-ingress-controller-architecture-nginx-traefik-envoy",
+    "/devops/kubernetes-network-policy-default-deny-implementation",
+    "/devops/kubernetes-pod-disruption-budgets-eviction-mechanics",
+    "/devops/kubernetes-pod-networking-packet-flow",
+    "/devops/kubernetes-priorityclass-preemption-pod-eviction",
+    "/devops/kubernetes-resourcequota-vs-limitrange-namespace-governance",
+    "/devops/kubernetes-statefulset-vs-deployment-storage-identity",
+    "/devops/kubernetes-storage-classes-costs-performance-traps",
+    "/devops/kubernetes-topology-spread-constraints-vs-pod-anti-affinity",
+    "/devops/linux-cgroups-v2-memory-oom-killer-reality",
+    "/devops/opentelemetry-vs-proprietary-apm-observability-cost",
+    "/devops/secrets-management-cicd-vault-oidc-reality",
+    "/devops/service-mesh-mtls-operational-overhead",
+    "/devops/terraform-state-locking-drift-enterprise-reality",
+    "/devops/terraform-state-splitting-enterprise-scale-terragrunt",
     "/devops/terraform-vs-opentofu",
+    "/enterprise-networking/aws-transit-gateway-multicast-routing",
+    "/enterprise-networking/bgp-anycast-vs-geo-dns-global-load-balancing",
+    "/enterprise-networking/bgp-in-the-cloud-why-it-matters",
+    "/enterprise-networking/enterprise-dns-security-doh-dot-filtering",
+    "/enterprise-networking/linux-xdp-vs-tc-ebpf-packet-drop",
+    "/enterprise-networking/sase-vs-sse-sd-wan-architecture-reality",
+    "/enterprise-networking/tcp-congestion-control-bbr-vs-cubic-cloud-networks",
     "/enterprise-networking/zero-trust-network-segmentation",
     "/microsoft-365-entra-id/conditional-access-break-glass-accounts",
     "/microsoft-365-entra-id/conditional-access-framework",
+    "/microsoft-365-entra-id/entra-external-id-b2b-b2c-cross-tenant-access",
+    "/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa",
+    "/microsoft-365-entra-id/entra-id-pim-implementation-failures",
+    "/microsoft-365-entra-id/entra-id-vs-active-directory-differences",
     "/microsoft-intune/autopilot-device-preparation-vs-autopilot",
     "/microsoft-intune/autopilot-device-registration-failures",
     "/microsoft-intune/autopilot-pre-provisioning-failures",
@@ -625,35 +738,12 @@ describe("existing article URLs are unchanged", () => {
     "/microsoft-intune/intunewin-packaging-win32-apps",
     "/microsoft-intune/win32-app-detection-rules",
     "/microsoft-intune/win32-app-supersedence-dependencies",
+    "/microsoft-intune/windows-laps-entra-id-architecture-deployment",
     "/networking/wifi-6-vs-wifi-7",
     "/software/vscode-vs-jetbrains",
-    "/windows/windows-11-vs-windows-10-enterprise",
-    "/microsoft-365-entra-id/entra-id-vs-active-directory-differences",
-    "/enterprise-networking/bgp-in-the-cloud-why-it-matters",
-    "/cybersecurity-ciso/passkeys-enterprise-deployment-reality",
-    "/devops/kubernetes-pod-networking-packet-flow",
-    "/cloud/cloud-egress-costs-architecture-problem",
-    "/cybersecurity-ciso/saml-federation-security-risks-trust-boundaries",
-    "/ai-enterprise-it/enterprise-ai-agents-security-governance-reality",
-    "/cloud/aws-vpc-lattice-vs-api-gateway-service-networking",
-    "/cybersecurity-ciso/oauth2-token-theft-dpop-mechanics",
-    "/devops/kubernetes-storage-classes-costs-performance-traps",
-    "/devops/secrets-management-cicd-vault-oidc-reality",
-    "/microsoft-intune/windows-laps-entra-id-architecture-deployment",
-    "/cloud/aws-transit-gateway-vs-vpc-peering",
-    "/cloud/aurora-serverless-v2-scaling-connection-limits",
-    "/cybersecurity-ciso/fido2-discoverable-credentials-resident-keys",
-    "/windows/wdac-vs-applocker-kernel-enforcement",
-    "/devops/karpenter-vs-cluster-autoscaler-node-scaling",
-    "/devops/service-mesh-mtls-operational-overhead",
-    "/cloud/aws-lambda-cold-start-optimization-snapstart",
-    "/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa",
-    "/devops/terraform-state-locking-drift-enterprise-reality",
-    "/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy",
-    "/enterprise-networking/enterprise-dns-security-doh-dot-filtering",
     "/windows/bitlocker-tpm-failure-recovery-enterprise",
-    "/microsoft-365-entra-id/entra-id-pim-implementation-failures",
-    "/devops/container-image-security-beyond-scanning",
+    "/windows/wdac-vs-applocker-kernel-enforcement",
+    "/windows/windows-11-vs-windows-10-enterprise",
   ];
 
   it("still publishes exactly the same addresses", () => {
@@ -664,7 +754,7 @@ describe("existing article URLs are unchanged", () => {
     // Published count only. The total is deliberately not pinned: adding a
     // draft is a normal editorial act that changes nothing a reader can reach,
     // and a guard that fails on it would just be noise every time one lands.
-    expect(allArticles).toHaveLength(55);
+    expect(allArticles).toHaveLength(101);
     expect(articles.length).toBeGreaterThanOrEqual(allArticles.length);
   });
 });

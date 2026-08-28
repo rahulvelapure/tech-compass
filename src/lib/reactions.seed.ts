@@ -52,6 +52,32 @@ const SEED_OVERRIDES: Readonly<Record<string, number>> = {
   // already seen it — and the newer one is nudged to the next free number.
   // 2234 was unused, sits inside the band and is not a round number.
   "eks-pod-identity-vs-irsa-migration": 2234,
+
+  // Collision. This slug and redis-cluster-vs-sentinel-architecture both derive
+  // to 1585. Redis was written first, so it keeps the derived value and this one
+  // moves. 1586 was unused, sits inside the band and is not a round number.
+  "aws-efs-vs-fsx-lustre-s3-mountpoint": 1586,
+
+  // Collision. This slug and kubernetes-pod-disruption-budgets-eviction-mechanics
+  // both derive to 1949. The published article keeps the derived value and the
+  // newer one moves. 1950 was skipped as too round; 1951 was unused.
+  "github-actions-self-hosted-runner-security": 1951,
+
+  // Collision. This slug and ransomware-recovery-backups-immutable-ad-forest
+  // both derive to 1889. The published article keeps the derived value and the
+  // newer one moves. 1890 was skipped as too round; 1891 was unused.
+  "aws-transit-gateway-multicast-routing": 1891,
+
+  // Collision. This slug and aws-lambda-concurrency-reserved-provisioned-throttling
+  // both derive to 1749. Both are drafts, so neither has a reader-visible value to
+  // protect; the Lambda one keeps the derived number and this one moves.
+  // 1750 was skipped as too round; 1751 was unused.
+  "kubernetes-ingress-controller-architecture-nginx-traefik-envoy": 1751,
+
+  // Round number. This slug derives to 1650, and the suite rejects any published
+  // seed divisible by 50 because it reads as generated. 1651 was unused and is
+  // the nearest non-round value.
+  "oidc-workload-identity-federation-cross-cloud": 1651,
 };
 
 /**

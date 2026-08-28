@@ -398,5 +398,23 @@ export const segment: Segment = {
       notes:
         "Refined from Qwen batch-006 article 3. The draft omitted two things that change the design: PIM requires Entra ID P2, and emergency access accounts must be excluded from it or a strict deployment becomes a lockout. Both added. Also dropped an incorrect built-in role count and added PIM for Groups. Boundary: m365-53 owns per-action step-up and is linked as the control that pairs with activation.",
     },
+    {
+      id: "m365-55",
+      title: "A guest account is a trust decision about someone else's tenant",
+      category: "microsoft-365-entra-id",
+      subcategory: "Identity",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P1",
+      status: "PUBLISHED",
+      targetKeyword: "Microsoft Entra External ID architecture",
+      secondaryKeywords: [
+        "cross-tenant access settings",
+        "B2B collaboration guest access",
+        "external identity governance",
+      ],
+      updateClass: "annual",
+      articleSlug: "entra-external-id-b2b-b2c-cross-tenant-access",
+    },
   ],
 };
