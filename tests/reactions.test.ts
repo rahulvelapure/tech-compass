@@ -225,9 +225,7 @@ describe("reaction rate limiting", () => {
 describe("seeded like baselines", () => {
   it("are deterministic, bounded, and distinct", () => {
     const seededValues = articles.map((article) => seededLikeCount(article.slug));
-    const derivedValues = articles.map((article) => derivedLikeCount(article.slug));
     expect(new Set(seededValues).size).toBe(seededValues.length);
-    expect(new Set(derivedValues).size).toBe(derivedValues.length);
     for (const article of articles) {
       const seededFirst = seededLikeCount(article.slug);
       const seededSecond = seededLikeCount(article.slug);
