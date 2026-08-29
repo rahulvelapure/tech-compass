@@ -49,6 +49,26 @@ function PrivacyPage() {
           The signup form checks for automated submissions. To do that it briefly uses your IP
           address to apply a rate limit — in hashed form, not stored, and never written to logs.
         </p>
+        <h2 id="reactions">Article reactions</h2>
+        <p>
+          Articles carry a useful / not useful control. Selecting one stores a small cookie
+          containing a random identifier — no name, no email, nothing derived from your IP address
+          or browser. Its only purpose is to remember that this browser has already reacted to that
+          article, so the same reaction is not counted twice and so your choice is still shown when
+          you return. The cookie cannot be read by scripts on the page, and it is signed so that a
+          value we did not issue is rejected rather than counted.
+        </p>
+        <p>
+          No cookie is set for simply reading. It is created at the moment you select a reaction and
+          not before. Clearing your browser&apos;s cookies removes it, and the reaction it recorded
+          can no longer be traced to you. Reactions are never linked to a person, and the counts are
+          used to judge which articles are working, nothing more.
+        </p>
+        <p>
+          As with the newsletter form, a rate limit keeps one visitor from flooding the controls. It
+          uses your IP address in hashed form only, held briefly in memory and never written to
+          storage or to logs.
+        </p>
         <h2 id="analytics">Future analytics and advertising</h2>
         <p>
           If analytics or advertising is introduced, this page will be updated before it goes live,

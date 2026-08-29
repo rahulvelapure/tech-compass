@@ -96,109 +96,109 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
   return (
     <section
       aria-label="Newsletter"
-      className={
-        inline
-          ? "border-y border-border py-8"
-          : "border border-border bg-surface px-6 py-12 sm:px-10"
-      }
+      className={inline ? "border-y border-border py-8" : "border-t-2 border-foreground bg-surface"}
     >
-      <div className={inline ? "" : "mx-auto max-w-xl text-center"}>
-        <h2 className="font-serif text-2xl font-bold tracking-tight">{site.newsletter.pitch}</h2>
-        <p
-          className={`mt-3 text-sm leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
-        >
-          {site.newsletter.detail}
-        </p>
-
-        {status === "done" || status === "unavailable" ? (
-          <p className="mt-6 text-sm font-medium text-foreground" role="status">
-            {status === "done"
-              ? message
-              : "Subscriptions are unavailable at the moment. Please check back soon."}
-          </p>
-        ) : (
-          <form
-            onSubmit={onSubmit}
-            onFocusCapture={primeToken}
-            className={`mt-6 flex flex-col gap-3 sm:flex-row ${inline ? "" : "sm:justify-center"}`}
+      <div className={inline ? "" : "wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-12"}>
+        <div className={inline ? "" : "lg:col-span-5"}>
+          <h2 className="kicker">The newsletter</h2>
+          <p className="display-2 mt-3">{site.newsletter.pitch}</p>
+          <p
+            className={`mt-3 text-sm leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
           >
-            <label htmlFor={fieldId} className="sr-only">
-              Email address
-            </label>
-            <input
-              id={fieldId}
-              type="email"
-              name="email"
-              autoComplete="email"
-              required
-              maxLength={254}
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@example.com"
-              aria-describedby={`${fieldId}-status ${fieldId}-consent`}
-              className="h-11 w-full rounded-md border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:w-72"
-            />
+            {site.newsletter.detail}
+          </p>
+        </div>
+        <div className={inline ? "" : "lg:col-span-7 lg:border-l lg:border-border lg:pl-12"}>
+          {status === "done" || status === "unavailable" ? (
+            <p className="mt-6 text-sm font-medium text-foreground" role="status">
+              {status === "done"
+                ? message
+                : "Subscriptions are unavailable at the moment. Please check back soon."}
+            </p>
+          ) : (
+            <form
+              onSubmit={onSubmit}
+              onFocusCapture={primeToken}
+              className="mt-6 flex flex-col gap-3 sm:flex-row"
+            >
+              <label htmlFor={fieldId} className="sr-only">
+                Email address
+              </label>
+              <input
+                id={fieldId}
+                type="email"
+                name="email"
+                autoComplete="email"
+                required
+                maxLength={254}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="you@example.com"
+                aria-describedby={`${fieldId}-status ${fieldId}-consent`}
+                className="h-11 w-full border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:w-72"
+              />
 
-            {/*
+              {/*
               Honeypot. Hidden from sight, from the tab order and from the
               accessibility tree, so no real reader can reach it — but it is a
               normal text input in the DOM, which is what form-filling bots see.
               Not `display:none`: some bots skip those.
             */}
-            <div
-              aria-hidden="true"
-              className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
-            >
-              <label htmlFor={`${fieldId}-${HONEYPOT_FIELD}`}>
-                Company (leave this field empty)
-              </label>
-              <input
-                ref={honeypot}
-                id={`${fieldId}-${HONEYPOT_FIELD}`}
-                type="text"
-                name={HONEYPOT_FIELD}
-                tabIndex={-1}
-                autoComplete="off"
-                defaultValue=""
-              />
-            </div>
+              <div
+                aria-hidden="true"
+                className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+              >
+                <label htmlFor={`${fieldId}-${HONEYPOT_FIELD}`}>
+                  Company (leave this field empty)
+                </label>
+                <input
+                  ref={honeypot}
+                  id={`${fieldId}-${HONEYPOT_FIELD}`}
+                  type="text"
+                  name={HONEYPOT_FIELD}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  defaultValue=""
+                />
+              </div>
 
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              className="h-11 rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-70"
-            >
-              {status === "loading" ? "Sending…" : "Subscribe"}
-            </button>
-          </form>
-        )}
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="h-11 shrink-0 bg-brand px-7 text-sm font-semibold tracking-wide text-brand-foreground transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-60"
+              >
+                {status === "loading" ? "Sending…" : "Subscribe"}
+              </button>
+            </form>
+          )}
 
-        <p
-          id={`${fieldId}-status`}
-          role="status"
-          aria-live="polite"
-          className={`mt-3 text-sm ${status === "error" ? "text-destructive" : "text-muted-foreground"}`}
-        >
-          {status === "error" ? message : ""}
-        </p>
-
-        {status !== "done" && status !== "unavailable" && (
           <p
-            id={`${fieldId}-consent`}
-            className={`mt-4 text-xs leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
+            id={`${fieldId}-status`}
+            role="status"
+            aria-live="polite"
+            className={`mt-3 text-sm ${status === "error" ? "text-destructive" : "text-muted-foreground"}`}
           >
-            We send a confirmation email first — you are only added to the list once you click the
-            link in it. Unsubscribe from any email. See the{" "}
-            <Link to="/privacy" className="underline hover:text-accent">
-              privacy policy
-            </Link>
-            .
+            {status === "error" ? message : ""}
           </p>
-        )}
 
-        <p className="eyebrow mt-4 text-muted-foreground">
-          No tracking pixels. No sponsored sends.
-        </p>
+          {status !== "done" && status !== "unavailable" && (
+            <p
+              id={`${fieldId}-consent`}
+              className={`mt-4 text-xs leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
+            >
+              We send a confirmation email first — you are only added to the list once you click the
+              link in it. Unsubscribe from any email. See the{" "}
+              <Link to="/privacy" className="underline hover:text-brand">
+                privacy policy
+              </Link>
+              .
+            </p>
+          )}
+
+          <p className="eyebrow mt-4 text-muted-foreground">
+            No tracking pixels. No sponsored sends.
+          </p>
+        </div>
       </div>
     </section>
   );

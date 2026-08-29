@@ -17,7 +17,22 @@ export function ThemeToggle() {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     window.localStorage.setItem(STORAGE_KEY, next);
-    document.documentElement.classList.toggle("dark", next === "dark");
+
+    /*
+     * Suppress transitions across the swap.
+     *
+     * The theme rewrites inherited custom properties. An element with a
+     * `color` transition then interpolates from its old value and never
+     * re-resolves the new one, stranding it on the previous theme's colour —
+     * see the .theme-switching rule in styles.css. Two frames is the minimum
+     * that reliably covers the class landing and the repaint.
+     */
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    root.classList.toggle("dark", next === "dark");
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => root.classList.remove("theme-switching"));
+    });
   }
 
   return (
@@ -25,7 +40,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-      className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+      className="flex size-9 items-center justify-center rounded-md text-ink-faint transition-colors hover:bg-accent hover:text-foreground"
     >
       {ready && theme === "dark" ? (
         <Sun className="h-4 w-4" aria-hidden="true" />

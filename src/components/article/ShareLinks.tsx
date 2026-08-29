@@ -1,9 +1,15 @@
-import { Link2, Linkedin } from "lucide-react";
-import { useState } from "react";
+import { Linkedin } from "lucide-react";
 
+/**
+ * Share controls.
+ *
+ * Outbound share links only. There is deliberately no copy-to-clipboard
+ * control here: site policy is that the application never writes to the
+ * clipboard, so the reader's own selection and copy remain the only path.
+ * The canonical URL is in the address bar and in the page's link rel, which
+ * is where a reader — or a browser's own share affordance — will look for it.
+ */
 export function ShareLinks({ url, title }: { url: string; title: string }) {
-  const [copied, setCopied] = useState(false);
-
   return (
     <div className="flex items-center gap-3">
       <span className="eyebrow text-muted-foreground">Share</span>
@@ -11,7 +17,7 @@ export function ShareLinks({ url, title }: { url: string; title: string }) {
         href={`https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-muted-foreground transition-colors hover:text-accent"
+        className="text-sm text-muted-foreground transition-colors hover:text-brand"
       >
         X
       </a>
@@ -20,22 +26,10 @@ export function ShareLinks({ url, title }: { url: string; title: string }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Share on LinkedIn"
-        className="text-muted-foreground transition-colors hover:text-accent"
+        className="text-muted-foreground transition-colors hover:text-brand"
       >
         <Linkedin className="h-4 w-4" aria-hidden="true" />
       </a>
-      <button
-        type="button"
-        onClick={async () => {
-          await navigator.clipboard.writeText(url);
-          setCopied(true);
-          window.setTimeout(() => setCopied(false), 2000);
-        }}
-        className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-accent"
-      >
-        <Link2 className="h-4 w-4" aria-hidden="true" />
-        {copied ? "Copied" : "Copy link"}
-      </button>
     </div>
   );
 }

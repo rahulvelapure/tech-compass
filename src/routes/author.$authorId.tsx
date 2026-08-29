@@ -67,7 +67,7 @@ function AuthorPage() {
       <header className="mt-8 flex flex-col gap-5 border-b border-border pb-8 sm:flex-row sm:gap-6">
         <div
           aria-hidden="true"
-          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-border bg-surface font-serif text-lg font-bold"
+          className="flex size-16 shrink-0 items-center justify-center rounded-full border border-border bg-surface font-display text-lg font-medium"
         >
           {author.initials}
         </div>
@@ -87,7 +87,7 @@ function AuthorPage() {
                 <Link
                   to="/$category"
                   params={{ category: category.slug }}
-                  className="inline-block border border-border px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                  className="inline-block border border-border px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-brand hover:text-brand"
                 >
                   {category.label}
                 </Link>
@@ -113,7 +113,7 @@ function AuthorPage() {
         it covers and how articles are researched, see{" "}
         {/* Underlined, not just coloured: inside running text, colour alone is
             not a sufficient distinction (WCAG 1.4.1). */}
-        <Link to="/about" className="underline hover:text-accent">
+        <Link to="/about" className="underline hover:text-brand">
           About
         </Link>
         .

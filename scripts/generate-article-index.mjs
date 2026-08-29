@@ -29,7 +29,12 @@ export function articleFiles() {
       const full = join(dir, entry);
       if (statSync(full).isDirectory()) walk(full);
       else if (entry.endsWith(".ts") && entry !== "index.ts") {
-        found.push(relative(ARTICLES_DIR, full).split(sep).join("/"));
+        // Article body helpers can live beside article files. Only files that
+        // export the Article object belong in the generated barrel.
+        const source = readFileSync(full, "utf8");
+        if (/export\s+const\s+article\b/.test(source)) {
+          found.push(relative(ARTICLES_DIR, full).split(sep).join("/"));
+        }
       }
     }
   };

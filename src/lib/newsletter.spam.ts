@@ -14,6 +14,8 @@
  * unchanged on Node and on Cloudflare Workers.
  */
 
+import { safeEqual, sign, toBase64Url } from "./hmac";
+
 /** Name of the decoy input. Plausible enough that bots fill it in. */
 export const HONEYPOT_FIELD = "company";
 
@@ -69,33 +71,11 @@ const DISPOSABLE_DOMAINS = new Set([
 /* Signed form token                                                   */
 /* ------------------------------------------------------------------ */
 
-const encoder = new TextEncoder();
-
-async function sign(secret: string, message: string): Promise<string> {
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
-  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(message));
-  return toBase64Url(new Uint8Array(signature));
-}
-
-function toBase64Url(bytes: Uint8Array): string {
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-}
-
-/** Length-independent comparison, so a bad signature leaks no timing signal. */
-function safeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i += 1) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
+/*
+ * Signing, encoding and constant-time comparison now live in hmac.ts so that
+ * article reactions can sign their visitor cookie with the same primitives
+ * rather than carry a second copy. The implementations are unchanged.
+ */
 
 /**
  * Mint a token for a form that has just been engaged with.

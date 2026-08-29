@@ -12,7 +12,7 @@ export function AuthorBox({ authorId }: { authorId: string }) {
     >
       <div
         aria-hidden="true"
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-background text-xs font-bold"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-xs font-bold"
       >
         {author.initials}
       </div>
@@ -22,7 +22,7 @@ export function AuthorBox({ authorId }: { authorId: string }) {
             to="/author/$authorId"
             params={{ authorId: author.id }}
             rel="author"
-            className="hover:text-accent"
+            className="hover:text-brand"
           >
             {author.name}
           </Link>
@@ -33,11 +33,11 @@ export function AuthorBox({ authorId }: { authorId: string }) {
           <Link
             to="/author/$authorId"
             params={{ authorId: author.id }}
-            className="text-accent hover:underline"
+            className="text-brand hover:underline"
           >
             All articles by {author.name.split(" ")[0]} →
           </Link>
-          <Link to="/about" className="text-accent hover:underline">
+          <Link to="/about" className="text-brand hover:underline">
             About this publication →
           </Link>
         </div>

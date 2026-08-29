@@ -1361,5 +1361,25 @@ export const segment: Segment = {
       notes:
         "A high coverage percentage is not the same as a working migration. The gap between the two is the article.",
     },
+    {
+      id: "intune-83",
+      title: "Windows LAPS with Entra ID: what it does, and who can read the password",
+      category: "microsoft-intune",
+      subcategory: "Windows",
+      contentType: "how-to",
+      searchIntent: "how-to",
+      priority: "P0",
+      status: "PUBLISHED",
+      targetKeyword: "windows laps entra id",
+      secondaryKeywords: ["windows laps intune policy", "laps backup directory entra"],
+      requiredSources: [
+        "https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-concepts-overview",
+        "https://learn.microsoft.com/en-us/entra/identity/devices/howto-manage-local-admin-passwords",
+      ],
+      updateClass: "annual",
+      articleSlug: "windows-laps-entra-id-architecture-deployment",
+      notes:
+        "Refined from Qwen batch-003 article 3, and the batch with the most factual errors. Verified against Microsoft Learn: the draft named msDS-ManagedPassword (a gMSA attribute), invented the permission DeviceLocalAdministratorPassword.Read.All, claimed Global Administrators cannot read the password by default, and claimed TPM-derived encryption Microsoft cannot decrypt. All four corrected; the documentation states the extra encryption layer is removed before the password is returned.",
+    },
   ],
 };

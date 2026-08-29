@@ -51,12 +51,12 @@ function oklch(L, C, hDeg) {
   });
 }
 
-// --primary / --foreground (light theme): the editorial ink.
-const INK = oklch(0.23, 0.036, 261.7);
-// --accent: the link/brand blue.
-const ACCENT = oklch(0.546, 0.215, 262.9);
-// --primary-foreground: near-white.
-const PAPER = oklch(0.99, 0.002, 247.9);
+// --foreground (light theme): the editorial ink.
+const INK = oklch(0.19, 0.014, 268);
+// --brand: the editorial blue.
+const ACCENT = oklch(0.5, 0.13, 246);
+// --background: the warm off-white the page is drawn on.
+const PAPER = oklch(0.988, 0.003, 92);
 
 /* --------------------------------------------------------------- geometry */
 

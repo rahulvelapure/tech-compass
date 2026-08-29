@@ -6,9 +6,15 @@
  */
 
 export const site = {
-  name: "Rahul Velapure",
+  /**
+   * Publication name. Distinct from the author byline in content/authors.ts —
+   * the masthead is the publication, the byline is the person who wrote the
+   * piece, and conflating them is what made the previous name do both jobs
+   * badly.
+   */
+  name: "Substrate",
   /** Short brand used in tight spaces. */
-  shortName: "RV",
+  shortName: "SB",
   domain: "rahulvelapure.dpdns.org",
   url: "https://rahulvelapure.dpdns.org",
   tagline: "Practical technology for the real world",

@@ -11,7 +11,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
     <nav aria-label="Breadcrumb">
       <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <li>
-          <Link to="/" className="hover:text-accent">
+          <Link to="/" className="hover:text-brand">
             Home
           </Link>
         </li>
@@ -24,7 +24,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
               <Link
                 to="/$category"
                 params={{ category: item.categorySlug }}
-                className="hover:text-accent"
+                className="hover:text-brand"
               >
                 {item.name}
               </Link>

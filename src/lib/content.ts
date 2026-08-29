@@ -53,8 +53,27 @@ export function latestArticles(limit = 6, excludeSlugs: string[] = []): Article[
   return allArticles.filter((a) => !excludeSlugs.includes(a.slug)).slice(0, limit);
 }
 
-export function featuredArticle(): Article {
-  return allArticles.find((a) => a.featured) ?? allArticles[0]!;
+/* ------------------------------------------------------------------ */
+/* Front-page                                                          */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Which articles lead the front page is decided per request in
+ * src/lib/homepage.selection.ts, not here. A clock-bucketed helper used to
+ * live at this spot; it gave every visitor the same lead for six hours at a
+ * time, which is the behaviour that had to change.
+ */
+
+/**
+ * When the publication last published something.
+ *
+ * Deliberately not the lead's own date. The masthead reports the state of the
+ * publication, and once the lead rotates, reading the date off it would make
+ * the front page appear to travel backwards in time whenever an older featured
+ * article came round.
+ */
+export function lastPublishedAt(): string {
+  return allArticles[0]?.publishedAt ?? "";
 }
 
 function keywordSet(article: Article): Set<string> {
