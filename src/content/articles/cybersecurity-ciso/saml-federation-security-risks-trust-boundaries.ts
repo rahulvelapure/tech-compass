@@ -15,6 +15,7 @@ export const article: Article = {
     "SAML's cryptography is fine. The risks sit in what federation asks you to trust: the signing key, a bearer assertion in a browser, and a service provider that cannot tell how the user proved who they were.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
+  draft: false,
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 6,
