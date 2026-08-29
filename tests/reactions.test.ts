@@ -230,7 +230,7 @@ describe("seeded like baselines", () => {
       const value = seededLikeCount(article.slug);
       expect(value).toBeGreaterThanOrEqual(1_500);
       expect(value).toBeLessThanOrEqual(2_500);
-      expect(value).toBe(derivedLikeCount(article.slug));
+      expect(seededLikeCount(article.slug)).toBe(derivedLikeCount(article.slug));
     }
   });
 });
