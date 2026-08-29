@@ -175,7 +175,7 @@ The first and most critical phase is establishing the identity model in the targ
 Domain verification. The target tenant must verify ownership of the email domains (e.g., company.com) before mailboxes can be migrated. Domain verification requires adding a TXT or MX record to the domain's DNS. If the source tenant currently owns the domain, the domain must be removed from the source tenant before it can be added to the target tenant. This creates a coordination challenge: you cannot have the same domain verified in two tenants simultaneously.
 Identity synchronization. If the organization uses hybrid Active Directory (on-premises AD synced to Entra ID via Entra Connect), the migration must account for the sync relationship. The typical approach is:
 Establish the target tenant's Entra ID.
-Create user accounts in the target tenant with a temporary UPN (e.g., user@targettenant.onmicrosoft.com).
+Create user accounts in the target tenant with a temporary UPN (e.g., user [at] targettenant.onmicrosoft.com).
 Perform the mailbox and data migration while users are still accessing the source tenant.
 On cutover day, switch DNS records, remove the domain from the source tenant, add it to the target tenant, and update the user UPNs to the production domain.
 Cross-tenant synchronization. Microsoft provides a Cross-Tenant Synchronization feature (available in Entra ID P1 and above) that allows user objects to be synchronized between two tenants. This is useful for maintaining free/busy calendar information during the migration period, so that users in the source tenant can see the availability of users who have already been migrated to the target tenant.
