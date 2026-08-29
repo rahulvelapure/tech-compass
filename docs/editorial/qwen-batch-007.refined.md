@@ -93,7 +93,7 @@ Primary sources were preferred: IETF RFCs, Microsoft Learn, AWS documentation, O
 
 The source batch was read-only throughout this pass. The GitHub repository was inspected through read-only tooling, so no commit, push or deployment occurred.
 
-The following repository-local gates could **not** be truthfully marked PASS from this environment because the user's Windows checkout at `C:\Users\rahul.velapure\Downloads\Tech Compass` is not mounted here:
+The following repository-local gates could **not** be truthfully marked PASS from this environment because the user's Windows checkout at `the local Windows checkout` is not mounted here:
 
 - TypeScript: NOT RUN
 - ESLint: NOT RUN
