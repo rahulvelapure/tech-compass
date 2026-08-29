@@ -126,6 +126,19 @@ jobs:
       - name: Install browser
         run: bunx playwright install --with-deps chromium
 
+      - name: Start built server
+        run: |
+          nohup node .output/server/index.mjs > /tmp/tech-compass-server.log 2>&1 &
+          echo $! > /tmp/tech-compass-server.pid
+          for i in {1..60}; do
+            if curl --silent --fail "http://127.0.0.1:${PORT}/" > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/tech-compass-server.log
+          exit 1
+
       - name: Run axe accessibility suite
         run: bun run test:a11y
 
