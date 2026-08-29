@@ -15,6 +15,7 @@ export const article: Article = {
     "Passkeys end credential phishing, and that is worth having. But device-bound and synced keys are not the same thing, recovery replaces password resets, and legacy apps still need a plan.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-22",
+  draft: false,
   lastReviewedAt: "2026-08-22",
   nextReviewAt: "2027-02-22",
   readingMinutes: 6,
