@@ -15,6 +15,7 @@ export const article: Article = {
     "Windows LAPS backs the local admin password up to the Entra device object, with no schema extension and no domain controller. The architecture, the roles that can read it, and where hybrid estates go wrong.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
+  draft: false,
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 6,
