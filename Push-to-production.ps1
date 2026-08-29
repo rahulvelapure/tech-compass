@@ -4,7 +4,7 @@ $ErrorActionPreference = "Stop"
 # Tech Compass - Safe Push Script
 # ============================================================
 
-$ProjectPath = "C:\Users\rahul.velapure\Downloads\Tech Compass"
+$ProjectPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 Write-Host ""
 Write-Host "=============================================" -ForegroundColor Cyan
