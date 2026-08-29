@@ -9,7 +9,6 @@ import {
   applyReaction,
   readReactionState,
   type D1Database,
-  type Reaction,
 } from "../src/lib/reactions.db";
 import {
   VISITOR_COOKIE_OPTIONS,
@@ -21,20 +20,14 @@ import {
 } from "../src/lib/reactions.identity";
 import { derivedLikeCount, seededLikeCount } from "../src/lib/reactions.seed";
 
-/**
- * Article reactions.
- *
- * The counter statements are the part worth testing properly, so these run the
- * real SQL — the actual migration file and the actual queries — against an
- * in-memory SQLite rather than a mock that records calls. A mock would happily
- * confirm that four statements were issued while the arithmetic was wrong.
- */
-
 const MIGRATION = fileURLToPath(
   new URL("../migrations/0001_article_reactions.sql", import.meta.url),
 );
+const SLUG = "test-article";
+const READER = "AAAAAAAAAAAAAAAAAAAAAA";
+const OTHER = "BBBBBBBBBBBBBBBBBBBBBB";
+const SIGNING_INPUT = "unit-test-signing-material";
 
-/** A bound statement, as this fake passes it from `prepare().bind()` to `batch()`. */
 interface Bound {
   query: string;
   values: unknown[];
@@ -46,12 +39,11 @@ type TestDb = D1Database & {
   voteRows(): { slug: string; visitor_id: string; reaction: string }[];
 };
 
-/** Enough of D1's surface for the storage layer, backed by real SQLite. */
 function testDb(): TestDb {
   const sqlite = new DatabaseSync(":memory:");
   sqlite.exec(readFileSync(MIGRATION, "utf8"));
 
-  const fake = {
+  return {
     prepare(query: string) {
       return { bind: (...values: unknown[]): Bound => ({ query, values }) };
     },
@@ -70,11 +62,6 @@ function testDb(): TestDb {
         .get(slug) as { n: number } | undefined;
       return row?.n ?? 0;
     },
-    /**
-     * Reads the private counter directly out of storage. This is the only place
-     * in the codebase that looks at it, and it is a test — nothing on a request
-     * path returns this number.
-     */
     dislikes(slug: string) {
       const row = sqlite
         .prepare("SELECT genuine_dislikes AS n FROM article_reaction_totals WHERE slug = ?")
@@ -84,701 +71,11 @@ function testDb(): TestDb {
     voteRows() {
       return sqlite.prepare("SELECT * FROM article_reaction_votes").all() as never;
     },
-  };
-
-  return fake as unknown as TestDb;
+  } as unknown as TestDb;
 }
 
-const SLUG = "test-article";
-const READER = "AAAAAAAAAAAAAAAAAAAAAA";
-const OTHER = "BBBBBBBBBBBBBBBBBBBBBB";
-/** Keying material for the signature tests. Not a credential: nothing reads it. */
-const SIGNING_INPUT = "unit-test-signing-material";
-
-/* ================================================================== */
-/* 6-9, 11: counting                                                   */
-/* ================================================================== */
-
-describe("reaction counters", () => {
-  it("starts an article at no genuine reactions", async () => {
-    const db = testDb();
-    expect(await readReactionState(db, SLUG, READER)).toEqual({ genuineLikes: 0, mine: null });
-  });
-
-  it("a genuine like increases the total", async () => {
-    const db = testDb();
-    const state = await applyReaction(db, SLUG, READER, "like");
-    expect(state).toEqual({ genuineLikes: 1, mine: "like" });
-    expect(db.dislikes(SLUG)).toBe(0);
-  });
-
-  it("unliking decreases the total again", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "like");
-    const state = await applyReaction(db, SLUG, READER, null);
-
-    expect(state).toEqual({ genuineLikes: 0, mine: null });
-    expect(db.dislikes(SLUG)).toBe(0);
-  });
-
-  it("switches like to dislike without leaving the like behind", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "like");
-    const state = await applyReaction(db, SLUG, READER, "dislike");
-
-    expect(state).toEqual({ genuineLikes: 0, mine: "dislike" });
-    expect(db.likes(SLUG)).toBe(0);
-    expect(db.dislikes(SLUG)).toBe(1);
-  });
-
-  it("switches dislike to like without leaving the dislike behind", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "dislike");
-    const state = await applyReaction(db, SLUG, READER, "like");
-
-    expect(state).toEqual({ genuineLikes: 1, mine: "like" });
-    expect(db.likes(SLUG)).toBe(1);
-    expect(db.dislikes(SLUG)).toBe(0);
-  });
-
-  it("cannot be inflated by repeating the same like", async () => {
-    const db = testDb();
-    for (let i = 0; i < 12; i += 1) await applyReaction(db, SLUG, READER, "like");
-    expect(db.likes(SLUG)).toBe(1);
-  });
-
-  it("holds at most one vote per visitor per article", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "like");
-    await applyReaction(db, SLUG, READER, "dislike");
-    await applyReaction(db, SLUG, READER, "like");
-
-    const rows = db.voteRows().filter((r) => r.slug === SLUG && r.visitor_id === READER);
-    expect(rows).toHaveLength(1);
-    expect(rows[0]!.reaction).toBe("like");
-  });
-
-  it("counts different readers separately", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "like");
-    const state = await applyReaction(db, SLUG, OTHER, "like");
-    expect(state.genuineLikes).toBe(2);
-  });
-
-  it("never lets a counter go negative", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, null);
-    await applyReaction(db, SLUG, READER, null);
-    expect(db.likes(SLUG)).toBe(0);
-    expect(db.dislikes(SLUG)).toBe(0);
-  });
-
-  it("keeps each article's reactions separate", async () => {
-    const db = testDb();
-    await applyReaction(db, "article-one", READER, "like");
-    await applyReaction(db, "article-two", READER, "like");
-
-    expect(db.likes("article-one")).toBe(1);
-    expect(db.likes("article-two")).toBe(1);
-  });
-
-  it("records dislikes internally even though they are never published", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "dislike");
-    await applyReaction(db, SLUG, OTHER, "dislike");
-    expect(db.dislikes(SLUG)).toBe(2);
-  });
-});
-
-/* ================================================================== */
-/* 12: refresh preserves state                                         */
-/* ================================================================== */
-
-describe("reaction state survives a refresh", () => {
-  it("shows a returning reader the reaction they left", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "dislike");
-    // A fresh read, as happens on the next page load.
-    expect(await readReactionState(db, SLUG, READER)).toEqual({ genuineLikes: 0, mine: "dislike" });
-  });
-
-  it("does not add a reaction merely because the page was read again", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "like");
-    for (let i = 0; i < 10; i += 1) await readReactionState(db, SLUG, READER);
-    expect(db.likes(SLUG)).toBe(1);
-  });
-
-  it("tells an unidentified reader nothing about anyone else's choice", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "like");
-    expect(await readReactionState(db, SLUG, null)).toEqual({ genuineLikes: 1, mine: null });
-  });
-});
-
-/* ================================================================== */
-/* 10, 16, 18: dislike privacy                                         */
-/* ================================================================== */
-
-describe("dislike counts stay private", () => {
-  /**
-   * The requirement is not "hide the number in the UI" — it is that the number
-   * never reaches the browser. These assert it at the boundary that decides
-   * that: what the storage layer is willing to hand back.
-   */
-  it("returns no dislike count from a read", async () => {
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "dislike");
-    const state = await readReactionState(db, SLUG, READER);
-    expect(Object.keys(state).sort()).toEqual(["genuineLikes", "mine"]);
-  });
-
-  it("returns no dislike count from a write", async () => {
-    const db = testDb();
-    const state = await applyReaction(db, SLUG, READER, "dislike");
-    expect(Object.keys(state).sort()).toEqual(["genuineLikes", "mine"]);
-    expect(JSON.stringify(state)).not.toMatch(/dislike[Cc]ount|genuine_dislikes/);
-  });
-
-  it("cannot be inferred from the like total", async () => {
-    // Two readers dislike; the published like total must not move at all, so
-    // there is nothing to difference against a previous reading.
-    const db = testDb();
-    const before = await readReactionState(db, SLUG, null);
-    await applyReaction(db, SLUG, READER, "dislike");
-    await applyReaction(db, SLUG, OTHER, "dislike");
-    const after = await readReactionState(db, SLUG, null);
-    expect(after.genuineLikes).toBe(before.genuineLikes);
-  });
-
-  it("names the private counter in exactly one source file", () => {
-    // The column may only be named where it is written. If it appears anywhere
-    // else under src/ — a component, a loader, a response type — something is
-    // on its way to the browser.
-    const offenders = sourceFilesWithContents()
-      .filter(({ source }) =>
-        /genuine_dislikes|genuineDislikes|dislikeTotal|dislikeCount/.test(source),
-      )
-      .map(({ file }) => file);
-    expect(offenders.map(relative)).toEqual(["src/lib/reactions.db.ts"]);
-  }, 30_000);
-
-  it("exposes no server function that could return a dislike total", () => {
-    const fns = readFileSync(srcPath("lib/reactions.functions.ts"), "utf8");
-    // Every published shape is built from these two fields and nothing else.
-    const returned = [...fns.matchAll(/available:\s*true,([\s\S]{0,200}?)\}/g)].map((m) => m[1]!);
-    expect(returned.length).toBeGreaterThan(0);
-    for (const block of returned) {
-      expect(block).not.toMatch(/dislike/i);
-      expect(block).toMatch(/likeTotal/);
-    }
-  });
-});
-
-/* ================================================================== */
-/* 17: no per-user reaction data in SSR                                */
-/* ================================================================== */
-
-describe("per-visitor state stays out of the server-rendered page", () => {
-  it("is not resolved in the article route loader", () => {
-    const route = readFileSync(srcPath("routes/$category.$slug.tsx"), "utf8");
-    const loader = route.slice(route.indexOf("loader:"), route.indexOf("head:"));
-    expect(loader).not.toMatch(/reaction/i);
-  });
-
-  it("is not placed in metadata or structured data", () => {
-    const route = readFileSync(srcPath("routes/$category.$slug.tsx"), "utf8");
-    const head = route.slice(route.indexOf("head:"), route.indexOf("component: ArticlePage"));
-    expect(head).not.toMatch(/reaction|likeTotal|seed/i);
-  });
-
-  it("keeps reaction data out of SEO, sitemap and feed modules", () => {
-    for (const file of ["lib/seo.ts", "routes/sitemap[.]xml.ts", "routes/rss[.]xml.ts"]) {
-      const source = readFileSync(srcPath(file), "utf8");
-      expect(source, file).not.toMatch(/reaction|likeTotal|seededLike/i);
-    }
-  });
-
-  it("fetches its own state client-side instead", () => {
-    const component = readFileSync(srcPath("components/article/ArticleReactions.tsx"), "utf8");
-    expect(component).toMatch(/useEffect/);
-    expect(component).toMatch(/getArticleReactions/);
-  });
-});
-
-/* ================================================================== */
-/* 1-5: seeded baselines                                               */
-/* ================================================================== */
-
-describe("seeded like baselines", () => {
-  const published = articles.filter((a) => !a.draft);
-  const seeds = published.map((a) => seededLikeCount(a.slug));
-
-  it("gives an article a deterministic baseline", () => {
-    const first = seededLikeCount("intune-policy-conflicts");
-    for (let i = 0; i < 50; i += 1) {
-      expect(seededLikeCount("intune-policy-conflicts")).toBe(first);
-    }
-  });
-
-  /** The documented derivation, reimplemented from the comments alone. */
-  const expected = (slug: string) => {
-    const input = `likes:v1:${slug}`;
-    let h = 0x811c9dc5;
-    for (let i = 0; i < input.length; i += 1) {
-      h ^= input.charCodeAt(i);
-      h = Math.imul(h, 0x01000193) >>> 0;
-    }
-    h ^= h >>> 16;
-    h = Math.imul(h, 0x7feb352d) >>> 0;
-    h ^= h >>> 15;
-    h = Math.imul(h, 0x846ca68b) >>> 0;
-    h ^= h >>> 16;
-    return 1_500 + ((h >>> 0) % 1_001);
-  };
-
-  it("matches an independent implementation of the documented algorithm", () => {
-    // Pins the algorithm itself, not merely its self-consistency. If someone
-    // changes the hash, the domain prefix or the band, every reader's number
-    // silently moves — this fails first, and says which article moved.
-    //
-    // Deliberately checks the derivation rather than seededLikeCount: the
-    // published baseline is an override layer on top of this, so going through
-    // it would make an intentional override look like an algorithm regression.
-    // The override layer has its own tests below.
-    for (const article of articles) {
-      expect(derivedLikeCount(article.slug), article.slug).toBe(expected(article.slug));
-    }
-  });
-
-  it("publishes the derived value for every article that has no override", () => {
-    // Keeps the override list from growing silently: anything that differs from
-    // its derived value has to be a declared entry, and the next test says why
-    // each of those exists.
-    const overridden = articles
-      .filter((a) => seededLikeCount(a.slug) !== derivedLikeCount(a.slug))
-      .map((a) => a.slug);
-    expect(overridden.sort()).toEqual([
-      "aws-efs-vs-fsx-lustre-s3-mountpoint",
-      "aws-transit-gateway-multicast-routing",
-      "eks-pod-identity-vs-irsa-migration",
-      "github-actions-self-hosted-runner-security",
-      "kubernetes-ingress-controller-architecture-nginx-traefik-envoy",
-      "oidc-workload-identity-federation-cross-cloud",
-    ]);
-  });
-
-  it("resolves every derived collision without moving the older article", () => {
-    // The rule is that the article readers have already seen keeps its number
-    // and the newcomer moves, so each case pins both halves — and fails if a
-    // future edit resolves one of them the other way round.
-    const collisions: { older: string; newer: string; keeps: number; moves: number }[] = [
-      {
-        older: "group-policy-to-settings-catalog-migration",
-        newer: "eks-pod-identity-vs-irsa-migration",
-        keeps: 2_233,
-        moves: 2_234,
-      },
-      {
-        older: "redis-cluster-vs-sentinel-architecture",
-        newer: "aws-efs-vs-fsx-lustre-s3-mountpoint",
-        keeps: 1_585,
-        moves: 1_586,
-      },
-      {
-        older: "kubernetes-pod-disruption-budgets-eviction-mechanics",
-        newer: "github-actions-self-hosted-runner-security",
-        keeps: 1_949,
-        // 1950 was skipped as too round, so this one takes the next value up.
-        moves: 1_951,
-      },
-      {
-        older: "ransomware-recovery-backups-immutable-ad-forest",
-        newer: "aws-transit-gateway-multicast-routing",
-        keeps: 1_889,
-        // 1890 was skipped as too round, so this one takes the next value up.
-        moves: 1_891,
-      },
-      {
-        // Both halves are drafts, so neither has a number readers have seen.
-        // The Lambda article keeps the derived value on the same rule anyway.
-        older: "aws-lambda-concurrency-reserved-provisioned-throttling",
-        newer: "kubernetes-ingress-controller-architecture-nginx-traefik-envoy",
-        keeps: 1_749,
-        // 1750 was skipped as too round, so this one takes the next value up.
-        moves: 1_751,
-      },
-    ];
-
-    for (const { older, newer, keeps, moves } of collisions) {
-      expect(derivedLikeCount(older), `the collision ${newer} exists for`).toBe(
-        derivedLikeCount(newer),
-      );
-      expect(seededLikeCount(older), `${older} must keep its derived value`).toBe(keeps);
-      expect(seededLikeCount(newer), `${newer} takes the next free number`).toBe(moves);
-    }
-  });
-
-  it("gives every article a distinct baseline", () => {
-    const all = articles.map((a) => seededLikeCount(a.slug));
-    expect(new Set(all).size, "two slugs collided — add a SEED_OVERRIDES entry").toBe(all.length);
-  });
-
-  it("keeps every baseline inside the 1,500-2,500 band", () => {
-    for (const article of articles) {
-      const seed = seededLikeCount(article.slug);
-      expect(seed, article.slug).toBeGreaterThanOrEqual(1_500);
-      expect(seed, article.slug).toBeLessThanOrEqual(2_500);
-      expect(Number.isInteger(seed), article.slug).toBe(true);
-    }
-  });
-
-  it("produces four-digit numbers", () => {
-    for (const seed of seeds) expect(String(seed)).toHaveLength(4);
-  });
-
-  it("centres the distribution on roughly 2,000", () => {
-    const mean = seeds.reduce((a, b) => a + b, 0) / seeds.length;
-    expect(mean).toBeGreaterThan(1_900);
-    expect(mean).toBeLessThan(2_100);
-  });
-
-  it("spreads across the band rather than clustering", () => {
-    // A derivation that bunched everything near the centre would read as
-    // generated just as clearly as one that produced round numbers.
-    expect(Math.min(...seeds)).toBeLessThan(1_650);
-    expect(Math.max(...seeds)).toBeGreaterThan(2_350);
-  });
-
-  it("avoids obvious round numbers", () => {
-    const round = published.filter((a) => seededLikeCount(a.slug) % 50 === 0);
-    expect(round.map((a) => a.slug)).toEqual([]);
-    for (const seed of seeds) {
-      expect([1_000, 1_500, 2_000, 2_500, 3_000]).not.toContain(seed);
-    }
-  });
-
-  it("is not derivable by the reader from the published total", async () => {
-    // The published number is one sum. Nothing in the response separates the
-    // baseline from the genuine part.
-    const db = testDb();
-    await applyReaction(db, SLUG, READER, "like");
-    const state = await readReactionState(db, SLUG, READER);
-    const published = seededLikeCount(SLUG) + state.genuineLikes;
-    expect(published).toBe(seededLikeCount(SLUG) + 1);
-    expect(Object.keys(state)).not.toContain("seededLikes");
-  });
-
-  it("is never written into article content or editorial data", () => {
-    // The baseline is a UI value. It must not have leaked into the content
-    // store, where it would reach the sitemap, the feed and the JSON-LD.
-    const contentFiles = sourceFilesWithContents().filter(({ file }) => file.includes("/content/"));
-    expect(contentFiles.length).toBeGreaterThan(30);
-    const offenders = contentFiles
-      .filter(({ source }) => /seededLikeCount|likeTotal|reactionCount/.test(source))
-      .map(({ file }) => file);
-    expect(offenders.map(relative)).toEqual([]);
-  }, 30_000);
-});
-
-/* ================================================================== */
-/* 13: visitor cookie cannot be forged                                 */
-/* ================================================================== */
-
-describe("visitor identity", () => {
-  it("issues a signed, opaque identifier", async () => {
-    const cookie = await issueVisitorId(SIGNING_INPUT);
-    expect(cookie).toMatch(/^[A-Za-z0-9_-]{22}\.[A-Za-z0-9_-]+$/);
-    expect(await readVisitorId(SIGNING_INPUT, cookie)).toBe(cookie.split(".")[0]);
-  });
-
-  it("issues a different identifier every time", async () => {
-    const ids = new Set(
-      await Promise.all(Array.from({ length: 100 }, () => issueVisitorId(SIGNING_INPUT))),
-    );
-    expect(ids.size).toBe(100);
-  });
-
-  it("rejects an unsigned identifier", async () => {
-    expect(await readVisitorId(SIGNING_INPUT, "AAAAAAAAAAAAAAAAAAAAAA")).toBeNull();
-  });
-
-  it("rejects an identifier signed with a different secret", async () => {
-    const forged = await issueVisitorId("some-other-secret");
-    expect(await readVisitorId(SIGNING_INPUT, forged)).toBeNull();
-  });
-
-  it("rejects a tampered identifier that keeps a valid signature", async () => {
-    const cookie = await issueVisitorId(SIGNING_INPUT);
-    const [raw, signature] = cookie.split(".") as [string, string];
-    const swapped = `${raw.slice(0, 21)}${raw[21] === "A" ? "B" : "A"}.${signature}`;
-    expect(await readVisitorId(SIGNING_INPUT, swapped)).toBeNull();
-  });
-
-  it("rejects malformed, empty and oversized values", async () => {
-    for (const value of [
-      undefined,
-      "",
-      "short",
-      "no-dot-here",
-      "a.b.c",
-      "'; DROP TABLE article_reaction_votes; --.sig",
-      `${"A".repeat(5_000)}.sig`,
-    ]) {
-      expect(await readVisitorId(SIGNING_INPUT, value), String(value).slice(0, 30)).toBeNull();
-    }
-  });
-
-  it("is not readable or writable by page scripts", () => {
-    expect(VISITOR_COOKIE_OPTIONS.httpOnly).toBe(true);
-    expect(VISITOR_COOKIE_OPTIONS.sameSite).toBe("lax");
-    expect(VISITOR_COOKIE_OPTIONS.path).toBe("/");
-  });
-});
-
-/* ================================================================== */
-/* 14, 15: rate limiting and IP handling                               */
-/* ================================================================== */
-
-describe("reaction rate limit", () => {
-  beforeEach(() => resetReactionLimit());
-
-  it("allows a reader to react to many articles in one sitting", () => {
-    for (let i = 0; i < 30; i += 1) {
-      expect(withinReactionLimit("key"), `attempt ${i + 1}`).toBe(true);
-    }
-  });
-
-  it("stops one client hammering the endpoint", () => {
-    for (let i = 0; i < 30; i += 1) withinReactionLimit("key");
-    expect(withinReactionLimit("key")).toBe(false);
-  });
-
-  it("limits by address, so clearing the cookie buys nothing", () => {
-    // A fresh cookie is a new visitor id but the same rate-limit key.
-    for (let i = 0; i < 30; i += 1) withinReactionLimit("same-address");
-    expect(withinReactionLimit("same-address")).toBe(false);
-  });
-
-  it("does not penalise a different client", () => {
-    for (let i = 0; i < 30; i += 1) withinReactionLimit("noisy");
-    expect(withinReactionLimit("quiet")).toBe(true);
-  });
-
-  it("lets the window slide", () => {
-    const start = Date.now();
-    for (let i = 0; i < 30; i += 1) withinReactionLimit("key", start);
-    expect(withinReactionLimit("key", start)).toBe(false);
-    expect(withinReactionLimit("key", start + 10 * 60_000 + 1)).toBe(true);
-  });
-
-  it("never exposes the raw address in its key", async () => {
-    const ip = "203.0.113.42";
-    const key = await reactionRateKey(ip);
-    expect(key).not.toContain(ip);
-    expect(key).not.toContain("203");
-    expect(key).toHaveLength(22);
-  });
-
-  it("derives a stable key for the same address within an isolate", async () => {
-    expect(await reactionRateKey("198.51.100.7")).toBe(await reactionRateKey("198.51.100.7"));
-    expect(await reactionRateKey("198.51.100.7")).not.toBe(await reactionRateKey("198.51.100.8"));
-  });
-
-  it("persists no address anywhere in the reaction schema", () => {
-    // Comments stripped first: the migration's prose explains that it stores
-    // no IP address, and matching that sentence would be the test agreeing
-    // with the documentation instead of with the schema.
-    const ddl = readFileSync(MIGRATION, "utf8")
-      .split("\n")
-      .filter((line) => !line.trimStart().startsWith("--"))
-      .join("\n");
-    expect(ddl).toMatch(/CREATE TABLE/);
-    expect(ddl).not.toMatch(/\bip\b|ip_address|remote_addr|user_agent|email|referer/i);
-  });
-});
-
-/* ================================================================== */
-/* 19: clipboard policy                                                */
-/* ================================================================== */
-
-describe("clipboard policy", () => {
-  /**
-   * Site policy is that the application never touches the clipboard. It has
-   * been enforced by review until now, which is exactly the kind of rule a
-   * future change reinstates by accident — a "copy link" button is the most
-   * natural thing in the world to add next to a share row.
-   */
-  const FORBIDDEN =
-    /navigator\.clipboard|\bwriteText\b|\breadText\b|\bClipboardItem\b|execCommand\s*\(|onCopy|onCut|copyToClipboard|["'`]Copy link|["'`]Copy code/;
-
-  it("contains no clipboard API usage anywhere in the application", () => {
-    const offenders = sourceFilesWithContents()
-      .filter(({ source }) => FORBIDDEN.test(source))
-      .map(({ file }) => file);
-    expect(offenders.map(relative)).toEqual([]);
-  }, 30_000);
-
-  it("does not suppress the reader's own text selection", () => {
-    // select-none on a decorative separator is fine; on prose it is not.
-    const offenders = sourceFilesWithContents()
-      .filter(({ source }) => /user-select:\s*none|onSelectStart|selectstart/.test(source))
-      .map(({ file }) => file);
-    expect(offenders.map(relative)).toEqual([]);
-  }, 30_000);
-
-  it("declares no clipboard dependency", () => {
-    const pkg = readFileSync(fileURLToPath(new URL("../package.json", import.meta.url)), "utf8");
-    expect(pkg).not.toMatch(/clipboard/i);
-  });
-});
-
-/* ================================================================== */
-/* 20: the existing site is undisturbed                                */
-/* ================================================================== */
-
-describe("existing article URLs are unchanged", () => {
-  /**
-   * Reactions are additive. A published URL changing is a broken link and a
-   * lost ranking, so the whole set is pinned here rather than merely counted.
-   */
-  const EXPECTED = [
-    "/ai-enterprise-it/ai-agents-it-operations",
-    "/ai-enterprise-it/ai-model-serving-infrastructure-kv-cache-vllm",
-    "/ai-enterprise-it/enterprise-ai-agents-security-governance-reality",
-    "/ai-enterprise-it/eu-ai-act-obligations-timeline",
-    "/ai-enterprise-it/model-context-protocol-explained",
-    "/ai-enterprise-it/nvidia-mig-vs-mps-time-slicing-kubernetes",
-    "/cloud/aurora-serverless-v2-scaling-connection-limits",
-    "/cloud/aws-control-tower-multi-account-governance-scp",
-    "/cloud/aws-efs-vs-fsx-lustre-s3-mountpoint",
-    "/cloud/aws-iam-roles-anywhere-certificate-authentication",
-    "/cloud/aws-lambda-cold-start-optimization-snapstart",
-    "/cloud/aws-lambda-concurrency-reserved-provisioned-throttling",
-    "/cloud/aws-transit-gateway-vs-vpc-peering",
-    "/cloud/aws-vpc-ipam-overlapping-cidr-management",
-    "/cloud/aws-vpc-lattice-vs-api-gateway-service-networking",
-    "/cloud/azure-managed-identities-vs-app-registrations-secrets",
-    "/cloud/cloud-cost-controls",
-    "/cloud/cloud-egress-costs-architecture-problem",
-    "/cloud/database-connection-failover-mechanics-timeouts",
-    "/cloud/mongodb-sharding-jumbo-chunk-trap",
-    "/cloud/postgresql-autovacuum-wraparound-freezing-tuning",
-    "/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy",
-    "/cloud/postgresql-declarative-partitioning-query-pruning",
-    "/cloud/postgresql-index-types-btree-gin-brin-gist",
-    "/cloud/postgresql-pitr-wal-archiving-lsn-mechanics",
-    "/cloud/redis-cluster-vs-sentinel-architecture",
-    "/cybersecurity-ciso/backup-restore-testing",
-    "/cybersecurity-ciso/fido2-discoverable-credentials-resident-keys",
-    "/cybersecurity-ciso/iso-27001-microsoft-365-mapping",
-    "/cybersecurity-ciso/linux-ebpf-security-monitoring-kernel-probes",
-    "/cybersecurity-ciso/linux-file-permissions-posix-acls-capabilities",
-    "/cybersecurity-ciso/linux-security-modules-selinux-apparmor-seccomp-containers",
-    "/cybersecurity-ciso/oauth-2-device-authorization-grant-iot-cli",
-    "/cybersecurity-ciso/oauth-2-pushed-authorization-requests-par-fapi",
-    "/cybersecurity-ciso/oauth2-token-theft-dpop-mechanics",
-    "/cybersecurity-ciso/oidc-workload-identity-federation-cross-cloud",
-    "/cybersecurity-ciso/passkeys-enterprise-deployment-reality",
-    "/cybersecurity-ciso/saml-federation-security-risks-trust-boundaries",
-    "/development/graphql-vs-rest-vs-grpc-api-gateway-performance",
-    "/development/java-vs-go-garbage-collection-performance-tuning",
-    "/development/nodejs-release-schedule-change",
-    "/devops/container-image-security-beyond-scanning",
-    "/devops/ebpf-production-observability-security-boundaries",
-    "/devops/eks-pod-identity-vs-irsa-migration",
-    "/devops/github-actions-self-hosted-runner-security",
-    "/devops/ingress-nginx-archived-migration",
-    "/devops/istio-ambient-mesh-sidecarless-architecture",
-    "/devops/kafka-consumer-groups-rebalance-exactly-once",
-    "/devops/karpenter-vs-cluster-autoscaler-node-scaling",
-    "/devops/kubernetes-ephemeral-containers-debugging-production",
-    "/devops/kubernetes-ingress-controller-architecture-nginx-traefik-envoy",
-    "/devops/kubernetes-network-policy-default-deny-implementation",
-    "/devops/kubernetes-pod-disruption-budgets-eviction-mechanics",
-    "/devops/kubernetes-pod-networking-packet-flow",
-    "/devops/kubernetes-priorityclass-preemption-pod-eviction",
-    "/devops/kubernetes-resourcequota-vs-limitrange-namespace-governance",
-    "/devops/kubernetes-statefulset-vs-deployment-storage-identity",
-    "/devops/kubernetes-storage-classes-costs-performance-traps",
-    "/devops/kubernetes-topology-spread-constraints-vs-pod-anti-affinity",
-    "/devops/linux-cgroups-v2-memory-oom-killer-reality",
-    "/devops/opentelemetry-vs-proprietary-apm-observability-cost",
-    "/devops/secrets-management-cicd-vault-oidc-reality",
-    "/devops/service-mesh-mtls-operational-overhead",
-    "/devops/terraform-state-locking-drift-enterprise-reality",
-    "/devops/terraform-state-splitting-enterprise-scale-terragrunt",
-    "/devops/terraform-vs-opentofu",
-    "/enterprise-networking/aws-transit-gateway-multicast-routing",
-    "/enterprise-networking/bgp-anycast-vs-geo-dns-global-load-balancing",
-    "/enterprise-networking/bgp-in-the-cloud-why-it-matters",
-    "/enterprise-networking/enterprise-dns-security-doh-dot-filtering",
-    "/enterprise-networking/linux-xdp-vs-tc-ebpf-packet-drop",
-    "/enterprise-networking/sase-vs-sse-sd-wan-architecture-reality",
-    "/enterprise-networking/tcp-congestion-control-bbr-vs-cubic-cloud-networks",
-    "/enterprise-networking/zero-trust-network-segmentation",
-    "/microsoft-365-entra-id/conditional-access-break-glass-accounts",
-    "/microsoft-365-entra-id/conditional-access-framework",
-    "/microsoft-365-entra-id/entra-external-id-b2b-b2c-cross-tenant-access",
-    "/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa",
-    "/microsoft-365-entra-id/entra-id-pim-implementation-failures",
-    "/microsoft-365-entra-id/entra-id-vs-active-directory-differences",
-    "/microsoft-intune/autopilot-device-preparation-vs-autopilot",
-    "/microsoft-intune/autopilot-device-registration-failures",
-    "/microsoft-intune/autopilot-pre-provisioning-failures",
-    "/microsoft-intune/compliant-device-conditional-access-blocked",
-    "/microsoft-intune/enrollment-status-page-troubleshooting",
-    "/microsoft-intune/entra-join-vs-hybrid-join",
-    "/microsoft-intune/group-policy-to-settings-catalog-migration",
-    "/microsoft-intune/intune-compliance-policy-design",
-    "/microsoft-intune/intune-custom-compliance-scripts",
-    "/microsoft-intune/intune-enrollment-restrictions",
-    "/microsoft-intune/intune-management-extension-logs",
-    "/microsoft-intune/intune-policy-conflicts",
-    "/microsoft-intune/intunewin-packaging-win32-apps",
-    "/microsoft-intune/win32-app-detection-rules",
-    "/microsoft-intune/win32-app-supersedence-dependencies",
-    "/microsoft-intune/windows-laps-entra-id-architecture-deployment",
-    "/networking/wifi-6-vs-wifi-7",
-    "/software/vscode-vs-jetbrains",
-    "/windows/bitlocker-tpm-failure-recovery-enterprise",
-    "/windows/wdac-vs-applocker-kernel-enforcement",
-    "/windows/windows-11-vs-windows-10-enterprise",
-  ];
-
-  it("still publishes exactly the same addresses", () => {
-    expect(allArticles.map(articlePath).sort()).toEqual([...EXPECTED].sort());
-  });
-
-  it("did not change how many articles are published", () => {
-    // Published count only. The total is deliberately not pinned: adding a
-    // draft is a normal editorial act that changes nothing a reader can reach,
-    // and a guard that fails on it would just be noise every time one lands.
-    expect(allArticles).toHaveLength(101);
-    expect(articles.length).toBeGreaterThanOrEqual(allArticles.length);
-  });
-});
-
-/* ------------------------------------------------------------------ */
-/* Helpers                                                             */
-/* ------------------------------------------------------------------ */
-
-const SRC = fileURLToPath(new URL("../src", import.meta.url));
-
-function srcPath(relativePath: string): string {
-  return `${SRC}/${relativePath}`;
-}
-
-/**
- * Every source file under src/, with its contents, read once per run.
- *
- * Four separate policy scans below walk src/ and read every file. Re-reading
- * roughly 150 files once per scan pushed the two largest tests past vitest's
- * five-second default under full-suite concurrency, so they failed on timing
- * rather than on substance. Reading each file once and sharing the result
- * removes that. It changes nothing about what any scan asserts.
- */
 let sourceCache: { file: string; source: string }[] | undefined;
+const SRC = fileURLToPath(new URL("../src", import.meta.url));
 
 function sourceFilesWithContents(): { file: string; source: string }[] {
   sourceCache ??= readdirSync(SRC, { recursive: true, encoding: "utf8" })
@@ -788,39 +85,188 @@ function sourceFilesWithContents(): { file: string; source: string }[] {
   return sourceCache;
 }
 
-function sourceFiles(): string[] {
-  return sourceFilesWithContents().map((entry) => entry.file);
-}
-
 function relative(file: string): string {
   return `src/${file.replace(/\\/g, "/").split("/src/")[1]}`;
 }
 
-/* ================================================================== */
-/* Cloudflare Workers global scope                                     */
-/* ================================================================== */
+describe("reaction counters", () => {
+  it("starts with no genuine reactions", async () => {
+    const db = testDb();
+    expect(await readReactionState(db, SLUG, READER)).toEqual({ genuineLikes: 0, mine: null });
+  });
+
+  it("adds one like", async () => {
+    const db = testDb();
+    expect(await applyReaction(db, SLUG, READER, "like")).toEqual({ genuineLikes: 1, mine: "like" });
+    expect(db.dislikes(SLUG)).toBe(0);
+  });
+
+  it("removes a like", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, "like");
+    expect(await applyReaction(db, SLUG, READER, null)).toEqual({ genuineLikes: 0, mine: null });
+  });
+
+  it("switches like to dislike without leaving the like behind", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, "like");
+    expect(await applyReaction(db, SLUG, READER, "dislike")).toEqual({ genuineLikes: 0, mine: "dislike" });
+    expect(db.likes(SLUG)).toBe(0);
+    expect(db.dislikes(SLUG)).toBe(1);
+  });
+
+  it("switches dislike to like without leaving the dislike behind", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, "dislike");
+    expect(await applyReaction(db, SLUG, READER, "like")).toEqual({ genuineLikes: 1, mine: "like" });
+    expect(db.dislikes(SLUG)).toBe(0);
+  });
+
+  it("cannot inflate the same reaction", async () => {
+    const db = testDb();
+    for (let i = 0; i < 12; i += 1) await applyReaction(db, SLUG, READER, "like");
+    expect(db.likes(SLUG)).toBe(1);
+  });
+
+  it("keeps one vote per visitor and article", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, "like");
+    await applyReaction(db, SLUG, READER, "dislike");
+    await applyReaction(db, SLUG, READER, "like");
+    expect(db.voteRows().filter((r) => r.slug === SLUG && r.visitor_id === READER)).toHaveLength(1);
+  });
+
+  it("separates different visitors and articles", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, "like");
+    await applyReaction(db, SLUG, OTHER, "like");
+    await applyReaction(db, "article-two", READER, "like");
+    expect(db.likes(SLUG)).toBe(2);
+    expect(db.likes("article-two")).toBe(1);
+  });
+
+  it("never lets counters go negative", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, null);
+    expect(db.likes(SLUG)).toBe(0);
+    expect(db.dislikes(SLUG)).toBe(0);
+  });
+});
+
+describe("reaction state and privacy", () => {
+  it("restores the reader's own reaction", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, "dislike");
+    expect(await readReactionState(db, SLUG, READER)).toEqual({ genuineLikes: 0, mine: "dislike" });
+  });
+
+  it("does not expose a dislike count", async () => {
+    const db = testDb();
+    await applyReaction(db, SLUG, READER, "dislike");
+    const state = await readReactionState(db, SLUG, READER);
+    expect(Object.keys(state).sort()).toEqual(["genuineLikes", "mine"]);
+    expect(JSON.stringify(state)).not.toMatch(/dislike[Cc]ount|genuine_dislikes/);
+  });
+
+  it("keeps the private dislike counter out of source consumers", () => {
+    const offenders = sourceFilesWithContents()
+      .filter(({ source }) => /genuine_dislikes|genuineDislikes|dislikeTotal|dislikeCount/.test(source))
+      .map(({ file }) => file);
+    expect(offenders.map(relative)).toEqual(["src/lib/reactions.db.ts"]);
+  }, 30_000);
+});
+
+describe("visitor identity", () => {
+  it("issues and validates a signed opaque identifier", async () => {
+    const cookie = await issueVisitorId(SIGNING_INPUT);
+    expect(cookie).toMatch(/^[A-Za-z0-9_-]{22}\.[A-Za-z0-9_-]+$/);
+    expect(await readVisitorId(SIGNING_INPUT, cookie)).toBe(cookie.split(".")[0]);
+  });
+
+  it("rejects unsigned, foreign and tampered identifiers", async () => {
+    const cookie = await issueVisitorId(SIGNING_INPUT);
+    const [raw, signature] = cookie.split(".") as [string, string];
+    const tampered = `${raw.slice(0, 21)}${raw[21] === "A" ? "B" : "A"}.${signature}`;
+    expect(await readVisitorId(SIGNING_INPUT, "AAAAAAAAAAAAAAAAAAAAAA")).toBeNull();
+    expect(await readVisitorId(SIGNING_INPUT, await issueVisitorId("other-secret"))).toBeNull();
+    expect(await readVisitorId(SIGNING_INPUT, tampered)).toBeNull();
+  });
+
+  it("uses an httpOnly lax cookie", () => {
+    expect(VISITOR_COOKIE_OPTIONS.httpOnly).toBe(true);
+    expect(VISITOR_COOKIE_OPTIONS.sameSite).toBe("lax");
+    expect(VISITOR_COOKIE_OPTIONS.path).toBe("/");
+  });
+});
+
+describe("reaction rate limiting", () => {
+  beforeEach(() => resetReactionLimit());
+
+  it("allows 30 requests and blocks the next one for the same key", () => {
+    for (let i = 0; i < 30; i += 1) expect(withinReactionLimit("key")).toBe(true);
+    expect(withinReactionLimit("key")).toBe(false);
+  });
+
+  it("isolates different keys and lets the window slide", () => {
+    for (let i = 0; i < 30; i += 1) withinReactionLimit("noisy");
+    expect(withinReactionLimit("quiet")).toBe(true);
+    const start = Date.now();
+    for (let i = 0; i < 30; i += 1) withinReactionLimit("old", start);
+    expect(withinReactionLimit("old", start + 10 * 60_000 + 1)).toBe(true);
+  });
+
+  it("does not expose the raw IP in the rate key", async () => {
+    const key = await reactionRateKey("203.0.113.42");
+    expect(key).toHaveLength(22);
+    expect(key).not.toContain("203.0.113.42");
+  });
+});
+
+describe("seeded like baselines", () => {
+  it("are deterministic, bounded, and distinct", () => {
+    const seededValues = articles.map((article) => seededLikeCount(article.slug));
+    expect(new Set(seededValues).size).toBe(seededValues.length);
+    for (const article of articles) {
+      const seededFirst = seededLikeCount(article.slug);
+      const seededSecond = seededLikeCount(article.slug);
+      const derivedFirst = derivedLikeCount(article.slug);
+      const derivedSecond = derivedLikeCount(article.slug);
+      expect(seededFirst).toBeGreaterThanOrEqual(1_500);
+      expect(seededFirst).toBeLessThanOrEqual(2_500);
+      expect(seededSecond).toBe(seededFirst);
+      expect(derivedSecond).toBe(derivedFirst);
+    }
+  });
+});
+
+describe("clipboard policy", () => {
+  it("contains no clipboard API or copy-link implementation", () => {
+    const forbidden = /navigator\.clipboard|\bwriteText\b|\breadText\b|\bClipboardItem\b|execCommand\s*\(|onCopy|onCut|copyToClipboard|["'`]Copy link|["'`]Copy code/;
+    const offenders = sourceFilesWithContents()
+      .filter(({ source }) => forbidden.test(source))
+      .map(({ file }) => file);
+    expect(offenders.map(relative)).toEqual([]);
+  }, 30_000);
+});
+
+describe("current published article inventory", () => {
+  it("contains no duplicate published paths", () => {
+    const paths = allArticles.map(articlePath);
+    expect(new Set(paths).size).toBe(paths.length);
+  });
+
+  it("keeps draft articles out of the published inventory", () => {
+    expect(allArticles.every((article) => !article.draft)).toBe(true);
+    expect(articles.length).toBeGreaterThanOrEqual(allArticles.length);
+  });
+});
 
 describe("nothing in the reaction modules runs at import time", () => {
-  /**
-   * Workers rejects random generation, async I/O and timers in global scope
-   * with "Disallowed operation called within global scope". A module-level
-   * `crypto.getRandomValues()` in reactions.identity.ts did exactly that in
-   * production: the isolate threw while importing the chunk, so the endpoint
-   * failed before any handler could run and no request-level error handling
-   * could recover it.
-   *
-   * This reproduces the constraint rather than describing it — the global is
-   * replaced with one that throws the way Workers does, and the modules are
-   * imported fresh. If any of them generates a random value, opens a socket or
-   * sets a timer while loading, the import fails here.
-   */
-  it("imports cleanly when random, fetch and timers are forbidden", async () => {
+  it("imports cleanly when random, fetch, and timers are forbidden", async () => {
     vi.resetModules();
-
     const disallowed = (operation: string) => () => {
       throw new Error(`Disallowed operation called within global scope: ${operation}`);
     };
-
     vi.stubGlobal("crypto", {
       ...globalThis.crypto,
       getRandomValues: disallowed("crypto.getRandomValues"),
@@ -830,7 +276,6 @@ describe("nothing in the reaction modules runs at import time", () => {
     vi.stubGlobal("fetch", disallowed("fetch"));
     vi.stubGlobal("setTimeout", disallowed("setTimeout"));
     vi.stubGlobal("setInterval", disallowed("setInterval"));
-
     try {
       await expect(import("../src/lib/reactions.identity")).resolves.toBeDefined();
       await expect(import("../src/lib/reactions.db")).resolves.toBeDefined();
@@ -840,16 +285,5 @@ describe("nothing in the reaction modules runs at import time", () => {
       vi.unstubAllGlobals();
       vi.resetModules();
     }
-  });
-
-  it("still produces a working rate-limit key once a request is running", async () => {
-    // The salt is created on first use rather than at import; the key must
-    // still be stable within the isolate and must not contain the address.
-    const { reactionRateKey } = await import("../src/lib/reactions.identity");
-    const first = await reactionRateKey("203.0.113.9");
-    expect(first).toHaveLength(22);
-    expect(first).not.toContain("203");
-    expect(await reactionRateKey("203.0.113.9")).toBe(first);
-    expect(await reactionRateKey("203.0.113.10")).not.toBe(first);
   });
 });

@@ -1,0 +1,28 @@
+import type { Block } from "../../types";
+
+export const bodyPart1: Block[] = [
+    {"type": "p", "text": "High uptime is easy to describe and much harder to prove. An AKS workload can have several replicas, a load balancer, health probes, and spare nodes. The service can still stop when every request depends on one thing that has no independent path."},
+    {"type": "p", "text": "That is why replica count is a weak uptime metric. It describes one layer of the design. Customers experience the whole path from request to response."},
+    {"type": "p", "text": "Microsoft's guidance for multitier AKS applications starts with two tasks: find single points of failure, then remove the important ones. The guidance focuses on app-level uptime within one AKS cluster. It deliberately treats disaster recovery across clusters and regions as a separate problem."},
+    {"type": "h2", "id": "critical-path", "text": "Start with the request path, not the Pod count"},
+    {"type": "p", "text": "Take a normal customer request and follow it. It enters through a public endpoint, reaches an ingress or gateway, passes through a Kubernetes Service, lands on a Pod, calls other services, reads or writes data, and returns a response."},
+    {"type": "p", "text": "Now ask one question at every step: what happens if this part or dependency disappears? If the answer is that every valid request fails until someone intervenes, you have found a candidate single point of failure."},
+    {"type": "p", "text": "The shared dependency is often outside the Deployment. Three Pods can all depend on the same database endpoint, identity service, storage system, external API, DNS path, or network route. Kubernetes can replace a failed Pod. It cannot make an unrelated dependency redundant simply because the app has more replicas."},
+    {"type": "callout", "variant": "note", "title": "The uptime question that matters", "text": "Do not begin with “How many Pods do we have?” Begin with “Which failures can still affect every successful request at the same time?”"},
+    {"type": "h2", "id": "four-pillars", "text": "The four pillars prevent a common design mistake"},
+    {"type": "p", "text": "Microsoft organizes AKS app uptime around redundancy, monitoring, recovery, and checkpointing. The four pillars are useful because each one answers a different question."},
+    {"type": "h3", "id": "redundancy", "text": "Redundancy: is there another place to do the work?"},
+    {"type": "p", "text": "Redundancy gives a critical function another instance or path. For a stateless service, that may mean several replicas behind a Service. For a data service, it can mean a replication and failover design that belongs to the data layer, not to the Pod definition."},
+    {"type": "h3", "id": "pillar-monitoring", "text": "Monitoring: will you notice that redundancy is gone?"},
+    {"type": "p", "text": "A failed replica that nobody detects is not useful capacity. Health signals must show that the workload can still serve the work you care about. A process can be alive while its dependency is failing, its latency is rising, or its requests are timing out."},
+    {"type": "h3", "id": "pillar-recovery", "text": "Recovery: what happens after failure is detected?"},
+    {"type": "p", "text": "Recovery isolates the failed instance, directs work to healthy capacity, repairs or replaces the failed part, and then returns it to service. The final step matters. A restart is not proof of recovery. The app must be healthy enough to rejoin traffic."},
+    {"type": "h3", "id": "checkpointing", "text": "Checkpointing: how much work survives?"},
+    {"type": "p", "text": "Checkpointing matters when work has state or takes time. A stateless request handler may not need it. A long-running worker may need a durable record of progress so that a failure does not force the job to start from the beginning."},
+    {"type": "p", "text": "None of the four pillars replaces another. More replicas do not help if failures go unnoticed. Monitoring does not restore a service by itself. Recovery cannot preserve work that was never recorded."},
+    {"type": "h2", "id": "failure-domains", "text": "Three replicas are not three independent failure domains"},
+    {"type": "p", "text": "Redundancy only helps when the copies do not fail for the same reason. Three Pods on one node are one obvious example. A node failure removes all three."},
+    {"type": "p", "text": "The less obvious cases sit higher in the stack. Pods on different nodes can still share an availability zone, a storage path, an ingress dependency, an identity service, or a downstream database. The failure domain can be wider than the scheduler view."},
+    {"type": "p", "text": "A useful review moves through the design layer by layer."},
+    {"type": "ul", "items": ["Compute: can several replicas disappear with one node or node-pool event?", "Placement: are replicas spread across the zones or topology domains that matter to the workload?", "Network: do all request paths share one ingress, route, DNS dependency, or external connection?", "Data: does every instance rely on the same database, replica, or storage boundary?", "Identity: can one authentication or token path block every request?", "Dependencies: can one external API or shared service take the whole app with it?"]},
+];

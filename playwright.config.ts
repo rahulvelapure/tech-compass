@@ -24,26 +24,14 @@ export default defineConfig({
   testDir: "tests",
   testMatch: "**/*.spec.ts",
   fullyParallel: true,
-  // A stray `test.only` should fail the pipeline, not silently skip the suite.
   forbidOnly: Boolean(process.env["CI"]),
-
-  /*
-   * Capped hard at two. Each case loads a page and then runs a full axe-core
-   * scan, which is CPU-bound; letting Playwright default to one worker per
-   * core saturates the machine and turns genuine passes into timeouts. This
-   * suite is a merge gate, so a deterministic three minutes beats a flaky one.
-   *
-   * A retry locally as well as in CI: an axe scan that loses a CPU slice to a
-   * background process should not read as an accessibility regression.
-   */
   workers: 2,
   retries: 1,
-
-  // An axe scan on a long article is slower than a normal navigation test.
   timeout: 90_000,
   expect: { timeout: 20_000 },
-
-  reporter: process.env["CI"] ? [["github"], ["html", { open: "never" }], ["list"]] : [["list"]],
+  reporter: process.env["CI"]
+    ? [["github"], ["html", { open: "never" }], ["list"]]
+    : [["list"]],
 
   use: {
     baseURL: BASE_URL,
@@ -52,14 +40,12 @@ export default defineConfig({
 
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
-    // Mobile is a designed layout here, not a shrunk desktop, so it is worth
-    // auditing separately — collapsed navigation and scrollable tables are
-    // exactly where accessibility regressions hide.
     { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
 
-  // Spread rather than assigned: `exactOptionalPropertyTypes` rejects an
-  // explicit `undefined` here, and the key must simply be absent.
+  // CI starts the production server once so the accessibility suite and the
+  // following crawl can inspect the exact same running build. Reuse it rather
+  // than attempting to start a second server on the same port.
   ...(DEPLOYED_URL
     ? {}
     : {
@@ -67,7 +53,7 @@ export default defineConfig({
           command: "node .output/server/index.mjs",
           url: BASE_URL,
           env: { PORT: String(PORT) },
-          reuseExistingServer: !process.env["CI"],
+          reuseExistingServer: true,
           timeout: 120_000,
         },
       }),

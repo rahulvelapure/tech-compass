@@ -809,7 +809,7 @@ export const segment: Segment = {
       contentType: "explainer",
       searchIntent: "architecture",
       priority: "P1",
-      status: "PUBLISHED",
+      status: "DRAFT",
       targetKeyword: "Linux file permissions ACL capabilities",
       secondaryKeywords: ["setfacl mask", "default ACL inheritance", "CAP_NET_BIND_SERVICE"],
       updateClass: "evergreen",

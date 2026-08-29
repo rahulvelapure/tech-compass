@@ -452,7 +452,7 @@ Run the following PowerShell command to check if the device can see its Autopilo
 powershell -executionpolicy bypass
 Get-AutopilotDiagnostics (if the module is available) or check the logs directly.
 To check the logs directly, navigate to:
-C:\Users\DefaultAppData\AppData\Local\Microsoft\Provisioning\Diagnostics\Autopilot
+%LOCALAPPDATA%\\Microsoft\\Provisioning\\Diagnostics\\Autopilot
 Open the AutoPilotDiagnostic.html or the .etl files using a tool like traceview or by copying them to a USB drive and analyzing them on another machine.
 Look for the AutopilotService logs. If you see errors related to "Device not found" or "Hardware hash mismatch," the device's hardware hash in the Autopilot service does not match the local hash. This can happen if the device was re-imaged incorrectly, or if the hardware hash was not fully uploaded to the service before the device was shipped.
 Common Mistakes in Autopilot Deployment
