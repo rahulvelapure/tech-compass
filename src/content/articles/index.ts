@@ -19,7 +19,6 @@ import { article as awsControlTowerMultiAccountGovernanceScp } from "./cloud/aws
 import { article as awsEfsVsFsxLustreS3Mountpoint } from "./cloud/aws-efs-vs-fsx-lustre-s3-mountpoint";
 import { article as awsIamRolesAnywhereCertificateAuthentication } from "./cloud/aws-iam-roles-anywhere-certificate-authentication";
 import { article as awsLambdaColdStartOptimizationSnapstart } from "./cloud/aws-lambda-cold-start-optimization-snapstart";
-import { article as awsLambdaConcurrencyReservedProvisionedThrottling } from "./cloud/aws-lambda-concurrency-reserved-provisioned-throttling";
 import { article as awsTransitGatewayVsVpcPeering } from "./cloud/aws-transit-gateway-vs-vpc-peering";
 import { article as awsVpcIpamOverlappingCidrManagement } from "./cloud/aws-vpc-ipam-overlapping-cidr-management";
 import { article as awsVpcLatticeVsApiGatewayServiceNetworking } from "./cloud/aws-vpc-lattice-vs-api-gateway-service-networking";
@@ -28,7 +27,6 @@ import { article as cloudCostControls } from "./cloud/cloud-cost-controls";
 import { article as cloudEgressCostsArchitectureProblem } from "./cloud/cloud-egress-costs-architecture-problem";
 import { article as databaseConnectionFailoverMechanicsTimeouts } from "./cloud/database-connection-failover-mechanics-timeouts";
 import { article as mongodbShardingJumboChunkTrap } from "./cloud/mongodb-sharding-jumbo-chunk-trap";
-import { article as postgresqlAutovacuumWraparoundFreezingTuning } from "./cloud/postgresql-autovacuum-wraparound-freezing-tuning";
 import { article as postgresqlConnectionPoolingPgbouncerRdsProxy } from "./cloud/postgresql-connection-pooling-pgbouncer-rds-proxy";
 import { article as postgresqlDeclarativePartitioningQueryPruning } from "./cloud/postgresql-declarative-partitioning-query-pruning";
 import { article as postgresqlIndexTypesBtreeGinBrinGist } from "./cloud/postgresql-index-types-btree-gin-brin-gist";
@@ -38,7 +36,6 @@ import { article as backupRestoreTesting } from "./cybersecurity-ciso/backup-res
 import { article as fido2DiscoverableCredentialsResidentKeys } from "./cybersecurity-ciso/fido2-discoverable-credentials-resident-keys";
 import { article as iso27001Microsoft365Mapping } from "./cybersecurity-ciso/iso-27001-microsoft-365-mapping";
 import { article as linuxEbpfSecurityMonitoringKernelProbes } from "./cybersecurity-ciso/linux-ebpf-security-monitoring-kernel-probes";
-import { article as linuxFilePermissionsPosixAclsCapabilities } from "./cybersecurity-ciso/linux-file-permissions-posix-acls-capabilities";
 import { article as linuxSecurityModulesSelinuxApparmorSeccompContainers } from "./cybersecurity-ciso/linux-security-modules-selinux-apparmor-seccomp-containers";
 import { article as oauth2DeviceAuthorizationGrantIotCli } from "./cybersecurity-ciso/oauth-2-device-authorization-grant-iot-cli";
 import { article as oauth2PushedAuthorizationRequestsParFapi } from "./cybersecurity-ciso/oauth-2-pushed-authorization-requests-par-fapi";
@@ -62,12 +59,10 @@ import { article as istioAmbientMeshSidecarlessArchitecture } from "./devops/ist
 import { article as kafkaConsumerGroupsRebalanceExactlyOnce } from "./devops/kafka-consumer-groups-rebalance-exactly-once";
 import { article as karpenterVsClusterAutoscalerNodeScaling } from "./devops/karpenter-vs-cluster-autoscaler-node-scaling";
 import { article as kubernetesEphemeralContainersDebuggingProduction } from "./devops/kubernetes-ephemeral-containers-debugging-production";
-import { article as kubernetesIngressControllerArchitectureNginxTraefikEnvoy } from "./devops/kubernetes-ingress-controller-architecture-nginx-traefik-envoy";
 import { article as kubernetesNetworkPolicyDefaultDenyImplementation } from "./devops/kubernetes-network-policy-default-deny-implementation";
 import { article as kubernetesPodDisruptionBudgetsEvictionMechanics } from "./devops/kubernetes-pod-disruption-budgets-eviction-mechanics";
 import { article as kubernetesPodNetworkingPacketFlow } from "./devops/kubernetes-pod-networking-packet-flow";
 import { article as kubernetesPriorityclassPreemptionPodEviction } from "./devops/kubernetes-priorityclass-preemption-pod-eviction";
-import { article as kubernetesResourcequotaVsLimitrangeNamespaceGovernance } from "./devops/kubernetes-resourcequota-vs-limitrange-namespace-governance";
 import { article as kubernetesStatefulsetVsDeploymentStorageIdentity } from "./devops/kubernetes-statefulset-vs-deployment-storage-identity";
 import { article as kubernetesStorageClassesCostsPerformanceTraps } from "./devops/kubernetes-storage-classes-costs-performance-traps";
 import { article as kubernetesTopologySpreadConstraintsVsPodAntiAffinity } from "./devops/kubernetes-topology-spread-constraints-vs-pod-anti-affinity";
@@ -139,7 +134,6 @@ export const articles: Article[] = [
   awsEfsVsFsxLustreS3Mountpoint,
   awsIamRolesAnywhereCertificateAuthentication,
   awsLambdaColdStartOptimizationSnapstart,
-  awsLambdaConcurrencyReservedProvisionedThrottling,
   awsTransitGatewayVsVpcPeering,
   awsVpcIpamOverlappingCidrManagement,
   awsVpcLatticeVsApiGatewayServiceNetworking,
@@ -148,7 +142,6 @@ export const articles: Article[] = [
   cloudEgressCostsArchitectureProblem,
   databaseConnectionFailoverMechanicsTimeouts,
   mongodbShardingJumboChunkTrap,
-  postgresqlAutovacuumWraparoundFreezingTuning,
   postgresqlConnectionPoolingPgbouncerRdsProxy,
   postgresqlDeclarativePartitioningQueryPruning,
   postgresqlIndexTypesBtreeGinBrinGist,
@@ -158,7 +151,6 @@ export const articles: Article[] = [
   fido2DiscoverableCredentialsResidentKeys,
   iso27001Microsoft365Mapping,
   linuxEbpfSecurityMonitoringKernelProbes,
-  linuxFilePermissionsPosixAclsCapabilities,
   linuxSecurityModulesSelinuxApparmorSeccompContainers,
   oauth2DeviceAuthorizationGrantIotCli,
   oauth2PushedAuthorizationRequestsParFapi,
@@ -182,12 +174,10 @@ export const articles: Article[] = [
   kafkaConsumerGroupsRebalanceExactlyOnce,
   karpenterVsClusterAutoscalerNodeScaling,
   kubernetesEphemeralContainersDebuggingProduction,
-  kubernetesIngressControllerArchitectureNginxTraefikEnvoy,
   kubernetesNetworkPolicyDefaultDenyImplementation,
   kubernetesPodDisruptionBudgetsEvictionMechanics,
   kubernetesPodNetworkingPacketFlow,
   kubernetesPriorityclassPreemptionPodEviction,
-  kubernetesResourcequotaVsLimitrangeNamespaceGovernance,
   kubernetesStatefulsetVsDeploymentStorageIdentity,
   kubernetesStorageClassesCostsPerformanceTraps,
   kubernetesTopologySpreadConstraintsVsPodAntiAffinity,
