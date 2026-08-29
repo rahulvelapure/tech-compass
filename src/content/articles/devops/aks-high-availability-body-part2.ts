@@ -1,0 +1,28 @@
+import type { Block } from "../../types";
+
+export const bodyPart2: Block[] = [
+    {"type": "p", "text": "The result is an uptime graph. It is more useful than a list of Kubernetes objects because it shows where failures can join together."},
+    {"type": "h2", "id": "kubernetes-tools", "text": "What Kubernetes can do, and what it cannot do"},
+    {"type": "p", "text": "Kubernetes provides strong building blocks for app uptime. Deployments can maintain replica counts. Services can direct traffic to ready endpoints. Scheduling rules can separate replicas. Probes can detect health conditions. Controllers can restart or replace failed Pods."},
+    {"type": "p", "text": "Those tools solve real problems, but each one has a boundary."},
+    {"type": "p", "text": "A Pod can be rescheduled while its database is still unavailable. A Service can distribute traffic while every backend returns the same dependency error. An autoscaler can add replicas while the downstream system is already saturated."},
+    {"type": "p", "text": "That is not a Kubernetes failure. It is a design boundary. The platform can keep the workload running and still be unable to make the service useful."},
+    {"type": "h2", "id": "placement", "text": "Placement must match the failure you want to survive"},
+    {"type": "p", "text": "Before adding an anti-affinity rule or topology spread constraint, name the failure you want to survive. A node failure, a zone failure, and a regional outage are different events. They need different boundaries."},
+    {"type": "ol", "items": ["Find the failure that the service is expected to survive.", "Find the infrastructure domain affected by that failure.", "Place redundant parts outside that domain where the workload requires it.", "Confirm that traffic can reach the surviving parts.", "Confirm that the critical dependencies can also survive or recover.", "Test the sequence under failure instead of trusting the diagram."]},
+    {"type": "p", "text": "Microsoft's AKS reliability guidance discusses zone-aware designs and other cluster reliability practices. The exact placement rule should follow the workload and the failure model. A hard rule that looks safe can also leave a replacement Pod Pending when capacity is scarce."},
+    {"type": "h2", "id": "probes", "text": "Health probes are traffic and recovery controls"},
+    {"type": "p", "text": "Liveness, readiness, and startup probes serve different purposes. Treating them as three names for the same health check creates noisy restarts and bad traffic decisions."},
+    {"type": "p", "text": "A readiness probe decides whether a Pod should receive service traffic. If readiness fails, the Pod can stay running while the Service stops sending new traffic to it. That makes readiness a traffic isolation tool."},
+    {"type": "p", "text": "A liveness probe can trigger a restart when the container is stuck or unhealthy. It is a recovery trigger, so the check must be chosen carefully. A dependency outage that makes every Pod fail the same liveness check can turn a downstream incident into a restart storm."},
+    {"type": "p", "text": "A startup probe protects slow-starting workloads from being judged by liveness or readiness before the app has had time to initialize."},
+    {"type": "callout", "variant": "warning", "title": "Do not ask every probe the same question", "text": "A process can be alive but unable to serve traffic. A service can be temporarily unready without needing a restart. A slow app can be healthy even though it has not started yet. Probe semantics should match those states."},
+    {"type": "h2", "id": "monitoring", "text": "A green Pod does not prove a green app"},
+    {"type": "p", "text": "A customer does not care whether Kubernetes says a container is Running. The customer cares whether the operation completes within an acceptable time and returns a valid result."},
+    {"type": "p", "text": "For a multitier app, monitoring should connect part health with service behavior. Useful questions include:"},
+    {"type": "ul", "items": ["Can customers reach the entry point?", "Are requests reaching ready Pods?", "Are errors rising at one tier or across every tier?", "Is latency increasing before errors appear?", "Are retries adding load to an already failing dependency?", "Can operators trace one failed request through the services involved?"]},
+    {"type": "p", "text": "Microsoft's monitoring guidance emphasizes health, uptime, performance, tracing, and correlation across distributed parts. That correlation matters because a healthy front end can hide a failing database, identity provider, or external service."},
+    {"type": "h2", "id": "recovery", "text": "Recovery must have a trigger and a proof"},
+    {"type": "p", "text": "Recovery is often described as automatic, which hides several steps. Something detects the failure. Traffic is isolated from the failed instance. Kubernetes or another system repairs or replaces it. The replacement becomes healthy. Only then should it receive work again."},
+    {"type": "p", "text": "For each critical part, document who or what performs those steps. Kubernetes may own Pod replacement. A database platform may own replica promotion. An operator may own a manual failover. A runbook may coordinate the larger sequence."},
+];
