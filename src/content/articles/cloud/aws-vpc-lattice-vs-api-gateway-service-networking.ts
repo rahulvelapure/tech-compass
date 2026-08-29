@@ -15,6 +15,7 @@ export const article: Article = {
     "API Gateway and VPC Lattice both route HTTP, which is where the confusion starts. They differ on network topology, on what they authenticate, and on how you debug them.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
+  draft: false,
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 6,
