@@ -15,6 +15,7 @@ export const article: Article = {
     "Once a model can call tools, prompt injection becomes an action rather than a bad answer. Why static keys and shared memory fail, and where the guardrails have to sit.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
+  draft: false,
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 6,

@@ -15,6 +15,7 @@ export const article: Article = {
     "OAuth bearer tokens authenticate the token, not the holder. DPoP binds the token to a key the client must prove it has — and it is worth knowing exactly which attack that closes.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
+  draft: false,
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
   readingMinutes: 5,
