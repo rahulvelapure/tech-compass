@@ -25,8 +25,6 @@ All ten selected articles have refined TypeScript Article objects in `src/conten
 
 ## Readability gates
 
-The repository's authoritative thresholds are:
-
 - Standfirst: Flesch Reading Ease >= 70
 - Opening paragraph: Flesch Reading Ease >= 65
 - Worst FAQ answer: Flesch Reading Ease >= 70
@@ -46,13 +44,15 @@ The refined records report passing measurements for all ten selected articles.
 - Unit tests pass.
 - Production Node build passes.
 - Accessibility checks pass.
-- Route crawl and HTML audit pass.
+- Route crawl and HTML audit pass against the running production build.
 - Lighthouse and Core Web Vitals pass for the configured production audit.
 
 ## Draft/release metadata
 
-The ten selected files are existing refined/published Article objects rather than the held draft. No temporary Batch 001 draft marker is being used to represent publication status. Publication is controlled by the repository's release/route conventions and the final PR merge/deployment gate.
+The ten selected files are existing refined/published Article objects rather than the held draft. The `Article` model supports `draft?: boolean`; no selected article is being promoted by silently changing a draft marker. Publication is controlled by the repository's article objects, index generation, and release/deployment gate.
 
 ## Release rule
 
 The branch stays in review until the complete CI run for the locked ten-article set is green. No production deployment is authorized by this QA record before that point.
+
+<!-- release-candidate: 10 articles locked 2026-08-29 -->
