@@ -21,6 +21,7 @@ const LEGACY_UNCONVERTED_ARTICLE_TOPICS = new Set([
   "cloud-29",
   "cloud-32",
   "devops-26",
+  "devops-27",
   "sec-110",
 ]);
 
