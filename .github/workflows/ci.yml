@@ -60,8 +60,8 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
-      - name: Lint
-        run: bun run lint
+      - name: Format check
+        run: bunx prettier --check .
 
       - name: Scan for secrets, personal data and local paths
         run: bun run scan:secrets
