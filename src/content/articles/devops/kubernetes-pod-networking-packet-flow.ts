@@ -22,7 +22,7 @@ export const article: Article = {
   secondaryKeywords: [
     "CNI plugin packet flow",
     "veth pair Kubernetes",
-    "kube-proxy iptables IPVS",
+    "kube-proxy iptables nftables",
     "Kubernetes MTU VXLAN",
     "conntrack table full",
   ],
@@ -139,7 +139,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The mode changes the debugging tools",
-      text: "If a Service is not working, where you look depends on the mode. iptables-save shows nothing useful on an IPVS cluster, and neither helps when Cilium is handling translation in eBPF. Check the mode before you start reading rules.",
+      text: "If a Service is not working, where you look depends on the mode. iptables-save does not explain an nftables cluster, and neither helps when Cilium is handling translation in eBPF. Check the mode before you start reading rules.",
     },
     { type: "h2", id: "troubleshooting", text: "A pod cannot reach the internet" },
     {
@@ -245,9 +245,9 @@ export const article: Article = {
         "Check the kernel log on the node for conntrack messages. The clue is timing: drops rise with load and stop when traffic falls. Raise nf_conntrack_max, then find out why so many connections are opening.",
     },
     {
-      question: "Is iptables or IPVS better for kube-proxy?",
+      question: "Should I use iptables, nftables, or IPVS for kube-proxy?",
       answer:
-        "IPVS holds up better once you have a lot of services, because it uses hash lookups rather than a long list of rules. On a small cluster you are unlikely to notice a difference.",
+        "For current Linux clusters, evaluate nftables where the node kernel and networking stack support it. Kubernetes made nftables stable in v1.33, while IPVS was deprecated in v1.35. iptables remains supported and is still the default in some current releases, so check the version you actually run before changing modes.",
     },
   ],
   sources: [
