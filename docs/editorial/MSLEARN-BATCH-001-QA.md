@@ -18,4 +18,6 @@ The current candidate set contains the validated article work for AKS high avail
 - Accessibility and route crawl checks must pass.
 - Local preview Lighthouse performance results are advisory; deployed-origin Lighthouse performance and SEO budgets remain strict.
 
-No production deployment is authorized by this QA record.
+## Release rule
+
+The branch stays a draft until the complete CI run is green. No production deployment is authorized by this QA record.
