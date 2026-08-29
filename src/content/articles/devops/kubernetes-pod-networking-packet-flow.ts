@@ -15,6 +15,7 @@ export const article: Article = {
     "The flat pod network is an abstraction built on network namespaces, veth pairs and CNI routing. What a packet really crosses, where it gets dropped, and how to find out.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-22",
+  draft: false,
   lastReviewedAt: "2026-08-22",
   nextReviewAt: "2027-08-22",
   readingMinutes: 6,
