@@ -131,7 +131,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "Intune uses the email address **in the user's profile**, not their user principal name. If there is no email address on file, no notification is sent — silently.",
-        "Notifications come from `microsoft-noreply@microsoft.com`. A mail flow rule or anti-spam policy that filters that sender means your users never see the warning.",
+        "Notifications come from `microsoft-noreply (at) microsoft.com`. A mail flow rule or anti-spam policy that filters that sender means your users never see the warning.",
         "Emails are expected to be sent **within six hours** of a device being marked noncompliant. If your grace period is six hours and your first email fires at the same point, the user may be blocked before the warning arrives.",
       ],
     },
@@ -264,7 +264,7 @@ export const article: Article = {
     {
       question: "Why did users not receive the noncompliance email?",
       answer:
-        "Intune sends to the email address in the user's profile rather than their user principal name, and sends nothing if no address is on file. Messages come from microsoft-noreply@microsoft.com, so mail flow or anti-spam rules can suppress them. Delivery is expected within six hours of the device being marked noncompliant, which can be later than a short grace period.",
+        "Intune sends to the email address in the user's profile rather than their user principal name, and sends nothing if no address is on file. Messages come from microsoft-noreply (at) microsoft.com, so mail flow or anti-spam rules can suppress them. Delivery is expected within six hours of the device being marked noncompliant, which can be later than a short grace period.",
     },
     {
       question: "What happens to devices with no compliance policy assigned?",
