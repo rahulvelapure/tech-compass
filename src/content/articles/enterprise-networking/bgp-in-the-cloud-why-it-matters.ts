@@ -15,6 +15,7 @@ export const article: Article = {
     "Cloud providers hide the routers right up to the point where you connect your own network. What BGP does on Direct Connect and ExpressRoute, and the four mistakes that break hybrid links.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-22",
+  draft: false,
   lastReviewedAt: "2026-08-22",
   nextReviewAt: "2027-08-22",
   readingMinutes: 6,
