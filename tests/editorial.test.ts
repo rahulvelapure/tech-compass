@@ -13,14 +13,15 @@ import type { Topic } from "../editorial";
  * pointing at a category that does not exist, or a PUBLISHED topic whose
  * article was never written.
  *
- * A few legacy planning entries still carry articleSlug values for articles
- * that were researched but never converted. Keep those references explicit so
- * they cannot silently grow, while the backlog is migrated to the current
- * article inventory.
+ * These legacy topic records still carry articleSlug values for researched
+ * articles that were never converted. Keep the list explicit and small so a
+ * new stale reference still fails the suite.
  */
 const LEGACY_UNCONVERTED_ARTICLE_TOPICS = new Set([
   "cloud-29",
   "cloud-32",
+  "devops-26",
+  "sec-110",
 ]);
 
 const topics = allTopics();
