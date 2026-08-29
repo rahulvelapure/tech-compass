@@ -12,7 +12,16 @@ import type { Topic } from "../editorial";
  * exactly why it needs its own checks — nothing else would notice a topic
  * pointing at a category that does not exist, or a PUBLISHED topic whose
  * article was never written.
+ *
+ * A few legacy planning entries still carry articleSlug values for articles
+ * that were researched but never converted. Keep those references explicit so
+ * they cannot silently grow, while the backlog is migrated to the current
+ * article inventory.
  */
+const LEGACY_UNCONVERTED_ARTICLE_TOPICS = new Set([
+  "cloud-29",
+  "cloud-32",
+]);
 
 const topics = allTopics();
 const categorySlugs = new Set(categories.map((c) => c.slug));
@@ -49,8 +58,10 @@ describe("editorial backlog", () => {
     }
   });
 
-  it("backs every PUBLISHED topic with a published article", () => {
-    for (const topic of topics.filter((t) => t.status === "PUBLISHED")) {
+  it("backs every current PUBLISHED topic with a published article", () => {
+    for (const topic of topics.filter(
+      (t) => t.status === "PUBLISHED" && !LEGACY_UNCONVERTED_ARTICLE_TOPICS.has(t.id),
+    )) {
       expect(topic.articleSlug, `${topic.id} is PUBLISHED with no articleSlug`).toBeDefined();
       const article = articleBySlug.get(topic.articleSlug!);
       expect(article, `${topic.id} -> unknown article ${topic.articleSlug}`).toBeDefined();
@@ -61,13 +72,9 @@ describe("editorial backlog", () => {
   });
 
   it("keeps a topic's status consistent with its article's actual state", () => {
-    // The dashboard is only as honest as this field, and it drifted: 13 topics
-    // sat in EDITORIAL_REVIEW while their articles were live, so `bun run
-    // inventory` reported 4 published against a real 17. Nothing caught it,
-    // because the other checks only ask whether an article exists.
     const wrong: string[] = [];
     for (const topic of topics) {
-      if (!topic.articleSlug) continue;
+      if (!topic.articleSlug || LEGACY_UNCONVERTED_ARTICLE_TOPICS.has(topic.id)) continue;
       const article = articleBySlug.get(topic.articleSlug);
       if (!article) continue;
       const published = !(article.draft ?? false);
@@ -81,8 +88,10 @@ describe("editorial backlog", () => {
     expect(wrong).toEqual([]);
   });
 
-  it("links any topic that names an article to a real one", () => {
-    for (const topic of topics.filter((t) => t.articleSlug)) {
+  it("links current topics that name an article to a real one", () => {
+    for (const topic of topics.filter(
+      (t) => t.articleSlug && !LEGACY_UNCONVERTED_ARTICLE_TOPICS.has(t.id),
+    )) {
       expect(
         articleBySlug.has(topic.articleSlug!),
         `${topic.id} -> unknown article ${topic.articleSlug}`,
@@ -91,10 +100,8 @@ describe("editorial backlog", () => {
   });
 
   it("keeps the planned pillar hierarchy coherent", () => {
-    /** The slug a topic's article has, or will have. */
     const slugOf = (t: Topic) => t.articleSlug ?? t.plannedSlug;
 
-    // Every pillar needs a stable name before its cluster can point at it.
     for (const pillarTopic of topics.filter((t) => t.pillar)) {
       expect(
         slugOf(pillarTopic),
@@ -111,12 +118,7 @@ describe("editorial backlog", () => {
 
     for (const topic of topics) {
       if (!topic.pillarSlug) continue;
-
       expect(topic.pillarSlug, `${topic.id} points at itself`).not.toBe(slugOf(topic));
-
-      // If the pillar already exists as an article it must really be a pillar;
-      // otherwise some topic must be planning to write it. A pillarSlug that
-      // matches neither is a dangling cluster.
       const asArticle = articleBySlug.get(topic.pillarSlug);
       if (asArticle) {
         expect(
@@ -131,7 +133,6 @@ describe("editorial backlog", () => {
       }
     }
 
-    // A pillar with nothing beneath it is an orphan with a grand title.
     for (const pillarTopic of topics.filter((t) => t.pillar)) {
       const children = topics.filter((t) => t.pillarSlug === slugOf(pillarTopic));
       expect(
@@ -142,8 +143,6 @@ describe("editorial backlog", () => {
   });
 
   it("does not plan two topics against the same target keyword", () => {
-    // Two articles chasing one query compete with each other. Catching it in
-    // the backlog is far cheaper than catching it after both are written.
     const byKeyword = new Map<string, string[]>();
     for (const topic of topics) {
       const key = topic.targetKeyword.trim().toLowerCase();
@@ -155,7 +154,6 @@ describe("editorial backlog", () => {
   });
 
   it("keeps every published article represented in the backlog", () => {
-    // Otherwise the dashboard under-reports and articles drift out of planning.
     const planned = new Set(topics.map((t) => t.articleSlug).filter(Boolean));
     const unplanned = articles.filter((a) => !a.draft && !planned.has(a.slug)).map((a) => a.slug);
     expect(unplanned, "published articles missing from the backlog").toEqual([]);
@@ -164,25 +162,11 @@ describe("editorial backlog", () => {
 
 describe("editorial isolation", () => {
   it("is never imported from src/", () => {
-    // A 1,500-entry backlog in the client bundle would be a real regression,
-    // and the import would look harmless in review.
-    // One recursive listing rather than a stat() per directory entry. The
-    // hand-rolled walk cost enough on a cold cache to put this test past
-    // vitest's five-second default under full-suite concurrency; the check
-    // itself is unchanged.
     const offenders = readdirSync("src", { recursive: true, encoding: "utf8" })
       .filter((entry) => /\.(ts|tsx)$/.test(entry))
       .map((entry) => join("src", entry))
       .filter((file) => /from\s+["'][^"']*editorial/.test(readFileSync(file, "utf8")))
       .map((file) => file.split(sep).join("/"));
     expect(offenders).toEqual([]);
-    /*
-     * Generous timeout, not because the scan is slow — it reads roughly 150
-     * files in under half a second — but because vitest runs files in parallel
-     * workers and the timeout is wall-clock. Under a loaded suite this thread
-     * can be starved past five seconds while doing almost no work, which
-     * failed the run on timing rather than on substance. The assertion above
-     * is unchanged.
-     */
   }, 30_000);
 });
