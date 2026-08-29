@@ -15,6 +15,7 @@ export const article: Article = {
     "Egress spend is set by the path data takes, so a discount will not fix it. The billing boundaries that matter, the NAT gateway trap, and where the fixes actually pay for themselves.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
+  draft: false,
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-08-23",
   readingMinutes: 6,
