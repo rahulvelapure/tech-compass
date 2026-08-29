@@ -18,7 +18,7 @@ export const article: Article = {
   publishedAt: "2026-08-28",
   lastReviewedAt: "2026-08-28",
   nextReviewAt: "2027-08-28",
-  readingMinutes: 12,
+  readingMinutes: 13,
   primaryKeyword: "AKS high availability",
   secondaryKeywords: [
     "Kubernetes high availability",
