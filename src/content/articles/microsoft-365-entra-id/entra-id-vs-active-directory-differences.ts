@@ -15,6 +15,7 @@ export const article: Article = {
     "Entra ID is not a cloud copy of Active Directory. The two differ in how they store objects, how they prove identity, and how they configure a device — and each difference changes a design decision.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-22",
+  draft: false,
   lastReviewedAt: "2026-08-22",
   nextReviewAt: "2027-08-22",
   readingMinutes: 7,
