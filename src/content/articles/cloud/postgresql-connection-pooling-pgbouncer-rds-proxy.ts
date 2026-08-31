@@ -5,14 +5,14 @@ export const article: Article = {
   category: "cloud",
   contentType: "explainer",
   subcategory: "Database",
-  title: "Postgres gives every connection a process, and that decides your architecture",
+  title: "Postgres gives each connection a process, and that shapes the design",
   seoTitle: "PostgreSQL connection pooling: PgBouncer and RDS Proxy",
   metaDescription:
-    "Postgres forks a process per connection, so connections are expensive. What transaction pooling breaks, why prepared statements fail, and when sessions pin.",
+    "Postgres uses a process for each connection. Learn why that makes pooling important, what transaction pooling breaks, and why RDS Proxy can pin sessions.",
   standfirst:
-    "Each connection to Postgres gets a whole process of its own. That single design choice is why pooling is not optional.",
+    "Each Postgres connection has a process behind it. That is why pooling matters as your app grows.",
   excerpt:
-    "Postgres connections are processes, not threads, so they cost real memory. Pooling is how you survive that — and transaction pooling quietly breaks assumptions your application probably makes.",
+    "Postgres connections use real processes. Pooling lets many clients share fewer database connections, but the mode you choose can change session behavior.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
@@ -33,235 +33,90 @@ export const article: Article = {
     "aws-lambda-cold-start-optimization-snapstart",
   ],
   methodology:
-    "Written from PostgreSQL documentation on connections and resource limits, the PgBouncer documentation on pooling modes and prepared statements, and AWS documentation on RDS Proxy including pinning behaviour, verified August 2026. Per-connection memory figures, safe connection counts and latency figures are not quoted: they depend on workload, version and instance. Behaviour that differs between PostgreSQL versions is flagged rather than stated flatly.",
+    "Written from PostgreSQL documentation on connections and resource limits, PgBouncer documentation on pooling modes and prepared statements, and AWS documentation on RDS Proxy and pinning, verified August 2026. Per-connection memory, safe counts and latency figures are not quoted because they vary by workload, version and instance.",
   body: [
-    {
-      type: "p",
-      text: "Most databases handle a new connection with a thread. Postgres forks a process.",
-    },
-    {
-      type: "p",
-      text: "That is a real architectural difference, not a detail. A process has its own memory and its own scheduling cost. A thousand connections means a thousand processes, and the machine spends its time switching between them rather than answering queries.",
-    },
-    {
-      type: "p",
-      text: "So connections to Postgres are expensive in a way they are not everywhere else. Everything below follows from that.",
-    },
-    { type: "h2", id: "limit", text: "Why raising the limit makes it worse" },
-    {
-      type: "p",
-      text: "The first instinct when connections run out is to allow more of them. It is one setting, and it appears to fix the error immediately.",
-    },
-    {
-      type: "p",
-      text: "It moves the failure rather than removing it. A refused connection is an obvious error with an obvious message. A database drowning in context switches is a slow, confusing degradation where every query is late and nothing looks broken.",
-    },
-    {
-      type: "p",
-      text: "The workable pattern is the opposite. Keep the number of real connections modest, and put something in front that lets many clients share them.",
-    },
-    {
-      type: "callout",
-      variant: "note",
-      title: "Application pools are necessary and not sufficient",
-      text: "A pool inside your application avoids a handshake on every query, and you should have one. It only pools for that process. Twenty replicas with a twenty-connection pool each will present hundreds of connections to the database, and the database has no idea they came from one system. You need a pool for the fleet as well as one per process.",
-    },
-    { type: "h2", id: "modes", text: "Three pooling modes, and what each costs" },
-    {
-      type: "p",
-      text: "PgBouncer is the usual answer, and the mode you choose matters more than anything else about it.",
-    },
+    { type: "p", text: "Most databases use threads for client work. Postgres gives each connection a process." },
+    { type: "p", text: "That matters. A process needs its own memory and scheduling time. A very large connection count can make the server spend more time managing processes than running useful queries." },
+    { type: "p", text: "That is why a Postgres connection is a resource to manage, not a cheap socket you can open without thought." },
+    { type: "h2", id: "limit", text: "Why raising the connection limit can make things worse" },
+    { type: "p", text: "The first response to a connection error is often to raise the limit. It is one setting. The error can disappear at once." },
+    { type: "p", text: "But the root problem may stay. A server with too many processes can become slow long before it reaches a clear failure. Queries wait. Context switches rise. The system feels sick, but the error message is gone." },
+    { type: "p", text: "A better pattern is to keep the number of real database connections modest. Put a pool in front of them. Let many clients share a smaller set of connections." },
+    { type: "callout", variant: "note", title: "App pools do not pool the whole fleet", text: "A pool inside one app process is still local to that process. Twenty replicas with twenty connections each can present hundreds of connections to Postgres. The database sees the total. A fleet-wide pooler solves a different problem." },
+    { type: "h2", id: "modes", text: "PgBouncer has three pooling modes" },
+    { type: "p", text: "PgBouncer is a common choice. The mode you pick changes the behavior of the application." },
     {
       type: "table",
-      caption: "How long a client holds a real database connection",
-      head: ["Mode", "Connection is held for", "Trade"],
+      caption: "When the pooler gives a real connection back",
+      head: ["Mode", "Connection held for", "Main trade"],
       rows: [
-        ["Session", "The whole client session", "Everything works; you barely multiplex"],
-        ["Transaction", "One transaction", "Multiplexes well; breaks session state"],
-        ["Statement", "One statement", "Multi-statement transactions cannot work"],
+        ["Session", "Full client session", "Safe, but little sharing"],
+        ["Transaction", "One transaction", "Strong sharing, less session state"],
+        ["Statement", "One statement", "Strongest sharing, limited transactions"],
       ],
     },
-    {
-      type: "p",
-      text: "Session mode is completely safe and largely pointless. If clients hold connections open while idle, the pooler is holding real connections open too, and you have added a hop without solving anything.",
-    },
-    {
-      type: "p",
-      text: "Transaction mode is where the benefit is. A connection is borrowed for a transaction and returned immediately, so a small number of real connections can serve a large number of clients.",
-    },
-    {
-      type: "p",
-      text: "It also changes an assumption your application probably makes without knowing it.",
-    },
-    { type: "h2", id: "session-state", text: "Anything you set on a session is gone" },
-    {
-      type: "p",
-      text: "In transaction mode, consecutive statements from one client may run on different backend connections. Anything set on a connection outside a transaction does not follow the client.",
-    },
-    {
-      type: "p",
-      text: "A search path set at connection time. A time zone. A session variable your ORM sets during initialisation. All of it applies to a connection you will not necessarily get back.",
-    },
-    {
-      type: "p",
-      text: "The failure is nasty because it is intermittent and looks like a data problem. Reports come back in the wrong time zone sometimes. A query cannot find a table sometimes. It depends entirely on which backend served the request.",
-    },
-    {
-      type: "callout",
-      variant: "warning",
-      title: "Prepared statements are the usual casualty",
-      text: "A named prepared statement is prepared on one backend connection. Under transaction pooling, the next call can land somewhere else, and that backend has never heard of it. You get an error saying the prepared statement does not exist — from an application that worked yesterday and changed nothing.",
-    },
-    {
-      type: "p",
-      text: "This bites hardest with ORMs, because they use prepared statements by default and rarely make it obvious.",
-    },
-    {
-      type: "p",
-      text: "There are three ways out. Configure the driver not to use server-side prepared statements. Use a driver mode that avoids naming them. Or use a PgBouncer version that tracks prepared statements across backends, which is supported in recent releases and needs configuring rather than assuming.",
-    },
-    { type: "h2", id: "rds-proxy", text: "RDS Proxy, and the pinning behaviour to know about" },
-    {
-      type: "p",
-      text: "AWS RDS Proxy solves the same problem as a managed service, which removes the job of running poolers yourself. It also handles failover by holding client connections while the database endpoint changes, and supports authenticating with IAM rather than a stored password.",
-    },
-    {
-      type: "p",
-      text: "It multiplexes like transaction pooling, so the session-state caveats apply in the same way. But it has one behaviour worth understanding before you rely on it.",
-    },
-    {
-      type: "callout",
-      variant: "warning",
-      title: "Session state causes pinning, and pinning removes the benefit",
-      text: "When RDS Proxy sees something that makes a connection stateful, it pins that client to one backend connection for the rest of the session rather than breaking your application. That is the safe choice, and it means the connection is no longer shared. Enough pinning and you are paying for a proxy that has quietly stopped pooling.",
-    },
-    {
-      type: "p",
-      text: "This is the important operational point: it does not fail, it degrades. Watch the pinning metrics rather than assuming multiplexing is happening. If pinning is high, find what is triggering it in the application.",
-    },
-    {
-      type: "p",
-      text: "Not every Postgres feature is supported through the proxy either. If you depend on anything unusual, check before designing around it.",
-    },
-    { type: "h2", id: "scenario", text: "How this arrives in production" },
-    {
-      type: "p",
-      text: "The sequence is consistent enough to be predictable.",
-    },
-    {
-      type: "p",
-      text: "An application scales out under load. Each replica opens its own pool. Total connections cross the limit, and the database starts refusing new clients. Replicas fail health checks, get restarted, and reconnect — which produces more connection attempts at exactly the wrong moment.",
-    },
-    {
-      type: "p",
-      text: "A pooler goes in, in transaction mode, and the outage ends. Then the errors start: prepared statements that do not exist, and a reporting job returning wrong time zones because it set one at connection time.",
-    },
-    {
-      type: "p",
-      text: "Both problems were always there. Transaction pooling just stopped hiding them. That is worth knowing in advance, because discovering it during an incident means changing driver configuration under pressure.",
-    },
-    { type: "h2", id: "replication", text: "One thing to check on your version" },
-    {
-      type: "p",
-      text: "Replication and change-data-capture connections need their own headroom, and how they interact with the general connection limit has differed between PostgreSQL versions.",
-    },
-    {
-      type: "p",
-      text: "The consequence, if you get it wrong, is worth avoiding: connection exhaustion that also stops replication, so a busy period silently produces replica lag. Check the settings for the version you run rather than trusting a blog post — including this one.",
-    },
+    { type: "p", text: "Session mode keeps a database connection for the full client session. It is easy to reason about. It also gives you little benefit if clients sit idle with open sessions." },
+    { type: "p", text: "Transaction mode is where pooling becomes useful. A client gets a real connection for one transaction. The pool then gives that connection to another client." },
+    { type: "p", text: "That works well, but it changes an important assumption. A client may not get the same backend connection for its next transaction." },
+    { type: "h2", id: "session-state", text: "Session state may not follow the client" },
+    { type: "p", text: "A setting applied to one backend connection can vanish when the client gets another connection. This includes search paths, time zones and some session variables." },
+    { type: "p", text: "The bugs can look random. One request may use the expected time zone. Another may not. One query may find an object. Another may fail because it landed on a connection with different state." },
+    { type: "callout", variant: "warning", title: "Prepared statements are a common trap", text: "A named prepared statement lives on the backend connection where it was created. Transaction pooling can send the next call to another connection. That backend has no statement with that name, so the query fails." },
+    { type: "p", text: "This is common with ORMs. Many use server-side prepared statements by default. Before enabling transaction pooling, check the driver settings your application uses." },
+    { type: "p", text: "You can disable server-side prepared statements. You can also use a driver mode that avoids named statements. Newer pooler versions can support more prepared-statement cases, but the feature still needs correct setup." },
+    { type: "h2", id: "rds-proxy", text: "RDS Proxy adds managed pooling on AWS" },
+    { type: "p", text: "RDS Proxy offers managed connection pooling for supported AWS databases. It can also help during failover. Client connections can stay on the proxy while the database endpoint changes." },
+    { type: "p", text: "The proxy can also work with IAM authentication. That can reduce the need to pass a long-lived database password through the app." },
+    { type: "p", text: "The important part is how the proxy handles session state." },
+    { type: "callout", variant: "warning", title: "Pinning can stop the pooling benefit", text: "When RDS Proxy sees state that must stay tied to a backend, it can pin the client to one connection. That protects application behavior. It also means that connection is no longer shared for that client." },
+    { type: "p", text: "Pinning is a quiet problem. The application still works. The proxy is just doing less multiplexing. Watch the pinning metrics. If pinning is high, find which application behavior triggers it." },
+    { type: "h2", id: "scenario", text: "How the incident appears" },
+    { type: "p", text: "An app scales out. Each new replica opens its own pool. Total connections pass the database limit. New clients fail." },
+    { type: "p", text: "The app restarts. More replicas reconnect. That creates more connection attempts during the incident." },
+    { type: "p", text: "A pooler fixes the first problem. Then transaction pooling exposes the second layer. Prepared statements fail. Session settings do not always follow the client." },
+    { type: "p", text: "None of those behaviors appeared by magic. The pooling layer made the hidden assumptions visible." },
+    { type: "h2", id: "replication", text: "Check connection rules for your Postgres version" },
+    { type: "p", text: "Replication and change-data-capture connections also need headroom. Their interaction with general connection limits can differ between PostgreSQL versions and deployment types." },
+    { type: "p", text: "That matters because a busy application can use the headroom you thought was reserved for replication. The result can be lag at the same time as user traffic is high." },
+    { type: "p", text: "Use the settings for the version you run. Do not copy an old connection-count rule from a blog post." },
     { type: "h2", id: "choosing", text: "Choosing a pooler" },
     {
       type: "table",
-      caption: "Both are reasonable; the choice is mostly operational",
-      head: ["PgBouncer when", "RDS Proxy when"],
+      caption: "A practical choice",
+      head: ["PgBouncer", "RDS Proxy"],
       rows: [
-        [
-          "You need different modes for different applications",
-          "You are on AWS and want it managed",
-        ],
-        [
-          "You run outside AWS, or on your own instances",
-          "Failover handling matters more than tuning",
-        ],
-        [
-          "You want no per-hour cost for the pooler",
-          "You want IAM authentication instead of passwords",
-        ],
-        ["You are comfortable operating it", "You would rather not operate one"],
+        ["You need several pooling modes", "You want a managed AWS service"],
+        ["You run outside AWS", "You want managed failover support"],
+        ["You want direct control", "You want IAM authentication options"],
+        ["You can operate the pooler", "You do not want to run one"],
       ],
     },
-    {
-      type: "p",
-      text: "Either way, keep the application-level pool as well. Your application pools to the proxy; the proxy pools to Postgres. Removing the first one just adds a handshake to every query.",
-    },
-    { type: "h2", id: "takeaways", text: "What to do with this" },
+    { type: "p", text: "Keep the application pool too. The app pool reduces repeated handshakes. The fleet pool reduces the number of real database connections. They solve different problems." },
+    { type: "h2", id: "takeaways", text: "What to do" },
     {
       type: "ul",
       items: [
-        "Keep the real connection limit modest and put a pooler in front. Raising the limit trades a clear error for a slow one.",
-        "Use transaction pooling, and check what your application sets on a session before you do.",
-        "Fix prepared statements deliberately — driver setting, driver mode, or a pooler version that handles them.",
-        "Watch pinning on RDS Proxy. It fails quietly by working less well.",
-        "Never rely on application pools alone once you have more than a couple of replicas.",
+        "Do not solve connection errors by raising the limit without checking process and memory pressure.",
+        "Use a pooler when many app replicas share one database.",
+        "Treat transaction pooling as a behavior change. Check session state first.",
+        "Test prepared statements before enabling transaction pooling.",
+        "Watch RDS Proxy pinning. High pinning can hide a loss of pooling efficiency.",
       ],
     },
-    {
-      type: "p",
-      text: "None of this is a criticism of Postgres. The process model buys real isolation, and the cost only shows up at a scale most systems never reach. But once many replicas share one database, connections become a resource you manage deliberately. The pooling mode that makes that work is the same one that quietly changes what a session means. Similar reasoning applies wherever [capacity and connection limits move together](/cloud/aurora-serverless-v2-scaling-connection-limits).",
-    },
+    { type: "p", text: "Postgres is not wrong for using a process per connection. That design provides useful isolation. The lesson is that connection count becomes a real capacity limit as an application grows. Pooling manages that limit. The pooling mode then decides which application assumptions still hold." },
   ],
   faq: [
-    {
-      question: "Why not just raise max_connections?",
-      answer:
-        "Because each one is a process. Allow thousands and the machine spends its time switching between them. You swap a clear error for slow queries everywhere.",
-    },
-    {
-      question: "Why do I get 'prepared statement does not exist'?",
-      answer:
-        "Transaction pooling moved you to a different backend. That one never saw the statement. Change the driver setting, or use a pooler version that tracks them.",
-    },
-    {
-      question: "Do I still need a pool inside my application?",
-      answer:
-        "Yes. It saves a handshake on every query. Your app pools to the proxy, and the proxy pools to the database. The two do different jobs.",
-    },
-    {
-      question: "What is pinning on RDS Proxy?",
-      answer:
-        "When it spots session state, it ties you to one backend so your app keeps working. Sharing stops for that client. Nothing errors, so watch the metric.",
-    },
-    {
-      question: "Which pooling mode should I use?",
-      answer:
-        "Transaction mode, in almost every case. Session mode is safe but barely pools. Check what your app sets on a session before you switch.",
-    },
+    { question: "Why not raise max_connections?", answer: "Because each connection uses a process. A very high count can make the server slow even before a hard error appears." },
+    { question: "Why does a prepared statement disappear?", answer: "Transaction pooling can send the next request to another backend connection. That connection never created the statement." },
+    { question: "Do I still need an app pool?", answer: "Yes. The app pool cuts repeated handshakes. A fleet pooler reduces the number of real database connections." },
+    { question: "What is RDS Proxy pinning?", answer: "The proxy keeps a client on one backend connection when session state requires it. The app keeps working, but sharing drops." },
+    { question: "Which PgBouncer mode is best?", answer: "Transaction mode is often the useful choice, but it changes session behavior. Check the application before switching." },
   ],
   sources: [
-    {
-      title: "PostgreSQL: Connections and Authentication",
-      publisher: "PostgreSQL",
-      url: "https://www.postgresql.org/docs/current/runtime-config-connection.html",
-    },
-    {
-      title: "PgBouncer configuration: pooling modes",
-      publisher: "PgBouncer",
-      url: "https://www.pgbouncer.org/config.html",
-    },
-    {
-      title: "PgBouncer FAQ: prepared statements and transaction pooling",
-      publisher: "PgBouncer",
-      url: "https://www.pgbouncer.org/faq.html",
-    },
-    {
-      title: "Using Amazon RDS Proxy",
-      publisher: "Amazon Web Services",
-      url: "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html",
-    },
-    {
-      title: "Avoiding pinning with RDS Proxy",
-      publisher: "Amazon Web Services",
-      url: "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy-managing.html",
-    },
+    { title: "PostgreSQL: Connections and Authentication", publisher: "PostgreSQL", url: "https://www.postgresql.org/docs/current/runtime-config-connection.html" },
+    { title: "PgBouncer configuration: pooling modes", publisher: "PgBouncer", url: "https://www.pgbouncer.org/config.html" },
+    { title: "PgBouncer FAQ: prepared statements and transaction pooling", publisher: "PgBouncer", url: "https://www.pgbouncer.org/faq.html" },
+    { title: "Using Amazon RDS Proxy", publisher: "Amazon Web Services", url: "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html" },
+    { title: "Avoiding pinning with RDS Proxy", publisher: "Amazon Web Services", url: "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy-managing.html" },
   ],
 };
