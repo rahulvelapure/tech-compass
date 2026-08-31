@@ -17,221 +17,66 @@ export const article: Article = {
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
-  readingMinutes: 6,
+  readingMinutes: 4,
   primaryKeyword: "service mesh mTLS",
-  secondaryKeywords: [
-    "SPIFFE workload identity",
-    "Istio strict mTLS",
-    "sidecar CPU overhead",
-    "certificate rotation Kubernetes",
-    "Linkerd mTLS",
-  ],
+  secondaryKeywords: ["SPIFFE workload identity", "Istio strict mTLS", "sidecar CPU overhead", "certificate rotation Kubernetes", "Linkerd mTLS"],
   tags: ["Kubernetes", "Security", "DevOps", "Zero Trust", "Service Mesh"],
   reviewStatus: "research-based",
   relatedSlugs: ["kubernetes-pod-networking-packet-flow", "zero-trust-network-segmentation"],
   methodology:
     "Written from Istio and Linkerd documentation and the SPIFFE specifications, verified August 2026. Proxy implementations are kept distinct because Istio uses Envoy while Linkerd uses its own Rust proxy. CPU, memory and overhead figures are not quoted because they depend on traffic and configuration.",
   body: [
-    {
-      type: "p",
-      text: "A service mesh can do something a firewall rule cannot. It can give each workload its own identity. It can then check that identity on each call.",
-    },
-    {
-      type: "p",
-      text: "That is a real change from trusting an IP range. An address tells you where a pod is. An identity tells you what service it is. The identity can stay the same when the pod moves to another node.",
-    },
-    {
-      type: "p",
-      text: "The trade is a new system that manages certificates for workloads. The control plane must keep issuing those certificates. That work is easy to ignore until it fails.",
-    },
+    { type: "p", text: "A service mesh can do something a firewall rule cannot. It can give each workload its own identity. It can then check that identity on each call." },
+    { type: "p", text: "That is a real change from trusting an IP range. An address tells you where a pod is. An identity tells you what service it is. The identity can stay the same when the pod moves to another node." },
+    { type: "p", text: "The trade is a new system that manages certificates for workloads. The control plane must keep issuing those certificates. That work is easy to ignore until it fails." },
     { type: "h2", id: "identity", text: "What the identity is" },
-    {
-      type: "p",
-      text: "Mesh certificates are not the same as public website certificates. They do not need a public DNS name.",
-    },
-    {
-      type: "p",
-      text: "A workload can use a SPIFFE ID. The ID names the trust domain, namespace and service account. The mesh puts that identity into an X.509 certificate. The mesh certificate authority signs the certificate.",
-    },
-    {
-      type: "p",
-      text: "When one service calls another, the two proxies run a TLS handshake. They present their certificates. Each side checks the certificate against the mesh CA. The call can then be tied to workload identity, not to a subnet.",
-    },
-    {
-      type: "callout",
-      variant: "note",
-      title: "Istio and Linkerd use different proxies",
-      text: "Istio uses Envoy. Linkerd uses its own Rust proxy. Do not copy Envoy tuning advice into a Linkerd deployment. The two products have different proxy designs.",
-    },
+    { type: "p", text: "Mesh certificates are not the same as public website certificates. They do not need a public DNS name." },
+    { type: "p", text: "A workload can use a SPIFFE ID. The ID names the trust domain, namespace and service account. The mesh puts that identity into an X.509 certificate. The mesh certificate authority signs the certificate." },
+    { type: "p", text: "When one service calls another, the two proxies run a TLS handshake. They present their certificates. Each side checks the certificate against the mesh CA. The call can then be tied to workload identity, not to a subnet." },
+    { type: "callout", variant: "note", title: "Istio and Linkerd use different proxies", text: "Istio uses Envoy. Linkerd uses its own Rust proxy. Do not copy Envoy tuning advice into a Linkerd deployment. The two products have different proxy designs." },
     { type: "h2", id: "compute", text: "The compute cost is real" },
-    {
-      type: "p",
-      text: "A proxy beside each workload uses CPU and memory. Encryption has a cost. Another process also needs space on the node.",
-    },
-    {
-      type: "p",
-      text: "You will find fixed percentages for this cost. They are poor defaults. The real cost depends on request rate, payload size, connection reuse, proxy type and configuration.",
-    },
-    {
-      type: "p",
-      text: "The useful rule is simple. Count the proxy in your capacity plan. Do not treat it as free overhead.",
-    },
-    {
-      type: "callout",
-      variant: "warning",
-      title: "An unbounded proxy can hurt the app",
-      text: "A proxy with no resource limit can take CPU during a traffic burst. The app beside it then slows down or times out. The network may be fine. The proxy may just be using the CPU first.",
-    },
-    {
-      type: "p",
-      text: "Set proxy requests and limits in the injection setup. Include those resources when you size the cluster. On a large cluster, the total is not small.",
-    },
-    {
-      type: "callout",
-      variant: "tip",
-      title: "Sidecars are not the only model",
-      text: "Istio ambient mode moves mTLS work away from a sidecar on each pod. That changes the cost model. Check the current mesh options before assuming that every workload needs one sidecar.",
-    },
+    { type: "p", text: "A proxy beside each workload uses CPU and memory. Encryption has a cost. Another process also needs space on the node." },
+    { type: "p", text: "You will find fixed percentages for this cost. They are poor defaults. The real cost depends on request rate, payload size, connection reuse, proxy type and configuration." },
+    { type: "p", text: "The useful rule is simple. Count the proxy in your capacity plan. Do not treat it as free overhead." },
+    { type: "callout", variant: "warning", title: "An unbounded proxy can hurt the app", text: "A proxy with no resource limit can take CPU during a traffic burst. The app beside it then slows down or times out. The network may be fine. The proxy may just be using the CPU first." },
+    { type: "p", text: "Set proxy requests and limits in the injection setup. Include those resources when you size the cluster. On a large cluster, the total is not small." },
+    { type: "callout", variant: "tip", title: "Sidecars are not the only model", text: "Istio ambient mode moves mTLS work away from a sidecar on each pod. That changes the cost model. Check the current mesh options before assuming that every workload needs one sidecar." },
     { type: "h2", id: "rotation", text: "Short certificates bring a new risk" },
-    {
-      type: "p",
-      text: "Mesh certificates are short-lived. That limits the useful life of a stolen key. It is one of the main security benefits of the model.",
-    },
-    {
-      type: "p",
-      text: "The mesh rotates certificates before they expire. In a healthy cluster, the proxy asks for a new certificate and swaps it in without a visible break.",
-    },
-    {
-      type: "p",
-      text: "The trouble starts when the control plane stops issuing certificates. The current certificates do not fail at once. They keep working until their lifetime ends.",
-    },
-    {
-      type: "p",
-      text: "Then many certificates can expire in the same period. Services start rejecting each other's connections. The outage can appear hours after the control plane fault began.",
-    },
-    {
-      type: "p",
-      text: "That makes certificate lifetime a grace period. It is the time you have to notice an issuance problem before it becomes a broad outage.",
-    },
-    {
-      type: "p",
-      text: "The control plane is therefore critical infrastructure. Monitor it, but also monitor certificate issuance. A process can be alive and still fail to issue new certificates.",
-    },
+    { type: "p", text: "Mesh certificates are short-lived. That limits the useful life of a stolen key. It is one of the main security benefits of the model." },
+    { type: "p", text: "The mesh rotates certificates before they expire. In a healthy cluster, the proxy asks for a new certificate and swaps it in without a visible break." },
+    { type: "p", text: "The trouble starts when the control plane stops issuing certificates. The current certificates do not fail at once. They keep working until their lifetime ends." },
+    { type: "p", text: "Then many certificates can expire in the same period. Services start rejecting each other's connections. The outage can appear hours after the control plane fault began." },
+    { type: "p", text: "That makes certificate lifetime a grace period. It is the time you have to notice an issuance problem before it becomes a broad outage." },
+    { type: "p", text: "The control plane is therefore critical infrastructure. Monitor it, but also monitor certificate issuance. A process can be alive and still fail to issue new certificates." },
     { type: "h2", id: "lifetime", text: "Shorter is not always better" },
-    {
-      type: "p",
-      text: "Very short lifetimes sound safer. They reduce the time a stolen key can work. They also create more certificate work and leave less time to fix an issuance fault.",
-    },
-    {
-      type: "p",
-      text: "Choose a life that limits key exposure and still gives your team time to respond. The right value depends on your response time. It is an operations choice as much as a security choice.",
-    },
+    { type: "p", text: "Very short lifetimes sound safer. They reduce the time a stolen key can work. They also create more certificate work and leave less time to fix an issuance fault." },
+    { type: "p", text: "Choose a life that limits key exposure and still gives your team time to respond. The right value depends on your response time. It is an operations choice as much as a security choice." },
     { type: "h2", id: "legacy", text: "Old applications may dislike reconnects" },
-    {
-      type: "p",
-      text: "Modern services often reconnect after a reset. Many older apps do not. This matters because mesh changes can close and reopen connections.",
-    },
-    {
-      type: "p",
-      text: "A long-lived database connection is a common example. The app may treat a reset as a fatal error. The same error can return on a regular rotation schedule.",
-    },
-    {
-      type: "p",
-      text: "Test these apps before enabling strict mTLS. Give them retry logic where it makes sense. If an app cannot recover from a normal connection reset, it may need a different design.",
-    },
+    { type: "p", text: "Modern services often reconnect after a reset. Many older apps do not. This matters because mesh changes can close and reopen connections." },
+    { type: "p", text: "A long-lived database connection is a common example. The app may treat a reset as a fatal error. The same error can return on a regular rotation schedule." },
+    { type: "p", text: "Test these apps before enabling strict mTLS. Give them retry logic where it makes sense. If an app cannot recover from a normal connection reset, it may need a different design." },
     { type: "h2", id: "mistakes", text: "Two gaps to close" },
-    {
-      type: "p",
-      text: "**Leaving permissive mode on.** Permissive mode can help during a migration. It lets a service accept both plaintext and mTLS traffic. That also means plaintext can bypass the trust check. Give migration mode a clear end date.",
-    },
-    {
-      type: "p",
-      text: "**Assuming the mesh covers all traffic.** mTLS protects traffic that stays in the mesh. A call to an external API leaves that boundary. You need an egress design if you want the same policy and visibility there.",
-    },
+    { type: "p", text: "**Leaving permissive mode on.** Permissive mode can help during a migration. It lets a service accept both plaintext and mTLS traffic. That also means plaintext can bypass the trust check. Give migration mode a clear end date." },
+    { type: "p", text: "**Assuming the mesh covers all traffic.** mTLS protects traffic that stays in the mesh. A call to an external API leaves that boundary. You need an egress design if you want the same policy and visibility there." },
     { type: "h2", id: "when", text: "When a mesh is a good fit" },
-    {
-      type: "table",
-      caption: "What the mesh gives you, and what it asks you to run",
-      head: ["Worth it when", "Use something simpler when"],
-      rows: [
-        ["Many services need workload identity", "Few services with simple traffic"],
-        ["IP rules no longer scale well", "Network policy already meets the need"],
-        ["A team owns the control plane", "Nobody will own certificate operations"],
-        ["Apps tolerate reconnects", "Critical apps fail on every reset"],
-      ],
-    },
-    {
-      type: "p",
-      text: "There are middle options. Network policy can provide segmentation without a mesh. Cloud services can also provide identity-aware service networking. [VPC Lattice does this on AWS](/cloud/aws-vpc-lattice-vs-api-gateway-service-networking). These options can solve a smaller problem with less machinery.",
-    },
+    { type: "table", caption: "What the mesh gives you, and what it asks you to run", head: ["Worth it when", "Use something simpler when"], rows: [["Many services need workload identity", "Few services with simple traffic"], ["IP rules no longer scale well", "Network policy already meets the need"], ["A team owns the control plane", "Nobody will own certificate operations"], ["Apps tolerate reconnects", "Critical apps fail on every reset"]] },
+    { type: "p", text: "There are middle options. Network policy can provide segmentation without a mesh. Cloud services can also provide identity-aware service networking. [VPC Lattice does this on AWS](/cloud/aws-vpc-lattice-vs-api-gateway-service-networking). These options can solve a smaller problem with less machinery." },
     { type: "h2", id: "takeaways", text: "What to do" },
-    {
-      type: "ul",
-      items: [
-        "Count proxy CPU and memory in cluster sizing.",
-        "Run the control plane for availability and watch certificate issuance.",
-        "Know the certificate lifetime. It is your window to detect an outage cause.",
-        "Give permissive mode a deadline.",
-        "Test older apps for safe reconnects before strict mTLS rollout.",
-      ],
-    },
-    {
-      type: "p",
-      text: "Mesh mTLS gives you a strong workload trust model. The cost is not just CPU. You also take on certificate operations and a control plane that every workload depends on. That trade can be worth it. Make it a design choice, not an automatic default.",
-    },
+    { type: "ul", items: ["Count proxy CPU and memory in cluster sizing.", "Run the control plane for availability and watch certificate issuance.", "Know the certificate lifetime. It is your window to detect an outage cause.", "Give permissive mode a deadline.", "Test older apps for safe reconnects before strict mTLS rollout."] },
+    { type: "p", text: "Mesh mTLS gives you a strong workload trust model. The cost is not just CPU. You also take on certificate operations and a control plane that every workload depends on. That trade can be worth it. Make it a design choice, not an automatic default." },
   ],
   faq: [
-    {
-      question: "Does every mesh use Envoy?",
-      answer:
-        "No. Istio uses Envoy. Linkerd uses its own Rust proxy. Their tuning and resource needs differ.",
-    },
-    {
-      question: "How much CPU does a proxy use?",
-      answer:
-        "There is no useful fixed number. Traffic and configuration change the cost. Measure your own workload and set resource limits.",
-    },
-    {
-      question: "What happens when the control plane stops?",
-      answer:
-        "Existing certificates keep working for a while. When they expire, workloads can stop trusting each other. The delay can make the cause hard to spot.",
-    },
-    {
-      question: "Should certificates be very short?",
-      answer:
-        "Short certificates reduce key exposure. They also reduce the time you have to fix a certificate-issuance problem. Pick a life that fits your response time.",
-    },
-    {
-      question: "Why does an old app fail after mTLS starts?",
-      answer:
-        "Mesh changes can reset connections. Modern apps reconnect. Older apps may treat the reset as fatal. Test reconnect behavior first.",
-    },
+    { question: "Does every mesh use Envoy?", answer: "No. Istio uses Envoy. Linkerd uses its own Rust proxy. Their tuning and resource needs differ." },
+    { question: "How much CPU does a proxy use?", answer: "There is no useful fixed number. Traffic and configuration change the cost. Measure your own workload and set resource limits." },
+    { question: "What happens when the control plane stops?", answer: "Existing certificates keep working for a while. When they expire, workloads can stop trusting each other. The delay can make the cause hard to spot." },
+    { question: "Should certificates be very short?", answer: "Short certificates reduce key exposure. They also reduce the time you have to fix a certificate-issuance problem. Pick a life that fits your response time." },
+    { question: "Why does an old app fail after mTLS starts?", answer: "Mesh changes can reset connections. Modern apps reconnect. Older apps may treat the reset as fatal. Test reconnect behavior first." },
   ],
   sources: [
-    {
-      title: "Mutual TLS migration",
-      publisher: "Istio",
-      url: "https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/",
-    },
-    {
-      title: "Istio security: identity and certificate management",
-      publisher: "Istio",
-      url: "https://istio.io/latest/docs/concepts/security/",
-    },
-    {
-      title: "Automatic mTLS",
-      publisher: "Linkerd",
-      url: "https://linkerd.io/2/features/automatic-mtls/",
-    },
-    {
-      title: "SPIFFE ID and X.509 SVID specification",
-      publisher: "SPIFFE",
-      url: "https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md",
-    },
-    {
-      title: "Istio ambient mode",
-      publisher: "Istio",
-      url: "https://istio.io/latest/docs/ambient/overview/",
-    },
+    { title: "Mutual TLS migration", publisher: "Istio", url: "https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/" },
+    { title: "Istio security: identity and certificate management", publisher: "Istio", url: "https://istio.io/latest/docs/concepts/security/" },
+    { title: "Automatic mTLS", publisher: "Linkerd", url: "https://linkerd.io/2/features/automatic-mtls/" },
+    { title: "SPIFFE ID and X.509 SVID specification", publisher: "SPIFFE", url: "https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md" },
+    { title: "Istio ambient mode", publisher: "Istio", url: "https://istio.io/latest/docs/ambient/overview/" },
   ],
 };
