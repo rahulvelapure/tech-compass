@@ -17,7 +17,7 @@ export const article: Article = {
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-08-23",
-  readingMinutes: 6,
+  readingMinutes: 4,
   primaryKeyword: "AWS Transit Gateway vs VPC Peering",
   secondaryKeywords: [
     "VPC peering limits",
