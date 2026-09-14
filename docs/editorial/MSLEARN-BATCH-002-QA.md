@@ -46,7 +46,7 @@ The refinement records document source verification and corrections for each art
 2. Run `bun run validate:content` with zero errors.
 3. Run `bun run verify` with zero errors.
 4. Run `bun run build:node` successfully.
-5. Run the production Cloudflare build/deploy path with `bun run build` followed by `bunx nitro deploy --prebuilt`.
+5. Run the production Cloudflare build/deploy path with `bun run build` followed by `bunx wrangler deploy --config .output/server/wrangler.json`.
 6. Validate the deployed production origin.
 7. Do not introduce draft-state changes solely to manufacture release status; these are existing refined production Article objects.
 
