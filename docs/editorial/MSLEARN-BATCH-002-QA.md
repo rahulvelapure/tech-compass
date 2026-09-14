@@ -24,7 +24,7 @@ This batch contains the ten refined articles from editorial refinement batches 0
 
 ## Readability gate
 
-Refinement records report all ten passing the repository editorial thresholds:
+The controlled remediation branch is raising every Batch 002 body to Flesch Reading Ease >= 70 using the repository's own `scripts/readability.ts` measurement. The original refinement thresholds remain required as well:
 
 - technical body Flesch Reading Ease >= 55
 - standfirst >= 70
@@ -33,8 +33,7 @@ Refinement records report all ten passing the repository editorial thresholds:
 - average sentence length <= 15 words
 - longest sentence <= 35 words
 
-Batch 004 measured body scores: 59.0, 58.6, 58.3, 55.2, 65.4.
-Batch 005 measured body scores: 57.9, 59.4, 61.4, 64.5, 58.3.
+The first controlled CI run identified `aws-transit-gateway-vs-vpc-peering` at Flesch 56.3, ASL 16.6, ASW 1.58, 1341 words. That article has since received a readability pass. No score is recorded as green until CI verifies the complete ten-article set.
 
 ## Technical/source gate
 
@@ -46,9 +45,10 @@ The refinement records document source verification and corrections for each art
 2. Run `bun run validate:content` with zero errors.
 3. Run `bun run verify` with zero errors.
 4. Run `bun run build:node` successfully.
-5. Run the production Cloudflare build/deploy path with `bun run build` followed by `bunx nitro deploy --prebuilt`.
+5. Run the production Cloudflare build/deploy path with `bun run build` followed by `bunx wrangler deploy --config .output/server/wrangler.json`.
 6. Validate the deployed production origin.
-7. Do not introduce draft-state changes solely to manufacture release status; these are existing refined production Article objects.
+7. Record the actual command results, deployment revision, origin URL, and smoke-test result in this record before declaring the batch green.
+8. Do not introduce draft-state changes solely to manufacture release status; these are existing refined production Article objects.
 
 ## Held items
 
