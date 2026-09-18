@@ -64,7 +64,7 @@ export const article: Article = {
     { type: "table", caption: "Use the smallest fix that targets the real delay", head: ["Main delay", "Best first move"], rows: [["Runtime or framework startup", "SnapStart when the runtime supports it"], ["Large package or layer download", "Trim dependencies and layers"], ["Your own init code", "Lazy initialization or SnapStart"], ["Cold starts are not acceptable", "Provisioned concurrency after cost review"], ["User waits on the body", "Response streaming where it fits"]] },
     { type: "h2", id: "takeaways", text: "What to do" },
     { type: "ul", items: ["Measure init time before changing memory.", "With SnapStart, refresh random state and validate connections after restore.", "Compare a full day of provisioned concurrency with a container option.", "Move heavy setup out of init when safe.", "Check current runtime support and gateway limits before relying on old advice."] },
-    { type: "p", text: "A cold start is not one problem. It is a group of steps that happen before the handler runs. Find the slow step first. Then the right fix is often clear, and the cheapest fix may be a small code change." },
+    { type: "p", text: "A cold start is not one problem. It is a group of steps that happen before the handler runs. Find the slow step first. Then the right fix is often clear. the cheapest fix may be a small code change." },
   ],
   faq: [
     { question: "Will more memory fix a cold start?", answer: "Only when CPU work is the slow part. Memory will not solve every startup phase. Measure init time first." },

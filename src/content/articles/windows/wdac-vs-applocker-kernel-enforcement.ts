@@ -52,19 +52,19 @@ export const article: Article = {
     { type: "h2", id: "where", text: "Where each one enforces" },
     {
       type: "p",
-      text: "AppLocker rules are evaluated by a service when a process is created. Rules can be based on publisher, path or hash, and — usefully — can apply to specific users or groups.",
+      text: "AppLocker rules are evaluated by a service when a process is created. Rules can be based on publisher, path or hash. — usefully — can apply to specific users or groups.",
     },
     {
       type: "p",
-      text: "Because the check happens in user mode at launch, it covers what launches. Code that gets into an already-running trusted process by another route has not launched anything, so nothing evaluates it.",
+      text: "Because the check happens in user mode at launch, it covers what launches. Code that gets into an already-running trusted process by another route has not launched anything. So nothing evaluates it.",
     },
     {
       type: "p",
-      text: "App Control works through the kernel's code integrity engine. When something asks to load an executable, a library or a driver, the check happens before the file is mapped. If the policy does not let it, it never runs, and the kernel logs the block.",
+      text: "App Control works through the kernel's code integrity engine. When something asks to load an executable, a library or a driver, the check happens before the file is mapped. If the policy does not let it, it never runs. the kernel logs the block.",
     },
     {
       type: "p",
-      text: "Microsoft is explicit about the difference in status. AppLocker is described as a defence-in-depth feature rather than a defensible security boundary; App Control is serviced as a security feature. That is a statement about what each one is expected to withstand.",
+      text: "Microsoft is explicit about the difference in status. AppLocker is described as a defence-in-depth feature rather than a defensible security boundary. App Control is serviced as a security feature. That is a statement about what each one is expected to withstand.",
     },
     {
       type: "table",
@@ -90,7 +90,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "AppLocker still ships, still works, and still receives security fixes. What it does not receive is new features. Microsoft recommends App Control for new rollouts and says it is no longer investing in AppLocker.",
+      text: "AppLocker still ships, still works. still receives security fixes. What it does not receive is new features. Microsoft recommends App Control for new rollouts and says it is no longer investing in AppLocker.",
     },
     {
       type: "p",
@@ -126,17 +126,17 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A **managed installer** is a rollout tool you designate as trusted — Intune, for example, which can be configured as one directly. Files it installs are tagged, and policy can trust anything carrying that tag. Internal software deploys and runs without being signed.",
+      text: "A **managed installer** is a rollout tool you designate as trusted — Intune, for example, which can be configured as one directly. Files it installs are tagged. policy can trust anything carrying that tag. Internal software deploys and runs without being signed.",
     },
     {
       type: "p",
-      text: "The elegant part is what it does not cover. Download the identical file through a browser and it runs unsigned and untagged, so it is blocked. Trust attaches to how the file arrived, not to what it is.",
+      text: "The elegant part is what it does not cover. Download the identical file through a browser and it runs unsigned and untagged. So it is blocked. Trust attaches to how the file arrived, not to what it is.",
     },
     {
       type: "p",
       text: "**Supplemental policies** solve the change problem. A locked base policy trusts Microsoft-signed code and little else. Supplemental policies extend it — your code signing certificate, a specific vendor. A vendor change means updating one supplemental policy rather than rebuilding and redeploying the base.",
     },
-    { type: "h2", id: "isg", text: "Reputation, and what it is called" },
+    { type: "h2", id: "isg", text: "Reputation. what it is called" },
     {
       type: "p",
       text: "App Control can also trust code that the Intelligent Security Graph rates as safe. Turn that on if you cannot list every version of every common app by hand.",
@@ -147,7 +147,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Watch for one side effect, so it does not alarm anyone. Turn on reputation trust while a second antivirus runs, and Defender steps back to handle just those checks. That is expected.",
+      text: "Watch for one side effect. So it does not alarm anyone. Turn on reputation trust while a second antivirus runs. Defender steps back to handle just those checks. That is expected.",
     },
     { type: "h2", id: "mistakes", text: "Three ways rollouts go wrong" },
     {
@@ -213,7 +213,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The honest summary is that App Control gives a stronger guarantee and asks for organisational maturity in exchange — code signing, a real rollout pipeline, and the discipline to audit before enforcing. That is why it is worth planning rather than switching on, and why the tool it supposedly replaces is still the right answer in specific places.",
+      text: "The honest summary is that App Control gives a stronger guarantee and asks for organisational maturity in exchange — code signing, a real rollout pipeline. the discipline to audit before enforcing. That is why it is worth planning rather than switching on. why the tool it supposedly replaces is still the right answer in specific places.",
     },
   ],
   faq: [

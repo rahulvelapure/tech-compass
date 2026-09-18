@@ -38,20 +38,20 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Those answers then hold for as long as the session does. That is the design, and it is fine for most things a person does.",
+      text: "Those answers then hold for as long as the session does. That is the design. it is fine for most things a person does.",
     },
     {
       type: "p",
-      text: "It is not fine for the small number of actions where the stakes jump. A session that was fine for reading a dashboard is the same session used to approve a payment, and nothing re-checks anything in between.",
+      text: "It is not fine for the small number of actions where the stakes jump. A session that was fine for reading a dashboard is the same session used to approve a payment. nothing re-checks anything in between.",
     },
     { type: "h2", id: "gap", text: "The gap this closes" },
     {
       type: "p",
-      text: "Two situations make the problem concrete, and neither needs anything exotic.",
+      text: "Two situations make the problem concrete. neither needs anything exotic.",
     },
     {
       type: "p",
-      text: "Someone walks away from an unlocked machine. The session is valid, the device is compliant, and whoever sits down next inherits all of it.",
+      text: "Someone walks away from an unlocked machine. The session is valid, the device is compliant. whoever sits down next inherits all of it.",
     },
     {
       type: "p",
@@ -86,12 +86,12 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The claim is acrs, not acr",
-      text: "Entra's authentication context uses an `acrs` claim, and a great deal of community guidance says `acr` — the standard OIDC claim, which is a different thing. Validating the wrong one means either rejecting good tokens or, worse, accepting tokens that never satisfied your policy.",
+      text: "Entra's authentication context uses an `acrs` claim. a great deal of community guidance says `acr` — the standard OIDC claim, which is a different thing. Validating the wrong one means either rejecting good tokens or, worse, accepting tokens that never satisfied your policy.",
     },
     { type: "h2", id: "opportunistic", text: "It does not always redirect" },
     {
       type: "p",
-      text: "Most descriptions of this feature imply every sensitive action triggers a round trip to Entra ID. That is not quite how it behaves, and the difference matters for user experience.",
+      text: "Most descriptions of this feature imply every sensitive action triggers a round trip to Entra ID. That is not quite how it behaves. the difference matters for user experience.",
     },
     {
       type: "p",
@@ -99,11 +99,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "So a user who already authenticated with a strong method may reach the sensitive action and pass, with no interruption at all. The check still happened; it simply had nothing left to ask for.",
+      text: "So a user who already authenticated with a strong method may reach the sensitive action and pass, with no interruption at all. The check still happened. it simply had nothing left to ask for.",
     },
     {
       type: "p",
-      text: "There is a catch. A resource provider has to opt in to receiving the claim this way, and each token type is opted in separately. Without that, the only route is an explicit request, and every check becomes a round trip.",
+      text: "There is a catch. A resource provider has to opt in to receiving the claim this way. each token type is opted in separately. Without that, the only route is an explicit request. every check becomes a round trip.",
     },
     { type: "h2", id: "building", text: "This is app work" },
     {
@@ -122,7 +122,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The mistake that produces a redirect loop",
-      text: "If the API demands a context but the client does not request that context on the redirect, Entra returns a token without it. The API rejects again, the client redirects again, and the browser spins. Both halves have to name the same context.",
+      text: "If the API demands a context but the client does not request that context on the redirect, Entra returns a token without it. The API rejects again, the client redirects again. the browser spins. Both halves have to name the same context.",
     },
     { type: "h2", id: "gotchas", text: "Three things the documentation is explicit about" },
     {
@@ -131,7 +131,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**There is room for far more contexts than you need.** A tenant can define up to ninety-nine. That is not an invitation. Every context is a redirect the user may experience, and Microsoft's own advice is to keep the set small and name them for what they mean rather than for individual apps.",
+      text: "**There is room for far more contexts than you need.** A tenant can define up to ninety-nine. That is not an invitation. Every context is a redirect the user may experience. Microsoft's own advice is to keep the set small and name them for what they mean rather than for individual apps.",
     },
     {
       type: "p",
@@ -141,12 +141,12 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Licensing and scope",
-      text: "Conditional Access needs an Entra ID P1 licence, and authentication context values are not available in the free edition. The feature also applies to apps that sign users in — an app authenticating as itself cannot use it.",
+      text: "Conditional Access needs an Entra ID P1 licence. authentication context values are not available in the free edition. The feature also applies to apps that sign users in — an app authenticating as itself cannot use it.",
     },
     { type: "h2", id: "using-it", text: "Where to point it" },
     {
       type: "p",
-      text: "The temptation is to protect everything. That produces prompt fatigue, and users respond to prompt fatigue by approving things without reading them, which is worse than where you started.",
+      text: "The temptation is to protect everything. That produces prompt fatigue. users respond to prompt fatigue by approving things without reading them, which is worse than where you started.",
     },
     {
       type: "p",
@@ -178,7 +178,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Step-up is the one that assumes the attacker may already hold a valid session, and asks for something they cannot produce.",
+      text: "Step-up is the one that assumes the attacker may already hold a valid session. asks for something they cannot produce.",
     },
     { type: "h2", id: "takeaways", text: "What to do with this" },
     {
