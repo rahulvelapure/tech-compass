@@ -1,6 +1,6 @@
 # Microsoft Learn Batch 002 — QA and release record
 
-Status: locked for controlled production QA.
+Status: merged to master; production deployment and live-origin verification pending.
 
 This batch contains the ten refined articles from editorial refinement batches 004 and 005. The articles already exist in `src/content/articles/` on `master`; this record locks the release set and its acceptance gates without rewriting already-refined article objects.
 
@@ -67,4 +67,4 @@ No article in this ten-article set is the previously held duplicate-intent mater
 
 No production release is considered complete until the current branch passes the complete repository validation and the live-origin deployment validation against the deployed site.
 
-<!-- release-candidate: Batch 002 locked 2026-08-30 -->
+<!-- release-candidate: Batch 002 merged 2026-09-18; awaiting production-origin verification -->
