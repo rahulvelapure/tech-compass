@@ -47,7 +47,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The name changed",
-      text: "Windows Defender Application Control is now App Control for Business. The technology is the same and the older name still appears widely in tooling, scripts and community guidance. If you are searching for documentation, both names lead to the same feature.",
+      text: "Windows Defender app Control is now App Control for Business. The technology is the same and the older name still appears widely in tooling, scripts and community guidance. If you are searching for documentation, both names lead to the same feature.",
     },
     { type: "h2", id: "where", text: "Where each one enforces" },
     {
@@ -60,7 +60,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "App Control works through the kernel's code integrity engine. When something asks to load an executable, a library or a driver, the check happens before the file is mapped. If the policy does not allow it, it never runs, and the kernel logs the block.",
+      text: "App Control works through the kernel's code integrity engine. When something asks to load an executable, a library or a driver, the check happens before the file is mapped. If the policy does not let it, it never runs, and the kernel logs the block.",
     },
     {
       type: "p",
@@ -68,7 +68,7 @@ export const article: Article = {
     },
     {
       type: "table",
-      caption: "The differences that decide a deployment",
+      caption: "The differences that decide a rollout",
       head: ["", "AppLocker", "App Control for Business"],
       rows: [
         [
@@ -90,7 +90,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "AppLocker still ships, still works, and still receives security fixes. What it does not receive is new features. Microsoft recommends App Control for new deployments and says it is no longer investing in AppLocker.",
+      text: "AppLocker still ships, still works, and still receives security fixes. What it does not receive is new features. Microsoft recommends App Control for new rollouts and says it is no longer investing in AppLocker.",
     },
     {
       type: "p",
@@ -109,15 +109,15 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "AppLocker will trust a location. Allow a directory and what sits there can run. App Control does not work that way: trust comes from signatures, hashes, reputation or how the file arrived. Dropping a malicious library into a trusted folder achieves nothing, because the folder was never the reason anything was trusted.",
+      text: "AppLocker will trust a location. let a directory and what sits there can run. App Control does not work that way: trust comes from signatures, hashes, reputation or how the file arrived. Dropping a malicious library into a trusted folder achieves nothing, because the folder was never the reason anything was trusted.",
     },
     {
       type: "p",
-      text: "That strictness lands on your own software. Unsigned internal scripts and third-party applications shipping unsigned components stop working. For most organisations this is the moment they find out how much unsigned code they depend on.",
+      text: "That strictness lands on your own software. Unsigned internal scripts and third-party apps shipping unsigned components stop working. For most organisations this is the moment they find out how much unsigned code they depend on.",
     },
     {
       type: "p",
-      text: "Policies are also compiled binaries rather than a list you edit. You author, convert and deploy them through management tooling, which means application control becomes a pipeline rather than a settings page.",
+      text: "Policies are also compiled binaries rather than a list you edit. You author, convert and deploy them through ops tooling, which means app control becomes a pipeline rather than a settings page.",
     },
     { type: "h2", id: "managed-installer", text: "Managed installers and supplemental policies" },
     {
@@ -126,7 +126,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A **managed installer** is a deployment tool you designate as trusted — Intune, for example, which can be configured as one directly. Files it installs are tagged, and policy can trust anything carrying that tag. Internal software deploys and runs without being signed.",
+      text: "A **managed installer** is a rollout tool you designate as trusted — Intune, for example, which can be configured as one directly. Files it installs are tagged, and policy can trust anything carrying that tag. Internal software deploys and runs without being signed.",
     },
     {
       type: "p",
@@ -143,16 +143,16 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "It is frequently called SmartScreen integration, which is the wrong name and sends people to the wrong documentation. Smart App Control is the related consumer feature, built on the same engine.",
+      text: "It is often called SmartScreen integration, which is the wrong name and sends people to the wrong documentation. Smart App Control is the related consumer feature, built on the same engine.",
     },
     {
       type: "p",
       text: "Watch for one side effect, so it does not alarm anyone. Turn on reputation trust while a second antivirus runs, and Defender steps back to handle just those checks. That is expected.",
     },
-    { type: "h2", id: "mistakes", text: "Three ways deployments go wrong" },
+    { type: "h2", id: "mistakes", text: "Three ways rollouts go wrong" },
     {
       type: "p",
-      text: "**Enforcing before auditing.** Audit mode allows everything and logs what would have been blocked. Those logs are how you build the policy. Skipping that step means discovering your dependencies through incidents.",
+      text: "**Enforcing before auditing.** Audit mode lets everything and logs what would have been blocked. Those logs are how you build the policy. Skipping that step means discovering your dependencies through incidents.",
     },
     {
       type: "p",
@@ -160,7 +160,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Blocking your own management tools.** It is entirely possible to write a policy that blocks the agent or the tooling needed to replace that policy. Recovery then means physical access. Make sure the management agent and the native policy tool are trusted in the base policy before enforcing anything.",
+      text: "**Blocking your own ops tools.** It is entirely possible to write a policy that blocks the agent or the tooling needed to replace that policy. Recovery then means physical access. Make sure the ops agent and the native policy tool are trusted in the base policy before enforcing anything.",
     },
     { type: "h2", id: "memory-integrity", text: "The protection underneath" },
     {
@@ -186,10 +186,10 @@ export const article: Article = {
           "Rules must differ by user or group on one device",
         ],
         [
-          "A deployment tool can act as managed installer",
+          "A rollout tool can act as managed installer",
           "Unsigned internal code cannot be signed or tagged yet",
         ],
-        ["You can run audit mode and act on the results", "Management maturity is not there yet"],
+        ["You can run audit mode and act on the results", "ops maturity is not there yet"],
         [
           "Kernel-level integrity is a stated requirement",
           "You need something useful in place quickly",
@@ -198,22 +198,22 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That second column is not a failure state. Application control that is actually deployed beats a stricter one that stalls in audit mode for a year.",
+      text: "That second column is not a failure state. app control that is actually deployed beats a stricter one that stalls in audit mode for a year.",
     },
     { type: "h2", id: "takeaways", text: "What to do with this" },
     {
       type: "ul",
       items: [
         "Start from a Microsoft example base policy rather than only from what your audit captured.",
-        "Set up your deployment tool as a managed installer first, and leave the signing work until after.",
+        "Set up your rollout tool as a managed installer first, and leave the signing work until after.",
         "Keep the base policy locked and put vendor and internal trust in supplemental policies.",
-        "Trust the management agent and policy tooling explicitly, or recovery needs hands on the device.",
+        "Trust the ops agent and policy tooling explicitly, or recovery needs hands on the device.",
         "Keep AppLocker where per-user rules matter. It is a complement, not a predecessor.",
       ],
     },
     {
       type: "p",
-      text: "The honest summary is that App Control gives a stronger guarantee and asks for organisational maturity in exchange — code signing, a real deployment pipeline, and the discipline to audit before enforcing. That is why it is worth planning rather than switching on, and why the tool it supposedly replaces is still the right answer in specific places.",
+      text: "The honest summary is that App Control gives a stronger guarantee and asks for organisational maturity in exchange — code signing, a real rollout pipeline, and the discipline to audit before enforcing. That is why it is worth planning rather than switching on, and why the tool it supposedly replaces is still the right answer in specific places.",
     },
   ],
   faq: [
