@@ -34,7 +34,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "Terraform does not inspect your cloud and work out what to do. It reads a file that records what it believes exists, compares that to your code, and acts on the difference.",
+      text: "Terraform does not inspect your cloud and work out what to do. It reads a file that records what it believes exists, compares that to your code. acts on the difference.",
     },
     {
       type: "p",
@@ -42,36 +42,36 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The tutorials cover storing it remotely and locking it. That is the start, and most of the failures happen past that point.",
+      text: "The tutorials cover storing it remotely and locking it. That is the start. most of the failures happen past that point.",
     },
-    { type: "h2", id: "locking", text: "What locking does, and does not do" },
+    { type: "h2", id: "locking", text: "What locking does. does not do" },
     {
       type: "p",
       text: "Before an operation that could write state, Terraform takes a lock. A second run against the same state is refused while the first holds it.",
     },
     {
       type: "p",
-      text: "This exists to stop a specific disaster. Two runs read the same state, each decides what to change, and each writes back — the second overwriting the first. You end up with cloud resources nothing is tracking and a state file that describes neither reality.",
+      text: "This exists to stop a specific disaster. Two runs read the same state, each decides what to change. each writes back — the second overwriting the first. You end up with cloud resources nothing is tracking and a state file that describes neither reality.",
     },
     {
       type: "callout",
       variant: "note",
       title: "How locking is configured has changed",
-      text: "For years the standard pattern on AWS was an S3 bucket for state plus a DynamoDB table for locking, and most guidance still says that. Newer Terraform versions support locking in S3 itself, without the separate table. Check what your version supports before building the older arrangement.",
+      text: "For years the standard pattern on AWS was an S3 bucket for state plus a DynamoDB table for locking. most guidance still says that. Newer Terraform versions support locking in S3 itself, without the separate table. Check what your version supports before building the older arrangement.",
     },
     {
       type: "p",
-      text: "The failure people meet is the stuck lock. A runner is killed, or someone interrupts a local run, and the process dies before releasing it. Nothing can run until the lock is cleared.",
+      text: "The failure people meet is the stuck lock. A runner is killed, or someone interrupts a local run. the process dies before releasing it. Nothing can run until the lock is cleared.",
     },
     {
       type: "p",
-      text: "There is a command to force it, and it deserves respect. If the original process is in fact still running somewhere, forcing the unlock produces exactly the corruption the lock existed to prevent. Confirm the other run is genuinely dead before using it.",
+      text: "There is a command to force it. it deserves respect. If the original process is in fact still running somewhere, forcing the unlock produces exactly the corruption the lock existed to prevent. Confirm the other run is genuinely dead before using it.",
     },
     {
       type: "p",
       text: "And the important limit: locking coordinates writers. It says nothing about whether the state is still true.",
     },
-    { type: "h2", id: "drift", text: "Drift, and why it is dangerous rather than untidy" },
+    { type: "h2", id: "drift", text: "Drift. why it is dangerous rather than untidy" },
     {
       type: "p",
       text: "Drift is when the cloud stops matching the state. It happens for ordinary reasons.",
@@ -79,7 +79,7 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "**Someone changed something by hand.** Usually during an incident, usually for good reasons, usually not recorded anywhere.",
+        "**Someone changed something by hand.** often during an incident, often for good reasons, often not recorded anywhere.",
         "**Another system changed it.** A controller, an autoscaler or a backup tool touching resources Terraform believes it owns.",
         "**The provider changed underneath you.** A default moves or an attribute is deprecated, and a plan shows a difference nobody caused.",
       ],
@@ -92,28 +92,28 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The emergency fix gets reverted",
-      text: "An engineer detaches a volume by hand to rescue data from a failing instance. State still says it should be attached. The next apply sets about making that true, and the fix — along with what it was protecting — can be undone by a pipeline doing exactly what it was told.",
+      text: "An engineer detaches a volume by hand to rescue data from a failing instance. State still says it should be attached. The next apply sets about making that true. the fix — along with what it was protecting — can be undone by a pipeline doing exactly what it was told.",
     },
     {
       type: "p",
-      text: "The defence is to find drift on your own schedule rather than during a deployment. A read-only plan running nightly, with an alert when it finds changes, turns a surprise into a ticket.",
+      text: "The defence is to find drift on your own schedule rather than during a rollout. A read-only plan running nightly, with an alert when it finds changes, turns a surprise into a ticket.",
     },
     { type: "h2", id: "refactor", text: "Moving code can plan to destroy a database" },
     {
       type: "p",
-      text: "This is the one that costs people production data, and it happens during work that feels entirely safe.",
+      text: "This is the one that costs people production data. it happens during work that feels entirely safe.",
     },
     {
       type: "p",
-      text: "State tracks resources by their address in your configuration. Move a resource into a module and its address changes. Terraform sees a resource that no longer exists at the old address, and a new one at an address it has never seen.",
+      text: "State tracks resources by their address in your setup. Move a resource into a module and its address changes. Terraform sees a resource that no longer exists at the old address. a new one at an address it has never seen.",
     },
     {
       type: "p",
-      text: "So the plan says destroy and create. The code is identical, nothing about the infrastructure changed, and the plan proposes deleting a database and building an empty one.",
+      text: "So the plan says destroy and create. The code is identical, nothing about the infrastructure changed. the plan proposes deleting a database and building an empty one.",
     },
     {
       type: "p",
-      text: "The fix is to tell Terraform the resource moved. A `moved` block in the configuration records the old address and the new one, and the next plan shows no changes at all. There is also a state command for the same job, but the block is version-controlled and reviewable, which the command is not.",
+      text: "The fix is to tell Terraform the resource moved. A `moved` block in the setup records the old address and the new one. the next plan shows no changes at all. There is also a state command for the same job. But the block is version-controlled and reviewable, which the command is not.",
     },
     {
       type: "p",
@@ -122,7 +122,7 @@ export const article: Article = {
     { type: "h2", id: "segmentation", text: "One state for everything is the trap" },
     {
       type: "p",
-      text: "Early Terraform adoption tends to produce a single state holding the network, the databases, the clusters and the applications. It is simple, and it stops scaling in three ways at once.",
+      text: "Early Terraform adoption tends to produce a single state holding the network, the databases, the clusters and the apps. It is simple. it stops scaling in three ways at once.",
     },
     {
       type: "table",
@@ -132,7 +132,7 @@ export const article: Article = {
         ["Slow plans", "Every run refreshes everything, whether or not it is relevant"],
         [
           "Wide blast radius",
-          "A mistake in an application change can propose destroying core infrastructure",
+          "A mistake in an app change can propose destroying core infrastructure",
         ],
         [
           "Coarse permissions",
@@ -142,11 +142,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The third is the one that quietly matters most. If one pipeline manages all of it, that pipeline's credentials can modify all of it, and there is no way to give a team autonomy over their own resources without giving them the network too.",
+      text: "The third is the one that quietly matters most. If one pipeline manages all of it, that pipeline's credentials can modify all of it. there is no way to give a team autonomy over their own resources without giving them the network too.",
     },
     {
       type: "p",
-      text: "Splitting state into layers — network, data, compute, application — fixes all three. Layers read from each other using a remote state data source, so an application workspace can look up a network identifier without being able to change the network.",
+      text: "Splitting state into layers — network, data, compute, app — fixes all three. Layers read from each other using a remote state data source. So an app workspace can look up a network identifier without being able to change the network.",
     },
     {
       type: "p",
@@ -155,7 +155,7 @@ export const article: Article = {
     { type: "h2", id: "mistakes", text: "Three things not to do" },
     {
       type: "p",
-      text: "**Do not commit state to Git.** State can contain values captured during resource creation, including secrets. Committing it publishes them to everyone with repository access, and to every clone that ever existed. Use a remote backend. The same reasoning that keeps [static credentials out of pipelines](/devops/secrets-management-cicd-vault-oidc-reality) applies here.",
+      text: "**Do not commit state to Git.** State can contain values captured during resource creation, including secrets. Committing it publishes them to everyone with repository access. to every clone that ever existed. Use a remote backend. The same reasoning that keeps [static credentials out of pipelines](/devops/terraform-state-splitting-enterprise-scale-terragrunt) applies here.",
     },
     {
       type: "p",
@@ -163,7 +163,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Do not auto-apply on a successful plan.** A plan that proposes destroying half your environment succeeds, because planning worked. Use the detailed exit code to distinguish no changes from pending changes, and require a human to approve anything that destroys.",
+      text: "**Do not auto-apply on a successful plan.** A plan that proposes destroying half your setup succeeds, because planning worked. Use the detailed exit code to distinguish no changes from pending changes. need a human to approve anything that destroys.",
     },
     { type: "h2", id: "backends", text: "Managed or self-hosted" },
     {
@@ -179,7 +179,7 @@ export const article: Article = {
         ["You build the approval and drift tooling", "That tooling already exists"],
         [
           "Suits strict data residency requirements",
-          "Suits teams who would rather not maintain it",
+          "Suits teams who would rather not keep it",
         ],
       ],
     },
@@ -192,7 +192,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "Split state by layer, and connect layers with remote state reads rather than one big workspace.",
-        "Run a read-only plan on a schedule so drift is found before a deployment finds it.",
+        "Run a read-only plan on a schedule so drift is found before a rollout finds it.",
         "Use a `moved` block whenever you relocate a resource in code. Read every destroy line in a plan.",
         "Gate applies that destroy anything behind a human, using the detailed exit code rather than plain success.",
         "Treat state as secret material, and never let it near version control.",
@@ -200,7 +200,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Most Terraform accidents are not caused by the tool doing something unexpected. They happen because state and reality quietly disagreed, and an apply resolved the disagreement in the direction nobody wanted. Everything above is about noticing that disagreement early, and about making sure a single mistake cannot reach everything you run.",
+      text: "Most Terraform accidents are not caused by the tool doing something unexpected. They happen because state and reality quietly disagreed. an apply resolved the disagreement in the direction nobody wanted. Everything above is about noticing that disagreement early. about making sure a single mistake cannot reach everything you run.",
     },
   ],
   faq: [
