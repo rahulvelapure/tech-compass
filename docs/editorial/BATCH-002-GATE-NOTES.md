@@ -9,3 +9,5 @@ The Batch 002 deployment procedure was separately corrected to the established W
 - 2026-09-18: readability and release-gate corrections consolidated for the current PR head; final CI is the acceptance check.
 
 - 2026-09-18: final consolidated CI retrigger after prior run completed.
+
+- 2026-09-18: repository-standard readability gate restored; final PR validation requested after stale CI cancellation.
