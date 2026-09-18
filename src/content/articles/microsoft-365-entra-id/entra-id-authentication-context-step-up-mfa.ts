@@ -17,7 +17,7 @@ export const article: Article = {
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
   nextReviewAt: "2027-02-23",
-  readingMinutes: 6,
+  readingMinutes: 5,
   primaryKeyword: "Entra ID authentication context",
   secondaryKeywords: [
     "step-up authentication Entra",
