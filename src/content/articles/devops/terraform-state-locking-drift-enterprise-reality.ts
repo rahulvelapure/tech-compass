@@ -79,7 +79,7 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "**Someone changed something by hand.** Usually during an incident, usually for good reasons, usually not recorded anywhere.",
+        "**Someone changed something by hand.** often during an incident, often for good reasons, often not recorded anywhere.",
         "**Another system changed it.** A controller, an autoscaler or a backup tool touching resources Terraform believes it owns.",
         "**The provider changed underneath you.** A default moves or an attribute is deprecated, and a plan shows a difference nobody caused.",
       ],
@@ -96,7 +96,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The defence is to find drift on your own schedule rather than during a deployment. A read-only plan running nightly, with an alert when it finds changes, turns a surprise into a ticket.",
+      text: "The defence is to find drift on your own schedule rather than during a rollout. A read-only plan running nightly, with an alert when it finds changes, turns a surprise into a ticket.",
     },
     { type: "h2", id: "refactor", text: "Moving code can plan to destroy a database" },
     {
@@ -105,7 +105,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "State tracks resources by their address in your configuration. Move a resource into a module and its address changes. Terraform sees a resource that no longer exists at the old address, and a new one at an address it has never seen.",
+      text: "State tracks resources by their address in your setup. Move a resource into a module and its address changes. Terraform sees a resource that no longer exists at the old address, and a new one at an address it has never seen.",
     },
     {
       type: "p",
@@ -113,7 +113,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The fix is to tell Terraform the resource moved. A `moved` block in the configuration records the old address and the new one, and the next plan shows no changes at all. There is also a state command for the same job, but the block is version-controlled and reviewable, which the command is not.",
+      text: "The fix is to tell Terraform the resource moved. A `moved` block in the setup records the old address and the new one, and the next plan shows no changes at all. There is also a state command for the same job, but the block is version-controlled and reviewable, which the command is not.",
     },
     {
       type: "p",
@@ -122,7 +122,7 @@ export const article: Article = {
     { type: "h2", id: "segmentation", text: "One state for everything is the trap" },
     {
       type: "p",
-      text: "Early Terraform adoption tends to produce a single state holding the network, the databases, the clusters and the applications. It is simple, and it stops scaling in three ways at once.",
+      text: "Early Terraform adoption tends to produce a single state holding the network, the databases, the clusters and the apps. It is simple, and it stops scaling in three ways at once.",
     },
     {
       type: "table",
@@ -132,7 +132,7 @@ export const article: Article = {
         ["Slow plans", "Every run refreshes everything, whether or not it is relevant"],
         [
           "Wide blast radius",
-          "A mistake in an application change can propose destroying core infrastructure",
+          "A mistake in an app change can propose destroying core infrastructure",
         ],
         [
           "Coarse permissions",
@@ -146,7 +146,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Splitting state into layers — network, data, compute, application — fixes all three. Layers read from each other using a remote state data source, so an application workspace can look up a network identifier without being able to change the network.",
+      text: "Splitting state into layers — network, data, compute, app — fixes all three. Layers read from each other using a remote state data source, so an app workspace can look up a network identifier without being able to change the network.",
     },
     {
       type: "p",
@@ -155,7 +155,7 @@ export const article: Article = {
     { type: "h2", id: "mistakes", text: "Three things not to do" },
     {
       type: "p",
-      text: "**Do not commit state to Git.** State can contain values captured during resource creation, including secrets. Committing it publishes them to everyone with repository access, and to every clone that ever existed. Use a remote backend. The same reasoning that keeps [static credentials out of pipelines](/devops/secrets-management-cicd-vault-oidc-reality) applies here.",
+      text: "**Do not commit state to Git.** State can contain values captured during resource creation, including secrets. Committing it publishes them to everyone with repository access, and to every clone that ever existed. Use a remote backend. The same reasoning that keeps [static credentials out of pipelines](/devops/secrets-ops-cicd-vault-oidc-reality) applies here.",
     },
     {
       type: "p",
@@ -163,7 +163,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Do not auto-apply on a successful plan.** A plan that proposes destroying half your environment succeeds, because planning worked. Use the detailed exit code to distinguish no changes from pending changes, and require a human to approve anything that destroys.",
+      text: "**Do not auto-apply on a successful plan.** A plan that proposes destroying half your setup succeeds, because planning worked. Use the detailed exit code to distinguish no changes from pending changes, and need a human to approve anything that destroys.",
     },
     { type: "h2", id: "backends", text: "Managed or self-hosted" },
     {
@@ -179,7 +179,7 @@ export const article: Article = {
         ["You build the approval and drift tooling", "That tooling already exists"],
         [
           "Suits strict data residency requirements",
-          "Suits teams who would rather not maintain it",
+          "Suits teams who would rather not keep it",
         ],
       ],
     },
@@ -192,7 +192,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "Split state by layer, and connect layers with remote state reads rather than one big workspace.",
-        "Run a read-only plan on a schedule so drift is found before a deployment finds it.",
+        "Run a read-only plan on a schedule so drift is found before a rollout finds it.",
         "Use a `moved` block whenever you relocate a resource in code. Read every destroy line in a plan.",
         "Gate applies that destroy anything behind a human, using the detailed exit code rather than plain success.",
         "Treat state as secret material, and never let it near version control.",
