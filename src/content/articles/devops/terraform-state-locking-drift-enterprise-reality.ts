@@ -155,7 +155,7 @@ export const article: Article = {
     { type: "h2", id: "mistakes", text: "Three things not to do" },
     {
       type: "p",
-      text: "**Do not commit state to Git.** State can contain values captured during resource creation, including secrets. Committing it publishes them to everyone with repository access. to every clone that ever existed. Use a remote backend. The same reasoning that keeps [static credentials out of pipelines](/devops/secrets-management-cicd-vault-oidc-reality) applies here.",
+      text: "**Do not commit state to Git.** State can contain values captured during resource creation, including secrets. Committing it publishes them to everyone with repository access. to every clone that ever existed. Use a remote backend. The same reasoning that keeps [static credentials out of pipelines](/devops/terraform-state-splitting-enterprise-scale-terragrunt) applies here.",
     },
     {
       type: "p",
