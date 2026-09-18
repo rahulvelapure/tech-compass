@@ -47,7 +47,7 @@ export const article: Article = {
     { type: "h2", id: "gap", text: "The gap this closes" },
     {
       type: "p",
-      text: "Two situations make the problem concrete, and neither requires anything exotic.",
+      text: "Two situations make the problem concrete, and neither needs anything exotic.",
     },
     {
       type: "p",
@@ -64,13 +64,13 @@ export const article: Article = {
     { type: "h2", id: "how", text: "How authentication context works" },
     {
       type: "p",
-      text: "Authentication context lets you attach a policy to an action rather than to an application. The application then asks for it when that action is attempted.",
+      text: "Authentication context lets you attach a policy to an action rather than to an app. The app then asks for it when that action is attempted.",
     },
     {
       type: "ol",
       items: [
-        "You define a context in Entra ID and attach a Conditional Access policy to it — require a fresh sign-in, a compliant device, a phishing-resistant method.",
-        "The application decides which of its operations need that context.",
+        "You define a context in Entra ID and attach a Conditional Access policy to it — need a fresh sign-in, a compliant device, a phishing-resistant method.",
+        "The app decides which of its operations need that context.",
         "A user attempts one of those operations with an ordinary token.",
         "The API sees the required context is missing and returns a **claims challenge** rather than simply refusing.",
         "The client sends the user back to Entra ID, asking for that context specifically.",
@@ -80,7 +80,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The result is that a stolen session gets you as far as the ordinary parts of the application and no further. At the sensitive action, the attacker is asked for something they do not have.",
+      text: "The result is that a stolen session gets you as far as the ordinary parts of the app and no further. At the sensitive action, the attacker is asked for something they do not have.",
     },
     {
       type: "callout",
@@ -105,10 +105,10 @@ export const article: Article = {
       type: "p",
       text: "There is a catch. A resource provider has to opt in to receiving the claim this way, and each token type is opted in separately. Without that, the only route is an explicit request, and every check becomes a round trip.",
     },
-    { type: "h2", id: "building", text: "This is application work" },
+    { type: "h2", id: "building", text: "This is app work" },
     {
       type: "p",
-      text: "The reason this feature is rare in the wild is not that people have not heard of it. It is that most of the work lands in the application rather than in the portal.",
+      text: "The reason this feature is rare in the wild is not that people have not heard of it. It is that most of the work lands in the app rather than in the portal.",
     },
     {
       type: "ul",
@@ -127,21 +127,21 @@ export const article: Article = {
     { type: "h2", id: "gotchas", text: "Three things the documentation is explicit about" },
     {
       type: "p",
-      text: "**Do not hard-code the context values.** They differ between tenants. An application should read the available contexts from Microsoft Graph and work from that mapping. Hard-coding works in one tenant and breaks the moment the application is used in another.",
+      text: "**Do not hard-code the context values.** They differ between tenants. An app should read the available contexts from Microsoft Graph and work from that mapping. Hard-coding works in one tenant and breaks the moment the app is used in another.",
     },
     {
       type: "p",
-      text: "**There is room for far more contexts than you need.** A tenant can define up to ninety-nine. That is not an invitation. Every context is a redirect the user may experience, and Microsoft's own advice is to keep the set small and name them for what they mean rather than for individual applications.",
+      text: "**There is room for far more contexts than you need.** A tenant can define up to ninety-nine. That is not an invitation. Every context is a redirect the user may experience, and Microsoft's own advice is to keep the set small and name them for what they mean rather than for individual apps.",
     },
     {
       type: "p",
-      text: "**Do not use it where the whole application is already the target of a policy.** The feature is for raising the bar inside an application whose baseline is lower. If everything in the application needs the same strong check, apply that check to the application and skip the complexity.",
+      text: "**Do not use it where the whole app is already the target of a policy.** The feature is for raising the bar inside an app whose baseline is lower. If everything in the app needs the same strong check, apply that check to the app and skip the risk.",
     },
     {
       type: "callout",
       variant: "note",
       title: "Licensing and scope",
-      text: "Conditional Access requires an Entra ID P1 licence, and authentication context values are not available in the free edition. The feature also applies to applications that sign users in — an application authenticating as itself cannot use it.",
+      text: "Conditional Access needs an Entra ID P1 licence, and authentication context values are not available in the free edition. The feature also applies to apps that sign users in — an app authenticating as itself cannot use it.",
     },
     { type: "h2", id: "using-it", text: "Where to point it" },
     {
@@ -165,7 +165,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That last row is worth noting. Role activation through Privileged Identity Management can be gated this way. It puts the strongest check on the moment someone takes administrative power, rather than on when they signed in.",
+      text: "That last row is worth noting. Role activation through Privileged Identity ops can be gated this way. It puts the strongest check on the moment someone takes administrative power, rather than on when they signed in.",
     },
     { type: "h2", id: "boundaries", text: "How this relates to the other answers" },
     {
@@ -186,14 +186,14 @@ export const article: Article = {
       items: [
         "Validate the `acrs` claim, and check you are not validating `acr` by mistake.",
         "Read context values from Graph rather than hard-coding them.",
-        "Keep the set of contexts small and named for meaning, not per application.",
+        "Keep the set of contexts small and named for meaning, not per app.",
         "Enforce on the server. A client-side check protects nobody who is attacking you.",
         "Pick a handful of expensive, irreversible actions. Protecting everything trains users to click through.",
       ],
     },
     {
       type: "p",
-      text: "The idea underneath is simple enough: a decision made once at the start of a session is a weak claim about what is happening later in it. Authentication context is the mechanism for asking again at the point where the answer actually matters. It costs real application work, which is why it stays rare — and why the handful of operations you point it at should be chosen carefully.",
+      text: "The idea underneath is simple enough: a decision made once at the start of a session is a weak claim about what is happening later in it. Authentication context is the mechanism for asking again at the point where the answer actually matters. It costs real app work, which is why it stays rare — and why the handful of operations you point it at should be chosen carefully.",
     },
   ],
   faq: [
