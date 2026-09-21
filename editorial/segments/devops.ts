@@ -735,5 +735,32 @@ export const segment: Segment = {
       updateClass: "volatile",
       articleSlug: "linux-cgroups-v2-memory-oom-killer-reality",
     },
+    {
+      id: "devops-40",
+      title: "At-least-once delivery means the consumer must survive the same message twice",
+      category: "devops",
+      subcategory: "Distributed systems",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "idempotent consumer pattern message duplicate delivery",
+      secondaryKeywords: [
+        "at least once delivery idempotency",
+        "message deduplication pattern",
+        "duplicate event processing",
+      ],
+      updateClass: "volatile",
+      pillar: "Reliable messaging and consumers",
+      plannedSlug: "idempotent-consumer-pattern",
+      requiredSources: [
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/idempotent-consumer",
+        "https://learn.microsoft.com/en-us/azure/architecture/serverless/event-hubs-functions/resilient-design",
+      ],
+      diagramOpportunity:
+        "A message delivered twice across a retry/checkpoint boundary, showing the idempotency key or processed-message store absorbing the duplicate side effect.",
+      notes:
+        "New Microsoft Architecture Center pattern, last updated September 5, 2026. Distinct from dev-04, which owns HTTP/API idempotency keys and client retries; this topic owns asynchronous message consumers, duplicate delivery, checkpoints, acknowledgements, and business side-effect safety.",
+    },
   ],
 };
