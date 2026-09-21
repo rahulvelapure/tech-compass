@@ -583,5 +583,31 @@ export const segment: Segment = {
       updateClass: "volatile",
       articleSlug: "mongodb-sharding-jumbo-chunk-trap",
     },
+    {
+      id: "cloud-42",
+      title: "Millions of devices can fail together: designing IoT scale around provisioning storms",
+      category: "cloud",
+      subcategory: "IoT",
+      contentType: "explainer",
+      searchIntent: "architecture",
+      priority: "P0",
+      status: "RESEARCHED",
+      targetKeyword: "Azure IoT Hub millions of devices architecture",
+      secondaryKeywords: [
+        "Azure IoT Hub DPS scale",
+        "IoT provisioning storm",
+        "IoT Hub deployment stamps",
+      ],
+      updateClass: "volatile",
+      pillar: "IoT scale and fleet resilience",
+      plannedSlug: "iot-scale-and-fleet-resilience",
+      requiredSources: [
+        "https://learn.microsoft.com/en-us/azure/architecture/guide/iot/scale-iot-solution-azure",
+      ],
+      diagramOpportunity:
+        "Multiple IoT Hub and DPS scale stamps with staggered provisioning, device retry paths, and regional failure boundaries.",
+      notes:
+        "New opportunity from Microsoft's materially updated August 2026 Architecture Center guidance. Distinct from enterprise-networking IoT segmentation: this owns fleet-scale provisioning, synchronized reconnect/update storms, service throttling, deployment stamps, and regional resilience.",
+    },
   ],
 };
