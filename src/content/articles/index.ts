@@ -33,6 +33,7 @@ import { article as postgresqlIndexTypesBtreeGinBrinGist } from "./cloud/postgre
 import { article as postgresqlPitrWalArchivingLsnMechanics } from "./cloud/postgresql-pitr-wal-archiving-lsn-mechanics";
 import { article as redisClusterVsSentinelArchitecture } from "./cloud/redis-cluster-vs-sentinel-architecture";
 import { article as backupRestoreTesting } from "./cybersecurity-ciso/backup-restore-testing";
+import { article as defenderAsrAuditToBlock } from "./cybersecurity-ciso/defender-asr-audit-to-block";
 import { article as fido2DiscoverableCredentialsResidentKeys } from "./cybersecurity-ciso/fido2-discoverable-credentials-resident-keys";
 import { article as iso27001Microsoft365Mapping } from "./cybersecurity-ciso/iso-27001-microsoft-365-mapping";
 import { article as linuxEbpfSecurityMonitoringKernelProbes } from "./cybersecurity-ciso/linux-ebpf-security-monitoring-kernel-probes";
@@ -44,6 +45,7 @@ import { article as oidcWorkloadIdentityFederationCrossCloud } from "./cybersecu
 import { article as passkeysEnterpriseDeploymentReality } from "./cybersecurity-ciso/passkeys-enterprise-deployment-reality";
 import { article as passwordManagersForTeams } from "./cybersecurity-ciso/password-managers-for-teams";
 import { article as postQuantumCryptographyNistMigrationEnterprise } from "./cybersecurity-ciso/post-quantum-cryptography-nist-migration-enterprise";
+import { article as purviewAdaptiveProtectionDlp } from "./cybersecurity-ciso/purview-adaptive-protection-dlp";
 import { article as ransomwareRecoveryBackupsImmutableAdForest } from "./cybersecurity-ciso/ransomware-recovery-backups-immutable-ad-forest";
 import { article as samlFederationSecurityRisksTrustBoundaries } from "./cybersecurity-ciso/saml-federation-security-risks-trust-boundaries";
 import { article as graphqlVsRestVsGrpcApiGatewayPerformance } from "./development/graphql-vs-rest-vs-grpc-api-gateway-performance";
@@ -93,6 +95,13 @@ import { article as entraIdAuthenticationContextStepUpMfa } from "./microsoft-36
 import { article as entraIdPimImplementationFailures } from "./microsoft-365-entra-id/entra-id-pim-implementation-failures";
 import { article as entraIdVsActiveDirectoryDifferences } from "./microsoft-365-entra-id/entra-id-vs-active-directory-differences";
 import { article as microsoft365TenantToTenantMigration } from "./microsoft-365-entra-id/microsoft-365-tenant-to-tenant-migration";
+import { article as entraAccessReviewsStaleAccess } from "./microsoft-entra/entra-access-reviews-stale-access";
+import { article as entraAuthenticationStrengths } from "./microsoft-entra/entra-authentication-strengths";
+import { article as entraGlobalSecureAccessVpn } from "./microsoft-entra/entra-global-secure-access-vpn";
+import { article as entraIdGovernanceLifecycle } from "./microsoft-entra/entra-id-governance-lifecycle";
+import { article as entraPimJustInTime } from "./microsoft-entra/entra-pim-just-in-time";
+import { article as entraPrivateAccessPerApp } from "./microsoft-entra/entra-private-access-per-app";
+import { article as globalSecureAccessTrafficProfiles } from "./microsoft-entra/global-secure-access-traffic-profiles";
 import { article as autopilotDevicePreparationVsAutopilot } from "./microsoft-intune/autopilot-device-preparation-vs-autopilot";
 import { article as autopilotDeviceRegistrationFailures } from "./microsoft-intune/autopilot-device-registration-failures";
 import { article as autopilotPreProvisioningFailures } from "./microsoft-intune/autopilot-pre-provisioning-failures";
@@ -100,6 +109,7 @@ import { article as compliantDeviceConditionalAccessBlocked } from "./microsoft-
 import { article as enrollmentStatusPageTroubleshooting } from "./microsoft-intune/enrollment-status-page-troubleshooting";
 import { article as entraJoinVsHybridJoin } from "./microsoft-intune/entra-join-vs-hybrid-join";
 import { article as groupPolicyToSettingsCatalogMigration } from "./microsoft-intune/group-policy-to-settings-catalog-migration";
+import { article as intuneAdvancedAnalyticsOperations } from "./microsoft-intune/intune-advanced-analytics-operations";
 import { article as intuneCompliancePolicyDesign } from "./microsoft-intune/intune-compliance-policy-design";
 import { article as intuneCustomComplianceScripts } from "./microsoft-intune/intune-custom-compliance-scripts";
 import { article as intuneEnrollmentRestrictions } from "./microsoft-intune/intune-enrollment-restrictions";
@@ -148,6 +158,7 @@ export const articles: Article[] = [
   postgresqlPitrWalArchivingLsnMechanics,
   redisClusterVsSentinelArchitecture,
   backupRestoreTesting,
+  defenderAsrAuditToBlock,
   fido2DiscoverableCredentialsResidentKeys,
   iso27001Microsoft365Mapping,
   linuxEbpfSecurityMonitoringKernelProbes,
@@ -159,6 +170,7 @@ export const articles: Article[] = [
   passkeysEnterpriseDeploymentReality,
   passwordManagersForTeams,
   postQuantumCryptographyNistMigrationEnterprise,
+  purviewAdaptiveProtectionDlp,
   ransomwareRecoveryBackupsImmutableAdForest,
   samlFederationSecurityRisksTrustBoundaries,
   graphqlVsRestVsGrpcApiGatewayPerformance,
@@ -208,6 +220,13 @@ export const articles: Article[] = [
   entraIdPimImplementationFailures,
   entraIdVsActiveDirectoryDifferences,
   microsoft365TenantToTenantMigration,
+  entraAccessReviewsStaleAccess,
+  entraAuthenticationStrengths,
+  entraGlobalSecureAccessVpn,
+  entraIdGovernanceLifecycle,
+  entraPimJustInTime,
+  entraPrivateAccessPerApp,
+  globalSecureAccessTrafficProfiles,
   autopilotDevicePreparationVsAutopilot,
   autopilotDeviceRegistrationFailures,
   autopilotPreProvisioningFailures,
@@ -215,6 +234,7 @@ export const articles: Article[] = [
   enrollmentStatusPageTroubleshooting,
   entraJoinVsHybridJoin,
   groupPolicyToSettingsCatalogMigration,
+  intuneAdvancedAnalyticsOperations,
   intuneCompliancePolicyDesign,
   intuneCustomComplianceScripts,
   intuneEnrollmentRestrictions,
