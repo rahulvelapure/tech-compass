@@ -37,28 +37,28 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "Kubernetes schedules pods onto nodes. When there is no room, something has to add a node. That job has been done the same way for years, and the way it was done shaped how clusters get built.",
+      text: "Kubernetes schedules pods onto nodes. When there is no room, something has to add a node. That job has been done the same way for years. the way it was done shaped how clusters get built.",
     },
     {
       type: "p",
-      text: "Cluster Autoscaler watches for pods that cannot be placed and asks the cloud provider for another node. The catch is in the word another. It adds a node to a group you defined in advance, and every node in that group is the same shape.",
+      text: "Cluster Autoscaler watches for pods that cannot be placed and asks the cloud provider for another node. The catch is in the word another. It adds a node to a group you defined in advance. every node in that group is the same shape.",
     },
     {
       type: "p",
-      text: "So the question stops being how much capacity you need and becomes which of your predefined shapes to add more of. Those are not the same question, and the gap between them is waste.",
+      text: "So the question stops being how much capacity you need and becomes which of your predefined shapes to add more of. Those are not the same question. the gap between them is waste.",
     },
     { type: "h2", id: "bin-packing", text: "Where the waste comes from" },
     {
       type: "p",
-      text: "Picture a pod that needs a modest slice of CPU and memory. Nothing has room, so it waits.",
+      text: "Picture a pod that needs a modest slice of CPU and memory. Nothing has room. So it waits.",
     },
     {
       type: "p",
-      text: "Cluster Autoscaler finds the node group that matches, and adds one node of whatever size that group defines. If the group holds large instances, you get a large instance. The pod schedules, and most of that node sits idle.",
+      text: "Cluster Autoscaler finds the node group that matches. adds one node of whatever size that group defines. If the group holds large instances, you get a large instance. The pod schedules. most of that node sits idle.",
     },
     {
       type: "p",
-      text: "The usual mitigation is more node groups: a small one, a medium one, a memory-heavy one, one for each shape someone anticipated. That works, and it produces a lot of configuration to maintain.",
+      text: "The usual mitigation is more node groups: a small one, a medium one, a memory-heavy one, one for each shape someone anticipated. That works. it produces a lot of setup to keep.",
     },
     {
       type: "p",
@@ -71,7 +71,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "You define a NodePool, but a NodePool is a set of boundaries rather than an instance size. It says which families are acceptable, which zones, whether spot capacity is allowed, and what limits apply. Inside those boundaries, the choice is made per request.",
+      text: "You define a NodePool. But a NodePool is a set of boundaries rather than an instance size. It says which families are acceptable, which zones, whether spot capacity is allowed. what limits apply. Inside those boundaries, the choice is made per request.",
     },
     {
       type: "ol",
@@ -85,7 +85,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The practical difference is at step four. The decision is made against current availability and current pricing, rather than against a list written months ago.",
+      text: "The practical difference is at step four. The decision is made against current uptime and current pricing, rather than against a list written months ago.",
     },
     { type: "h2", id: "spot", text: "Why this matters most for spot capacity" },
     {
@@ -98,7 +98,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "With broad boundaries instead, the replacement is not tied to the type that just went away. Something else that satisfies the same requirements can be launched instead. Flexibility is the whole value proposition of spot capacity, and node groups are the thing that removes it.",
+      text: "With broad boundaries instead, the replacement is not tied to the type that just went away. Something else that satisfies the same requirements can be launched instead. Flexibility is the whole value proposition of spot capacity. node groups are the thing that removes it.",
     },
     { type: "h2", id: "consolidation", text: "Consolidation is the part to plan for" },
     {
@@ -107,11 +107,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Cluster Autoscaler removes a node only when it is sufficiently empty and the pods can move elsewhere. The threshold is configurable and conservative by design. It does not rearrange anything to create that situation, so a cluster drifts into fragmentation: several nodes, each lightly loaded, none empty enough to remove.",
+      text: "Cluster Autoscaler removes a node only when it is sufficiently empty and the pods can move elsewhere. The threshold is configurable and conservative by design. It does not rearrange anything to create that situation. So a cluster drifts into fragmentation: several nodes, each lightly loaded, none empty enough to remove.",
     },
     {
       type: "p",
-      text: "Karpenter actively defragments. If workloads would fit on fewer nodes, it will cordon one, evict what is running there, let it reschedule, and remove the node. The cluster keeps being repacked as it changes.",
+      text: "Karpenter actively defragments. If workloads would fit on fewer nodes, it will cordon one, evict what is running there, let it reschedule. remove the node. The cluster keeps being repacked as it changes.",
     },
     {
       type: "callout",
@@ -126,15 +126,15 @@ export const article: Article = {
     { type: "h2", id: "mistakes", text: "Three mistakes worth avoiding" },
     {
       type: "p",
-      text: "**Narrow NodePools.** Restricting a NodePool to two instance types recreates the problem you were solving, with different configuration. The value comes from breadth. Allow whole families, and let the constraints on pods do the fine-grained work.",
+      text: "**Narrow NodePools.** Restricting a NodePool to two instance types recreates the problem you were solving, with different setup. The value comes from breadth. let whole families. let the constraints on pods do the fine-grained work.",
     },
     {
       type: "p",
-      text: "**Running both autoscalers.** They will make competing decisions about the same pending pods, and the result is over-provisioning and churn. Migration means removing the old one, not layering the new one on top.",
+      text: "**Running both autoscalers.** They will make competing decisions about the same pending pods. the result is over-provisioning and churn. Migration means removing the old one, not layering the new one on top.",
     },
     {
       type: "p",
-      text: "**No disruption budgets.** Covered above, and it is the one that turns a cost improvement into an incident. Put budgets in place before consolidation is enabled, not after.",
+      text: "**No disruption budgets.** Covered above. it is the one that turns a cost improvement into an incident. Put budgets in place before consolidation is enabled, not after.",
     },
     { type: "h2", id: "choosing", text: "Choosing between them" },
     {
@@ -162,7 +162,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That first row has been changing. Karpenter began as an AWS project and is now developed in the open under the Kubernetes autoscaling community, with other platforms building on it — Azure's node autoprovisioning is Karpenter-based. Check what your provider currently supports rather than assuming it is AWS-only.",
+      text: "That first row has been changing. Karpenter began as an AWS project and is now developed in the open under the Kubernetes autoscaling community, with other platforms building on it — Azure's node autoprovisioning is Karpenter-based. Check what your provider now supports rather than assuming it is AWS-only.",
     },
     { type: "h2", id: "takeaways", text: "What to do with this" },
     {
@@ -177,7 +177,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The shift here is small to describe and large in effect. Deciding node shapes in advance made sense when instance types were something you picked quarterly. Once the provider offers hundreds and prices move constantly, choosing at the moment of need is simply better information. What you give up is predictability about which machines you are running, which is a fair trade for most workloads and a genuine problem for a few.",
+      text: "The shift here is small to describe and large in effect. Deciding node shapes in advance made sense when instance types were something you picked quarterly. Once the provider offers hundreds and prices move constantly, choosing at the moment of need is simply better data. What you give up is predictability about which machines you are running, which is a fair trade for most workloads and a genuine problem for a few.",
     },
   ],
   faq: [
