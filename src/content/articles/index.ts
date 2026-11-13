@@ -100,6 +100,7 @@ import { article as entraExternalIdB2bB2cCrossTenantAccess } from "./microsoft-3
 import { article as entraIdAuthenticationContextStepUpMfa } from "./microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa";
 import { article as entraIdPimImplementationFailures } from "./microsoft-365-entra-id/entra-id-pim-implementation-failures";
 import { article as entraIdVsActiveDirectoryDifferences } from "./microsoft-365-entra-id/entra-id-vs-active-directory-differences";
+import { article as microsoft365OutageNovember2026 } from "./microsoft-365-entra-id/microsoft-365-outage-november-2026";
 import { article as microsoft365TenantToTenantMigration } from "./microsoft-365-entra-id/microsoft-365-tenant-to-tenant-migration";
 import { article as entraAccessReviewsStaleAccess } from "./microsoft-entra/entra-access-reviews-stale-access";
 import { article as entraAuthenticationStrengths } from "./microsoft-entra/entra-authentication-strengths";
@@ -231,6 +232,7 @@ export const articles: Article[] = [
   entraIdAuthenticationContextStepUpMfa,
   entraIdPimImplementationFailures,
   entraIdVsActiveDirectoryDifferences,
+  microsoft365OutageNovember2026,
   microsoft365TenantToTenantMigration,
   entraAccessReviewsStaleAccess,
   entraAuthenticationStrengths,
