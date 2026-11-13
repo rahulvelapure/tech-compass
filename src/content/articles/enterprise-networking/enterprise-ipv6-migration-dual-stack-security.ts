@@ -10,7 +10,7 @@ export const article: Article = {
   metaDescription:
     "IPv6 is already present in modern enterprise networks. Learn how dual-stack addressing, routing, DNS, firewalls, NDP and monitoring change the migration plan.",
   standfirst:
-    "IPv6 migration is not mainly an addressing project. It is a second network stack that must be designed, filtered, monitored and operated beside IPv4.",
+    "IPv6 is not really an addressing project. It is a second network stack, and you have to design it, filter it, watch it and run it beside IPv4.",
   excerpt:
     "The hard part of enterprise IPv6 is not writing a 128-bit address. It is making routing, DNS, security policy, monitoring and operations treat IPv6 as a first-class protocol.",
   authorId: "rahul-velapure",
@@ -39,7 +39,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "IPv6 is no longer a future architecture exercise. It is already present in enterprise operating systems, cloud services and internet traffic. Cloudflare Radar currently reports IPv6 for about 40.9% of worldwide requests in its latest seven-day view. India is much higher in the same view. That does not mean every enterprise should turn on IPv6 tomorrow. It does mean IPv6 deserves an explicit security and operations decision.",
+      text: "IPv6 is not a future project any more. It is already in your operating systems, in cloud services, and in the traffic you serve. Cloudflare Radar currently reports IPv6 for about 40.9% of worldwide requests in its latest seven-day view, and India runs much higher. None of that means you should switch it on tomorrow. It does mean the choice has to be a real one, made on security and operations grounds.",
     },
     {
       type: "p",
@@ -47,7 +47,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A practical enterprise migration therefore starts with visibility. Inventory where IPv6 is already enabled. Identify where routers advertise prefixes. Confirm what firewalls inspect. Check whether monitoring and identity systems record IPv6 addresses correctly. Then build dual-stack deliberately.",
+      text: "So start by looking, not building. Find where IPv6 is already on. Find which routers advertise prefixes. Check what the firewalls actually inspect. Check that monitoring and identity systems record an IPv6 address properly. Only then build dual-stack on purpose.",
     },
     {
       type: "h2",
@@ -106,7 +106,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That makes the common enterprise question less binary than “SLAAC or DHCPv6.” Decide first whether the organisation needs centrally assigned addresses, host inventory, DNS options, or simple autonomous configuration. Then choose the control flags and tooling that match that requirement.",
+      text: "So the usual question, “SLAAC or DHCPv6”, is the wrong one to start with. Ask what you actually need first. Central control of addresses? A host inventory? DNS options? Or just hosts that configure themselves? Then pick the control flags and tools that give you it.",
     },
     {
       type: "h2",
@@ -140,12 +140,12 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Do not treat RA Guard as the whole IPv6 security model. Combine it with switch controls, port security, appropriate IPv6 firewall policy, endpoint controls and monitoring. Also validate the implementation against the current vendor documentation. RA Guard behaviour and command syntax vary by platform.",
+      text: "Do not treat RA Guard as the whole story. Pair it with switch controls and port security. Add an IPv6 firewall policy that fits, plus endpoint controls and monitoring. And check it against your vendor's current docs, because RA Guard behaviour and syntax differ by platform.",
     },
     {
       type: "h2",
       id: "firewall",
-      text: "Firewall policy must cover both families",
+      text: "Firewall rules have to cover both",
     },
     {
       type: "p",
@@ -182,26 +182,26 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "IPv6 does not make DNS optional. Services that should be reachable over IPv6 need appropriate AAAA records. But adding records without testing the application is risky. Some applications still contain IPv4 literals, IPv4-only ACLs or libraries with incorrect address-family assumptions.",
+      text: "IPv6 does not let you skip DNS. A service you want reachable over IPv6 needs its AAAA records. Adding those records without testing the app is a risk, though. Plenty of apps still hold IPv4 literals, IPv4-only ACLs, or a library that assumes one address family.",
     },
     {
       type: "p",
-      text: "Monitoring must also become address-family aware. Search rules, dashboards, allowlists and incident playbooks should accept IPv6 syntax. Store the address in a real IP-aware field rather than a string designed around dotted decimal notation.",
+      text: "Monitoring has to learn both address families too. Search rules, dashboards, allowlists and playbooks all need to accept IPv6 syntax. And store the address in a real IP field, not a string shaped around dotted decimal.",
     },
     {
       type: "p",
-      text: "The same applies to VPNs, load balancers, EDR, vulnerability scanners and asset inventory. A dual-stack network is only operationally real when the tools around it understand both stacks.",
+      text: "The same goes for VPNs, load balancers, EDR, vulnerability scanners and asset inventory. A dual-stack network is only real once the tools around it understand both stacks.",
     },
     {
       type: "h2",
       id: "migration",
-      text: "A safer enterprise migration sequence",
+      text: "A safer order to do this in",
     },
     {
       type: "callout",
       variant: "warning",
       title: "Do not use endpoint disablement as the migration strategy",
-      text: "Microsoft states that IPv6 is a mandatory part of modern Windows and does not recommend disabling IPv6 components. If an organisation wants IPv4 preferred, Microsoft documents prefix-policy configuration instead. The safer enterprise control is to decide whether the network advertises and routes IPv6, then secure it when it does.",
+      text: "Microsoft calls IPv6 a mandatory part of modern Windows, and advises against turning its components off. If you want IPv4 preferred, Microsoft points you at prefix policy instead. The safer control sits in the network: decide whether you advertise and route IPv6 at all, then secure it once you do.",
     },
     {
       type: "h2",
@@ -210,7 +210,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Dual-stack is not automatically the final architecture. Some environments will eventually use IPv6-only segments with translation mechanisms for IPv4 dependencies. Others will keep both protocols for a long time. The correct decision depends on application support, provider connectivity, security tooling and business dependencies.",
+      text: "Dual-stack is not always where you end up. Some networks will move to IPv6-only segments, with translation for whatever still needs IPv4. Others will run both for years. What decides it is app support, what your provider offers, what your security tools handle, and what the business depends on.",
     },
     {
       type: "p",
@@ -228,7 +228,7 @@ export const article: Article = {
         "SLAAC and DHCPv6 can coexist; choose the model from operational requirements.",
         "RA Guard helps control rogue Router Advertisements but is not the whole IPv6 security model.",
         "ICMPv6 is required for core IPv6 functions, so do not block it blindly.",
-        "Every important IPv4 control should trigger an explicit IPv6 review.",
+        "Every IPv4 control that matters should prompt you to check the IPv6 side.",
         "Monitoring, DNS, IPAM, VPN and endpoint tools must understand IPv6 before the rollout expands.",
       ],
     },
@@ -237,27 +237,27 @@ export const article: Article = {
     {
       question: "Should an enterprise disable IPv6 until it is ready?",
       answer:
-        "Microsoft does not recommend disabling IPv6 components on modern Windows. A better approach is to control whether the network advertises and routes IPv6, and to secure it when enabled.",
+        "Microsoft advises against turning IPv6 off in Windows. Control it in the network instead. Decide if you advertise and route it. Then secure it once you do.",
     },
     {
       question: "Do all enterprise VLANs need a /64?",
       answer:
-        "A /64 is the normal subnet boundary for many IPv6 deployments, but the design should follow standards and the requirements of the hosts and services on that link.",
+        "A /64 is the usual subnet size, and most designs use it. Follow the standards, and check what the hosts on that link need.",
     },
     {
       question: "Is DHCPv6 required when using SLAAC?",
       answer:
-        "No. SLAAC can work without DHCPv6. DHCPv6 can add address assignment or configuration information when the enterprise needs it.",
+        "No. SLAAC works on its own. Add DHCPv6 when you want to hand out addresses, or push extra settings.",
     },
     {
       question: "Can I block all ICMPv6 at the firewall?",
       answer:
-        "No. IPv6 relies on ICMPv6 for functions such as Neighbor Discovery and Path MTU Discovery. Filter unwanted types instead of blocking the protocol wholesale.",
+        "No. IPv6 leans on ICMPv6 for things like Neighbor Discovery and Path MTU Discovery. Filter the types you do not want. Do not block the lot.",
     },
     {
       question: "What should be tested first in an IPv6 pilot?",
       answer:
-        "Test routing, DNS, firewall enforcement, ICMPv6, application connectivity, monitoring, VPN access and failure paths. A working ping is not enough.",
+        "Test routing and DNS. Test the firewall, ICMPv6 and the apps. Then test monitoring, VPN and what happens when it breaks. A ping that works proves very little.",
     },
   ],
   sources: [

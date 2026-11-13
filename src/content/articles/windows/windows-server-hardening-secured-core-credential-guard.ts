@@ -51,7 +51,7 @@ export const article: Article = {
     { type: "h2", id: "boundary", text: "Moving the boundary below the kernel" },
     {
       type: "p",
-      text: "Virtualization-Based Security (VBS) answers this. It adds a layer the kernel does not outrank. The Windows hypervisor uses the chip's virtualization extensions to split memory into virtual trust levels.",
+      text: "Virtualization-Based Security, or VBS, is the answer to that. It puts a layer above the kernel. The kernel cannot overrule it. To do this, the Windows hypervisor uses the chip's own virtualization extensions, and splits memory into virtual trust levels.",
     },
     {
       type: "p",
@@ -97,10 +97,10 @@ export const article: Article = {
       type: "p",
       text: 'So the realistic question for an existing estate is not "how do we roll this out". It is "which servers already have it, and did anything break quietly when they did".',
     },
-    { type: "h2", id: "memory-integrity", text: "Memory integrity, and the driver problem" },
+    { type: "h2", id: "memory-integrity", text: "Memory integrity, and the driver that blocks it" },
     {
       type: "p",
-      text: "Memory integrity applies the same isolation to code rather than secrets. You may know it as Hypervisor-Protected Code Integrity (HVCI). Kernel code checks run inside the VBS environment. A kernel page becomes executable only after passing them. A page is writable or executable, never both.",
+      text: "Memory integrity does the same thing for code, rather than for secrets. You may know it as Hypervisor-Protected Code Integrity, or HVCI. The kernel code checks run inside VBS. A kernel page can only run once it passes them. And a page is either writable or runnable. Never both.",
     },
     {
       type: "p",
@@ -108,7 +108,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Audit before enforcing, and read the Code Integrity operational log. Compatibility events are generally event ID 3087 — not 3077, a number that circulates widely and is wrong.",
+      text: "Audit before you enforce, and read the Code Integrity operational log. The compatibility events are usually event ID 3087. They are not 3077, a number that gets repeated a lot and is simply wrong.",
     },
     {
       type: "callout",
@@ -118,7 +118,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Memory integrity guards the kernel. Deciding which applications may run at all is a different control with a different failure mode, covered in [App Control and AppLocker](/windows/wdac-vs-applocker-kernel-enforcement). The two are complementary, and neither substitutes for the other.",
+      text: "Memory integrity guards the kernel. Deciding which apps may run at all is a different control, and it fails in a different way. That one is covered in [App Control and AppLocker](/windows/wdac-vs-applocker-kernel-enforcement). The two work together, and neither stands in for the other.",
     },
     {
       type: "p",
@@ -127,7 +127,7 @@ export const article: Article = {
     {
       type: "h2",
       id: "secured-core",
-      text: "Secured-core is a hardware bar, then a configuration",
+      text: "Secured-core is a hardware bar first",
     },
     {
       type: "p",
@@ -154,7 +154,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Group Policy lives under Computer Configuration, Administrative Templates, System, Device Guard. The Device Guard name survives only as the place these settings live. Turn On Virtualization Based Security holds the platform security level, the code integrity setting and Secure Launch.",
+      text: "In Group Policy, look under Computer Configuration, then Administrative Templates, then System, then Device Guard. That old Device Guard name lives on only as the folder they sit in. Open Turn On Virtualization Based Security. There you set the platform security level, the code integrity setting and Secure Launch.",
     },
     {
       type: "callout",
@@ -166,7 +166,7 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "Audit what is already running. `msinfo32` shows virtualization-based security services running; PowerShell reads the same from the DeviceGuard WMI namespace.",
+        "Check what is already on. `msinfo32` lists the virtualization-based security services that are running. PowerShell reads the same thing from the DeviceGuard WMI namespace.",
         "Find the authentication that will break before it does. Search for PEAP-MSCHAPv2 and EAP-MSCHAPv2 in Wi-Fi and VPN profiles, and for CredSSP in Hyper-V and cluster configuration.",
         "Run memory integrity in audit and read the Code Integrity log for long enough to catch drivers that load rarely. A monthly agent update is not visible in a week.",
         "Enable without lock first. Lock only once the estate has been stable through a patch cycle and out-of-band access is proven.",
@@ -181,8 +181,8 @@ export const article: Article = {
         "Check what is already enabled before planning a rollout; Server 2025 turns Credential Guard on by itself.",
         "The breakage is authentication protocols, and it is knowable in advance. Go looking for it.",
         "Credential Guard is not a domain controller control. Do not lead with DCs.",
-        "Audit memory integrity properly, and watch event 3087 rather than the number everyone repeats.",
-        "Secured-core stalls on firmware, not licensing. Confirm DRTM and Kernel DMA Protection before purchase.",
+        "Audit memory integrity properly. Watch for event 3087, not the number everyone repeats.",
+        "Secured-core stalls on firmware, not on licensing. Check for DRTM and Kernel DMA Protection before you buy.",
       ],
     },
     {

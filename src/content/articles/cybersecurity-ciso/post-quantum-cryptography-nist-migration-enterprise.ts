@@ -70,14 +70,14 @@ export const article: Article = {
       type: "p",
       text: "This distinction is worth making early, because it is where budget gets wasted. Nobody needs to re-encrypt a data lake. They need to find every place a key is agreed or a signature verified.",
     },
-    { type: "h2", id: "standards", text: "What NIST actually standardised" },
+    { type: "h2", id: "standards", text: "What NIST actually signed off" },
     {
       type: "p",
       text: "In August 2024 NIST released three standards, which replace different things.",
     },
     {
       type: "p",
-      text: "**FIPS 203, ML-KEM** is a key-encapsulation mechanism, derived from CRYSTALS-Kyber. It replaces Diffie-Hellman and ECDH for agreeing a session key. Its keys and ciphertexts are considerably larger than elliptic-curve equivalents, but the operations are fast, and it is the piece already in production use.",
+      text: "**FIPS 203, ML-KEM** is a key-encapsulation mechanism. It comes from CRYSTALS-Kyber, and it takes over from Diffie-Hellman and ECDH when two sides agree a session key. The keys and ciphertexts run much larger than the elliptic-curve ones. The operations are fast, though, and this is the piece already running in production.",
     },
     {
       type: "p",
@@ -93,7 +93,7 @@ export const article: Article = {
       title: "The set is still growing",
       text: "Two things commonly get stated as finished when they are not. FN-DSA, based on FALCON and expected as FIPS 206, is still in standardisation rather than published. And HQC has been selected as an additional key-encapsulation mechanism, chosen for a different mathematical basis so that the KEM story does not rest entirely on lattices. Plan for a portfolio, not a single replacement algorithm.",
     },
-    { type: "h2", id: "hybrid", text: "Why nobody is migrating directly" },
+    { type: "h2", id: "hybrid", text: "Why nobody moves straight across" },
     {
       type: "p",
       text: "These algorithms are new. Lattice problems are well studied, but not with the decades of concentrated attack that RSA has survived. Replacing a proven algorithm with an unproven one is its own risk.",
@@ -176,13 +176,13 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "**Inventory, and rank by confidentiality lifetime.** Nothing sensible happens before this.",
+        "**Take an inventory, then rank it by how long the data must stay secret.** Nothing else works until you have.",
         "**Turn on hybrid key exchange where it is already supported.** Public endpoints, then internal ones. This is configuration, and it addresses harvest-now traffic today.",
         "**Enable hybrid exchange in SSH and VPN** where the software and appliances support it.",
         "**Ask vendors for dates, in writing.** Certificate authorities, HSMs, VPN appliances, load balancers. The answers shape everything after this point.",
-        "**Test certificate chains in non-production.** Find the size and compatibility problems before they are urgent.",
-        "**Build crypto agility into anything new.** Algorithms behind configuration, not compiled into application logic.",
-        "**Plan for what cannot migrate.** Isolation, application-layer encryption, or replacement.",
+        "**Test certificate chains away from production.** You want the size and compatibility problems while they are still cheap.",
+        "**Build crypto agility into anything new.** Keep the algorithm behind a setting. Do not bake it into the code.",
+        "**Plan for what cannot move.** Some of it you will isolate. Some you will wrap in application-layer encryption. The rest you replace.",
       ],
     },
     {

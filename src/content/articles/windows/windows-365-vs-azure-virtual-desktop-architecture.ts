@@ -49,7 +49,7 @@ export const article: Article = {
       type: "p",
       text: "So the question is not which has better features. It is how much of that estate you want to own.",
     },
-    { type: "h2", id: "architecture", text: "The architectural split" },
+    { type: "h2", id: "architecture", text: "Where the two designs part ways" },
     {
       type: "p",
       text: "A Windows 365 Cloud PC is one virtual machine per user, provisioned and hosted by Microsoft. There is no host pool to design and no Azure subscription required for the compute. You assign a licence and a Cloud PC appears, enrolled in Intune like any other Windows device.",
@@ -60,7 +60,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Pooled multi-session is the capability that has no equivalent on the other side, and it is the reason this decision is not simply about convenience.",
+      text: "Pooled multi-session has no equal on the other side. That single fact is why this choice is not just about convenience.",
     },
     { type: "h2", id: "pooling", text: "Why pooling changes the arithmetic" },
     {
@@ -112,14 +112,14 @@ export const article: Article = {
       type: "p",
       text: "**Profile containers** are where pooled AVD most often disappoints its users. Because a user may land on a different host each session, the profile has to travel, and it does so as a container on network storage. Get the storage performance wrong and sign-in becomes slow. Get the failure handling wrong and profiles corrupt. This is the component that generates helpdesk tickets, and it does not exist at all on a dedicated Cloud PC, because the profile never moves.",
     },
-    { type: "h2", id: "gpu", text: "Two things the comparison usually gets wrong" },
+    { type: "h2", id: "gpu", text: "Two things people usually get wrong" },
     {
       type: "p",
       text: "**Windows 365 supports GPU Cloud PCs.** This is worth stating plainly because the opposite is widely repeated. There are several GPU sizes, spanning light graphics acceleration up to configurations aimed at demanding visual workloads, available in dedicated and shared modes. GPU work is not automatically a reason to choose AVD.",
     },
     {
       type: "p",
-      text: "One caveat matters if you are evaluating them for developers: GPU Cloud PCs do not support nested virtualization, so tooling that needs a hypervisor inside the desktop will not run there.",
+      text: "One caveat matters if you are sizing these for developers. GPU Cloud PCs do not support nested virtualization. So any tool that needs a hypervisor inside the desktop will not run there.",
     },
     {
       type: "p",
@@ -142,7 +142,7 @@ export const article: Article = {
       type: "p",
       text: "The comparison people forget to make is the operational one. AVD's saving on compute has to cover the engineering time to build and maintain the estate. At small scale it frequently does not. At large scale, with pooled task workers, it frequently does. Model both, and count the people.",
     },
-    { type: "h2", id: "decision", text: "Matching the platform to the population" },
+    { type: "h2", id: "decision", text: "Matching the platform to the people" },
     {
       type: "p",
       text: "Most organisations of any size need both, because their users are not one population.",
@@ -169,7 +169,7 @@ export const article: Article = {
       type: "callout",
       variant: "tip",
       title: "The honest test is a staffing question",
-      text: "Ask whether you have someone who will own image builds, scaling rules and profile storage as a continuing responsibility — not a project, a rota. If the answer is yes, AVD's flexibility and pooled density are genuinely available to you. If the answer is a name who already has another full-time job, choose the managed option and spend the difference elsewhere.",
+      text: "Ask who will own image builds, scaling rules and profile storage. Not as a project, but as a rota that keeps running. If you have that person, AVD's flexibility and pooled density are really open to you. If the name you thought of already has a full-time job, take the managed option and spend the difference somewhere else.",
     },
     { type: "h2", id: "takeaways", text: "What to take away" },
     {
@@ -177,7 +177,7 @@ export const article: Article = {
       items: [
         "Windows 365 is a managed dedicated desktop. AVD is a platform for infrastructure you operate.",
         "Pooled multi-session is AVD's real advantage, and the only place its cost model clearly wins.",
-        "AVD with personal desktops is usually the worst option: dedicated cost plus operational load.",
+        "AVD with personal desktops is usually the worst of both. You pay for dedicated capacity and still carry the operational load.",
         "Image builds and profile containers are the continuing work, and profiles cause the tickets.",
         "Windows 365 does offer GPU Cloud PCs. The common claim otherwise is wrong.",
         "Non-GPU sizes now reach well beyond the mid-range figures usually quoted.",

@@ -10,7 +10,7 @@ export const article: Article = {
   metaDescription:
     "Tenant-to-tenant migration is an identity and workload reconstruction project. Learn how Exchange, OneDrive, SharePoint, Teams, domains and coexistence fit together.",
   standfirst:
-    "A Microsoft 365 tenant migration is not a mailbox copy. It is a coordinated move of identities, data, permissions, domains and workload dependencies.",
+    "A tenant move is not just a mailbox copy. People, data, permissions and domains all have to land at once.",
   excerpt:
     "Microsoft now provides native cross-tenant tooling for several workloads, but the hard work remains identity mapping, coexistence, permissions, domain ownership and the parts that do not move cleanly.",
   authorId: "rahul-velapure",
@@ -38,15 +38,15 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "A Microsoft 365 tenant-to-tenant migration looks like a data move on a project plan. In practice, it is an identity and dependency reconstruction exercise.",
+      text: "It looks like a data move. On the plan, it is boxes and dates. In practice you are rebuilding identity, and everything that hangs off it.",
     },
     {
       type: "p",
-      text: "The source and target tenants are separate security boundaries. A user can exist in both. A mailbox can move. A SharePoint site can move. But the relationships around those objects do not automatically become identical in the target.",
+      text: "Source and target are separate security boundaries. A user can exist in both. A mailbox can move, and so can a SharePoint site. What does not follow on its own is everything those objects were linked to.",
     },
     {
       type: "p",
-      text: "That is why mergers, acquisitions, divestitures and tenant consolidations fail in predictable places. Identity mapping is incomplete. A target mailbox is provisioned too early. A domain is moved before dependencies are ready. A permission points at an object that has no equivalent target identity.",
+      text: "That is why these projects fail in the same few places. The identity map has gaps. A target mailbox gets built too early. A domain moves before the things behind it are ready. Or a permission points at an object the target has no match for.",
     },
     {
       type: "h2",
@@ -55,7 +55,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Microsoft now documents tenant-to-tenant migration as a set of workload moves. Current Microsoft guidance includes Exchange Online mailboxes, OneDrive and SharePoint migrations, with Migration Orchestrator providing coordinated movement for supported user workloads. The exact workload scope matters because Teams chats and meetings have a different path from shared Teams and channels.",
+      text: "Microsoft now frames this as a set of workload moves rather than one migration. The guidance covers Exchange Online mailboxes, OneDrive and SharePoint, and Migration Orchestrator ties the supported user workloads together. Scope matters here, because Teams chats and meetings take a different path from shared teams and channels.",
     },
     {
       type: "table",
@@ -102,123 +102,123 @@ export const article: Article = {
     {
       type: "h2",
       id: "identity",
-      text: "Identity is the first dependency",
+      text: "Identity comes first",
     },
     {
       type: "p",
-      text: "Create the target identity model before moving production data. Decide how source users map to target users. Decide whether UPNs change. Decide which groups are recreated, which are synchronised temporarily and which are retired.",
+      text: "Build the target identity model before you move any production data. Work out how each source user maps to a target user. Decide whether UPNs change. Then sort the groups into three piles: rebuilt, synced for now, and retired.",
     },
     {
       type: "p",
-      text: "Microsoft Entra Cross-Tenant Synchronization can create and maintain B2B users between tenants. Current Microsoft documentation requires Entra ID P1 or P2 for cross-tenant user synchronization. It is useful for coexistence, but it is not a data migration engine.",
+      text: "Microsoft Entra Cross-Tenant Synchronization can create and keep B2B users across the two tenants. Microsoft requires Entra ID P1 or P2 for it. It earns its place during coexistence, but it is not a migration engine.",
     },
     {
       type: "p",
-      text: "The distinction matters. Synchronization creates an identity relationship. It does not move the source mailbox, SharePoint site or device management state. Those workloads have their own migration mechanics.",
+      text: "That difference matters. Sync builds a link between two identities. It moves no mailbox, no SharePoint site and no device state. Each of those has its own way of moving.",
     },
     {
       type: "h2",
       id: "exchange",
-      text: "Exchange migration is more controlled than the old playbook suggests",
+      text: "Exchange has tighter rules than the old playbook says",
     },
     {
       type: "p",
-      text: "Microsoft provides native cross-tenant mailbox migration through Exchange Online. The target user must be prepared correctly. The move requires the source and target configuration, identity mapping and the appropriate Cross Tenant User Data Migration license.",
+      text: "Exchange Online can move mailboxes across tenants natively. The target user has to be prepared first. You also need both tenants configured, the identity mapping done, and the Cross Tenant User Data Migration licence in place.",
     },
     {
       type: "p",
-      text: "Current Microsoft documentation also lists important blockers. Mailboxes on hold are not migrated by the native cross-tenant mailbox feature. Only user-visible mailbox content and specified recoverable content moves. Teams chat folder content does not become migrated mailbox content.",
+      text: "Microsoft also lists the blockers, and they are worth reading early. A mailbox on hold does not move at all. Only user-visible content and the named recoverable items travel. Teams chat folder content does not come across as mailbox content.",
     },
     {
       type: "p",
-      text: "Do not design cutover as a single MX-record flip. The migration has a preparation phase, a move phase and a coexistence phase. Mail routing, source MailUsers, verified domains and target addresses all need to be tested as a system.",
+      text: "Do not plan the cutover as one MX flip. There is a prepare phase, a move phase and a coexistence phase. Mail routing, source MailUsers, verified domains and target addresses all have to be tested together.",
     },
     {
       type: "callout",
       variant: "warning",
       title: "Do not license the target mailbox too early",
-      text: "Microsoft documents that assigning Exchange Online licensing before the target MailUser is correctly prepared can provision a new mailbox and break the expected move path. Identity mapping and ExchangeGUID preparation must precede that step.",
+      text: "Microsoft is explicit about one order-of-operations trap. Assign the Exchange Online licence before the target MailUser is ready, and you get a brand new mailbox instead of a move. Do the identity mapping and the ExchangeGUID work first.",
     },
     {
       type: "h2",
       id: "sharepoint-onedrive",
-      text: "SharePoint and OneDrive are not simple file copies",
+      text: "SharePoint and OneDrive are not just file copies",
     },
     {
       type: "p",
-      text: "The current Microsoft cross-tenant migration tooling is more capable than older migration guides suggest. In particular, migrated SharePoint file links can redirect to the target location when the migration and identity mapping are configured correctly.",
+      text: "The current tooling does more than older guides suggest. Migrated SharePoint file links can redirect to the target, so long as the migration and the identity mapping are set up correctly.",
     },
     {
       type: "p",
-      text: "That does not mean every dependency survives. Site permissions depend on identity mapping. External users need to exist in the target where required. Custom solutions, automation and integrations need separate validation.",
+      text: "That does not mean everything survives. Site permissions ride on the identity map. External users have to exist in the target where you need them. Custom code, automation and integrations each need checking on their own.",
     },
     {
       type: "p",
-      text: "OneDrive has a similar pattern. The content moves, but the user identity and client configuration still matter. A migration plan should test the target OneDrive site, permissions, sync client behaviour and application references before the source is retired.",
+      text: "OneDrive works much the same way. The content moves, but the user identity and the client setup still decide whether it works. Test the target site, the permissions, the sync client and any app references before you retire the source.",
     },
     {
       type: "h2",
       id: "teams",
-      text: "Teams has two very different migration problems",
+      text: "Teams is really two problems",
     },
     {
       type: "p",
-      text: "The first is personal user data. Microsoft Migration Orchestrator currently supports Teams chats and meetings in its supported workload set, with important caveats. Microsoft notes that source content remains, participant lists can change and duplicate threads can appear.",
+      text: "The first is personal data. Migration Orchestrator does support Teams chats and meetings, with caveats worth reading. The source content stays where it is, participant lists can change, and duplicate threads can show up.",
     },
     {
       type: "p",
-      text: "The second problem is shared Teams data. Teams and channels are not the same as a user chat history. Microsoft states that shared data such as Teams and channels is out of scope for the Cross-Tenant User Data Migration solution. That requires a separate plan.",
+      text: "The second is shared data. Teams and channels are not a user's chat history. Microsoft puts shared data like teams and channels out of scope for Cross-Tenant User Data Migration, so it needs its own plan.",
     },
     {
       type: "p",
-      text: "This distinction fixes a common migration mistake. “Teams is migrated” is not a meaningful acceptance criterion. The project needs separate acceptance tests for chats, meetings, teams, channels, files, tabs, apps and permissions.",
+      text: "That split kills a common mistake. “Teams is migrated” means nothing as an acceptance test. Write one test each for chats, meetings, teams, channels, files, tabs, apps and permissions.",
     },
     {
       type: "h2",
       id: "security",
-      text: "Security policy must be rebuilt deliberately",
+      text: "Rebuild the security rules on purpose",
     },
     {
       type: "p",
-      text: "Conditional Access policies, authentication methods, administrative roles and application registrations belong to the target tenant security model. Treating them as copied configuration is dangerous because the target is a new trust boundary.",
+      text: "Conditional Access, authentication methods, admin roles and app registrations all belong to the target's own security model. Treat them as config to copy across and you miss the point: the target is a new trust boundary.",
     },
     {
       type: "p",
-      text: "Build a policy inventory before cutover. Record policy intent, assignments, exclusions, authentication strengths and emergency access paths. Then recreate and test the target policy set before users are moved.",
+      text: "List the policies before cutover. Write down what each one is for, who it hits, who is excluded, the authentication strength, and how you get in when it all breaks. Then rebuild that set in the target and test it before anyone moves.",
     },
     {
       type: "p",
-      text: "The same principle applies to Power Platform, enterprise applications, secrets, certificates and automation identities. A migration is complete only when the workload works under the target identity and security model.",
+      text: "The same goes for Power Platform, enterprise apps, secrets, certificates and automation identities. The move is done when the workload runs under the target's identity and security model, not before.",
     },
     {
       type: "h2",
       id: "coexistence",
-      text: "Coexistence is a design phase",
+      text: "Coexistence is something you design",
     },
     {
       type: "p",
-      text: "Large migrations rarely move every user at once. Current Microsoft planning guidance supports phased migration and recommends planning mail routing, calendar sharing and Teams federation during coexistence.",
+      text: "Big migrations rarely move everyone at once. Microsoft's planning guidance backs a phased move, and tells you to plan mail routing, calendar sharing and Teams federation for the period in between.",
     },
     {
       type: "p",
-      text: "Cross-tenant access policies are also changing how organisations manage collaboration between tenants. Microsoft now documents migration from older Exchange sharing mechanisms to Microsoft 365 Cross-Tenant Access Policies for free/busy, calendars and MailTips.",
+      text: "Cross-tenant access policies are changing how two tenants work together. Microsoft now documents the move off the older Exchange sharing setup. The new home is Microsoft 365 Cross-Tenant Access Policies, and it covers free/busy, calendars and MailTips.",
     },
     {
       type: "p",
-      text: "Coexistence therefore needs an explicit end date. Every temporary trust should have an owner, a purpose and a removal condition. Otherwise the migration leaves behind permanent cross-tenant access.",
+      text: "So give coexistence an end date. Every temporary trust needs an owner, a reason, and the condition that removes it. Skip that and the migration leaves permanent cross-tenant access behind.",
     },
     {
       type: "h2",
       id: "devices",
-      text: "Intune is a separate migration track",
+      text: "Intune is its own track",
     },
     {
       type: "p",
-      text: "Tenant-to-tenant data migration does not transfer the device management authority of Intune. Devices enrolled in the source tenant need a target-tenant enrollment strategy. Depending on the device state, this can involve Entra join changes, Autopilot reassignment or a reset and re-enrollment workflow.",
+      text: "Moving data across tenants does not move Intune's authority over the device. Anything enrolled in the source needs a plan for enrolling in the target. Depending on the device, that means changing the Entra join, reassigning Autopilot, or a reset and re-enrol.",
     },
     {
       type: "p",
-      text: "Treat endpoint migration as its own project. Test application deployment, BitLocker recovery, compliance, Conditional Access and user profile continuity. A mailbox cutover can be successful while the user is still unable to access the target environment from the managed device.",
+      text: "Run endpoint migration as its own project. Test app deployment, BitLocker recovery, compliance, Conditional Access and whether the user profile survives. A mailbox cutover can go perfectly while the user still cannot get in from their managed laptop.",
     },
     {
       type: "h2",
@@ -233,12 +233,12 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "Tenant migration is an identity project with workload-specific data moves.",
-        "Cross-Tenant Synchronization is an identity mechanism, not a mailbox or SharePoint migration engine.",
+        "A tenant move is an identity project first. The data moves hang off that.",
+        "Cross-Tenant Synchronization handles identity. It does not move a mailbox or a SharePoint site.",
         "Current Microsoft tooling supports more native migration than older guides imply, but Teams and channels still need separate treatment.",
         "Identity mapping determines whether permissions and links survive in a useful form.",
         "Do not provision target Exchange or OneDrive objects before the migration workflow says to.",
-        "Treat Intune, Conditional Access and application integrations as separate cutover dependencies.",
+        "Intune, Conditional Access and app integrations each cut over on their own. Plan them that way.",
       ],
     },
   ],
@@ -246,27 +246,27 @@ export const article: Article = {
     {
       question: "Do users need new email addresses?",
       answer:
-        "Not necessarily. An organisation can retain its production domain, but the domain transfer and target preparation must be coordinated with the migration sequence.",
+        "Not always. You can keep your domain. Just line up the domain transfer and the target prep with the rest of the move.",
     },
     {
       question: "Does Cross-Tenant Synchronization migrate mailboxes?",
       answer:
-        "No. It synchronizes user identity information between tenants. Exchange, OneDrive and SharePoint have separate migration mechanisms.",
+        "No. It only syncs who the user is. The data does not move. Exchange, OneDrive and SharePoint each go their own way.",
     },
     {
       question: "Do OneDrive links always break after a tenant move?",
       answer:
-        "No. Current Microsoft cross-tenant OneDrive and SharePoint tooling can create redirects so migrated links continue to reach the target location when the migration is configured correctly.",
+        "No. The tooling can add redirects, so old links still reach the file. That holds when the move is set up correctly.",
     },
     {
       question: "Can Teams chats be migrated?",
       answer:
-        "Microsoft Migration Orchestrator supports Teams chats and meetings in its current supported workload set, but duplicate threads and participant changes can occur. Teams and channels are a separate scope.",
+        "Chats and meetings, yes. The tool is Migration Orchestrator. Expect a few threads to show up twice. Teams and channels are a separate job.",
     },
     {
       question: "Can an Intune-enrolled device simply be moved to the new tenant?",
       answer:
-        "No. Device management is a separate migration track. Plan target enrollment, application deployment, compliance and recovery workflows explicitly.",
+        "No. Devices are their own track. Plan how they enrol, how apps land, how compliance works, and how you recover them.",
     },
   ],
   sources: [

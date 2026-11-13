@@ -10,7 +10,7 @@ export const article: Article = {
   metaDescription:
     "Backups are necessary for ransomware recovery, but they do not rebuild identity, DNS or application dependencies. Learn the recovery order that makes backups usable.",
   standfirst:
-    "A recoverable backup is only one part of ransomware resilience. Recovery also depends on clean identity, DNS, management planes and a rehearsed rebuild sequence.",
+    "A backup you can restore is only half the job. You also need clean identity, working DNS, and a rebuild order you have practised.",
   excerpt:
     "Ransomware recovery fails when teams restore data before they restore the systems that authenticate, resolve and control it. Build recovery around dependencies, not backup jobs alone.",
   authorId: "rahul-velapure",
@@ -46,20 +46,20 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "The phrase “restore from backup” hides the hardest part of ransomware recovery. A backup can preserve data while the environment needed to use that data remains compromised.",
+      text: "The phrase “restore from backup” hides the hard part. A backup can hold your data safely while the thing you need in order to use that data is still owned by the attacker.",
     },
     {
       type: "p",
-      text: "A serious recovery plan must restore more than files. It must restore identity, DNS, network control, privileged access, management systems, applications and data in an order that avoids rebuilding on top of a compromised foundation.",
+      text: "A real plan brings back more than files. It brings back identity, DNS, network control, privileged access, management systems, apps and data. And it does so in an order that avoids building on ground the attacker still holds.",
     },
     {
       type: "p",
-      text: "That changes how backup architecture should be evaluated. The question is not only whether a backup exists. The question is whether an attacker who owns production can also destroy, alter or authenticate to the system that protects it.",
+      text: "That changes how you judge a backup design. The question is not just whether a backup exists. It is whether someone who owns production can also delete it, change it, or log in to the thing that guards it.",
     },
     {
       type: "h2",
       id: "scope",
-      text: "The recovery dependency chain",
+      text: "What has to come back first",
     },
     {
       type: "table",
@@ -76,111 +76,111 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The order is not universal. A cloud-native service may not depend on Active Directory. A Windows enterprise may depend on AD for almost everything. The recovery plan should therefore document dependencies per critical service.",
+      text: "The order is not the same everywhere. A cloud-native service may not touch Active Directory at all. A Windows estate may lean on AD for nearly everything. So write the dependencies down per service, and do it before you need them.",
     },
     {
       type: "h2",
       id: "immutable",
-      text: "Immutability changes the attacker problem",
+      text: "What immutability changes for the attacker",
     },
     {
       type: "p",
-      text: "A backup repository connected to production is still part of the attack surface. If privileged credentials can delete recovery points, the backup job can succeed every night and still fail when the incident arrives.",
+      text: "A backup repository wired into production is part of the attack surface. If a privileged credential can delete recovery points, the job can succeed every night and still leave you with nothing on the day.",
     },
     {
       type: "p",
-      text: "S3 Object Lock provides storage-layer retention. In Compliance mode, a protected object version cannot be overwritten or deleted by a user, including the AWS account root user, until the retention period expires. Azure Backup provides a similar immutable-vault model, with a locked state that makes immutability irreversible.",
+      text: "S3 Object Lock holds retention at the storage layer. In Compliance mode nobody can overwrite or delete a protected object version until the retention period runs out. That includes the AWS account root user. Azure Backup offers a similar immutable vault, and its locked state makes the immutability irreversible.",
     },
     {
       type: "p",
-      text: "The important design principle is enforcement below the backup application. If the backup application can delete the data, compromising the application can become a backup-destruction path. Storage-level immutability narrows that path.",
+      text: "The principle worth holding on to is this: enforce it below the backup app. If the app can delete the data, then taking over the app is a way to destroy the backups. Pushing the lock down to storage closes that route.",
     },
     {
       type: "callout",
       variant: "warning",
       title: "Immutability is not the same as isolation",
-      text: "Immutable storage can protect recovery points from deletion. It does not automatically protect the management plane, credentials, network paths or encryption keys. Keep at least one recovery path outside the same administrative blast radius where practical.",
+      text: "Immutable storage keeps recovery points from being deleted. It does nothing on its own for the management plane, the credentials, the network paths or the keys. So keep at least one way back that sits outside the same blast radius.",
     },
     {
       type: "h2",
       id: "airgap",
-      text: "Air gaps reduce shared blast radius",
+      text: "An air gap cuts the shared blast radius",
     },
     {
       type: "p",
-      text: "An offline backup is not reachable through the production network. A logically isolated copy can provide a similar property when it uses a separate account, separate credentials and no unnecessary network trust.",
+      text: "An offline backup cannot be reached from the production network at all. A logically isolated copy can get close, so long as it uses its own account, its own credentials, and no network trust it does not need.",
     },
     {
       type: "p",
-      text: "CISA recommends offline backups and regular restoration testing. The reason is simple. Ransomware operators deliberately search for accessible backups because destroying them increases pressure on the victim.",
+      text: "CISA recommends offline backups and regular restore testing. The reason is blunt. Ransomware crews go looking for backups they can reach, because wrecking them puts the victim under more pressure to pay.",
     },
     {
       type: "p",
-      text: "Do not confuse a second backup job with a second trust boundary. Two repositories using the same domain administrator and the same management console are still one administrative failure domain.",
+      text: "Do not mistake a second backup job for a second trust boundary. Two repositories behind the same domain admin and the same console are still one failure domain.",
     },
     {
       type: "h2",
       id: "ad",
-      text: "Active Directory recovery is a specialised operation",
+      text: "Recovering Active Directory is its own job",
     },
     {
       type: "p",
-      text: "When a forest is compromised, the first restored domain controller must be treated as a recovery asset, not as another server to join casually to the production network.",
+      text: "Once a forest is compromised, treat the first restored domain controller as a recovery asset. It is not just another server to plug back into the production network.",
     },
     {
       type: "p",
-      text: "Microsoft documents forest recovery for Windows Server 2025 and earlier supported releases. The process includes restoring the first writable domain controller, verifying the restored state before reconnecting it, resetting administrative credentials and recovering the remaining domain controllers.",
+      text: "Microsoft documents forest recovery for Windows Server 2025 and the earlier supported releases. You restore the first writable domain controller. You check the restored state before you reconnect it. You reset the admin credentials. Then you bring back the rest of the domain controllers.",
     },
     {
       type: "p",
-      text: "The krbtgt account is central to Kerberos ticket signing. Microsoft documents resetting its password twice during forest recovery. The current guidance says to wait 10 hours between resets under the default ticket lifetime settings, or longer if those policies are configured with a longer lifetime.",
+      text: "The krbtgt account signs Kerberos tickets, which is why it matters here. Microsoft says to reset its password twice during forest recovery. Wait 10 hours between the two resets under the default ticket lifetime. Wait longer if your policy sets a longer one.",
     },
     {
       type: "p",
-      text: "The recovery procedure also addresses trust passwords, computer account passwords, global catalog state and metadata cleanup. This is why a forest recovery document should be treated as an executable runbook rather than a paragraph in a disaster recovery policy.",
+      text: "The procedure also covers trust passwords, computer account passwords, global catalog state and metadata cleanup. That is a lot of steps in a fixed order. Treat the document as a runbook you can execute, not a paragraph in a policy.",
     },
     {
       type: "h2",
       id: "identity",
-      text: "Cloud identity changes the recovery boundary",
+      text: "Cloud identity moves the boundary",
     },
     {
       type: "p",
-      text: "Modern enterprises often depend on Microsoft Entra ID, Okta or another cloud identity provider alongside AD. Recovery must therefore include administrative accounts, application registrations, privileged roles, Conditional Access and session revocation.",
+      text: "Most estates now run Microsoft Entra ID, Okta or another cloud provider next to AD. So recovery has to cover the admin accounts, the application registrations, the privileged roles, Conditional Access, and how you revoke sessions.",
     },
     {
       type: "p",
-      text: "Hybrid identity needs extra care. A compromised on-premises directory can affect the cloud through synchronization. A cloud compromise can create new application permissions or administrative access without changing a domain controller.",
+      text: "Hybrid identity needs more care than either half alone. A compromised directory on-premises can reach the cloud through sync. A cloud compromise can hand out new app permissions or admin access without touching a domain controller at all.",
     },
     {
       type: "p",
-      text: "Build an identity recovery checklist for both planes. Record emergency access accounts, privileged roles, synchronization configuration, application registrations and the process for invalidating attacker-controlled sessions.",
+      text: "Write one identity checklist that covers both planes. List the emergency access accounts. List the privileged roles, the sync settings and the application registrations. And write down how you kill the sessions the attacker holds.",
     },
     {
       type: "h2",
       id: "sequence",
-      text: "A recovery sequence that follows dependencies",
+      text: "An order that follows the dependencies",
     },
     {
       type: "p",
-      text: "The sequence is intentionally conservative. A faster sequence is not better if it reconnects compromised systems and forces a second recovery.",
+      text: "The order is deliberately cautious. A quicker one is no help if it plugs a compromised system back in and buys you a second recovery.",
     },
     {
       type: "h2",
       id: "testing",
-      text: "A backup is only useful if recovery is executable",
+      text: "A backup is only as good as the restore",
     },
     {
       type: "p",
-      text: "CISA recommends regularly testing backup availability and integrity. A restore test should go beyond proving that a file can be read. Restore a representative system. Verify that it boots, authenticates, resolves dependencies and behaves like the service it is supposed to replace.",
+      text: "CISA recommends testing backup availability and integrity on a regular basis. A real test goes past proving a file can be read. Restore a system that stands for the others. Check that it boots, that it authenticates, that it resolves what it needs, and that it behaves like the service it replaces.",
     },
     {
       type: "p",
-      text: "For AD, conduct a forest recovery exercise. For cloud backup, test recovery into an isolated subscription or account where the service supports it. For applications, document which secrets, certificates, DNS records and external APIs are required after restore.",
+      text: "For AD, run a forest recovery exercise. For cloud backup, restore into an isolated subscription or account where the service allows it. For apps, write down which secrets, certificates, DNS records and external APIs they need once they are back.",
     },
     {
       type: "p",
-      text: "Keep the recovery documentation outside the production identity system. If the network is unavailable, a wiki that requires the same identity system is not a recovery document.",
+      text: "Keep the recovery docs outside the production identity system. If the network is down, a wiki that asks you to log in with the very thing you are rebuilding is not a recovery document.",
     },
     {
       type: "h2",
@@ -190,12 +190,12 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "Backups protect data, not the entire computing environment.",
-        "Storage-level immutability reduces the risk that compromised administrators can delete recovery points.",
-        "A second copy is valuable only when it reduces shared administrative and network trust.",
-        "Active Directory forest recovery is a specialised procedure that must be rehearsed.",
-        "Cloud identity and application registrations belong in the recovery plan.",
-        "Recovery tests must validate dependencies, not just the existence of backup files.",
+        "Backups protect the data. They do not protect the environment you need to use it.",
+        "Lock the recovery points at the storage layer, so a stolen admin account cannot delete them.",
+        "A second copy only helps if it cuts the trust the two copies share.",
+        "Forest recovery is a set procedure, and you have to rehearse it.",
+        "Cloud identity and app registrations belong in the plan too.",
+        "Test what the service depends on, not just that the backup file is there.",
       ],
     },
   ],
@@ -203,27 +203,27 @@ export const article: Article = {
     {
       question: "Are immutable backups enough for ransomware recovery?",
       answer:
-        "No. They protect recovery points from destructive changes, but recovery still depends on clean identity, DNS, management systems, applications and tested procedures.",
+        "No. They stop the recovery points being wrecked. You still need clean identity, DNS, apps and a plan you have tested.",
     },
     {
       question: "Why is Active Directory part of backup recovery?",
       answer:
-        "In many Windows environments, AD authenticates users and services and controls access to systems. If the identity foundation is compromised, restored servers may still be unusable or unsafe.",
+        "In a Windows estate, AD signs in your users and services and gates access. If it is dirty, a restored server can still be unusable or unsafe.",
     },
     {
       question: "How many times should krbtgt be reset during forest recovery?",
       answer:
-        "Microsoft documents two resets, with a waiting period between them based on the configured Kerberos ticket lifetime. Under the default settings, the current guidance specifies 10 hours.",
+        "Twice, says Microsoft. Wait between them, based on your Kerberos ticket lifetime. On the default settings that wait is 10 hours.",
     },
     {
       question: "Should one backup copy be offline?",
       answer:
-        "CISA recommends offline backups. A separate account or environment with independent authentication can also reduce the shared blast radius, but the exact design should match the threat model.",
+        "CISA says yes, keep one offline. A separate account with its own sign-in can cut the shared blast radius too. Match the design to your threat model.",
     },
     {
       question: "How often should ransomware recovery be tested?",
       answer:
-        "The important requirement is regular testing. Critical organisations should exercise both backup restoration and the identity recovery procedure on a planned schedule rather than waiting for an incident.",
+        "On a set date, and often. Test the restore. Test the identity plan too. Waiting for a real attack is not a schedule.",
     },
   ],
   sources: [
