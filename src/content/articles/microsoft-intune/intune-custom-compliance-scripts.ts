@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "intune-custom-compliance-scripts",
@@ -26,15 +26,15 @@ export const article: Article = {
   tags: ["Intune", "Endpoint Management", "PowerShell", "Security", "Governance"],
   reviewStatus: "research-based",
   methodology:
-    "Written from Microsoft's published Intune custom compliance documentation — the custom settings overview, discovery script reference, JSON reference and compliance policy creation guidance — together with the Intune Management Extension and PowerShell script documentation. Script and JSON requirements, supported operators and data types, size and runtime limits, evaluation cadence and the documented error codes are taken from those sources and cited below. Where the article recommends an approach rather than describing documented behaviour, it says so. No customer environment is described and no script was executed for this article.",
+    "Written from Microsoft's published Intune custom compliance documentation â€” the custom settings overview, discovery script reference, JSON reference and compliance policy creation guidance â€” together with the Intune Management Extension and PowerShell script documentation. Script and JSON requirements, supported operators and data types, size and runtime limits, evaluation cadence and the documented error codes are taken from those sources and cited below. Where the article recommends an approach rather than describing documented behaviour, it says so. No customer environment is described and no script was executed for this article.",
   body: [
     {
       type: "p",
-      text: "Built-in compliance settings cover the things Microsoft has decided are worth checking: encryption, minimum OS version, firewall, antivirus. They are a fixed list, and eventually something matters to your organisation that is not on it — a specific agent running, a registry value your security team set, a certificate present, a local group with the membership you expect.",
+      text: "Built-in compliance settings cover the things Microsoft has decided are worth checking: encryption, minimum OS version, firewall, antivirus. They are a fixed list, and eventually something matters to your organisation that is not on it â€” a specific agent running, a registry value your security team set, a certificate present, a local group with the membership you expect.",
     },
     {
       type: "p",
-      text: "Custom compliance is the escape hatch: it evaluates anything a script can read. Microsoft is explicit that the results sit alongside the built-in settings as a compound rule set — equally affecting the compliance state, and usable for Conditional Access in exactly the same way. Worth understanding before you write anything. This is not a side report; a custom rule can block access.",
+      text: "Custom compliance is the escape hatch: it evaluates anything a script can read. Microsoft is explicit that the results sit alongside the built-in settings as a compound rule set â€” equally affecting the compliance state, and usable for Conditional Access in exactly the same way. Worth understanding before you write anything. This is not a side report; a custom rule can block access.",
     },
 
     {
@@ -59,13 +59,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The binding between them is strict. Each compliance policy supports exactly one discovery script, and each discovery script can be used with only one compliance policy. You also cannot delete a script while it is still assigned — it has to be unassigned from the policy first. A single script can, however, discover as many settings as you like, which is the intended way to cover several checks.",
+      text: "The binding between them is strict. Each compliance policy supports exactly one discovery script, and each discovery script can be used with only one compliance policy. You also cannot delete a script while it is still assigned â€” it has to be unassigned from the policy first. A single script can, however, discover as many settings as you like, which is the intended way to cover several checks.",
     },
     {
       type: "callout",
       variant: "warning",
       title: "Intune does not validate your script",
-      text: "The documentation states it plainly: Intune doesn't validate the script for syntax or programmatic errors. The JSON is validated on upload and will tell you what is wrong with it. The script is not. A script with a typo uploads cleanly, deploys cleanly, and fails silently on every device — which is why the guidance is to test it in an isolated environment before deploying it in production.",
+      text: "The documentation states it plainly: Intune doesn't validate the script for syntax or programmatic errors. The JSON is validated on upload and will tell you what is wrong with it. The script is not. A script with a typo uploads cleanly, deploys cleanly, and fails silently on every device â€” which is why the guidance is to test it in an isolated environment before deploying it in production.",
     },
 
     {
@@ -95,11 +95,11 @@ return $hash | ConvertTo-Json -Compress`,
     },
     {
       type: "p",
-      text: "Two details in that snippet do real work. `-Compress` produces the single line the service expects. And the conversion has to be the **last** line of the file — anything written after it becomes part of the output and invalidates the JSON.",
+      text: "Two details in that snippet do real work. `-Compress` produces the single line the service expects. And the conversion has to be the **last** line of the file â€” anything written after it becomes part of the output and invalidates the JSON.",
     },
     {
       type: "p",
-      text: "That is why a script that works perfectly in your console can fail once deployed. A stray `Write-Host`, a module banner, a cmdlet emitting an object you did not capture — any of it lands on the output stream and corrupts the payload. Silence everywhere except the final line is the contract, not tidiness.",
+      text: "That is why a script that works perfectly in your console can fail once deployed. A stray `Write-Host`, a module banner, a cmdlet emitting an object you did not capture â€” any of it lands on the output stream and corrupts the payload. Silence everywhere except the final line is the contract, not tidiness.",
     },
     {
       type: "table",
@@ -109,7 +109,7 @@ return $hash | ConvertTo-Json -Compress`,
         [
           "Run this script using the logged on credentials",
           "No",
-          "The script runs in the System context. Set to Yes for user context — but if no user is signed in, it falls back to System anyway, so a script that depends on a user profile is unreliable rather than merely scoped.",
+          "The script runs in the System context. Set to Yes for user context â€” but if no user is signed in, it falls back to System anyway, so a script that depends on a user profile is unreliable rather than merely scoped.",
         ],
         [
           "Run script in 64 bit PowerShell Host",
@@ -127,11 +127,11 @@ return $hash | ConvertTo-Json -Compress`,
       type: "callout",
       variant: "warning",
       title: "The 32-bit default is the one that catches people",
-      text: "A discovery script running in the 32-bit host sees the redirected registry view, so a query against `HKLM\\Software\\Vendor` actually reads `HKLM\\Software\\WOW6432Node\\Vendor`. It resolves `%ProgramFiles%` to the x86 directory, and it cannot load 64-bit-only modules. The script runs, returns a value, and the value is wrong — or the key is simply not found and the setting comes back empty. If a check works interactively and reports nothing once deployed, this setting is the first thing to look at. The same trap exists in Win32 app install commands, covered in [Packaging Win32 apps for Intune](/microsoft-intune/intunewin-packaging-win32-apps).",
+      text: "A discovery script running in the 32-bit host sees the redirected registry view, so a query against `HKLM\\Software\\Vendor` actually reads `HKLM\\Software\\WOW6432Node\\Vendor`. It resolves `%ProgramFiles%` to the x86 directory, and it cannot load 64-bit-only modules. The script runs, returns a value, and the value is wrong â€” or the key is simply not found and the setting comes back empty. If a check works interactively and reports nothing once deployed, this setting is the first thing to look at. The same trap exists in Win32 app install commands, covered in [Packaging Win32 apps for Intune](/microsoft-intune/intunewin-packaging-win32-apps).",
     },
     {
       type: "p",
-      text: "The documented limits are generous but finite: scripts must be no larger than 1 MB, output no larger than 1 MB, and on Windows a script must complete in **10 minutes or less** (five on Linux). The runtime limit is the one worth designing around — a check that queries a slow WMI class or reaches across the network on a device with poor connectivity can exceed it, and the result is a device that reports nothing rather than an obvious timeout error.",
+      text: "The documented limits are generous but finite: scripts must be no larger than 1 MB, output no larger than 1 MB, and on Windows a script must complete in **10 minutes or less** (five on Linux). The runtime limit is the one worth designing around â€” a check that queries a slow WMI class or reaches across the network on a device with poor connectivity can exceed it, and the result is a device that reports nothing rather than an obvious timeout error.",
     },
 
     {
@@ -170,15 +170,15 @@ return $hash | ConvertTo-Json -Compress`,
     },
     {
       type: "p",
-      text: 'Two fields need more care than they look. `SettingName` is case-sensitive, so `TPMChipPresent` and `TpmChipPresent` are different settings and the failure reports as the setting being missing rather than as a mismatch. And a script returning `"True"` as a string against a rule declared `Boolean` is a type error, not a comparison that fails — cast explicitly in the script rather than trusting what a cmdlet emits.',
+      text: 'Two fields need more care than they look. `SettingName` is case-sensitive, so `TPMChipPresent` and `TpmChipPresent` are different settings and the failure reports as the setting being missing rather than as a mismatch. And a script returning `"True"` as a string against a rule declared `Boolean` is a type error, not a comparison that fails â€” cast explicitly in the script rather than trusting what a cmdlet emits.',
     },
     {
       type: "p",
-      text: "The operator list is short: no pattern matching, no set membership, no substring test. Where you need logic it cannot express, do the evaluation in the script and return a boolean for the JSON to compare against — that keeps the rules readable and puts the complexity where you can test it.",
+      text: "The operator list is short: no pattern matching, no set membership, no substring test. Where you need logic it cannot express, do the evaluation in the script and return a boolean for the JSON to compare against â€” that keeps the rules readable and puts the complexity where you can test it.",
     },
     {
       type: "p",
-      text: "The policy can hold up to 100 KB and 100 rules — far more than any policy anyone can reason about when a device fails one of them. One access detail catches teams with delegated administration: the script upload workflow does not support scope tags, so you must hold the default scope tag to create, edit or even view discovery scripts.",
+      text: "The policy can hold up to 100 KB and 100 rules â€” far more than any policy anyone can reason about when a device fails one of them. One access detail catches teams with delegated administration: the script upload workflow does not support scope tags, so you must hold the default scope tag to create, edit or even view discovery scripts.",
     },
 
     {
@@ -195,13 +195,13 @@ return $hash | ConvertTo-Json -Compress`,
       items: [
         "The extension checks for new or updated PowerShell scripts **every eight hours**.",
         "It runs discovery scripts **every eight hours**.",
-        "It runs scripts when a user selects **Check Compliance** on the device — but does **not** check for new or updated scripts at that moment.",
+        "It runs scripts when a user selects **Check Compliance** on the device â€” but does **not** check for new or updated scripts at that moment.",
         "Push notifications cannot trigger custom compliance to run on demand.",
       ],
     },
     {
       type: "p",
-      text: "The third point is the one that wastes afternoons. A user pressing Check Compliance re-runs the script the device already has; it does not fetch the corrected version you uploaded five minutes ago. So the loop of edit, ask the user to sync, observe no change, edit again is not evidence that your fix is wrong — it is evidence that the device is still running yesterday's script.",
+      text: "The third point is the one that wastes afternoons. A user pressing Check Compliance re-runs the script the device already has; it does not fetch the corrected version you uploaded five minutes ago. So the loop of edit, ask the user to sync, observe no change, edit again is not evidence that your fix is wrong â€” it is evidence that the device is still running yesterday's script.",
     },
     {
       type: "p",
@@ -211,7 +211,7 @@ return $hash | ConvertTo-Json -Compress`,
       type: "callout",
       variant: "tip",
       title: "Test on a device you control, not through the fleet",
-      text: "Because iteration costs eight hours, the only sane development loop is local: run the script as SYSTEM on a test machine and inspect the exact JSON it produces before uploading anything. Microsoft's PowerShell script documentation points at PsExec for this — `psexec -i -s` gives you a shell in the System context. Confirm the output is one line, is valid JSON, and contains exactly the keys your rules file names.",
+      text: "Because iteration costs eight hours, the only sane development loop is local: run the script as SYSTEM on a test machine and inspect the exact JSON it produces before uploading anything. Microsoft's PowerShell script documentation points at PsExec for this â€” `psexec -i -s` gives you a shell in the System context. Confirm the output is one line, is valid JSON, and contains exactly the keys your rules file names.",
     },
 
     {
@@ -231,7 +231,7 @@ return $hash | ConvertTo-Json -Compress`,
         [
           "`65007`",
           "Script returned failure.",
-          "The script itself — it threw, or exited unsuccessfully. Run it as SYSTEM on a test device.",
+          "The script itself â€” it threw, or exited unsuccessfully. Run it as SYSTEM on a test device.",
         ],
         [
           "`65008`",
@@ -252,11 +252,11 @@ return $hash | ConvertTo-Json -Compress`,
     },
     {
       type: "p",
-      text: "For anything the reports do not explain, the device-side logging lives in `HealthScripts.log` under the Intune Management Extension log directory — the same file used by remediations, because custom compliance is built on that plumbing. That is a genuinely unintuitive place for compliance logging to live, and it is covered alongside the other agent logs in [Reading the Intune Management Extension logs](/microsoft-intune/intune-management-extension-logs).",
+      text: "For anything the reports do not explain, the device-side logging lives in `HealthScripts.log` under the Intune Management Extension log directory â€” the same file used by remediations, because custom compliance is built on that plumbing. That is a genuinely unintuitive place for compliance logging to live, and it is covered alongside the other agent logs in [Reading the Intune Management Extension logs](/microsoft-intune/intune-management-extension-logs).",
     },
     {
       type: "p",
-      text: "Two documented quirks are worth recognising rather than investigating. Scripts missing from the picker, or still listed after deletion, are a stale view — refresh, then restart the policy creation flow. And on Microsoft Entra registered devices, device-context scripts run normally while user-context scripts are ignored entirely.",
+      text: "Two documented quirks are worth recognising rather than investigating. Scripts missing from the picker, or still listed after deletion, are a stale view â€” refresh, then restart the policy creation flow. And on Microsoft Entra registered devices, device-context scripts run normally while user-context scripts are ignored entirely.",
     },
 
     {
@@ -266,11 +266,11 @@ return $hash | ConvertTo-Json -Compress`,
     },
     {
       type: "p",
-      text: "This section is recommendation rather than documented guidance. Custom compliance is powerful enough to be misused, and the failure mode is not a broken policy — it is a fleet blocked from email for a reason nobody can explain.",
+      text: "This section is recommendation rather than documented guidance. Custom compliance is powerful enough to be misused, and the failure mode is not a broken policy â€” it is a fleet blocked from email for a reason nobody can explain.",
     },
     {
       type: "p",
-      text: "**Good candidates** are cheap to run, stable in their answer, and tied to real risk: a security agent's service state, a registry value your hardening baseline sets, a certificate, a firmware version floor on hardware with a known vulnerability. **Poor candidates** share one property — the answer can change for reasons unrelated to security posture. Anything depending on network reachability fails for people on a train; anything querying an external service makes that service a dependency of your users' ability to work.",
+      text: "**Good candidates** are cheap to run, stable in their answer, and tied to real risk: a security agent's service state, a registry value your hardening baseline sets, a certificate, a firmware version floor on hardware with a known vulnerability. **Poor candidates** share one property â€” the answer can change for reasons unrelated to security posture. Anything depending on network reachability fails for people on a train; anything querying an external service makes that service a dependency of your users' ability to work.",
     },
     {
       type: "p",
@@ -301,11 +301,11 @@ return $hash | ConvertTo-Json -Compress`,
     },
     {
       type: "p",
-      text: "Write the script first and prove its output by hand. Run it as SYSTEM in the host the policy will actually use, look at the literal string it prints, and confirm it is one line of valid JSON whose keys match the rules file exactly — that string is the only part Intune will not check for you. Then keep each policy small: one script, a handful of related settings, and remediation text that tells a user what to do. When a device fails, whoever picks up the ticket should be able to tell which rule failed from the Company Portal message alone.",
+      text: "Write the script first and prove its output by hand. Run it as SYSTEM in the host the policy will actually use, look at the literal string it prints, and confirm it is one line of valid JSON whose keys match the rules file exactly â€” that string is the only part Intune will not check for you. Then keep each policy small: one script, a handful of related settings, and remediation text that tells a user what to do. When a device fails, whoever picks up the ticket should be able to tell which rule failed from the Company Portal message alone.",
     },
     {
       type: "p",
-      text: "And roll it out the way you would roll out any other access control — a generous grace period, notification actions before the block, and a pilot group first. A custom rule is not softer than a built-in one just because you wrote it. It feeds the same compliance state, which feeds the same Conditional Access decision, and the gap between a green tick in Intune and a working sign-in is covered in [Why a compliant device still fails Conditional Access](/microsoft-intune/compliant-device-conditional-access-blocked).",
+      text: "And roll it out the way you would roll out any other access control â€” a generous grace period, notification actions before the block, and a pilot group first. A custom rule is not softer than a built-in one just because you wrote it. It feeds the same compliance state, which feeds the same Conditional Access decision, and the gap between a green tick in Intune and a working sign-in is covered in [Why a compliant device still fails Conditional Access](/microsoft-intune/compliant-device-conditional-access-blocked).",
     },
   ],
   faq: [
@@ -322,7 +322,7 @@ return $hash | ConvertTo-Json -Compress`,
     {
       question: "How often does custom compliance run?",
       answer:
-        "The Intune Management Extension checks for new or updated scripts every eight hours and runs discovery scripts every eight hours. It also runs scripts when a user selects Check Compliance, but it does not check for new or updated scripts at that point — so a freshly uploaded script will not be picked up by a manual sync. Push notifications cannot trigger custom compliance on demand.",
+        "The Intune Management Extension checks for new or updated scripts every eight hours and runs discovery scripts every eight hours. It also runs scripts when a user selects Check Compliance, but it does not check for new or updated scripts at that point â€” so a freshly uploaded script will not be picked up by a manual sync. Push notifications cannot trigger custom compliance on demand.",
     },
     {
       question: "Can one compliance policy use more than one discovery script?",

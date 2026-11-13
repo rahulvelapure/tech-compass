@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "aws-efs-vs-fsx-lustre-s3-mountpoint",
@@ -32,7 +32,7 @@ export const article: Article = {
     "cloud-egress-costs-architecture-problem",
   ],
   methodology:
-    "Written from the Amazon EFS performance specifications, the FSx for Lustre user guide, and the Mountpoint for Amazon S3 semantics document, verified August 2026. Two corrections were made to the source draft. It presented Bursting as the EFS default; Elastic is the recommended and default throughput mode, and Max I/O is a previous generation that AWS advises against. And it said Mountpoint cannot rename or append at all — both are supported on S3 Express One Zone directory buckets, with appends requiring the incremental upload flag. The draft's GPU training incident and its throughput figures were removed.",
+    "Written from the Amazon EFS performance specifications, the FSx for Lustre user guide, and the Mountpoint for Amazon S3 semantics document, verified August 2026. Two corrections were made to the source draft. It presented Bursting as the EFS default; Elastic is the recommended and default throughput mode, and Max I/O is a previous generation that AWS advises against. And it said Mountpoint cannot rename or append at all â€” both are supported on S3 Express One Zone directory buckets, with appends requiring the incremental upload flag. The draft's GPU training incident and its throughput figures were removed.",
   body: [
     {
       type: "p",

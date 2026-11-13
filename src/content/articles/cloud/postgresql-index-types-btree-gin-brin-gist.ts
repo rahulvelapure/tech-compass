@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "postgresql-index-types-btree-gin-brin-gist",
@@ -62,7 +62,7 @@ export const article: Article = {
       head: ["Question", "What it decides"],
       rows: [
         ["Which operator does the query use?", "Which index types are eligible at all"],
-        ["What shape is the data?", "Scalar, composite or spatial — narrows it further"],
+        ["What shape is the data?", "Scalar, composite or spatial â€” narrows it further"],
         ["How selective is the predicate?", "Whether any index beats a sequential scan"],
         ["Does the column track physical row order?", "Whether BRIN is a candidate"],
         [
@@ -74,7 +74,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The first question is the one people skip. They pick an index by column type instead — a JSONB column, so index the JSONB column — and end up with an index the planner cannot use.",
+      text: "The first question is the one people skip. They pick an index by column type instead â€” a JSONB column, so index the JSONB column â€” and end up with an index the planner cannot use.",
     },
     { type: "h3", id: "selectivity", text: "Selectivity, briefly" },
     {
@@ -230,7 +230,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A widely repeated claim says jsonb_path_ops supports containment only. That is wrong, and it matters if you use jsonpath. It supports the jsonpath operators too. What it gives up is key existence — asking whether a key is present at all, without caring about its value.",
+      text: "A widely repeated claim says jsonb_path_ops supports containment only. That is wrong, and it matters if you use jsonpath. It supports the jsonpath operators too. What it gives up is key existence â€” asking whether a key is present at all, without caring about its value.",
     },
     {
       type: "p",
@@ -320,7 +320,7 @@ export const article: Article = {
       caption: "When BRIN is and is not the answer",
       head: ["Attractive", "Poor choice"],
       rows: [
-        ["Very large table", "Small table — summary overhead outweighs the gain"],
+        ["Very large table", "Small table â€” summary overhead outweighs the gain"],
         ["Append-only, or nearly", "Rows updated often, degrading correlation"],
         ["Column tracks insertion order", "Values arrive in random order"],
         ["Range queries over that column", "Equality lookups for a single row"],
@@ -381,7 +381,7 @@ export const article: Article = {
       caption: "The trade for text search",
       head: ["", "GIN", "GiST"],
       rows: [
-        ["Query speed", "Faster", "Slower — may recheck candidates against the heap"],
+        ["Query speed", "Faster", "Slower â€” may recheck candidates against the heap"],
         ["Update cost", "Higher", "Lower"],
         ["Index size", "Larger", "Smaller"],
         ["Nearest-neighbour ordering", "No", "Yes"],
@@ -437,7 +437,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Two more constraints. A concurrent build cannot run inside a transaction block. And concurrent builds on partitioned tables are not supported — the documented approach is to build on each partition concurrently, then create the index on the parent, which is a metadata-only operation.",
+      text: "Two more constraints. A concurrent build cannot run inside a transaction block. And concurrent builds on partitioned tables are not supported â€” the documented approach is to build on each partition concurrently, then create the index on the parent, which is a metadata-only operation.",
     },
     {
       type: "callout",
@@ -560,7 +560,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The fix is a GIN index. Because the queries use containment and never key existence, jsonb_path_ops is the better class — smaller, and more specific on keys that appear in most rows. Build it concurrently, confirm the plan changes, then drop the B-Tree.",
+      text: "The fix is a GIN index. Because the queries use containment and never key existence, jsonb_path_ops is the better class â€” smaller, and more specific on keys that appear in most rows. Build it concurrently, confirm the plan changes, then drop the B-Tree.",
     },
     {
       type: "p",
@@ -584,7 +584,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "An unused index is not neutral. It slows every write, occupies storage, and adds vacuum work, and it does all of that silently. Choosing deliberately costs an afternoon. Finding the mismatch during an incident costs considerably more. This is one of two database problems that usually present as an application fault — the other is connection behaviour, covered in [connection pooling with PgBouncer and RDS Proxy](/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy).",
+      text: "An unused index is not neutral. It slows every write, occupies storage, and adds vacuum work, and it does all of that silently. Choosing deliberately costs an afternoon. Finding the mismatch during an incident costs considerably more. This is one of two database problems that usually present as an application fault â€” the other is connection behaviour, covered in [connection pooling with PgBouncer and RDS Proxy](/cloud/postgresql-connection-pooling-pgbouncer-rds-proxy).",
     },
   ],
   faq: [

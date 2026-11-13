@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "nvidia-mig-vs-mps-time-slicing-kubernetes",
@@ -11,7 +11,7 @@ export const article: Article = {
   standfirst:
     "A GPU running one small model is mostly idle hardware. Sharing it is easy. Sharing it without one tenant taking down the rest is the real problem.",
   excerpt:
-    "The question is not how to fit more pods on a GPU. It is what happens when one of them misbehaves — and only one of the three mechanisms contains that in hardware.",
+    "The question is not how to fit more pods on a GPU. It is what happens when one of them misbehaves â€” and only one of the three mechanisms contains that in hardware.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-27",
   lastReviewedAt: "2026-08-26",
@@ -32,7 +32,7 @@ export const article: Article = {
     "karpenter-vs-cluster-autoscaler-node-scaling",
   ],
   methodology:
-    "Written from the NVIDIA MPS documentation, the MIG user guide and device-name reference, and the Kubernetes device plugin project documentation, verified August 2026. Two corrections were made to the source draft. It said MPS provides no memory isolation; from Volta onward each client has its own GPU address space, and CUDA 11.4 added a per-client memory cap and thread-percentage limit — what MPS still lacks is fault isolation, which is a different claim. And its example MIG layout for an 80 GB card required eight compute slices, where seven is the hardware maximum and profiles must fit a fixed geometry. The draft's multi-tenant crash narrative and its hardware prices were removed.",
+    "Written from the NVIDIA MPS documentation, the MIG user guide and device-name reference, and the Kubernetes device plugin project documentation, verified August 2026. Two corrections were made to the source draft. It said MPS provides no memory isolation; from Volta onward each client has its own GPU address space, and CUDA 11.4 added a per-client memory cap and thread-percentage limit â€” what MPS still lacks is fault isolation, which is a different claim. And its example MIG layout for an 80 GB card required eight compute slices, where seven is the hardware maximum and profiles must fit a fixed geometry. The draft's multi-tenant crash narrative and its hardware prices were removed.",
   body: [
     {
       type: "p",
@@ -130,7 +130,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "MIG is also a whole-card choice. A card is split or it is not. So you cannot mix a full-GPU job with MIG instances on the same device. In practice you end up with node pools for each layout, and a provisioner that knows the difference — see [Karpenter versus Cluster Autoscaler](/devops/karpenter-vs-cluster-autoscaler-node-scaling).",
+      text: "MIG is also a whole-card choice. A card is split or it is not. So you cannot mix a full-GPU job with MIG instances on the same device. In practice you end up with node pools for each layout, and a provisioner that knows the difference â€” see [Karpenter versus Cluster Autoscaler](/devops/karpenter-vs-cluster-autoscaler-node-scaling).",
     },
     { type: "h2", id: "choosing", text: "Choosing" },
     {

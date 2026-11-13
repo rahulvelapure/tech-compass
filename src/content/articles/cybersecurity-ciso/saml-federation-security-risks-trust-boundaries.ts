@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "saml-federation-security-risks-trust-boundaries",
@@ -126,7 +126,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The replay cache is the one people miss. The condition is a request, not an enforcement — it only works if the service provider records the assertion ID and refuses to see it twice. That is the SP's job, and it is not visible from your side of the trust.",
+      text: "The replay cache is the one people miss. The condition is a request, not an enforcement â€” it only works if the service provider records the assertion ID and refuses to see it twice. That is the SP's job, and it is not visible from your side of the trust.",
     },
     {
       type: "p",
@@ -193,7 +193,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For applications you are building now, OpenID Connect is generally the better fit. It is JSON rather than XML, behaves better on mobile, and gives finer control over scopes. The trust questions above do not disappear — a signing key still mints tokens, and tokens are still bearer credentials — but the tooling is more current.",
+      text: "For applications you are building now, OpenID Connect is generally the better fit. It is JSON rather than XML, behaves better on mobile, and gives finer control over scopes. The trust questions above do not disappear â€” a signing key still mints tokens, and tokens are still bearer credentials â€” but the tooling is more current.",
     },
     { type: "h2", id: "takeaways", text: "What to do with this" },
     {
@@ -208,7 +208,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Federation is worth having. It removes passwords, centralises joiners and leavers, and gives one place to enforce policy. The trade is that it also gives one place to attack. Making that trade knowingly — and closing the three gaps above — is the difference between single sign-on as a control and single sign-on as a single point of failure. Where the IdP policy itself is designed matters as much as the federation: [a Conditional Access framework](/microsoft-365-entra-id/conditional-access-framework) is where those rules live, and [passkeys](/cybersecurity-ciso/passkeys-enterprise-deployment-reality) are what make the IdP sign-in itself hard to phish.",
+      text: "Federation is worth having. It removes passwords, centralises joiners and leavers, and gives one place to enforce policy. The trade is that it also gives one place to attack. Making that trade knowingly â€” and closing the three gaps above â€” is the difference between single sign-on as a control and single sign-on as a single point of failure. Where the IdP policy itself is designed matters as much as the federation: [a Conditional Access framework](/microsoft-365-entra-id/conditional-access-framework) is where those rules live, and [passkeys](/cybersecurity-ciso/passkeys-enterprise-deployment-reality) are what make the IdP sign-in itself hard to phish.",
     },
   ],
   faq: [

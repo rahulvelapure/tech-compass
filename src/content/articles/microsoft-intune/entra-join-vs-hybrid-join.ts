@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-join-vs-hybrid-join",
@@ -49,9 +49,9 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "**Microsoft Entra registered** — the device gets a cloud identity but is not joined. This is the bring-your-own-device and mobile case: personal hardware, corporate access, no organisational ownership of the device itself.",
-        "**Microsoft Entra joined** — the device is joined to Microsoft Entra ID and is not joined to on-premises Active Directory. These are what Microsoft calls cloud-native endpoints.",
-        "**Microsoft Entra hybrid joined** — the device is joined to an on-premises Active Directory domain **and** registered with Microsoft Entra ID. It has both identities and depends on both.",
+        "**Microsoft Entra registered** â€” the device gets a cloud identity but is not joined. This is the bring-your-own-device and mobile case: personal hardware, corporate access, no organisational ownership of the device itself.",
+        "**Microsoft Entra joined** â€” the device is joined to Microsoft Entra ID and is not joined to on-premises Active Directory. These are what Microsoft calls cloud-native endpoints.",
+        "**Microsoft Entra hybrid joined** â€” the device is joined to an on-premises Active Directory domain **and** registered with Microsoft Entra ID. It has both identities and depends on both.",
       ],
     },
     {
@@ -72,7 +72,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Hybrid joined devices require periodic network line of sight to your domain controllers. Not once at setup — periodically, for the life of the device. Microsoft's planning documentation states that without this connection, devices become unusable.",
+      text: "Hybrid joined devices require periodic network line of sight to your domain controllers. Not once at setup â€” periodically, for the life of the device. Microsoft's planning documentation states that without this connection, devices become unusable.",
     },
     {
       type: "p",
@@ -134,7 +134,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Plan the conversion around events you already have",
-      text: "Because there is no in-place path, Microsoft's recommendation is to wait for a complementary event — a hardware refresh, an OS upgrade, or a troubleshooting scenario that already produces a new or reset instance of Windows. That approach minimises user disruption and avoids creating a migration project out of something that will happen anyway. Proactively resetting devices is possible, but it is more disruptive and needs more planning and testing.",
+      text: "Because there is no in-place path, Microsoft's recommendation is to wait for a complementary event â€” a hardware refresh, an OS upgrade, or a troubleshooting scenario that already produces a new or reset instance of Windows. That approach minimises user disruption and avoids creating a migration project out of something that will happen anyway. Proactively resetting devices is possible, but it is more disruptive and needs more planning and testing.",
     },
 
     {
@@ -152,7 +152,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: '**"We need Group Policy."** This one is real, but it is a transition constraint rather than a permanent one. On hybrid joined devices you can use Group Policy, Intune, or both — and Microsoft notes that the combination adds administrative overhead and complexity. That is an accurate description of what happens: two policy engines targeting one device, with no unified view of which one won. If Group Policy is the reason for staying hybrid, the honest framing is that you are deferring a migration, not avoiding one.',
+      text: '**"We need Group Policy."** This one is real, but it is a transition constraint rather than a permanent one. On hybrid joined devices you can use Group Policy, Intune, or both â€” and Microsoft notes that the combination adds administrative overhead and complexity. That is an accurate description of what happens: two policy engines targeting one device, with no unified view of which one won. If Group Policy is the reason for staying hybrid, the honest framing is that you are deferring a migration, not avoiding one.',
     },
     {
       type: "p",
@@ -186,7 +186,7 @@ export const article: Article = {
         [
           "Remote-first population, little or no domain controller reachability",
           "**Microsoft Entra join**",
-          "The documented failure scenarios — password changes and TPM reset — all depend on domain controller line of sight.",
+          "The documented failure scenarios â€” password changes and TPM reset â€” all depend on domain controller line of sight.",
         ],
         [
           "Applications with hard on-premises domain dependencies",
@@ -197,11 +197,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Mixed estates are explicitly supported — the two are not mutually exclusive and can coexist. Microsoft is also clear that a mixed environment increases complexity, maintenance and support costs. Both things are true, and the practical answer is to treat the mix as a transitional state with a direction of travel rather than a permanent architecture.",
+      text: "Mixed estates are explicitly supported â€” the two are not mutually exclusive and can coexist. Microsoft is also clear that a mixed environment increases complexity, maintenance and support costs. Both things are true, and the practical answer is to treat the mix as a transitional state with a direction of travel rather than a permanent architecture.",
     },
     {
       type: "p",
-      text: "One planning detail worth checking early if you are configuring hybrid join: the minimum domain controller version for hybrid join with Windows 10 or newer is Windows Server 2008 R2, and from version 1.1.819.0 onwards Microsoft Entra Connect provides a wizard that handles the configuration. There is also a UPN subtlety that catches organisations with subdomain suffixes — if the primary domain is registered as a confirmed custom domain, users can still obtain a Primary Refresh Token even when their synchronised on-premises UPN suffix sits in a subdomain.",
+      text: "One planning detail worth checking early if you are configuring hybrid join: the minimum domain controller version for hybrid join with Windows 10 or newer is Windows Server 2008 R2, and from version 1.1.819.0 onwards Microsoft Entra Connect provides a wizard that handles the configuration. There is also a UPN subtlety that catches organisations with subdomain suffixes â€” if the primary domain is registered as a confirmed custom domain, users can still obtain a Primary Refresh Token even when their synchronised on-premises UPN suffix sits in a subdomain.",
     },
 
     {
@@ -233,7 +233,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Leave existing hybrid joined devices alone until they reach an event that already produces a fresh Windows installation. There is no in-place conversion, so resetting healthy devices purely to change join type buys you very little and costs users real time. The exception is a population where the domain controller dependency is actively causing failures — remote workers who cannot change their password being the obvious case — where the disruption of a reset is smaller than the disruption of the status quo.",
+      text: "Leave existing hybrid joined devices alone until they reach an event that already produces a fresh Windows installation. There is no in-place conversion, so resetting healthy devices purely to change join type buys you very little and costs users real time. The exception is a population where the domain controller dependency is actively causing failures â€” remote workers who cannot change their password being the obvious case â€” where the disruption of a reset is smaller than the disruption of the status quo.",
     },
     {
       type: "p",
@@ -241,7 +241,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For new-device provisioning, the join type also constrains which Autopilot model is available — device preparation supports Microsoft Entra join only, which is covered in [Autopilot device preparation vs Windows Autopilot](/microsoft-intune/autopilot-device-preparation-vs-autopilot).",
+      text: "For new-device provisioning, the join type also constrains which Autopilot model is available â€” device preparation supports Microsoft Entra join only, which is covered in [Autopilot device preparation vs Windows Autopilot](/microsoft-intune/autopilot-device-preparation-vs-autopilot).",
     },
   ],
   faq: [

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "autopilot-device-preparation-vs-autopilot",
@@ -58,7 +58,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The device group needs a specific owner",
-      text: "For device preparation, the nominated device security group must have **Intune Provisioning Client** set as its owner. This is not an optional hardening step — it is what allows the service to add devices to the group during enrollment. A policy that looks correct but never adds devices to the group is worth checking here first.",
+      text: "For device preparation, the nominated device security group must have **Intune Provisioning Client** set as its owner. This is not an optional hardening step â€” it is what allows the service to add devices to the group during enrollment. A policy that looks correct but never adds devices to the group is worth checking here first.",
     },
 
     {
@@ -82,7 +82,7 @@ export const article: Article = {
         ],
         [
           "Windows versions",
-          "Windows 11 only — 24H2 or later, or 22H2/23H2 with KB5035942 or later",
+          "Windows 11 only â€” 24H2 or later, or 22H2/23H2 with KB5035942 or later",
           "All currently supported Windows 10 and Windows 11 General Availability Channel versions",
         ],
         [
@@ -93,7 +93,7 @@ export const article: Article = {
         ["Device registration", "Not required", "Required"],
         [
           "Apps during OOBE",
-          "Up to 25 essential apps — and LOB plus Win32 **in the same deployment**",
+          "Up to 25 essential apps â€” and LOB plus Win32 **in the same deployment**",
           "Up to 100 applications, but not LOB and Win32 in the same deployment",
         ],
         [
@@ -131,13 +131,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The app row cuts the other way. Delivering line-of-business and Win32 applications in the same deployment is something Autopilot does not do, and Microsoft attributes device preparation's improved consistency to delivering configurations and apps in a serialised way that minimises conflicts. If your ESP failures have historically been app-ordering problems, that is the relevant difference — although a 25-app ceiling against Autopilot's 100 is a real constraint if your build is heavy.",
+      text: "The app row cuts the other way. Delivering line-of-business and Win32 applications in the same deployment is something Autopilot does not do, and Microsoft attributes device preparation's improved consistency to delivering configurations and apps in a serialised way that minimises conflicts. If your ESP failures have historically been app-ordering problems, that is the relevant difference â€” although a 25-app ceiling against Autopilot's 100 is a real constraint if your build is heavy.",
     },
 
     {
       type: "h2",
       id: "precedence",
-      text: "They do not coexist on a device — one wins",
+      text: "They do not coexist on a device â€” one wins",
     },
     {
       type: "p",
@@ -151,7 +151,7 @@ export const article: Article = {
       type: "callout",
       variant: "tip",
       title: "The fastest way to tell which one is actually running",
-      text: "Device preparation does not use the Enrollment Status Page. If the ESP appears during a deployment you believe is device preparation, then it is not — the device is almost certainly registered with Autopilot, or an Autopilot profile is assigned to it. Microsoft documents this as the diagnostic. It takes a glance at the screen and settles the question immediately.",
+      text: "Device preparation does not use the Enrollment Status Page. If the ESP appears during a deployment you believe is device preparation, then it is not â€” the device is almost certainly registered with Autopilot, or an Autopilot profile is assigned to it. Microsoft documents this as the diagnostic. It takes a glance at the screen and settles the question immediately.",
     },
     {
       type: "p",
@@ -177,7 +177,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Autopilot's Enrollment Status Page exists precisely to block that. If your security position depends on a device being fully configured before anyone can use it — disk encryption state, a specific browser policy, a firewall baseline — that guarantee is weaker under device preparation, and it is worth being deliberate about rather than discovering later. Autopilot also blocks the desktop until user-based configuration has applied, which device preparation does not do at all, because its OOBE configuration is device-scoped only.",
+      text: "Autopilot's Enrollment Status Page exists precisely to block that. If your security position depends on a device being fully configured before anyone can use it â€” disk encryption state, a specific browser policy, a firewall baseline â€” that guarantee is weaker under device preparation, and it is worth being deliberate about rather than discovering later. Autopilot also blocks the desktop until user-based configuration has applied, which device preparation does not do at all, because its OOBE configuration is device-scoped only.",
     },
 
     {
@@ -195,7 +195,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Device preparation is worth choosing** if you are Entra-joined and Windows 11 only, if your provisioning pain has been app-delivery conflicts rather than app count, if you operate in GCC High or DoD where Autopilot is not available, or if the operational cost of registering hardware — chasing hashes, dealing with hardware changes, resellers holding registrations — has been a recurring drain.",
+      text: "**Device preparation is worth choosing** if you are Entra-joined and Windows 11 only, if your provisioning pain has been app-delivery conflicts rather than app count, if you operate in GCC High or DoD where Autopilot is not available, or if the operational cost of registering hardware â€” chasing hashes, dealing with hardware changes, resellers holding registrations â€” has been a recurring drain.",
     },
     {
       type: "p",
@@ -203,7 +203,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The most defensible position for a mixed estate is to run both deliberately: Autopilot where hybrid join or pre-provisioning is genuinely required, device preparation for cloud-native Windows 11 hardware — with a clear rule about which population is which, because the precedence rule will otherwise decide for you.",
+      text: "The most defensible position for a mixed estate is to run both deliberately: Autopilot where hybrid join or pre-provisioning is genuinely required, device preparation for cloud-native Windows 11 hardware â€” with a clear rule about which population is which, because the precedence rule will otherwise decide for you.",
     },
 
     {
@@ -215,12 +215,12 @@ export const article: Article = {
       type: "ul",
       items: [
         "**Piloting device preparation on already-registered hardware.** The Autopilot profile wins. Deregister the device first, or the pilot tests nothing.",
-        "**Assuming device preparation supports hybrid join.** It does not — Entra join only. This is the single most common disqualifier.",
+        "**Assuming device preparation supports hybrid join.** It does not â€” Entra join only. This is the single most common disqualifier.",
         "**Assigning PowerShell scripts that run in the user context.** Scripts run during OOBE when no user is signed in, so they must be set to run in the System context. Set the option to run with logged-on credentials to No.",
         "**Expecting configuration policies to be applied when the deployment reports complete.** Policies are synced but not tracked. Applied state is not guaranteed at handover.",
         "**Forgetting the Intune Provisioning Client owner on the device group.** Without it, the enrollment-time group membership that the whole model depends on does not happen.",
         "**Adding corporate identifiers when nothing requires them.** Device preparation only needs them if enrollment restrictions are being used to block personal device enrollments.",
-        "**Assuming more than one device preparation policy is additive.** If several target the same user, the highest-priority policy applies — the one nearest the top of the list, with the smallest priority number.",
+        "**Assuming more than one device preparation policy is additive.** If several target the same user, the highest-priority policy applies â€” the one nearest the top of the list, with the smallest priority number.",
       ],
     },
 
@@ -239,7 +239,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "If you are still weighing the join type itself, that decision sits upstream of this one. And if devices are already failing before either model gets going, the problem is registration rather than provisioning — worked through in [Autopilot device registration failures](/microsoft-intune/autopilot-device-registration-failures).",
+      text: "If you are still weighing the join type itself, that decision sits upstream of this one. And if devices are already failing before either model gets going, the problem is registration rather than provisioning â€” worked through in [Autopilot device registration failures](/microsoft-intune/autopilot-device-registration-failures).",
     },
   ],
   faq: [
@@ -257,7 +257,7 @@ export const article: Article = {
     {
       question: "How can I tell which provisioning model a device is actually running?",
       answer:
-        "Look at the screen. Device preparation does not use the Enrollment Status Page — it shows a Setting up for work or school screen with a percentage progress bar. If the Enrollment Status Page appears, the device is running Windows Autopilot, which usually means it is registered as an Autopilot device or has an Autopilot profile assigned.",
+        "Look at the screen. Device preparation does not use the Enrollment Status Page â€” it shows a Setting up for work or school screen with a percentage progress bar. If the Enrollment Status Page appears, the device is running Windows Autopilot, which usually means it is registered as an Autopilot device or has an Autopilot profile assigned.",
     },
     {
       question: "Do I need to migrate existing Autopilot profiles to device preparation?",

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-storage-classes-costs-performance-traps",
@@ -57,7 +57,7 @@ export const article: Article = {
       items: [
         "A claim is created, naming a StorageClass, a size and an access mode.",
         "The control plane sees an unbound claim and looks up that class.",
-        "The class names a provisioner — usually a CSI driver running in the cluster.",
+        "The class names a provisioner â€” usually a CSI driver running in the cluster.",
         "The driver calls the cloud API and creates a real disk.",
         "The driver creates a persistent volume object representing it and binds the claim to it.",
         "When a pod using the claim is scheduled, the driver attaches the disk to that node and mounts it.",
@@ -118,7 +118,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "With `volumeBindingMode: Immediate`, the disk is created as soon as the claim exists — before anyone knows where the pod will run. The scheduler then places the pod using its own criteria: resources, affinities, taints. If it picks a node in a different zone, the attach fails.",
+      text: "With `volumeBindingMode: Immediate`, the disk is created as soon as the claim exists â€” before anyone knows where the pod will run. The scheduler then places the pod using its own criteria: resources, affinities, taints. If it picks a node in a different zone, the attach fails.",
     },
     {
       type: "p",
@@ -209,7 +209,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "None of this is difficult, and all of it is easy to skip, because dynamic provisioning works perfectly on day one no matter how the class is configured. The bill and the pending pods arrive later, which is exactly what makes these settings worth deciding on purpose. Storage is the second place cloud spend accumulates quietly — [the first is data transfer](/cloud/cloud-egress-costs-architecture-problem).",
+      text: "None of this is difficult, and all of it is easy to skip, because dynamic provisioning works perfectly on day one no matter how the class is configured. The bill and the pending pods arrive later, which is exactly what makes these settings worth deciding on purpose. Storage is the second place cloud spend accumulates quietly â€” [the first is data transfer](/cloud/cloud-egress-costs-architecture-problem).",
     },
   ],
   faq: [

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "postgresql-pitr-wal-archiving-lsn-mechanics",
@@ -29,7 +29,7 @@ export const article: Article = {
   reviewStatus: "research-based",
   relatedSlugs: ["backup-restore-testing", "database-connection-failover-mechanics-timeouts"],
   methodology:
-    "Written from the PostgreSQL documentation on continuous archiving and on recovery target settings, and the pgBackRest user guide, verified August 2026. One correction was made to the source draft. It described promotion after reaching the target as an optional step, where `recovery_target_action` defaults to `pause` — recovery stops and waits, and `pg_wal_replay_resume()` is what ends it. The draft's IAM outage narrative was rewritten as the mechanism, and its restore timings were removed as unverifiable. The behaviour when `pg_wal` fills was corrected: PostgreSQL performs a PANIC shutdown and commits are not lost, rather than shutting down to prevent corruption.",
+    "Written from the PostgreSQL documentation on continuous archiving and on recovery target settings, and the pgBackRest user guide, verified August 2026. One correction was made to the source draft. It described promotion after reaching the target as an optional step, where `recovery_target_action` defaults to `pause` â€” recovery stops and waits, and `pg_wal_replay_resume()` is what ends it. The draft's IAM outage narrative was rewritten as the mechanism, and its restore timings were removed as unverifiable. The behaviour when `pg_wal` fills was corrected: PostgreSQL performs a PANIC shutdown and commits are not lost, rather than shutting down to prevent corruption.",
   body: [
     {
       type: "p",
@@ -59,7 +59,7 @@ export const article: Article = {
     { type: "h2", id: "archiving", text: "Archiving, and the failure that hides" },
     {
       type: "p",
-      text: "Turn on `archive_mode` and set an `archive_command`. When a segment fills, the server runs that command to copy it somewhere durable — object storage, another host, or a backup tool that manages the destination for you.",
+      text: "Turn on `archive_mode` and set an `archive_command`. When a segment fills, the server runs that command to copy it somewhere durable â€” object storage, another host, or a backup tool that manages the destination for you.",
     },
     {
       type: "p",
@@ -69,7 +69,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "A broken archive is silent until the disk is full",
-      text: "Nothing is refused while archiving fails. Transactions commit normally and the database looks healthy. What happens is that `pg_wal` stops draining and starts growing. When the file system fills, PostgreSQL performs a PANIC shutdown — no committed transaction is lost, but the database stays offline until you free space. The worse part is what you find afterwards: the archive is missing every segment since the failure began, so recovery cannot reach anything later than that point. The outage is loud. The data loss happened quietly, days earlier.",
+      text: "Nothing is refused while archiving fails. Transactions commit normally and the database looks healthy. What happens is that `pg_wal` stops draining and starts growing. When the file system fills, PostgreSQL performs a PANIC shutdown â€” no committed transaction is lost, but the database stays offline until you free space. The worse part is what you find afterwards: the archive is missing every segment since the failure began, so recovery cannot reach anything later than that point. The outage is loud. The data loss happened quietly, days earlier.",
     },
     {
       type: "p",
@@ -77,7 +77,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Alert on two signals. Any movement in `failed_count` means the pipeline is broken now. And the distance between the current write position and `last_archived_wal` tells you how much data is not yet safe — which is the real recovery point objective, rather than the one in the policy document.",
+      text: "Alert on two signals. Any movement in `failed_count` means the pipeline is broken now. And the distance between the current write position and `last_archived_wal` tells you how much data is not yet safe â€” which is the real recovery point objective, rather than the one in the policy document.",
     },
     {
       type: "p",
@@ -148,7 +148,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Which is the general point. An archive that has never been restored is a claim, not a backup, and the failure mode above is invisible from the primary. Restore on a schedule, to a real host, and check the row counts — the wider case for that is in [testing your restores](/cybersecurity-ciso/backup-restore-testing).",
+      text: "Which is the general point. An archive that has never been restored is a claim, not a backup, and the failure mode above is invisible from the primary. Restore on a schedule, to a real host, and check the row counts â€” the wider case for that is in [testing your restores](/cybersecurity-ciso/backup-restore-testing).",
     },
   ],
   faq: [

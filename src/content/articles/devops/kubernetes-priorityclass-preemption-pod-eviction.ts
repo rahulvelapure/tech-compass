@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-priorityclass-preemption-pod-eviction",
@@ -101,7 +101,7 @@ export const article: Article = {
       variant: "warning",
       title:
         "Preemption respects disruption budgets where it can, and overrides them where it cannot",
-      text: "The scheduler prefers victims whose disruption budget would not be violated. If it cannot find a set like that, preemption still happens and the budget is violated anyway. Budgets are supported, not guaranteed. So a budget does not make a workload preemption-proof. If you need a workload never to be preempted, the mechanism is priority — give it one high enough that nothing routinely outranks it — not a budget.",
+      text: "The scheduler prefers victims whose disruption budget would not be violated. If it cannot find a set like that, preemption still happens and the budget is violated anyway. Budgets are supported, not guaranteed. So a budget does not make a workload preemption-proof. If you need a workload never to be preempted, the mechanism is priority â€” give it one high enough that nothing routinely outranks it â€” not a budget.",
     },
     {
       type: "p",
@@ -152,7 +152,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "And watch what preemption is actually doing. Repeated preemption of the same workload is not a scheduling success, it is a capacity shortage being absorbed quietly by whoever ranked lowest. The fix for that is nodes, not numbers — and where those nodes land is the subject of [topology spread constraints](/devops/kubernetes-topology-spread-constraints-vs-pod-anti-affinity).",
+      text: "And watch what preemption is actually doing. Repeated preemption of the same workload is not a scheduling success, it is a capacity shortage being absorbed quietly by whoever ranked lowest. The fix for that is nodes, not numbers â€” and where those nodes land is the subject of [topology spread constraints](/devops/kubernetes-topology-spread-constraints-vs-pod-anti-affinity).",
     },
   ],
   faq: [

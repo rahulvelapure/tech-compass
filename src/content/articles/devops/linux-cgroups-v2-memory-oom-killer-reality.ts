@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "linux-cgroups-v2-memory-oom-killer-reality",
@@ -87,7 +87,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Kubernetes does not set memory.high by default",
-      text: "This is where the theory and most clusters part company. Upstream Kubernetes maps the memory limit to `memory.max` and leaves `memory.high` unset. Writing it is the Memory QoS feature, which derives `memory.high` from the limit using `memoryThrottlingFactor`, default 0.9, and takes `memory.min` from the request. It was still alpha as of v1.36 and behind a feature gate. So on a default cluster there is no throttling stage — you go from working to killed with nothing in between.",
+      text: "This is where the theory and most clusters part company. Upstream Kubernetes maps the memory limit to `memory.max` and leaves `memory.high` unset. Writing it is the Memory QoS feature, which derives `memory.high` from the limit using `memoryThrottlingFactor`, default 0.9, and takes `memory.min` from the request. It was still alpha as of v1.36 and behind a feature gate. So on a default cluster there is no throttling stage â€” you go from working to killed with nothing in between.",
     },
     {
       type: "p",
@@ -141,7 +141,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Give a container 2 GB and a JVM a 1.8 GB heap and only 200 MB is left for everything else. But a JVM also needs metaspace, thread stacks, code cache, direct byte buffers and the garbage collector's own structures. Under load those grow, the total crosses the limit, and the process is killed without ever raising an `OutOfMemoryError` — because the JVM never ran out of heap.",
+      text: "Give a container 2 GB and a JVM a 1.8 GB heap and only 200 MB is left for everything else. But a JVM also needs metaspace, thread stacks, code cache, direct byte buffers and the garbage collector's own structures. Under load those grow, the total crosses the limit, and the process is killed without ever raising an `OutOfMemoryError` â€” because the JVM never ran out of heap.",
     },
     {
       type: "p",
@@ -158,7 +158,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Polling that file catches sustained pressure and misses short spikes, which is often exactly the shape a latency problem takes. Attaching probes to the kernel's reclaim path measures the stalls directly instead — the trade-offs of running that in production are covered in [eBPF observability and security boundaries](/devops/ebpf-production-observability-security-boundaries).",
+      text: "Polling that file catches sustained pressure and misses short spikes, which is often exactly the shape a latency problem takes. Attaching probes to the kernel's reclaim path measures the stalls directly instead â€” the trade-offs of running that in production are covered in [eBPF observability and security boundaries](/devops/ebpf-production-observability-security-boundaries).",
     },
     { type: "h2", id: "practice", text: "What to do about it" },
     {

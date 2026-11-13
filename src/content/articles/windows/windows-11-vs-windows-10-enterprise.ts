@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "windows-11-vs-windows-10-enterprise",
@@ -62,7 +62,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "ESU is a runway, not a reprieve",
-      text: "Extended Security Updates deliver Critical and Important security fixes and nothing else. No new features, no non-security quality updates, and no general technical support for Windows itself — support covers the ESU licensing and installation only.",
+      text: "Extended Security Updates deliver Critical and Important security fixes and nothing else. No new features, no non-security quality updates, and no general technical support for Windows itself â€” support covers the ESU licensing and installation only.",
     },
     { type: "h2", id: "esu-mechanics", text: "What the ESU programme actually requires" },
     {
@@ -76,7 +76,7 @@ export const article: Article = {
         "KB5066791 or later must be installed, and the ESU Licensing Preparation Package KB5072653 must be installed after it. The order matters.",
         "Coverage is sold by year and is cumulative. Year One began in November 2025; buying Year Two means paying for Year One as well. Partial periods cannot be purchased.",
         "Commercial and education organisations can receive updates for a maximum of three years past end of support.",
-        "LTSC and LTSB releases are excluded — they run their own lifecycles and are not part of this programme.",
+        "LTSC and LTSB releases are excluded â€” they run their own lifecycles and are not part of this programme.",
       ],
     },
     {
@@ -87,7 +87,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The consumer programme is a different thing",
-      text: "The consumer option — a one-off payment, 1,000 Microsoft Rewards points, or free by syncing PC settings with Windows Backup — requires a Microsoft Account and runs only to 13 October 2026. It explicitly excludes devices that are domain-joined, Entra-joined, in kiosk mode or MDM-managed. It is not a route for a managed fleet, and staff asking about it should be told so directly.",
+      text: "The consumer option â€” a one-off payment, 1,000 Microsoft Rewards points, or free by syncing PC settings with Windows Backup â€” requires a Microsoft Account and runs only to 13 October 2026. It explicitly excludes devices that are domain-joined, Entra-joined, in kiosk mode or MDM-managed. It is not a route for a managed fleet, and staff asking about it should be told so directly.",
     },
     {
       type: "h2",
@@ -119,7 +119,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The hardware floor is what turns a software migration into a procurement project. Devices failing the TPM or CPU check cannot be upgraded in place at all, and in most estates that group is larger than the first audit suggests — because the audit is usually run against an asset register rather than against what is actually checking in. Since this becomes a buying exercise, it is also the cheapest moment to settle adjacent specifications that otherwise get decided by default, [the wireless generation among them](/networking/wifi-6-vs-wifi-7).",
+      text: "The hardware floor is what turns a software migration into a procurement project. Devices failing the TPM or CPU check cannot be upgraded in place at all, and in most estates that group is larger than the first audit suggests â€” because the audit is usually run against an asset register rather than against what is actually checking in. Since this becomes a buying exercise, it is also the cheapest moment to settle adjacent specifications that otherwise get decided by default, [the wireless generation among them](/networking/wifi-6-vs-wifi-7).",
     },
     { type: "h2", id: "migration-cost", text: "Where the migration effort actually is" },
     {
@@ -127,8 +127,8 @@ export const article: Article = {
       items: [
         "Hardware eligibility auditing, run against devices that are actually reporting. The gap between that list and the asset register is itself the first finding.",
         "Kernel-mode application compatibility. Security agents, VPN clients and anything with a filter driver break first and are slowest to get vendor fixes.",
-        "Re-baselining images, Autopilot profiles and configuration policies. Cheap if the build is already declarative, expensive if it depends on a captured image — and if settings still arrive by Group Policy, this is the moment the [migration to the settings catalog](/microsoft-intune/group-policy-to-settings-catalog-migration) stops being optional.",
-        "The unsupported tail — appliances, lab machines, equipment controllers. Deciding whether each gets ESU, network isolation or replacement is a decision to make deliberately, not a discovery to make late.",
+        "Re-baselining images, Autopilot profiles and configuration policies. Cheap if the build is already declarative, expensive if it depends on a captured image â€” and if settings still arrive by Group Policy, this is the moment the [migration to the settings catalog](/microsoft-intune/group-policy-to-settings-catalog-migration) stops being optional.",
+        "The unsupported tail â€” appliances, lab machines, equipment controllers. Deciding whether each gets ESU, network isolation or replacement is a decision to make deliberately, not a discovery to make late.",
       ],
     },
     {

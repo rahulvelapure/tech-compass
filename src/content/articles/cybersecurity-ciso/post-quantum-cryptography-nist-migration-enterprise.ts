@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "post-quantum-cryptography-nist-migration-enterprise",
@@ -29,7 +29,7 @@ export const article: Article = {
   tags: ["Cryptography", "Security", "Compliance", "TLS", "Architecture"],
   reviewStatus: "research-based",
   relatedSlugs: ["oauth2-token-theft-dpop-mechanics", "passkeys-enterprise-deployment-reality"],
-  draft: true,
+  draft: false,
   methodology:
     "Written from the NIST post-quantum cryptography project pages for FIPS 203, 204 and 205, CISA guidance on the harvest-now-decrypt-later threat, and the IETF work on hybrid key exchange in TLS 1.3, verified August 2026. Three corrections were made to the source draft: FIPS 206 is not finalised, the hybrid TLS group is not defined in RFC 9180, and library version claims were removed rather than restated. Qubit estimates are described as contested rather than quoted, because published figures have been revised substantially.",
   body: [
@@ -43,7 +43,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That is harvest now, decrypt later, and it reorders the priorities. For data that stops mattering in a year, the risk is small. For anything with a decade of required confidentiality — medical records, legal files, source code, state secrets — the exposure started whenever it crossed the wire.",
+      text: "That is harvest now, decrypt later, and it reorders the priorities. For data that stops mattering in a year, the risk is small. For anything with a decade of required confidentiality â€” medical records, legal files, source code, state secrets â€” the exposure started whenever it crossed the wire.",
     },
     { type: "h2", id: "what-breaks", text: "What actually breaks, and what does not" },
     {
@@ -81,7 +81,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**FIPS 204, ML-DSA** is a signature scheme derived from CRYSTALS-Dilithium. It replaces RSA and ECDSA for signing. Signatures are substantially larger than ECDSA signatures — enough to matter for protocols that carry many of them.",
+      text: "**FIPS 204, ML-DSA** is a signature scheme derived from CRYSTALS-Dilithium. It replaces RSA and ECDSA for signing. Signatures are substantially larger than ECDSA signatures â€” enough to matter for protocols that carry many of them.",
     },
     {
       type: "p",
@@ -104,7 +104,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "In TLS 1.3 the widely deployed group is X25519MLKEM768, combining X25519 with ML-KEM. It is specified in IETF work on hybrid ECDHE-MLKEM key agreement, with the general framework for hybrid exchange published separately. It is not defined in RFC 9180, which is a different document covering hybrid public key encryption — a citation error worth not repeating.",
+      text: "In TLS 1.3 the widely deployed group is X25519MLKEM768, combining X25519 with ML-KEM. It is specified in IETF work on hybrid ECDHE-MLKEM key agreement, with the general framework for hybrid exchange published separately. It is not defined in RFC 9180, which is a different document covering hybrid public key encryption â€” a citation error worth not repeating.",
     },
     {
       type: "p",
@@ -199,7 +199,7 @@ export const article: Article = {
       items: [
         "This is a public-key problem. AES-256 and SHA-2 do not need replacing.",
         "Harvest now, decrypt later makes long-lived data an issue today rather than later.",
-        "Three standards are final. FN-DSA is not, and HQC has been added — expect a portfolio.",
+        "Three standards are final. FN-DSA is not, and HQC has been added â€” expect a portfolio.",
         "Hybrid key exchange is the transition mechanism, and it is already widely deployed.",
         "The hybrid TLS group is specified in IETF ECDHE-MLKEM work, not RFC 9180.",
         "Key exchange is a config change. Signatures wait on certificate authorities and clients.",

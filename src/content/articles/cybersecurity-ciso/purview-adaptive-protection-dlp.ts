@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "purview-adaptive-protection-dlp",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["Purview DLP", "Insider Risk Management", "adaptive DLP", "data loss prevention"],
   tags: ["Microsoft Purview", "DLP", "Insider Risk", "Compliance", "Security"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Purview Adaptive Protection and Insider Risk Management. The article explains documented product behavior and keeps recommendations separate.",
   body: [
     { type: "p", text: "DLP rules often stay the same for every user. Risk does not. A user can move from low risk to high risk after a new signal appears." },

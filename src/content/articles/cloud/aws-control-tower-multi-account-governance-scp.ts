@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "aws-control-tower-multi-account-governance-scp",
@@ -11,7 +11,7 @@ export const article: Article = {
   standfirst:
     "IAM decides what a role may do. An SCP decides what the account may do at all. The gap between those two ideas is where most AWS governance goes wrong.",
   excerpt:
-    "SCPs set a ceiling that even the root user cannot lift — in member accounts. They do nothing at all in the management account, and nothing to service-linked roles. That shapes the whole design.",
+    "SCPs set a ceiling that even the root user cannot lift â€” in member accounts. They do nothing at all in the management account, and nothing to service-linked roles. That shapes the whole design.",
   authorId: "rahul-velapure",
   publishedAt: "2026-02-09",
   lastReviewedAt: "2026-08-26",
@@ -29,7 +29,7 @@ export const article: Article = {
   reviewStatus: "research-based",
   relatedSlugs: ["eks-pod-identity-vs-irsa-migration", "cloud-cost-controls"],
   methodology:
-    "Written from the AWS Organizations documentation on service control policies, the AWS Control Tower guide to how landing zones work, and the IAM Identity Center user guide, verified August 2026. Three corrections were made to the source draft. It stated that an SCP overrides the root user of any account; SCPs have no effect at all on users or roles in the management account, and none on service-linked roles anywhere. It said Control Tower creates the management account, which it does not — it is deployed into an existing one. And it described only preventive and detective controls, omitting proactive controls and the resource control policies added in late 2024. The draft's crypto-mining incident and its billing figures were removed.",
+    "Written from the AWS Organizations documentation on service control policies, the AWS Control Tower guide to how landing zones work, and the IAM Identity Center user guide, verified August 2026. Three corrections were made to the source draft. It stated that an SCP overrides the root user of any account; SCPs have no effect at all on users or roles in the management account, and none on service-linked roles anywhere. It said Control Tower creates the management account, which it does not â€” it is deployed into an existing one. And it described only preventive and detective controls, omitting proactive controls and the resource control policies added in late 2024. The draft's crypto-mining incident and its billing figures were removed.",
   body: [
     {
       type: "p",
@@ -188,7 +188,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "None of those four is clever. Each one is enforced somewhere the stolen key cannot reach, and the account boundary is what puts it there. Budgets and alerts are the last line, not the first — see [cloud cost controls](/cloud/cloud-cost-controls) for the FinOps side.",
+      text: "None of those four is clever. Each one is enforced somewhere the stolen key cannot reach, and the account boundary is what puts it there. Budgets and alerts are the last line, not the first â€” see [cloud cost controls](/cloud/cloud-cost-controls) for the FinOps side.",
     },
     {
       type: "p",

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "compliant-device-conditional-access-blocked",
@@ -51,18 +51,18 @@ export const article: Article = {
       items: [
         "The device is **enrolled in MDM and managed by Intune**.",
         "**Both the user and the device** are compliant with the assigned compliance policies.",
-        "By default, the user has a device compliance policy assigned — with the caveat that this depends on the tenant setting **Mark devices with no compliance policy assigned as**.",
+        "By default, the user has a device compliance policy assigned â€” with the caveat that this depends on the tenant setting **Mark devices with no compliance policy assigned as**.",
         "Exchange ActiveSync is activated on the device if the user is using the native mail client rather than Outlook. This happens automatically for iOS/iPadOS and Android Knox devices.",
         "For on-premises Exchange, the Intune Exchange Connector is correctly configured.",
       ],
     },
     {
       type: "p",
-      text: 'Two things in that list surprise people. The first is that the requirement is on the user *and* the device — a compliant device does not rescue a user who is failing something of their own. The second is the tenant setting, which means the answer to "is a device with no policy compliant?" is a configuration decision rather than a fixed behaviour, and it is set somewhere nobody looks during an incident.',
+      text: 'Two things in that list surprise people. The first is that the requirement is on the user *and* the device â€” a compliant device does not rescue a user who is failing something of their own. The second is the tenant setting, which means the answer to "is a device with no policy compliant?" is a configuration decision rather than a fixed behaviour, and it is set somewhere nobody looks during an incident.',
     },
     {
       type: "p",
-      text: "There is a further constraint on the Conditional Access side. The **Require device to be marked as compliant** control only supports Windows 10 and later, iOS, Android, macOS and Linux Ubuntu devices that are registered with Microsoft Entra ID and enrolled with Intune. Devices must be registered in Microsoft Entra ID before they can be marked compliant at all — so a device identity problem presents as a compliance problem.",
+      text: "There is a further constraint on the Conditional Access side. The **Require device to be marked as compliant** control only supports Windows 10 and later, iOS, Android, macOS and Linux Ubuntu devices that are registered with Microsoft Entra ID and enrolled with Intune. Devices must be registered in Microsoft Entra ID before they can be marked compliant at all â€” so a device identity problem presents as a compliance problem.",
     },
 
     {
@@ -80,7 +80,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**How recently did the device enrol or change?** Microsoft documents that when a device is first enrolled or updated, it can take some time for compliance information and attributes to be registered — the guidance is literally to wait a few minutes and try again. A device that became compliant ninety seconds ago is not yet a device whose compliance is visible everywhere it needs to be.",
+      text: "**How recently did the device enrol or change?** Microsoft documents that when a device is first enrolled or updated, it can take some time for compliance information and attributes to be registered â€” the guidance is literally to wait a few minutes and try again. A device that became compliant ninety seconds ago is not yet a device whose compliance is visible everywhere it needs to be.",
     },
     {
       type: "p",
@@ -94,7 +94,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "A specific Windows browser case",
-      text: "Microsoft Edge in InPrivate mode on Windows is documented as being considered a noncompliant device for the purposes of the compliant device control. A user who reproduces the problem in a private window to rule out a caching issue has changed the test rather than isolating the fault — worth knowing before you conclude the block is intermittent.",
+      text: "Microsoft Edge in InPrivate mode on Windows is documented as being considered a noncompliant device for the purposes of the compliant device control. A user who reproduces the problem in a private window to rule out a caching issue has changed the test rather than isolating the fault â€” worth knowing before you conclude the block is intermittent.",
     },
 
     {
@@ -104,11 +104,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Everything above is inference. The sign-in log records what actually happened, per policy, for that specific sign-in — and it is where this class of ticket should be settled rather than guessed at.",
+      text: "Everything above is inference. The sign-in log records what actually happened, per policy, for that specific sign-in â€” and it is where this class of ticket should be settled rather than guessed at.",
     },
     {
       type: "p",
-      text: "Open the failed sign-in event and go to the **Conditional Access** tab. It lists each policy that was evaluated, whether it applied, and the result. Alongside it, the **Device info** on the sign-in event shows whether Entra ID considered the device Managed or Compliant at the moment of the sign-in — which is the claim the policy actually evaluated, rather than the state Intune shows you now.",
+      text: "Open the failed sign-in event and go to the **Conditional Access** tab. It lists each policy that was evaluated, whether it applied, and the result. Alongside it, the **Device info** on the sign-in event shows whether Entra ID considered the device Managed or Compliant at the moment of the sign-in â€” which is the claim the policy actually evaluated, rather than the state Intune shows you now.",
     },
     {
       type: "p",
@@ -116,11 +116,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "One thing to be careful about when reading that tab: a policy showing Failure does not always mean the sign-in was blocked. A sign-in can succeed overall while individual policies report failure — report-only policies always do, and a grant configured with *require one of the selected controls* logs the unmet branch as a failure even though an alternative was satisfied. Read the overall result and the per-policy detail as two different pieces of information.",
+      text: "One thing to be careful about when reading that tab: a policy showing Failure does not always mean the sign-in was blocked. A sign-in can succeed overall while individual policies report failure â€” report-only policies always do, and a grant configured with *require one of the selected controls* logs the unmet branch as a failure even though an alternative was satisfied. Read the overall result and the per-policy detail as two different pieces of information.",
     },
     {
       type: "p",
-      text: "For a device-specific block, the error codes narrow it further. Microsoft documents `AADSTS53000` as a Conditional Access policy preventing device access, and `AADSTS530003` as device-related — with the suggested checks being whether the device platform is in the supported list, whether the client app type is included, and whether a device filter is excluding it.",
+      text: "For a device-specific block, the error codes narrow it further. Microsoft documents `AADSTS53000` as a Conditional Access policy preventing device access, and `AADSTS530003` as device-related â€” with the suggested checks being whether the device platform is in the supported list, whether the client app type is included, and whether a device filter is excluding it.",
     },
 
     {
@@ -144,7 +144,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Compliance Error state has a seven-day fuse",
-      text: "If a compliance setting returns **Error** rather than pass or fail, the device's compliance state remains unchanged for up to seven days while evaluation is retried. A device can therefore continue to show and behave as Compliant for a week while a setting is not actually being evaluated — and then go noncompliant with no apparent change. If a population loses access together for no obvious reason, look for settings that have been sitting in Error.",
+      text: "If a compliance setting returns **Error** rather than pass or fail, the device's compliance state remains unchanged for up to seven days while evaluation is retried. A device can therefore continue to show and behave as Compliant for a week while a setting is not actually being evaluated â€” and then go noncompliant with no apparent change. If a population loses access together for no obvious reason, look for settings that have been sitting in Error.",
     },
 
     {
@@ -163,7 +163,7 @@ export const article: Article = {
       rows: [
         [
           "Android, non-Knox",
-          "Access is not granted until the user selects the **Get Started Now** link in the quarantine email — even if already enrolled in Intune.",
+          "Access is not granted until the user selects the **Get Started Now** link in the quarantine email â€” even if already enrolled in Intune.",
           "Have the user open the quarantine email and follow the link. If it did not reach the device, it can be forwarded from a PC.",
         ],
         [
@@ -223,11 +223,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Then classify what you find into one of three buckets, because they have different owners. **The claim was never made** — licensing, device registration, an incapable client. **The claim was made but stale** — token timing, recent enrolment, a compliance setting sitting in Error. **The claim was made and rejected** — a device filter, an unsupported platform, or a policy that genuinely intends this outcome.",
+      text: "Then classify what you find into one of three buckets, because they have different owners. **The claim was never made** â€” licensing, device registration, an incapable client. **The claim was made but stale** â€” token timing, recent enrolment, a compliance setting sitting in Error. **The claim was made and rejected** â€” a device filter, an unsupported platform, or a policy that genuinely intends this outcome.",
     },
     {
       type: "p",
-      text: "The design lesson underneath all of this is that compliance is an input to an access decision, not the decision itself. Building compliance policies with that in mind — grace periods, notifications, and an understanding of what happens to devices no policy targets — prevents most of these tickets before they exist, which is covered in [Designing Intune compliance policies that do not lock people out](/microsoft-intune/intune-compliance-policy-design). The structure of the policies making the decision is covered in [A Conditional Access framework that survives contact with users](/microsoft-365-entra-id/conditional-access-framework).",
+      text: "The design lesson underneath all of this is that compliance is an input to an access decision, not the decision itself. Building compliance policies with that in mind â€” grace periods, notifications, and an understanding of what happens to devices no policy targets â€” prevents most of these tickets before they exist, which is covered in [Designing Intune compliance policies that do not lock people out](/microsoft-intune/intune-compliance-policy-design). The structure of the policies making the decision is covered in [A Conditional Access framework that survives contact with users](/microsoft-365-entra-id/conditional-access-framework).",
     },
   ],
   faq: [
@@ -254,7 +254,7 @@ export const article: Article = {
     {
       question: "Can a compliance setting in Error cause a sudden block?",
       answer:
-        "Yes, on a delay. When a setting returns Error, the device's compliance state remains unchanged for up to seven days while evaluation retries. The device continues to behave as compliant during that window, then becomes Not compliant if the setting is still in Error — which can look like a large group losing access simultaneously for no apparent reason.",
+        "Yes, on a delay. When a setting returns Error, the device's compliance state remains unchanged for up to seven days while evaluation retries. The device continues to behave as compliant during that window, then becomes Not compliant if the setting is still in Error â€” which can look like a large group losing access simultaneously for no apparent reason.",
     },
     {
       question: "Why are Android devices blocked even though they are enrolled and compliant?",

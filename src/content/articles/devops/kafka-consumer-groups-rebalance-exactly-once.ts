@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kafka-consumer-groups-rebalance-exactly-once",
@@ -84,7 +84,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For any group beyond a handful of members this is the single highest-value setting. It does not make rebalances free — they still take rounds to converge — but it stops one failure freezing everything.",
+      text: "For any group beyond a handful of members this is the single highest-value setting. It does not make rebalances free â€” they still take rounds to converge â€” but it stops one failure freezing everything.",
     },
     {
       type: "callout",
@@ -140,7 +140,7 @@ export const article: Article = {
         "One record in that batch is slow. A downstream call blocks, or a query goes to a cold index.",
         "Processing the batch takes longer than `max.poll.interval.ms`.",
         "The consumer leaves the group. The partition is reassigned.",
-        "The new owner starts from the last committed offset — which includes the same slow record.",
+        "The new owner starts from the last committed offset â€” which includes the same slow record.",
         "It reaches the same batch, takes the same time, and leaves too.",
       ],
     },
@@ -154,7 +154,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The better fixes attack the batch. Lower `max.poll.records` so a worst-case batch still finishes inside the window. Or decouple the loop entirely — poll on one thread, hand records to workers, and commit only what the workers finish. The main thread then keeps polling regardless of how slow one record is.",
+      text: "The better fixes attack the batch. Lower `max.poll.records` so a worst-case batch still finishes inside the window. Or decouple the loop entirely â€” poll on one thread, hand records to workers, and commit only what the workers finish. The main thread then keeps polling regardless of how slow one record is.",
     },
     {
       type: "p",

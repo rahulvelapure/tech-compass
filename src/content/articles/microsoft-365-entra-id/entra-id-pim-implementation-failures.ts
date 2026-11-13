@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-id-pim-implementation-failures",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "Eligible instead of standing is the whole idea. If turning it on asks nothing, you have added a click and kept the risk.",
   excerpt:
-    "PIM turns permanent admin rights into rights you activate. Whether that reduces risk depends entirely on what activation demands — and on which accounts you deliberately leave out of it.",
+    "PIM turns permanent admin rights into rights you activate. Whether that reduces risk depends entirely on what activation demands â€” and on which accounts you deliberately leave out of it.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
@@ -33,7 +33,7 @@ export const article: Article = {
     "entra-id-authentication-context-step-up-mfa",
   ],
   methodology:
-    "Written from Microsoft Learn documentation on Privileged Identity Management, role settings, PIM for groups and emergency access accounts, verified August 2026. Licensing requirements are stated because they gate the feature entirely. The configuration table is labelled a starting point rather than a standard — Microsoft publishes no prescribed durations, and the right values depend on how your administrators actually work.",
+    "Written from Microsoft Learn documentation on Privileged Identity Management, role settings, PIM for groups and emergency access accounts, verified August 2026. Licensing requirements are stated because they gate the feature entirely. The configuration table is labelled a starting point rather than a standard â€” Microsoft publishes no prescribed durations, and the right values depend on how your administrators actually work.",
   body: [
     {
       type: "p",
@@ -54,7 +54,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The role then expires on its own. Everything — request, approval, activation, expiry — lands in the audit log.",
+      text: "The role then expires on its own. Everything â€” request, approval, activation, expiry â€” lands in the audit log.",
     },
     {
       type: "p",
@@ -78,7 +78,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For the roles that own the tenant, activation should involve a second person. For everything else, a justification at minimum — it is a weak control on its own and it makes the audit log worth reading.",
+      text: "For the roles that own the tenant, activation should involve a second person. For everything else, a justification at minimum â€” it is a weak control on its own and it makes the audit log worth reading.",
     },
     { type: "h3", id: "duration", text: "Durations that outlast the work" },
     {
@@ -105,7 +105,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Directory roles get the full treatment. Azure resource roles — the ones that let someone create infrastructure, reach data and change access — are left as permanent assignments. An attacker who lands on a subscription owner never encounters PIM at all.",
+      text: "Directory roles get the full treatment. Azure resource roles â€” the ones that let someone create infrastructure, reach data and change access â€” are left as permanent assignments. An attacker who lands on a subscription owner never encounters PIM at all.",
     },
     {
       type: "p",
@@ -118,7 +118,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "An alert on activation of the highest roles is cheap and worth having. The useful signal is not activation itself but activation that looks unusual — at an odd hour, by someone who rarely does it, or with a justification that says nothing.",
+      text: "An alert on activation of the highest roles is cheap and worth having. The useful signal is not activation itself but activation that looks unusual â€” at an odd hour, by someone who rarely does it, or with a justification that says nothing.",
     },
     { type: "h2", id: "break-glass", text: "The accounts that must stay outside PIM" },
     {
@@ -137,7 +137,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Those accounts need their own discipline — stored credentials, monitoring on any use, and periodic testing that they still work. [Break-glass accounts](/microsoft-365-entra-id/conditional-access-break-glass-accounts) covers what that involves.",
+      text: "Those accounts need their own discipline â€” stored credentials, monitoring on any use, and periodic testing that they still work. [Break-glass accounts](/microsoft-365-entra-id/conditional-access-break-glass-accounts) covers what that involves.",
     },
     { type: "h2", id: "config", text: "A starting configuration" },
     {
@@ -153,12 +153,12 @@ export const article: Article = {
           "Tenant-wide administration",
           "Two approvers",
           "Required, with a ticket reference",
-          "Short — hours, not a shift",
+          "Short â€” hours, not a shift",
         ],
         ["Security administration", "One approver", "Required", "Short"],
         ["Workload administration", "Usually none", "Required", "Moderate"],
         ["Azure resource ownership", "One approver", "Required", "Short"],
-        ["Emergency access", "Not applicable — excluded from PIM", "—", "Permanent"],
+        ["Emergency access", "Not applicable â€” excluded from PIM", "â€”", "Permanent"],
       ],
     },
     {
@@ -172,7 +172,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Turning a role on can be gated by an authentication context. Taking the role then requires meeting a set policy — a phishing-resistant method, a healthy device — whatever the session did earlier. That is covered in [authentication context and step-up](/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa), and this is one of the better places to use it.",
+      text: "Turning a role on can be gated by an authentication context. Taking the role then requires meeting a set policy â€” a phishing-resistant method, a healthy device â€” whatever the session did earlier. That is covered in [authentication context and step-up](/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa), and this is one of the better places to use it.",
     },
     { type: "h2", id: "takeaways", text: "What to do with this" },
     {
@@ -187,7 +187,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The failure mode worth watching for is not a misconfiguration, it is a deployment that satisfies an audit without changing anything. PIM is enabled, roles are eligible, the report looks correct, and activation takes one click that nobody reviews. Whether it is doing anything comes down to a handful of settings — and to whether someone is reading the log it produces.",
+      text: "The failure mode worth watching for is not a misconfiguration, it is a deployment that satisfies an audit without changing anything. PIM is enabled, roles are eligible, the report looks correct, and activation takes one click that nobody reviews. Whether it is doing anything comes down to a handful of settings â€” and to whether someone is reading the log it produces.",
     },
   ],
   faq: [

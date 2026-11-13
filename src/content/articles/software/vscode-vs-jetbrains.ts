@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "vscode-vs-jetbrains",
@@ -27,7 +27,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "The short answer: choose **JetBrains when the codebase is large, statically typed and long-lived**, and **VS Code when the work is polyglot, infrastructure-shaped or remote**. Everything else in this comparison is a consequence of that one architectural difference — a JetBrains IDE builds and holds a model of your whole project, and VS Code asks a language server about the file in front of it.",
+      text: "The short answer: choose **JetBrains when the codebase is large, statically typed and long-lived**, and **VS Code when the work is polyglot, infrastructure-shaped or remote**. Everything else in this comparison is a consequence of that one architectural difference â€” a JetBrains IDE builds and holds a model of your whole project, and VS Code asks a language server about the file in front of it.",
     },
     {
       type: "p",
@@ -41,11 +41,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "If the answer is usually yes — you are working in a service you know well, or in configuration, scripts and infrastructure where the file is the unit of work — a project-wide index is largely wasted effort. You pay for it on every startup and in every gigabyte of memory, and you cash it in rarely.",
+      text: "If the answer is usually yes â€” you are working in a service you know well, or in configuration, scripts and infrastructure where the file is the unit of work â€” a project-wide index is largely wasted effort. You pay for it on every startup and in every gigabyte of memory, and you cash it in rarely.",
     },
     {
       type: "p",
-      text: "If the answer is usually no — you are working in a codebase big enough that finding the right place is the hard part, where a rename touches thirty files and you need to know every caller of a method before you dare change its signature — the index is the product. That is what you are buying.",
+      text: "If the answer is usually no â€” you are working in a codebase big enough that finding the right place is the hard part, where a rename touches thirty files and you need to know every caller of a method before you dare change its signature â€” the index is the product. That is what you are buying.",
     },
     {
       type: "diagram",
@@ -53,25 +53,25 @@ export const article: Article = {
       ascii: `                    Do you know which file to
                   open before you start?
 
-                  ┌──────────┴──────────┐
+                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
                 YES                     NO
-                  │                      │
+                  â”‚                      â”‚
       Scripts, config, IaC,      Large typed codebase,
       polyglot repos, quick      unfamiliar territory,
       edits over SSH             cross-cutting change
-                  │                      │
-                  ▼                      ▼
-           ┌─────────────┐        ┌─────────────┐
-           │  VS Code    │        │  JetBrains  │
-           └─────────────┘        └─────────────┘
-                  │                      │
-                  └──────────┬───────────┘
-                             ▼
+                  â”‚                      â”‚
+                  â–¼                      â–¼
+           â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+           â”‚  VS Code    â”‚        â”‚  JetBrains  â”‚
+           â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                  â”‚                      â”‚
+                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                             â–¼
                  Formatting, linting and build
                  config live in the REPOSITORY,
                  not in either editor`,
       caption:
-        "The editor is a personal choice. The output it produces is not — that belongs to the repository.",
+        "The editor is a personal choice. The output it produces is not â€” that belongs to the repository.",
     },
 
     { type: "h2", text: "What the project index actually buys", id: "what-the-index-buys" },
@@ -86,10 +86,10 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "**Rename that is a refactor, not a find-and-replace.** It updates the declaration, every reference, and stops if any usage would become ambiguous — including in places a regular expression would never have matched, and skipping the string literal that merely contains the same word.",
-        "**Call hierarchies in both directions.** Who calls this, and what does this call, transitively — answered from the symbol graph rather than by searching for the method name.",
+        "**Rename that is a refactor, not a find-and-replace.** It updates the declaration, every reference, and stops if any usage would become ambiguous â€” including in places a regular expression would never have matched, and skipping the string literal that merely contains the same word.",
+        "**Call hierarchies in both directions.** Who calls this, and what does this call, transitively â€” answered from the symbol graph rather than by searching for the method name.",
         '**Type-aware inspections.** Not "this line looks odd" but "this branch is unreachable given the nullability annotation three files away".',
-        "**Extract method, change signature, move class** — structural edits that keep the project compiling, rather than leaving you to fix the breakage.",
+        "**Extract method, change signature, move class** â€” structural edits that keep the project compiling, rather than leaving you to fix the breakage.",
       ],
     },
     {
@@ -109,7 +109,7 @@ export const article: Article = {
     { type: "h2", text: "Where VS Code is the better tool", id: "where-vs-code-wins" },
     {
       type: "p",
-      text: "VS Code's architecture — a fast shell that delegates language intelligence to [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) implementations — has three consequences that matter more than the feature lists suggest.",
+      text: "VS Code's architecture â€” a fast shell that delegates language intelligence to [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) implementations â€” has three consequences that matter more than the feature lists suggest.",
     },
     {
       type: "p",
@@ -121,13 +121,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Its extension coverage is broader at the edges.** For any given mainstream language, JetBrains' first-party support is usually deeper. For the long tail — a niche template language, a vendor's proprietary config format, a protocol you touch twice a year — someone has published a VS Code extension and probably has not published a JetBrains plugin.",
+      text: "**Its extension coverage is broader at the edges.** For any given mainstream language, JetBrains' first-party support is usually deeper. For the long tail â€” a niche template language, a vendor's proprietary config format, a protocol you touch twice a year â€” someone has published a VS Code extension and probably has not published a JetBrains plugin.",
     },
     {
       type: "callout",
       variant: "warning",
       title: '"Open source" is doing less work than you think',
-      text: "The VS Code source is MIT-licensed, but the build Microsoft ships is not: it adds proprietary components, telemetry and the Marketplace. The Marketplace terms restrict extensions to Microsoft products, which is why forks such as VSCodium default to the Open VSX registry instead — and why some extensions, including several first-party ones, cannot legally be used in those forks at all. If your reason for choosing VS Code is licensing, verify that reasoning against the actual terms.",
+      text: "The VS Code source is MIT-licensed, but the build Microsoft ships is not: it adds proprietary components, telemetry and the Marketplace. The Marketplace terms restrict extensions to Microsoft products, which is why forks such as VSCodium default to the Open VSX registry instead â€” and why some extensions, including several first-party ones, cannot legally be used in those forks at all. If your reason for choosing VS Code is licensing, verify that reasoning against the actual terms.",
     },
 
     { type: "h2", text: "Side by side", id: "side-by-side" },
@@ -144,7 +144,7 @@ export const article: Article = {
         ],
         [
           "Cold start on a large repo",
-          "Slow — indexing must finish before full accuracy",
+          "Slow â€” indexing must finish before full accuracy",
           "Immediate, accuracy arrives as servers warm",
         ],
         ["Memory footprint", "Substantially higher; JVM-based", "Substantially lower"],
@@ -155,8 +155,8 @@ export const article: Article = {
         ],
         [
           "Polyglot repositories",
-          "Weaker — one IDE per ecosystem, or a heavier bundle",
-          "Strong — one editor, many extensions",
+          "Weaker â€” one IDE per ecosystem, or a heavier bundle",
+          "Strong â€” one editor, many extensions",
         ],
         ["Remote / container work", "Supported via Gateway", "First-class and widely assumed"],
         ["Database and ORM tooling", "Integrated and genuinely good", "Extension-dependent"],
@@ -184,13 +184,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Second, **free is not free at team scale either**. VS Code's cost shows up as configuration effort: every developer assembling their own extension set, disagreeing about formatters, and debugging why the same file looks different on two machines. That cost is real but it is fixable once, in the repository — which is the next section.",
+      text: "Second, **free is not free at team scale either**. VS Code's cost shows up as configuration effort: every developer assembling their own extension set, disagreeing about formatters, and debugging why the same file looks different on two machines. That cost is real but it is fixable once, in the repository â€” which is the next section.",
     },
 
     { type: "h2", text: "Standardise the output, not the editor", id: "standardise-the-output" },
     {
       type: "p",
-      text: "The most common mistake organisations make here is trying to mandate an editor. It generates resentment, it is unenforceable for anyone senior enough to ignore it, and it solves the wrong problem. What actually hurts is not that two people use different editors — it is that two people's editors produce different bytes.",
+      text: "The most common mistake organisations make here is trying to mandate an editor. It generates resentment, it is unenforceable for anyone senior enough to ignore it, and it solves the wrong problem. What actually hurts is not that two people use different editors â€” it is that two people's editors produce different bytes.",
     },
     {
       type: "p",
@@ -239,7 +239,7 @@ indent_style = tab`,
     },
     {
       type: "p",
-      text: "Run the same commands in CI and the argument is settled by a machine that has no preference. The editor is then free to be whatever each person is fastest in — which is the correct outcome, and the one you were trying to get to by standardising in the first place.",
+      text: "Run the same commands in CI and the argument is settled by a machine that has no preference. The editor is then free to be whatever each person is fastest in â€” which is the correct outcome, and the one you were trying to get to by standardising in the first place.",
     },
     {
       type: "callout",
@@ -253,7 +253,7 @@ indent_style = tab`,
       type: "ul",
       items: [
         "**Choosing on startup time.** You start an IDE once a day and navigate it for eight hours. Optimise the eight hours.",
-        "**Buying JetBrains for a repository with no type system to index.** The value is in the model. No model, no value — just the memory cost.",
+        "**Buying JetBrains for a repository with no type system to index.** The value is in the model. No model, no value â€” just the memory cost.",
         "**Treating the Community editions as the paid product minus polish.** They exclude whole categories of functionality, and for some languages they do not exist at all. Check what is actually included before assuming a free tier covers the team.",
         "**Assuming VS Code means no licensing questions.** See the marketplace terms above. This bites hardest in regulated environments and in anything shipped to a customer's machine.",
         "**Mandating one editor across a polyglot organisation.** The backend team and the platform team have genuinely different needs. Standardise the repository, not the person.",
@@ -305,7 +305,7 @@ indent_style = tab`,
     {
       question: "Which uses less memory?",
       answer:
-        "VS Code, substantially — JetBrains IDEs run on the JVM and hold a project index in memory. The size of the gap depends on the project and the extensions loaded, so no figure is given here; measure it on your own repository if it is likely to be the deciding factor.",
+        "VS Code, substantially â€” JetBrains IDEs run on the JVM and hold a project index in memory. The size of the gap depends on the project and the extensions loaded, so no figure is given here; measure it on your own repository if it is likely to be the deciding factor.",
     },
   ],
   sources: [
@@ -320,7 +320,7 @@ indent_style = tab`,
       url: "https://sales.jetbrains.com/hc/en-gb/articles/206544679-Subscription-based-licensing",
     },
     {
-      title: "Visual Studio Code FAQ — licensing and telemetry",
+      title: "Visual Studio Code FAQ â€” licensing and telemetry",
       publisher: "Microsoft",
       url: "https://code.visualstudio.com/docs/supporting/faq",
     },

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "backup-restore-testing",
@@ -155,7 +155,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A dated record of each drill — scenario, measured time, failures found, fixes made — is the artefact auditors ask for. It is also the argument that funds the next improvement, which is the part that matters more.",
+      text: "A dated record of each drill â€” scenario, measured time, failures found, fixes made â€” is the artefact auditors ask for. It is also the argument that funds the next improvement, which is the part that matters more.",
     },
     { type: "h2", id: "cadence", text: "Cadence, and when to break it" },
     {

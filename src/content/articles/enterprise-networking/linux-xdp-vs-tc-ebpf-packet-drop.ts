@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "linux-xdp-vs-tc-ebpf-packet-drop",
@@ -89,7 +89,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Generic mode is for testing, and it is easy to run by accident",
-      text: "Generic XDP works on virtual devices, including veth pairs — so a program you developed in containers or a VM probably ran in generic mode. It behaves correctly and it is not fast, because the allocation you were trying to avoid has already happened. Check which mode you attached in before you conclude anything about performance, and confirm the driver supports native mode on the machines that matter.",
+      text: "Generic XDP works on virtual devices, including veth pairs â€” so a program you developed in containers or a VM probably ran in generic mode. It behaves correctly and it is not fast, because the allocation you were trying to avoid has already happened. Check which mode you attached in before you conclude anything about performance, and confirm the driver supports native mode on the machines that matter.",
     },
     { type: "h2", id: "tc", text: "TC runs later and knows more" },
     {
@@ -106,7 +106,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A TC program has the socket buffer and the metadata attached to it. It can act on connection tracking state, on the results of address translation, and on kernel context that only exists because the allocation happened. It also works on every kind of interface — bridges, tunnels, virtual devices — rather than depending on driver support.",
+      text: "A TC program has the socket buffer and the metadata attached to it. It can act on connection tracking state, on the results of address translation, and on kernel context that only exists because the allocation happened. It also works on every kind of interface â€” bridges, tunnels, virtual devices â€” rather than depending on driver support.",
     },
     { type: "h2", id: "layering", text: "Serious filters use both" },
     {
@@ -128,7 +128,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "XDP handles the obvious volume. Traffic to a port you do not serve, malformed packets, sources already on a block list — none of that needs context, and all of it is cheap to reject in the driver.",
+      text: "XDP handles the obvious volume. Traffic to a port you do not serve, malformed packets, sources already on a block list â€” none of that needs context, and all of it is cheap to reject in the driver.",
     },
     {
       type: "p",

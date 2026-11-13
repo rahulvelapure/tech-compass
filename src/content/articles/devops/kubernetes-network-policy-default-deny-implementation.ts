@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-network-policy-default-deny-implementation",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "Kubernetes stores the rule whether or not anything acts on it. Nothing warns you. That quiet is the real risk.",
   excerpt:
-    "Default-deny is four lines of YAML and a fortnight of work. DNS breaks, metadata breaks, the API server becomes unreachable — and on some clusters the policy was never enforced at all.",
+    "Default-deny is four lines of YAML and a fortnight of work. DNS breaks, metadata breaks, the API server becomes unreachable â€” and on some clusters the policy was never enforced at all.",
   authorId: "rahul-velapure",
   publishedAt: "2026-03-23",
   lastReviewedAt: "2026-08-24",
@@ -74,7 +74,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**A pod selected by any policy denies everything not explicitly allowed** — for the directions that policy covers. This is where default-deny comes from. It is a per-pod consequence of being selected, not a cluster-wide mode you switch on.",
+      text: "**A pod selected by any policy denies everything not explicitly allowed** â€” for the directions that policy covers. This is where default-deny comes from. It is a per-pod consequence of being selected, not a cluster-wide mode you switch on.",
     },
     {
       type: "p",
@@ -82,7 +82,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That last property matters for design. Policy sets grow by addition, which means an over-broad rule written months ago cannot be overridden later — it has to be found and narrowed.",
+      text: "That last property matters for design. Policy sets grow by addition, which means an over-broad rule written months ago cannot be overridden later â€” it has to be found and narrowed.",
     },
     { type: "h2", id: "breaks", text: "What default-deny breaks first" },
     {
@@ -142,7 +142,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Calico** enforces through iptables in its traditional dataplane, and through eBPF in its newer one. The iptables path is mature and widely deployed; rule evaluation is sequential, so the work grows with the size of the policy set. The eBPF dataplane changes that shape and also changes operational behaviour — notably how service traffic is handled — so it is a migration rather than a flag. It also offers a cluster-wide policy resource outside the Kubernetes API, useful for host endpoints.",
+      text: "**Calico** enforces through iptables in its traditional dataplane, and through eBPF in its newer one. The iptables path is mature and widely deployed; rule evaluation is sequential, so the work grows with the size of the policy set. The eBPF dataplane changes that shape and also changes operational behaviour â€” notably how service traffic is handled â€” so it is a migration rather than a flag. It also offers a cluster-wide policy resource outside the Kubernetes API, useful for host endpoints.",
     },
     {
       type: "p",
@@ -163,7 +163,7 @@ export const article: Article = {
         "Pick a target pod and note its address and a listening port.",
         "Apply a deny-ingress policy that picks out just that one pod.",
         "From another pod, attempt a connection to that port.",
-        "It should fail — timeout or refused. If it succeeds, nothing is enforcing your policies.",
+        "It should fail â€” timeout or refused. If it succeeds, nothing is enforcing your policies.",
         "Remove the test policy.",
       ],
     },
@@ -190,15 +190,15 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Egress last, and log before you enforce.** Egress is harder because it requires knowing every external endpoint an application calls — APIs, registries, telemetry, licence servers. Run it in a visibility-only mode first and read what would have been dropped.",
+      text: "**Egress last, and log before you enforce.** Egress is harder because it requires knowing every external endpoint an application calls â€” APIs, registries, telemetry, licence servers. Run it in a visibility-only mode first and read what would have been dropped.",
     },
     {
       type: "p",
-      text: "The whole sequence is layer 3 and 4 work. It controls which pods may exchange packets, not what those packets are permitted to ask for. Application-level authorisation belongs to a mesh, and the two are complementary rather than competing — the operational cost of the mesh side is covered in [service mesh mTLS overhead](/devops/service-mesh-mtls-operational-overhead).",
+      text: "The whole sequence is layer 3 and 4 work. It controls which pods may exchange packets, not what those packets are permitted to ask for. Application-level authorisation belongs to a mesh, and the two are complementary rather than competing â€” the operational cost of the mesh side is covered in [service mesh mTLS overhead](/devops/service-mesh-mtls-operational-overhead).",
     },
     {
       type: "p",
-      text: "If you want the layer underneath all of this — how a packet actually leaves a pod and reaches another — that is [Kubernetes pod networking](/devops/kubernetes-pod-networking-packet-flow).",
+      text: "If you want the layer underneath all of this â€” how a packet actually leaves a pod and reaches another â€” that is [Kubernetes pod networking](/devops/kubernetes-pod-networking-packet-flow).",
     },
     { type: "h2", id: "takeaways", text: "What to take away" },
     {

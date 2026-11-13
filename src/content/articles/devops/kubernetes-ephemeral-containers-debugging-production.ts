@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-ephemeral-containers-debugging-production",
@@ -73,7 +73,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "It cannot mount your volumes",
-      text: "Ephemeral containers cannot declare volume mounts. This trips people up because the container is inside the pod, so it feels like it should see the pod's files. It does not: each container has its own filesystem from its own image. You can still reach another container's files, but through the process namespace rather than a mount — see below. If you genuinely need the volumes attached, make a copy of the pod instead.",
+      text: "Ephemeral containers cannot declare volume mounts. This trips people up because the container is inside the pod, so it feels like it should see the pod's files. It does not: each container has its own filesystem from its own image. You can still reach another container's files, but through the process namespace rather than a mount â€” see below. If you genuinely need the volumes attached, make a copy of the pod instead.",
     },
     { type: "h2", id: "kubectl-debug", text: "kubectl debug does the wiring" },
     {

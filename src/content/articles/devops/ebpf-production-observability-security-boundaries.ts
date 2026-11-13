@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "ebpf-production-observability-security-boundaries",
@@ -55,7 +55,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The load path runs once. A user-space loader — usually libbpf — reads the bytecode, adjusts it for the running kernel, and calls the `bpf()` syscall. The verifier analyses the program, and if it passes, the kernel JIT-compiles it to native machine code and attaches it to a hook. The run path is what happens afterwards. An event hits the hook and the compiled native code runs. It writes results into a map or a ring buffer, and user space collects them.",
+      text: "The load path runs once. A user-space loader â€” usually libbpf â€” reads the bytecode, adjusts it for the running kernel, and calls the `bpf()` syscall. The verifier analyses the program, and if it passes, the kernel JIT-compiles it to native machine code and attaches it to a hook. The run path is what happens afterwards. An event hits the hook and the compiled native code runs. It writes results into a map or a ring buffer, and user space collects them.",
     },
     {
       type: "figure",
@@ -63,7 +63,7 @@ export const article: Article = {
       alt: "A load path across the top, running once: a loader reading BTF, then the verifier, then JIT compilation. A dashed line drops from the JIT stage into the middle of a vertical run path that repeats for every event. The run path descends through five stages: an event such as a syscall, packet or probe; the kernel hook it reaches; the eBPF program running as native code; the map or ring buffer it writes to; and the user-space agent that reads from it.",
       caption:
         "Verification and JIT compilation are load-time costs paid once per program. Only the vertical path repeats per event.",
-      svg: '<svg viewBox="0 0 440 510" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><marker id="tc-ebpf-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="currentColor"/></marker></defs><g fill="currentColor" font-size="11" letter-spacing="0.1em"><text x="8" y="18">LOAD PATH — ONCE</text><text x="60" y="104">RUN PATH — EVERY EVENT</text></g><g stroke="currentColor" stroke-width="1.5" fill="none"><rect x="8" y="30" width="124" height="40"/><rect x="158" y="30" width="124" height="40"/><rect x="308" y="30" width="124" height="40"/><rect x="60" y="116" width="280" height="46"/><rect x="60" y="196" width="280" height="46"/><rect x="60" y="276" width="280" height="46"/><rect x="60" y="356" width="280" height="46"/><rect x="60" y="436" width="280" height="46"/></g><g fill="currentColor" font-size="12" text-anchor="middle"><text x="70" y="55">Loader + BTF</text><text x="220" y="55">Verifier</text><text x="370" y="55">JIT</text></g><g fill="currentColor" font-size="14" text-anchor="middle"><text x="200" y="144">Event: syscall, packet, probe</text><text x="200" y="224">Kernel hook</text><text x="200" y="304">eBPF program runs (native)</text><text x="200" y="384">Map or ring buffer</text><text x="200" y="464">User-space agent</text></g><g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#tc-ebpf-arrow)"><line x1="134" y1="50" x2="152" y2="50"/><line x1="284" y1="50" x2="302" y2="50"/><line x1="200" y1="162" x2="200" y2="192"/><line x1="200" y1="242" x2="200" y2="272"/><line x1="200" y1="322" x2="200" y2="352"/><line x1="200" y1="402" x2="200" y2="432"/></g><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-dasharray="4 4" marker-end="url(#tc-ebpf-arrow)"><polyline points="370,72 370,299 346,299"/></g></svg>',
+      svg: '<svg viewBox="0 0 440 510" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><marker id="tc-ebpf-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="currentColor"/></marker></defs><g fill="currentColor" font-size="11" letter-spacing="0.1em"><text x="8" y="18">LOAD PATH â€” ONCE</text><text x="60" y="104">RUN PATH â€” EVERY EVENT</text></g><g stroke="currentColor" stroke-width="1.5" fill="none"><rect x="8" y="30" width="124" height="40"/><rect x="158" y="30" width="124" height="40"/><rect x="308" y="30" width="124" height="40"/><rect x="60" y="116" width="280" height="46"/><rect x="60" y="196" width="280" height="46"/><rect x="60" y="276" width="280" height="46"/><rect x="60" y="356" width="280" height="46"/><rect x="60" y="436" width="280" height="46"/></g><g fill="currentColor" font-size="12" text-anchor="middle"><text x="70" y="55">Loader + BTF</text><text x="220" y="55">Verifier</text><text x="370" y="55">JIT</text></g><g fill="currentColor" font-size="14" text-anchor="middle"><text x="200" y="144">Event: syscall, packet, probe</text><text x="200" y="224">Kernel hook</text><text x="200" y="304">eBPF program runs (native)</text><text x="200" y="384">Map or ring buffer</text><text x="200" y="464">User-space agent</text></g><g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#tc-ebpf-arrow)"><line x1="134" y1="50" x2="152" y2="50"/><line x1="284" y1="50" x2="302" y2="50"/><line x1="200" y1="162" x2="200" y2="192"/><line x1="200" y1="242" x2="200" y2="272"/><line x1="200" y1="322" x2="200" y2="352"/><line x1="200" y1="402" x2="200" y2="432"/></g><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-dasharray="4 4" marker-end="url(#tc-ebpf-arrow)"><polyline points="370,72 370,299 346,299"/></g></svg>',
     },
     {
       type: "p",
@@ -82,10 +82,10 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "**Memory safety.** Every load and store must be provably within a known region — the stack, a map value, or the program context. Pointer arithmetic is tracked, and a pointer that might be null must be checked before it is dereferenced.",
+        "**Memory safety.** Every load and store must be provably within a known region â€” the stack, a map value, or the program context. Pointer arithmetic is tracked, and a pointer that might be null must be checked before it is dereferenced.",
         "**Termination.** The program must be shown to finish. Until kernel 5.3 this meant no loops at all; the graph was checked to be acyclic.",
         "**Restricted calls.** Programs cannot call arbitrary kernel functions. They call a fixed set of helpers, and which helpers are available depends on the program type.",
-        "**Reference discipline.** Resources that must be released — an acquired socket reference, for example — are tracked so a program cannot leak them.",
+        "**Reference discipline.** Resources that must be released â€” an acquired socket reference, for example â€” are tracked so a program cannot leak them.",
       ],
     },
     {
@@ -148,7 +148,7 @@ export const article: Article = {
     { type: "h2", id: "maps", text: "Maps and the path back to user space" },
     {
       type: "p",
-      text: "An eBPF program cannot return data by itself. It writes into maps — typed key-value structures shared with user space — and an agent reads them. Map type is a design decision with real consequences. Hash and array maps hold state and lookup tables. Per-CPU variants avoid contention. LRU variants suit the case where bounded memory matters more than completeness.",
+      text: "An eBPF program cannot return data by itself. It writes into maps â€” typed key-value structures shared with user space â€” and an agent reads them. Map type is a design decision with real consequences. Hash and array maps hold state and lookup tables. Per-CPU variants avoid contention. LRU variants suit the case where bounded memory matters more than completeness.",
     },
     {
       type: "p",

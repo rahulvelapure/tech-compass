@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-global-secure-access-vpn",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["Global Secure Access VPN", "Microsoft Entra Private Access", "Zero Trust access", "VPN replacement"],
   tags: ["Microsoft Entra", "Global Secure Access", "Zero Trust", "Networking"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Global Secure Access and Private Access. Product behavior is based on the cited Microsoft sources.",
   body: [
     { type: "p", text: "A VPN solves remote access. A user connects to the VPN. The user then reaches a private network." },

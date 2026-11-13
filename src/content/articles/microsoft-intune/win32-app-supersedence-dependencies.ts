@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "win32-app-supersedence-dependencies",
@@ -58,13 +58,13 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The superseded app does not need targeting",
-      text: "The asymmetry goes one level further. If the superseding app is targeted to a device that has the superseded app, supersedence takes place regardless of whether the superseded app has targeting. So an old version that was assigned years ago and later unassigned can still be uninstalled by a supersedence relationship — and because only targeted apps show install statuses in the admin center, the app doing the uninstalling may be the only one you can see.",
+      text: "The asymmetry goes one level further. If the superseding app is targeted to a device that has the superseded app, supersedence takes place regardless of whether the superseded app has targeting. So an old version that was assigned years ago and later unassigned can still be uninstalled by a supersedence relationship â€” and because only targeted apps show install statuses in the admin center, the app doing the uninstalling may be the only one you can see.",
     },
 
     {
       type: "h2",
       id: "update-vs-replacement",
-      text: "Update or replacement — one toggle, two behaviours",
+      text: "Update or replacement â€” one toggle, two behaviours",
     },
     {
       type: "p",
@@ -76,12 +76,12 @@ export const article: Article = {
       head: ["Setting", "Microsoft's scenario", "What happens on the device"],
       rows: [
         [
-          "**Off** — app update",
+          "**Off** â€” app update",
           "You want to update an app with a newer version of the same app.",
           "The superseding app's installer handles the upgrade. Intune sends no uninstall command. Whether the old version disappears is entirely down to the installer's own behaviour.",
         ],
         [
-          "**On** — app replacement",
+          "**On** â€” app replacement",
           "You want to replace an app with an entirely different app.",
           "Intune uninstalls the superseded app using its configured uninstall command line, then installs the superseding app.",
         ],
@@ -89,7 +89,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The decision is really a question about the installer, not about your intent. If the vendor's MSI upgrades in place — most well-behaved ones do — leave the toggle off and let it. If you are moving from one product to another, or from a vendor's own packaging to a repackaged build that will not upgrade cleanly over the top, turn it on.",
+      text: "The decision is really a question about the installer, not about your intent. If the vendor's MSI upgrades in place â€” most well-behaved ones do â€” leave the toggle off and let it. If you are moving from one product to another, or from a vendor's own packaging to a repackaged build that will not upgrade cleanly over the top, turn it on.",
     },
     {
       type: "p",
@@ -111,7 +111,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "So a detection rule that is slightly too loose on the old app — matching a leftover folder, an orphaned registry key, a shared component the uninstaller deliberately leaves behind — does not cause a cosmetic reporting problem. It leaves the device with the old app uninstalled and the new one never installed. The user has no application at all, and the console shows an install that has not completed rather than an error.",
+      text: "So a detection rule that is slightly too loose on the old app â€” matching a leftover folder, an orphaned registry key, a shared component the uninstaller deliberately leaves behind â€” does not cause a cosmetic reporting problem. It leaves the device with the old app uninstalled and the new one never installed. The user has no application at all, and the console shows an install that has not completed rather than an error.",
     },
     {
       type: "callout",
@@ -127,13 +127,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Both relationship types can exist in the same app graph, and Microsoft documents that enforcement prefers supersedence over dependency — but that genuine conflicts are reported rather than silently resolved. Three documented cases are worth knowing:",
+      text: "Both relationship types can exist in the same app graph, and Microsoft documents that enforcement prefers supersedence over dependency â€” but that genuine conflicts are reported rather than silently resolved. Three documented cases are worth knowing:",
     },
     {
       type: "ul",
       items: [
         "**A depends on B, and C supersedes B.** A reports a conflict state. The dependency points at an app that something else is replacing, and Intune will not guess.",
-        "**A depends on B, and C replaces A.** C installs and A is replaced — but B is left behind. The dependency was satisfied for an app that no longer exists, and nothing cleans it up.",
+        "**A depends on B, and C replaces A.** C installs and A is replaced â€” but B is left behind. The dependency was satisfied for an app that no longer exists, and nothing cleans it up.",
         "**A depends on both B and C, and B supersedes C.** Supersedence does not go through. The graph is contradictory: one prerequisite is meant to replace another prerequisite of the same app.",
       ],
     },
@@ -149,7 +149,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Supersedence allows a maximum of **10 nodes in a relationship**, and the counting is less generous than it sounds. Microsoft's wording is that there is a maximum of 10 updated or replaced apps *including references to other apps* — if your app references another app, which references others, that creates a graph, and every app in the graph counts toward the limit of 10.",
+      text: "Supersedence allows a maximum of **10 nodes in a relationship**, and the counting is less generous than it sounds. Microsoft's wording is that there is a maximum of 10 updated or replaced apps *including references to other apps* â€” if your app references another app, which references others, that creates a graph, and every app in the graph counts toward the limit of 10.",
     },
     {
       type: "p",
@@ -157,11 +157,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Dependencies have a different constraint. Each dependency follows the standard Win32 retry logic — three install attempts, five minutes apart — and the global re-evaluation cadence of roughly 24 hours. If you choose not to set a dependency to **Automatically install**, the app installation is not attempted at all, and reporting shows the dependency flagged as failed with a reason.",
+      text: "Dependencies have a different constraint. Each dependency follows the standard Win32 retry logic â€” three install attempts, five minutes apart â€” and the global re-evaluation cadence of roughly 24 hours. If you choose not to set a dependency to **Automatically install**, the app installation is not attempted at all, and reporting shows the dependency flagged as failed with a reason.",
     },
     {
       type: "p",
-      text: "One user-facing consequence worth knowing before support asks: if an app has dependencies, or is itself a dependency of something else, the Company Portal does not show an uninstall button for it — even when **Allow available uninstall** is set to Yes. Dependencies are also not applicable when uninstalling an app, so removal does not walk the graph backwards.",
+      text: "One user-facing consequence worth knowing before support asks: if an app has dependencies, or is itself a dependency of something else, the Company Portal does not show an uninstall button for it â€” even when **Allow available uninstall** is set to Yes. Dependencies are also not applicable when uninstalling an app, so removal does not walk the graph backwards.",
     },
 
     {
@@ -180,7 +180,7 @@ export const article: Article = {
       rows: [
         [
           "What you can change",
-          "Content, metadata, detection and install commands only — nothing stored outside the app object.",
+          "Content, metadata, detection and install commands only â€” nothing stored outside the app object.",
           "The app in its entirety, with a completely new set of configurations.",
         ],
         [
@@ -236,7 +236,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Use dependencies for genuine prerequisites and nothing else — runtimes, frameworks, agents that must exist before the payload will run. Their value is precisely that they install without targeting, and that property becomes a liability the moment you use them to express something that is really sequencing or preference.",
+      text: "Use dependencies for genuine prerequisites and nothing else â€” runtimes, frameworks, agents that must exist before the payload will run. Their value is precisely that they install without targeting, and that property becomes a liability the moment you use them to express something that is really sequencing or preference.",
     },
     {
       type: "p",
@@ -248,7 +248,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Both relationships depend entirely on detection being accurate — the agent decides what to install, what to uninstall and whether a replacement can proceed based on what detection tells it. That is covered in [Win32 app detection rules](/microsoft-intune/win32-app-detection-rules), and the client-side order in which these relationships are resolved is visible in [the Intune Management Extension logs](/microsoft-intune/intune-management-extension-logs).",
+      text: "Both relationships depend entirely on detection being accurate â€” the agent decides what to install, what to uninstall and whether a replacement can proceed based on what detection tells it. That is covered in [Win32 app detection rules](/microsoft-intune/win32-app-detection-rules), and the client-side order in which these relationships are resolved is visible in [the Intune Management Extension logs](/microsoft-intune/intune-management-extension-logs).",
     },
   ],
   faq: [
@@ -261,7 +261,7 @@ export const article: Article = {
       question:
         "What is the difference between an app update and an app replacement in supersedence?",
       answer:
-        "It is the Uninstall previous version toggle. Left off, the superseding app's installer handles the upgrade and Intune sends no uninstall command — this is an app update. Turned on, Intune uninstalls the superseded app using its configured uninstall command and then installs the new one — this is an app replacement.",
+        "It is the Uninstall previous version toggle. Left off, the superseding app's installer handles the upgrade and Intune sends no uninstall command â€” this is an app update. Turned on, Intune uninstalls the superseded app using its configured uninstall command and then installs the new one â€” this is an app replacement.",
     },
     {
       question: "Why did the old app get uninstalled but the new one never install?",
@@ -271,7 +271,7 @@ export const article: Article = {
     {
       question: "How many apps can be in a supersedence relationship?",
       answer:
-        "A maximum of 10 nodes. The limit counts the whole graph, including references to other apps — so a chain where each version supersedes the previous one consumes the budget quickly. Have the current version supersede the specific older versions still present rather than chaining every historical release.",
+        "A maximum of 10 nodes. The limit counts the whole graph, including references to other apps â€” so a chain where each version supersedes the previous one consumes the budget quickly. Have the current version supersede the specific older versions still present rather than chaining every historical release.",
     },
     {
       question: "Are dependencies removed when the app that needed them is replaced?",
@@ -281,7 +281,7 @@ export const article: Article = {
     {
       question: "Should I use supersedence or an in-place update for a new version?",
       answer:
-        "An in-place update is simpler for a routine version bump where targeting and configuration do not change — you swap the content and update the detection and install commands on the existing app. Use supersedence when you need the old app object to survive, when several versions are in the field at once, or when you are replacing one product with a different one. Review detection rules after either.",
+        "An in-place update is simpler for a routine version bump where targeting and configuration do not change â€” you swap the content and update the detection and install commands on the existing app. Use supersedence when you need the old app object to survive, when several versions are in the field at once, or when you are replacing one product with a different one. Review detection rules after either.",
     },
   ],
   sources: [

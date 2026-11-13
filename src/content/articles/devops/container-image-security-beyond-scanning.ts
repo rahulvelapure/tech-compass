@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "container-image-security-beyond-scanning",
@@ -119,13 +119,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Step four is the one that matters and the one most often skipped. Signing without verification is a ritual — the signature exists and nothing checks it. The control is the admission policy, not the signature.",
+      text: "Step four is the one that matters and the one most often skipped. Signing without verification is a ritual â€” the signature exists and nothing checks it. The control is the admission policy, not the signature.",
     },
     {
       type: "callout",
       variant: "tip",
       title: "Sign in the pipeline, verify in the cluster",
-      text: "Keep the signing key out of human hands. The identity that signs should be the pipeline itself, using short-lived credentials from your identity provider rather than a stored key — the same reasoning as [keeping static secrets out of CI](/devops/secrets-management-cicd-vault-oidc-reality). A signing key a person can export is a signing key an attacker can use.",
+      text: "Keep the signing key out of human hands. The identity that signs should be the pipeline itself, using short-lived credentials from your identity provider rather than a stored key â€” the same reasoning as [keeping static secrets out of CI](/devops/secrets-management-cicd-vault-oidc-reality). A signing key a person can export is a signing key an attacker can use.",
     },
     { type: "h2", id: "sbom", text: "Knowing what is in there, later" },
     {
@@ -138,7 +138,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A bill of materials generated at build time — a list of what went into the image — turns that into a query. It is unglamorous, it is cheap to produce, and it is the difference between an afternoon and a week when something significant lands.",
+      text: "A bill of materials generated at build time â€” a list of what went into the image â€” turns that into a query. It is unglamorous, it is cheap to produce, and it is the difference between an afternoon and a week when something significant lands.",
     },
     { type: "h2", id: "runtime", text: "Runtime asks a different question entirely" },
     {
@@ -156,7 +156,7 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "A process starting that this container has no reason to start — a shell inside a web server, for instance.",
+        "A process starting that this container has no reason to start â€” a shell inside a web server, for instance.",
         "Writes outside the paths the workload normally touches.",
         "Network connections to somewhere it has never talked to before.",
         "Attempts to gain privilege, reach the host filesystem, or change capabilities.",
@@ -168,7 +168,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "This is also where workload identity connects. Knowing what a container is allowed to talk to, and enforcing it, is the [mesh side of the same problem](/devops/service-mesh-mtls-operational-overhead) — one covers what it may reach, the other notices what it actually did.",
+      text: "This is also where workload identity connects. Knowing what a container is allowed to talk to, and enforcing it, is the [mesh side of the same problem](/devops/service-mesh-mtls-operational-overhead) â€” one covers what it may reach, the other notices what it actually did.",
     },
     { type: "h2", id: "model", text: "What a complete picture covers" },
     {

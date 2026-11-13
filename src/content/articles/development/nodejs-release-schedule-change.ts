@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "nodejs-release-schedule-change",
@@ -78,12 +78,12 @@ export const article: Article = {
         "Native addons. Anything compiling against Node's C++ API needs a rebuild, and a dependency that has stopped being maintained will block the whole upgrade. This is the most common hard stop.",
         "The bundled V8 version. Behaviour that depended on an engine detail, and performance characteristics that a benchmark was tuned against, can both shift.",
         "Deprecated APIs finally being removed. A runtime deprecation warning that has been ignored for two majors becomes a runtime error in the one that removes it.",
-        "The toolchain around the runtime, not the runtime itself — the package manager, the test runner, the bundler and the type definitions all need to agree on the target.",
+        "The toolchain around the runtime, not the runtime itself â€” the package manager, the test runner, the bundler and the type definitions all need to agree on the target.",
       ],
     },
     {
       type: "p",
-      text: "An annual cadence helps here more than it first appears. The work of an upgrade scales with how much changed since the last one, and a team that skips two majors is not doing one upgrade — it is doing three at once, with the failures interleaved so that diagnosing any single one is harder.",
+      text: "An annual cadence helps here more than it first appears. The work of an upgrade scales with how much changed since the last one, and a team that skips two majors is not doing one upgrade â€” it is doing three at once, with the failures interleaved so that diagnosing any single one is harder.",
     },
     { type: "h2", id: "planning", text: "What to do about it" },
     {
@@ -109,7 +109,7 @@ export const article: Article = {
     {
       question: "Does the change affect how long a release is supported?",
       answer:
-        "The published lifetimes for the current lines are unchanged — Active LTS carries bug fixes and security patches, followed by a maintenance period for critical security fixes. What changes is how many releases exist and that all of them become LTS.",
+        "The published lifetimes for the current lines are unchanged â€” Active LTS carries bug fixes and security patches, followed by a maintenance period for critical security fixes. What changes is how many releases exist and that all of them become LTS.",
     },
     {
       question: "Do odd-numbered releases disappear?",

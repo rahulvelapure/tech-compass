@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "windows-365-vs-azure-virtual-desktop-architecture",
@@ -29,7 +29,7 @@ export const article: Article = {
   tags: ["Windows", "Azure", "Virtual Desktop", "Endpoint Management", "Architecture"],
   reviewStatus: "research-based",
   relatedSlugs: ["windows-11-vs-windows-10-enterprise", "entra-join-vs-hybrid-join"],
-  draft: true,
+  draft: false,
   methodology:
     "Written from Microsoft Learn documentation on Windows 365 Cloud PC sizing, GPU Cloud PCs and Azure Virtual Desktop architecture, verified August 2026. Two corrections were made to the source draft: Windows 365 does offer GPU Cloud PCs, and the maximum non-GPU size is larger than the draft stated. All per-user and per-hour pricing was removed rather than repeated, because Microsoft revises it and a stale figure invites the wrong decision.",
   body: [
@@ -69,7 +69,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Pooled hosts recover that waste. Several users share the CPU and memory of one host, and because their active moments do not coincide, the host carries more people than its size suggests. For task work — a browser, a line-of-business application, Office — the density can be substantial.",
+      text: "Pooled hosts recover that waste. Several users share the CPU and memory of one host, and because their active moments do not coincide, the host carries more people than its size suggests. For task work â€” a browser, a line-of-business application, Office â€” the density can be substantial.",
     },
     {
       type: "p",
@@ -136,7 +136,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "AVD is consumption billing across several components — compute for the hosts, storage for profiles, networking, plus the licensing that entitles you to the OS. It rewards good engineering: scaling that shuts hosts down out of hours, and pooling that raises density. It also punishes neglect, because a host pool sized for peak and never scaled down bills continuously.",
+      text: "AVD is consumption billing across several components â€” compute for the hosts, storage for profiles, networking, plus the licensing that entitles you to the OS. It rewards good engineering: scaling that shuts hosts down out of hours, and pooling that raises density. It also punishes neglect, because a host pool sized for peak and never scaled down bills continuously.",
     },
     {
       type: "p",

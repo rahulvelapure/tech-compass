@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "opentelemetry-vs-proprietary-apm-observability-cost",
@@ -47,7 +47,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "So the real question is not “open source or SaaS”. It is “which layers do we want to run ourselves?” That one leads to a far better design.",
+      text: "So the real question is not â€œopen source or SaaSâ€. It is â€œwhich layers do we want to run ourselves?â€ That one leads to a far better design.",
     },
     {
       type: "h2",
@@ -138,7 +138,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Do not use an invented break-even point",
-      text: "Where the line falls depends on your volume, your team, your retention, your contract, and what the managed features are worth. “Self-hosting wins above X GB” is a slogan, not a rule.",
+      text: "Where the line falls depends on your volume, your team, your retention, your contract, and what the managed features are worth. â€œSelf-hosting wins above X GBâ€ is a slogan, not a rule.",
     },
     {
       type: "h2",

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "terraform-state-splitting-enterprise-scale-terragrunt",
@@ -119,7 +119,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Run a command across many modules and Terragrunt builds a directed acyclic graph from those blocks. It applies the network layer, waits, then applies anything downstream — running independent modules in parallel where the graph allows.",
+      text: "Run a command across many modules and Terragrunt builds a directed acyclic graph from those blocks. It applies the network layer, waits, then applies anything downstream â€” running independent modules in parallel where the graph allows.",
     },
     {
       type: "p",
@@ -169,7 +169,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "A moved block is not the same tool",
-      text: "`moved` blocks handle renaming or restructuring a resource inside one state. They are declarative, they live in your configuration, and they survive in version control — which makes them the right choice for refactoring within a module. They cannot move a resource to a different state file. That still needs the pull, move, push sequence above.",
+      text: "`moved` blocks handle renaming or restructuring a resource inside one state. They are declarative, they live in your configuration, and they survive in version control â€” which makes them the right choice for refactoring within a module. They cannot move a resource to a different state file. That still needs the pull, move, push sequence above.",
     },
     { type: "h2", id: "pipeline", text: "The pipeline has to change too" },
     {
@@ -182,7 +182,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Then decide deliberately what a change to a shared layer does. Planning every dependent module downstream is the safe answer and the slow one. Whatever you choose, choose it — the default of ignoring it is how a network change reaches production without anyone seeing its downstream effect.",
+      text: "Then decide deliberately what a change to a shared layer does. Planning every dependent module downstream is the safe answer and the slow one. Whatever you choose, choose it â€” the default of ignoring it is how a network change reaches production without anyone seeing its downstream effect.",
     },
   ],
   faq: [

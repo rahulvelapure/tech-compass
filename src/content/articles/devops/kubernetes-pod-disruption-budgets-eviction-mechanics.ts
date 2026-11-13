@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-pod-disruption-budgets-eviction-mechanics",
@@ -33,7 +33,7 @@ export const article: Article = {
     "kubernetes-storage-classes-costs-performance-traps",
   ],
   methodology:
-    "Written from the current Kubernetes disruptions and PDB documentation, verified August 2026. The source draft's claim that rounding always favours the application was corrected — rounding up maxUnavailable permits more disruption than the percentage suggests — along with its description of custom controllers, which are supported when they expose the scale subresource. An invented incident narrative and its timings were removed.",
+    "Written from the current Kubernetes disruptions and PDB documentation, verified August 2026. The source draft's claim that rounding always favours the application was corrected â€” rounding up maxUnavailable permits more disruption than the percentage suggests â€” along with its description of custom controllers, which are supported when they expose the scale subresource. An invented incident narrative and its timings were removed.",
   body: [
     {
       type: "p",
@@ -54,7 +54,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Whatever is doing the draining then has to decide what to do with that refusal. In practice it waits and asks again, hoping a replacement has become ready in the meantime. It will keep asking. Nothing in the design gives up, which is why a badly specified budget does not produce an error — it produces a drain that runs forever.",
+      text: "Whatever is doing the draining then has to decide what to do with that refusal. In practice it waits and asks again, hoping a replacement has become ready in the meantime. It will keep asking. Nothing in the design gives up, which is why a badly specified budget does not produce an error â€” it produces a drain that runs forever.",
     },
     {
       type: "callout",
@@ -114,7 +114,7 @@ export const article: Article = {
     { type: "h3", id: "nowhere", text: "A replacement with nowhere to go" },
     {
       type: "p",
-      text: "This one is harder to see because the budget is reasonable. Evicting a pod is permitted, so the eviction succeeds. The controller creates a replacement, and the replacement cannot be scheduled — no node satisfies its affinity, its taints, its resource request, or the zone its volume lives in.",
+      text: "This one is harder to see because the budget is reasonable. Evicting a pod is permitted, so the eviction succeeds. The controller creates a replacement, and the replacement cannot be scheduled â€” no node satisfies its affinity, its taints, its resource request, or the zone its volume lives in.",
     },
     {
       type: "p",
@@ -140,23 +140,23 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The provisioner's own controls sit on top of that. Infrastructure-level disruption limits — how many nodes may churn at once, when churn is allowed — are a separate layer from the application's budget, and the application's budget wins. Where those layers meet is covered in [Karpenter and cluster autoscaling](/devops/karpenter-vs-cluster-autoscaler-node-scaling).",
+      text: "The provisioner's own controls sit on top of that. Infrastructure-level disruption limits â€” how many nodes may churn at once, when churn is allowed â€” are a separate layer from the application's budget, and the application's budget wins. Where those layers meet is covered in [Karpenter and cluster autoscaling](/devops/karpenter-vs-cluster-autoscaler-node-scaling).",
     },
     {
       type: "callout",
       variant: "tip",
       title: "Alert on disruptions allowed reaching zero",
-      text: "kube-state-metrics exposes `kube_poddisruptionbudget_status_pod_disruptions_allowed`. When it sits at zero, that budget is currently refusing every eviction — which is correct during a rollout and a problem if it persists. Alerting on a sustained zero catches both the misconfigured budget and the workload that has quietly stopped being able to reschedule, long before someone finds it during an upgrade.",
+      text: "kube-state-metrics exposes `kube_poddisruptionbudget_status_pod_disruptions_allowed`. When it sits at zero, that budget is currently refusing every eviction â€” which is correct during a rollout and a problem if it persists. Alerting on a sustained zero catches both the misconfigured budget and the workload that has quietly stopped being able to reschedule, long before someone finds it during an upgrade.",
     },
     { type: "h2", id: "design", text: "Writing one that works" },
     {
       type: "ul",
       items: [
-        "**Prefer maxUnavailable for stateless work.** It expresses the thing you care about — how much can be down at once — and it holds as replicas change.",
+        "**Prefer maxUnavailable for stateless work.** It expresses the thing you care about â€” how much can be down at once â€” and it holds as replicas change.",
         "**Prefer minAvailable for quorum systems.** A database or a broker cares about a floor, and the floor is a property of the quorum rather than a fraction of the replicas.",
         "**Spread before you budget.** A budget cannot help if every replica is on one node. Topology spread constraints are what make the budget satisfiable during a drain.",
         "**Check the arithmetic at your actual replica count**, not the one in the example you copied. Two replicas with `minAvailable: 50%` permits exactly one eviction; two with `minAvailable: 1` is the same thing written more clearly.",
-        "**Remember termination is separate.** A budget governs whether an eviction starts. Once allowed, the pod gets SIGTERM and its grace period — an application that takes minutes to exit makes every drain take minutes.",
+        "**Remember termination is separate.** A budget governs whether an eviction starts. Once allowed, the pod gets SIGTERM and its grace period â€” an application that takes minutes to exit makes every drain take minutes.",
       ],
     },
     {

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "windows-laps-entra-id-architecture-deployment",
@@ -95,7 +95,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Dropping the schema extension is the change that unblocks most organisations. It was rarely the technical difficulty that stopped adoption — it was the change-control conversation about modifying the forest schema.",
+      text: "Dropping the schema extension is the change that unblocks most organisations. It was rarely the technical difficulty that stopped adoption â€” it was the change-control conversation about modifying the forest schema.",
     },
     { type: "h2", id: "access", text: "Who can read the password" },
     {
@@ -109,8 +109,8 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "`microsoft.directory/deviceLocalCredentials/standard/read` — metadata only. Device name, when the password last rotated, when it next expires. Fine for reporting and compliance.",
-        "`microsoft.directory/deviceLocalCredentials/password/read` — the password itself. Sensitive, and it should be assigned deliberately.",
+        "`microsoft.directory/deviceLocalCredentials/standard/read` â€” metadata only. Device name, when the password last rotated, when it next expires. Fine for reporting and compliance.",
+        "`microsoft.directory/deviceLocalCredentials/password/read` â€” the password itself. Sensitive, and it should be assigned deliberately.",
       ],
     },
     {
@@ -146,7 +146,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "If you are unsure which join type a device actually has, that distinction drives more than LAPS — [Entra join and hybrid join compared](/microsoft-intune/entra-join-vs-hybrid-join) covers what each one changes.",
+      text: "If you are unsure which join type a device actually has, that distinction drives more than LAPS â€” [Entra join and hybrid join compared](/microsoft-intune/entra-join-vs-hybrid-join) covers what each one changes.",
     },
     { type: "h2", id: "operational", text: "Operational facts worth knowing first" },
     {
@@ -170,7 +170,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "**Confirm the policy applied.** Check the device's work or school account details for the configuration profile. If it is not there, this is a delivery problem, not a LAPS problem.",
-        "**Read the LAPS operational log on the device.** It records backup attempts and their outcome, and it is the only place that tells you why one failed. Check the current event IDs in the documentation rather than trusting a number from an article — they differ by backup target.",
+        "**Read the LAPS operational log on the device.** It records backup attempts and their outcome, and it is the only place that tells you why one failed. Check the current event IDs in the documentation rather than trusting a number from an article â€” they differ by backup target.",
         "**Check your own permissions.** An account without the password read permission sees an error that reads like missing data rather than denied access. Confirm the role before concluding the backup failed.",
         "**Check the join type.** A registered personal device is not an Entra joined device and will not process device-targeted policy.",
         "**Check the backup target.** In a hybrid estate this is the single most common cause of a password that exists but is not where you are looking.",

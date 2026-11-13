@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "linux-file-permissions-posix-acls-capabilities",
@@ -275,7 +275,7 @@ export const article: Article = {
   ],
   sources: [
     {
-      title: "acl(5) — Access Control Lists",
+      title: "acl(5) â€” Access Control Lists",
       publisher: "Linux man-pages project",
       url: "https://man7.org/linux/man-pages/man5/acl.5.html",
     },
@@ -285,7 +285,7 @@ export const article: Article = {
       url: "https://man7.org/linux/man-pages/man1/setfacl.1.html",
     },
     {
-      title: "capabilities(7) — overview of Linux capabilities",
+      title: "capabilities(7) â€” overview of Linux capabilities",
       publisher: "Linux man-pages project",
       url: "https://man7.org/linux/man-pages/man7/capabilities.7.html",
     },

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "enterprise-dns-security-doh-dot-filtering",
@@ -118,7 +118,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "This is on by default, not opt-in",
-      text: "Browsers and operating systems now enable encrypted DNS on their own, often pointing at a public resolver. If nobody has managed that setting, queries are already bypassing your resolver — and because nothing breaks, there is no signal that your filtering policy has stopped applying to part of the estate.",
+      text: "Browsers and operating systems now enable encrypted DNS on their own, often pointing at a public resolver. If nobody has managed that setting, queries are already bypassing your resolver â€” and because nothing breaks, there is no signal that your filtering policy has stopped applying to part of the estate.",
     },
     {
       type: "callout",
@@ -160,7 +160,7 @@ export const article: Article = {
     { type: "h2", id: "fit", text: "Where this sits" },
     {
       type: "p",
-      text: "DNS filtering is not a replacement for a web proxy, an endpoint agent, or email filtering. It is the earliest and cheapest layer, and it fails in different ways than they do — which is precisely why it is worth having alongside them.",
+      text: "DNS filtering is not a replacement for a web proxy, an endpoint agent, or email filtering. It is the earliest and cheapest layer, and it fails in different ways than they do â€” which is precisely why it is worth having alongside them.",
     },
     {
       type: "p",
@@ -183,7 +183,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The awkward part of this subject is that encrypted DNS is genuinely good. It closes a real privacy gap, and arguing against it puts security teams on the wrong side of an obviously reasonable change. The workable position is not to resist the encryption but to be the one providing it — so that queries are private from everyone except the organisation that is accountable for what those devices reach.",
+      text: "The awkward part of this subject is that encrypted DNS is genuinely good. It closes a real privacy gap, and arguing against it puts security teams on the wrong side of an obviously reasonable change. The workable position is not to resist the encryption but to be the one providing it â€” so that queries are private from everyone except the organisation that is accountable for what those devices reach.",
     },
   ],
   faq: [
@@ -225,7 +225,7 @@ export const article: Article = {
       url: "https://www.rfc-editor.org/rfc/rfc8484",
     },
     {
-      title: "RFC 1035: Domain Names — Implementation and Specification",
+      title: "RFC 1035: Domain Names â€” Implementation and Specification",
       publisher: "IETF",
       url: "https://www.rfc-editor.org/rfc/rfc1035",
     },

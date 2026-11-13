@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-id-vs-active-directory-differences",
@@ -8,11 +8,11 @@ export const article: Article = {
   title: "Entra ID and Active Directory are not the same system",
   seoTitle: "Entra ID vs Active Directory: the real differences",
   metaDescription:
-    "Entra ID is not Active Directory in the cloud. How the two differ in structure, authentication and device management — and what that means for hybrid identity.",
+    "Entra ID is not Active Directory in the cloud. How the two differ in structure, authentication and device management â€” and what that means for hybrid identity.",
   standfirst:
     "One is a tree you walk. The other is a flat list you query. Teams that miss this build the wrong thing twice.",
   excerpt:
-    "Entra ID is not a cloud copy of Active Directory. The two differ in how they store objects, how they prove identity, and how they configure a device — and each difference changes a design decision.",
+    "Entra ID is not a cloud copy of Active Directory. The two differ in how they store objects, how they prove identity, and how they configure a device â€” and each difference changes a design decision.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-22",
   draft: false,
@@ -35,7 +35,7 @@ export const article: Article = {
     "group-policy-to-settings-catalog-migration",
   ],
   methodology:
-    "Written from Microsoft Learn documentation on directory comparison, Entra Connect synchronisation, password hash sync internals and device identity, verified August 2026. Where the documentation describes a mechanism, it is reported as a mechanism. Where this article recommends a design, it says so. No performance figures or migration timings are given — those depend on directory size and are not generalisable.",
+    "Written from Microsoft Learn documentation on directory comparison, Entra Connect synchronisation, password hash sync internals and device identity, verified August 2026. Where the documentation describes a mechanism, it is reported as a mechanism. Where this article recommends a design, it says so. No performance figures or migration timings are given â€” those depend on directory size and are not generalisable.",
   body: [
     {
       type: "p",
@@ -74,7 +74,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Entra ID does not nest in that sense. A tenant holds users, groups and devices. There is no forest and no domain. Administrative units exist, and they delegate administration, but they are not OUs — nothing inherits policy by sitting inside one.",
+      text: "Entra ID does not nest in that sense. A tenant holds users, groups and devices. There is no forest and no domain. Administrative units exist, and they delegate administration, but they are not OUs â€” nothing inherits policy by sitting inside one.",
     },
     {
       type: "p",

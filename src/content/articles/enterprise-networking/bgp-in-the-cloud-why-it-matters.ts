@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "bgp-in-the-cloud-why-it-matters",
@@ -31,7 +31,7 @@ export const article: Article = {
   reviewStatus: "research-based",
   relatedSlugs: ["zero-trust-network-segmentation", "cloud-cost-controls"],
   methodology:
-    "Written from AWS Direct Connect routing documentation, the AWS BGP communities reference, Azure ExpressRoute routing documentation and RFC 4271, verified August 2026. Community values and BGP state names are quoted from those sources. Vendor behaviour is labelled by vendor, because the two providers differ in ways that matter. No throughput or latency figures are given — they depend on the circuit.",
+    "Written from AWS Direct Connect routing documentation, the AWS BGP communities reference, Azure ExpressRoute routing documentation and RFC 4271, verified August 2026. Community values and BGP state names are quoted from those sources. Vendor behaviour is labelled by vendor, because the two providers differ in ways that matter. No throughput or latency figures are given â€” they depend on the circuit.",
   body: [
     {
       type: "p",
@@ -48,7 +48,7 @@ export const article: Article = {
     { type: "h2", id: "what-bgp-does", text: "What BGP is actually doing" },
     {
       type: "p",
-      text: "BGP is a path-vector protocol. It exchanges routing information between autonomous systems — networks under separate control. It is what holds the public internet together, and the same machinery runs your hybrid link.",
+      text: "BGP is a path-vector protocol. It exchanges routing information between autonomous systems â€” networks under separate control. It is what holds the public internet together, and the same machinery runs your hybrid link.",
     },
     {
       type: "p",
@@ -172,8 +172,8 @@ export const article: Article = {
       caption: "Where a session stalls, and what it usually means",
       head: ["Stuck in", "Usually means"],
       rows: [
-        ["Active", "TCP 179 is not getting through — firewall or security group"],
-        ["OpenSent", "TCP is fine, negotiation is not — commonly a mismatched ASN"],
+        ["Active", "TCP 179 is not getting through â€” firewall or security group"],
+        ["OpenSent", "TCP is fine, negotiation is not â€” commonly a mismatched ASN"],
         ["Idle", "The session is administratively down, or the peer address is wrong"],
       ],
     },

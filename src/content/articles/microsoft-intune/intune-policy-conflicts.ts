@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "intune-policy-conflicts",
@@ -33,7 +33,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "A conflict in Intune has a precise meaning: **two or more policies assigned to the same device set the same setting to different values**, and Intune will not choose between them. The setting may fail to apply entirely. Nothing is broken — the platform is telling you that you have given two policies equal authority over one setting and it has no basis for picking a winner.",
+      text: "A conflict in Intune has a precise meaning: **two or more policies assigned to the same device set the same setting to different values**, and Intune will not choose between them. The setting may fail to apply entirely. Nothing is broken â€” the platform is telling you that you have given two policies equal authority over one setting and it has no basis for picking a winner.",
     },
     {
       type: "p",
@@ -61,7 +61,7 @@ export const article: Article = {
         ],
         [
           "Conflict",
-          "Two settings apply to the same device and Intune cannot resolve which wins — or an existing setting on the device cannot be overridden.",
+          "Two settings apply to the same device and Intune cannot resolve which wins â€” or an existing setting on the device cannot be overridden.",
           "Your policy design. Requires a human decision.",
         ],
         [
@@ -76,7 +76,7 @@ export const article: Article = {
         ],
         [
           "Not applicable",
-          "The device cannot receive the policy — wrong platform, or an OS version that does not support the setting.",
+          "The device cannot receive the policy â€” wrong platform, or an OS version that does not support the setting.",
           "Targeting or filters, not the policy body.",
         ],
       ],
@@ -104,7 +104,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Where the same setting appears in both a compliance policy and any configuration policy — device configuration, settings catalog, endpoint security or a security baseline — the compliance policy value is used. This is the one genuine hierarchy in the product, and it is absolute rather than situational.",
+      text: "Where the same setting appears in both a compliance policy and any configuration policy â€” device configuration, settings catalog, endpoint security or a security baseline â€” the compliance policy value is used. This is the one genuine hierarchy in the product, and it is absolute rather than situational.",
     },
     {
       type: "h3",
@@ -144,7 +144,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "Conflicting values resolve to **the most restrictive setting available**, rather than raising a conflict for a human to resolve.",
-        "Numeric entry fields are the exception — PIN attempts before reset, for instance, are set as though the policy had been created with the recommended-settings option, not simply to the lowest number.",
+        "Numeric entry fields are the exception â€” PIN attempts before reset, for instance, are set as though the policy had been created with the recommended-settings option, not simply to the lowest number.",
         "If one policy is already deployed and applied when a second arrives, **the first takes precedence and stays applied**, and the second reports a conflict.",
         "If both apply at the same time with no incumbent, both report conflict and the conflicting settings resolve to the most restrictive values.",
       ],
@@ -174,7 +174,7 @@ export const article: Article = {
         ],
         [
           "Two different settings that happen to be related (an allow list and a block list for setup classes)",
-          "Not compared or merged. The device receives both and enforces the most restrictive result — a class on the blocklist is blocked even if it also appears on the allowlist.",
+          "Not compared or merged. The device receives both and enforces the most restrictive result â€” a class on the blocklist is blocked even if it also appears on the allowlist.",
         ],
         [
           "Setting does not support merge (for example PreventInstallationOfMatchingDeviceIDs)",
@@ -186,7 +186,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: '"No policy is delivered" is the outcome worth remembering',
-      text: "In the unmergeable case, an unresolvable conflict does not fall back to a safe default — the device receives nothing for that setting. A security control you believe is deployed can be absent because two policies disagreed about it.",
+      text: "In the unmergeable case, an unresolvable conflict does not fall back to a safe default â€” the device receives nothing for that setting. A security control you believe is deployed can be absent because two policies disagreed about it.",
     },
 
     {
@@ -201,7 +201,7 @@ export const article: Article = {
     {
       type: "h3",
       id: "by-device",
-      text: "By device — when you have one broken machine",
+      text: "By device â€” when you have one broken machine",
     },
     {
       type: "ol",
@@ -219,7 +219,7 @@ export const article: Article = {
     {
       type: "h3",
       id: "by-policy",
-      text: "By policy — when you have one suspect profile",
+      text: "By policy â€” when you have one suspect profile",
     },
     {
       type: "p",
@@ -228,7 +228,7 @@ export const article: Article = {
     {
       type: "h3",
       id: "tenant-wide",
-      text: "Tenant-wide — when you want the backlog",
+      text: "Tenant-wide â€” when you want the backlog",
     },
     {
       type: "p",
@@ -237,7 +237,7 @@ export const article: Article = {
     {
       type: "callout",
       variant: "warning",
-      title: "Two reports, two different numbers — both correct",
+      title: "Two reports, two different numbers â€” both correct",
       text: "Device and user check-in status depends on when each device last checked in, so devices that have been offline show stale states. The Device assignment status report can take 24 to 48 hours to reflect recent assignment or group membership changes, particularly on large tenants. Microsoft documents that it is normal for these two numbers to differ. Do not treat a discrepancy as evidence of a fault.",
     },
 
@@ -292,7 +292,7 @@ Value:     1`,
     },
     {
       type: "p",
-      text: "Two operational details are easy to miss. The policy is device-scoped only, and Microsoft recommends setting it **at every sync** rather than once, so that Group Policy settings which drift back into conflict are removed again. And to see what it actually blocked, generate the Advanced Diagnostic Report on the device from **Settings** > **Accounts** > **Access work or school** — it lists the Group Policy settings that were blocked because an MDM equivalent was configured.",
+      text: "Two operational details are easy to miss. The policy is device-scoped only, and Microsoft recommends setting it **at every sync** rather than once, so that Group Policy settings which drift back into conflict are removed again. And to see what it actually blocked, generate the Advanced Diagnostic Report on the device from **Settings** > **Accounts** > **Access work or school** â€” it lists the Group Policy settings that were blocked because an MDM equivalent was configured.",
     },
     {
       type: "p",
@@ -321,7 +321,7 @@ Value:     1`,
         ],
         [
           "Broad hardening to a published standard",
-          "A security baseline — used instead of, not alongside, endpoint security policies for the same settings",
+          "A security baseline â€” used instead of, not alongside, endpoint security policies for the same settings",
           "Baselines set non-default values across a wide surface; overlapping them with anything else guarantees conflicts.",
         ],
         [
@@ -343,7 +343,7 @@ Value:     1`,
     },
     {
       type: "p",
-      text: "Two further practices reduce conflicts more than any reporting workflow. Assign a setting from exactly one profile, and use assignment groups that cannot overlap for the same setting — Microsoft's guidance for unavoidable overlap between baselines and endpoint security policies is explicitly to assign them to different device groups. And record which policy type owns which domain somewhere a colleague will find it, because most conflicts are introduced by someone who did not know the rule existed.",
+      text: "Two further practices reduce conflicts more than any reporting workflow. Assign a setting from exactly one profile, and use assignment groups that cannot overlap for the same setting â€” Microsoft's guidance for unavoidable overlap between baselines and endpoint security policies is explicitly to assign them to different device groups. And record which policy type owns which domain somewhere a colleague will find it, because most conflicts are introduced by someone who did not know the rule existed.",
     },
 
     {
@@ -378,7 +378,7 @@ Value:     1`,
     },
     {
       type: "p",
-      text: "Conflicts also surface during provisioning, where the symptom looks entirely different — a device that never finishes setting up rather than a setting that quietly did not apply. That failure mode is covered separately in [Enrollment Status Page stuck: a systematic troubleshooting method](/microsoft-intune/enrollment-status-page-troubleshooting). More endpoint management coverage is collected in the [Microsoft Intune section](/microsoft-intune), and the way claims on this site are labelled and researched is described in [about this publication](/about).",
+      text: "Conflicts also surface during provisioning, where the symptom looks entirely different â€” a device that never finishes setting up rather than a setting that quietly did not apply. That failure mode is covered separately in [Enrollment Status Page stuck: a systematic troubleshooting method](/microsoft-intune/enrollment-status-page-troubleshooting). More endpoint management coverage is collected in the [Microsoft Intune section](/microsoft-intune), and the way claims on this site are labelled and researched is described in [about this publication](/about).",
     },
   ],
   faq: [
@@ -410,7 +410,7 @@ Value:     1`,
     {
       question: "Can a conflict cause a setting to be missing entirely?",
       answer:
-        "Yes. For settings that do not support policy merge, conflicts are resolved by applying the most secure policy, then the last modified policy. If neither resolves it, no policy is delivered to the device for that setting — so a control you believe is deployed can be absent.",
+        "Yes. For settings that do not support policy merge, conflicts are resolved by applying the most secure policy, then the last modified policy. If neither resolves it, no policy is delivered to the device for that setting â€” so a control you believe is deployed can be absent.",
     },
   ],
   sources: [
@@ -451,7 +451,7 @@ Value:     1`,
       url: "https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-configure",
     },
     {
-      title: "Configure Windows Hello for Business — policy conflicts from multiple policy sources",
+      title: "Configure Windows Hello for Business â€” policy conflicts from multiple policy sources",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/windows/security/identity-protection/hello-for-business/configure",
     },

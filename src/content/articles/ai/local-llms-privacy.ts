@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "local-llms-privacy",
@@ -32,7 +32,7 @@ export const article: Article = {
     "ai-model-serving-infrastructure-kv-cache-vllm",
     "model-context-protocol-explained",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Written from published model documentation, quantisation formats and hardware specifications, verified August 2026. Performance figures are not claimed, because no standardised testing was performed for this article and published benchmarks measure specific models on specific hardware.",
   body: [
@@ -42,7 +42,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "If that is your actual requirement — regulated data, client confidentiality, an air-gapped site — no hosted service substitutes for it, whatever the provider's data policy says. A policy is a promise. Not sending the data is a property of the system.",
+      text: "If that is your actual requirement â€” regulated data, client confidentiality, an air-gapped site â€” no hosted service substitutes for it, whatever the provider's data policy says. A policy is a promise. Not sending the data is a property of the system.",
     },
     {
       type: "p",
@@ -55,7 +55,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The tool around the model can still reach the network. Some desktop apps check for updates, fetch model files, or offer an optional cloud fallback when a request is too large. Each of those is reasonable on its own. None of them is covered by the phrase “runs locally”.",
+      text: "The tool around the model can still reach the network. Some desktop apps check for updates, fetch model files, or offer an optional cloud fallback when a request is too large. Each of those is reasonable on its own. None of them is covered by the phrase â€œruns locallyâ€.",
     },
     {
       type: "p",
@@ -116,7 +116,7 @@ export const article: Article = {
       items: [
         "Difficult multi-step reasoning, where the quality gap is most visible.",
         "Anything needing current information, unless you build the retrieval layer yourself.",
-        "Workloads where several people need concurrent access — at that point you are operating inference infrastructure.",
+        "Workloads where several people need concurrent access â€” at that point you are operating inference infrastructure.",
       ],
     },
     {

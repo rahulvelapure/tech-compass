@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "aws-iam-roles-anywhere-certificate-authentication",
@@ -32,7 +32,7 @@ export const article: Article = {
     "aws-control-tower-multi-account-governance-scp",
   ],
   methodology:
-    "Written from the AWS IAM Roles Anywhere user guide covering the trust model, profiles and the credential helper, and the AWS Private CA documentation, verified August 2026. Two corrections were made to the source draft. It describes the exchange as a mutual TLS handshake; the workload calls `CreateSession` and signs that request with the certificate's private key, which is a different mechanism with different failure modes. And it omits the account trust boundary entirely — a certificate from any trust anchor in an account can assume any role in that account unless the role's trust policy says otherwise, which is the most important security property of the service. The draft's edge-fleet incident was rewritten as the mechanism.",
+    "Written from the AWS IAM Roles Anywhere user guide covering the trust model, profiles and the credential helper, and the AWS Private CA documentation, verified August 2026. Two corrections were made to the source draft. It describes the exchange as a mutual TLS handshake; the workload calls `CreateSession` and signs that request with the certificate's private key, which is a different mechanism with different failure modes. And it omits the account trust boundary entirely â€” a certificate from any trust anchor in an account can assume any role in that account unless the role's trust policy says otherwise, which is the most important security property of the service. The draft's edge-fleet incident was rewritten as the mechanism.",
   body: [
     {
       type: "p",
@@ -63,7 +63,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The trust boundary is the whole account",
-      text: "AWS states this plainly and it surprises people. A certificate issued by any trust anchor in an account can be used to assume any target role in that account, unless the role's trust policy narrows it. Register a second CA for a different team and you have not created a separate compartment — you have added another way to reach every Roles Anywhere role in the account. There is also no automatic tie-in to organisation-wide controls. The condition on the role is the boundary, and if you do not write one there is not one.",
+      text: "AWS states this plainly and it surprises people. A certificate issued by any trust anchor in an account can be used to assume any target role in that account, unless the role's trust policy narrows it. Register a second CA for a different team and you have not created a separate compartment â€” you have added another way to reach every Roles Anywhere role in the account. There is also no automatic tie-in to organisation-wide controls. The condition on the role is the boundary, and if you do not write one there is not one.",
     },
     {
       type: "p",
@@ -84,7 +84,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "AWS ships a credential helper that does all of this and hands the result to the SDK in the format it expects. Point your configuration at the helper, give it the certificate and key, and existing code needs no changes — the same shape as any other credential process.",
+      text: "AWS ships a credential helper that does all of this and hands the result to the SDK in the format it expects. Point your configuration at the helper, give it the certificate and key, and existing code needs no changes â€” the same shape as any other credential process.",
     },
     {
       type: "h2",

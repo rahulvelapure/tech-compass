@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "enrollment-status-page-troubleshooting",
@@ -35,7 +35,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: 'The Enrollment Status Page is a progress gate, not a process. It waits for a defined set of work to finish and blocks the desktop until that work reports success or the timeout expires. When a device sits on **Device preparation** or **Account setup** for forty minutes, the useful question is never "why is Autopilot slow" — it is **which specific item is the ESP still waiting for, and what is that item\'s own error**.',
+      text: 'The Enrollment Status Page is a progress gate, not a process. It waits for a defined set of work to finish and blocks the desktop until that work reports success or the timeout expires. When a device sits on **Device preparation** or **Account setup** for forty minutes, the useful question is never "why is Autopilot slow" â€” it is **which specific item is the ESP still waiting for, and what is that item\'s own error**.',
     },
     {
       type: "p",
@@ -49,7 +49,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The ESP tracks three phases. The first two — **Device preparation** and **Device setup** — are the device ESP. The third, **Account setup**, is the user ESP. They fail for entirely different reasons, so reading the on-screen phase before touching anything eliminates most of the search space.",
+      text: "The ESP tracks three phases. The first two â€” **Device preparation** and **Device setup** â€” are the device ESP. The third, **Account setup**, is the user ESP. They fail for entirely different reasons, so reading the on-screen phase before touching anything eliminates most of the search space.",
     },
     {
       type: "h3",
@@ -62,7 +62,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "After enrolment the device calculates which policies and apps to track in the next phase, and installs the Intune Management Extension used for Win32 apps. A hang here is an identity, network or agent-installation problem — not an application problem.",
+      text: "After enrolment the device calculates which policies and apps to track in the next phase, and installs the Intune Management Extension used for Win32 apps. A hang here is an identity, network or agent-installation problem â€” not an application problem.",
     },
     {
       type: "h3",
@@ -71,13 +71,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "This phase tracks four categories: security policies, certificate profiles, network connections and apps. The detail that surprises people is what is **not** tracked. Microsoft's documentation is explicit that the ESP does not track security policies such as device restrictions — those install in the background — with the exception of Microsoft Edge, Assigned Access and Kiosk Browser policies. When the phase completes it reports security policies as **(1 of 1) completed** regardless. Certificate tracking covers SCEP profiles targeted at devices; network tracking covers VPN and Wi-Fi profiles targeted at devices.",
+      text: "This phase tracks four categories: security policies, certificate profiles, network connections and apps. The detail that surprises people is what is **not** tracked. Microsoft's documentation is explicit that the ESP does not track security policies such as device restrictions â€” those install in the background â€” with the exception of Microsoft Edge, Assigned Access and Kiosk Browser policies. When the phase completes it reports security policies as **(1 of 1) completed** regardless. Certificate tracking covers SCEP profiles targeted at devices; network tracking covers VPN and Wi-Fi profiles targeted at devices.",
     },
     {
       type: "callout",
       variant: "note",
       title: '"1 of 1 completed" does not mean your policies applied',
-      text: "The security-policy counter is effectively a fixed placeholder, not a count of your configuration profiles. If you are trying to confirm that a device restriction profile landed, the ESP is the wrong place to look — check the device's configuration status in the Intune admin center instead.",
+      text: "The security-policy counter is effectively a fixed placeholder, not a count of your configuration profiles. If you are trying to confirm that a device restriction profile landed, the ESP is the wrong place to look â€” check the device's configuration status in the Intune admin center instead.",
     },
     {
       type: "h3",
@@ -96,7 +96,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "From the ESP itself, Shift+F10 opens a command prompt on any device that is not in S mode. The MDM diagnostics tool captures everything relevant in one artefact, which is faster and more complete than clicking through Event Viewer on a machine you may be about to reset. The command differs by scenario — self-deploying and pre-provisioning need the TPM area because hardware attestation is part of their device preparation phase.",
+      text: "From the ESP itself, Shift+F10 opens a command prompt on any device that is not in S mode. The MDM diagnostics tool captures everything relevant in one artefact, which is faster and more complete than clicking through Event Viewer on a machine you may be about to reset. The command differs by scenario â€” self-deploying and pre-provisioning need the TPM area because hardware attestation is part of their device preparation phase.",
     },
     {
       type: "code",
@@ -126,7 +126,7 @@ Get-AutopilotDiagnostics -CABFile C:\\Temp\\autopilot-logs.cab`,
       type: "callout",
       variant: "warning",
       title: "Co-managed devices need two collections",
-      text: "The MDM diagnostics tool does not gather Configuration Manager CCMSetup and client logs. If the device is co-managed, collect %windir%\\ccmsetup\\Logs and %windir%\\CCM\\Logs separately — a device preparation hang on a co-managed build is frequently a client installation failure, and that evidence is not in the cab file.",
+      text: "The MDM diagnostics tool does not gather Configuration Manager CCMSetup and client logs. If the device is co-managed, collect %windir%\\ccmsetup\\Logs and %windir%\\CCM\\Logs separately â€” a device preparation hang on a co-managed build is frequently a client installation failure, and that evidence is not in the cab file.",
     },
 
     {
@@ -148,25 +148,25 @@ Get-AutopilotDiagnostics -CABFile C:\\Temp\\autopilot-logs.cab`,
           "Root of all ESP tracking. Contains Device, ESPTrackingInfo and a per-user SID subkey.",
         ],
         [
-          "…\\Device\\DevicePreparation",
+          "â€¦\\Device\\DevicePreparation",
           "Installation state of the Intune Management Extension and which resource types it tracks.",
         ],
         [
-          "…\\Device\\Setup\\Apps",
+          "â€¦\\Device\\Setup\\Apps",
           "Per-app installation state for the device setup phase, plus a Locked value showing whether device use is blocked.",
         ],
         [
-          "…\\Device\\Setup\\Apps\\PolicyProviders\\Sidecar",
-          "TrackingPoliciesCreated — whether tracking policies were built at all.",
+          "â€¦\\Device\\Setup\\Apps\\PolicyProviders\\Sidecar",
+          "TrackingPoliciesCreated â€” whether tracking policies were built at all.",
         ],
         [
-          "…\\ESPTrackingInfo\\Diagnostics",
+          "â€¦\\ESPTrackingInfo\\Diagnostics",
           "Timestamped status per MSI app, Wi-Fi profile, SCEP profile and Store app.",
         ],
-        ["…\\{User_SID}", "Account setup phase. Only exists if device setup succeeded."],
+        ["â€¦\\{User_SID}", "Account setup phase. Only exists if device setup succeeded."],
         [
           "HKLM\\SOFTWARE\\Microsoft\\Enrollments\\{EnrollmentGUID}\\FirstSync",
-          "The ESP settings the device actually received — not what you think you assigned.",
+          "The ESP settings the device actually received â€” not what you think you assigned.",
         ],
       ],
     },
@@ -193,7 +193,7 @@ Get-AutopilotDiagnostics -CABFile C:\\Temp\\autopilot-logs.cab`,
       type: "callout",
       variant: "warning",
       title: "One failed app stops the queue",
-      text: "Microsoft documents that if InstallationState is 4 for any app, the ESP stops installing applications. A single broken package does not merely fail itself — it halts everything behind it. This is why a deployment can appear to hang on an app that is perfectly healthy: it never started.",
+      text: "Microsoft documents that if InstallationState is 4 for any app, the ESP stops installing applications. A single broken package does not merely fail itself â€” it halts everything behind it. This is why a deployment can appear to hang on an app that is perfectly healthy: it never started.",
     },
     {
       type: "p",
@@ -273,7 +273,7 @@ Get-ItemPropertyValue -Path $key -Name InstallationState`,
     },
     {
       type: "p",
-      text: "The opposite complaint — the ESP finished but the app is missing — usually comes down to the blocking-app list being misunderstood. That list does **not** specify what to install. It filters which of the already-assigned apps count as blocking.",
+      text: "The opposite complaint â€” the ESP finished but the app is missing â€” usually comes down to the blocking-app list being misunderstood. That list does **not** specify what to install. It filters which of the already-assigned apps count as blocking.",
     },
     {
       type: "p",
@@ -287,7 +287,7 @@ Get-ItemPropertyValue -Path $key -Name InstallationState`,
       type: "callout",
       variant: "note",
       title: "Check which profile the device actually got",
-      text: "If more than one ESP profile applies, the highest priority wins — device-targeted profiles first, then user-targeted, then the default. Pre-provisioning and self-deploying scenarios only honour device-targeted profiles. The FirstSync registry key shows what the device received, which is the only version of this that matters.",
+      text: "If more than one ESP profile applies, the highest priority wins â€” device-targeted profiles first, then user-targeted, then the default. Pre-provisioning and self-deploying scenarios only honour device-targeted profiles. The FirstSync registry key shows what the device received, which is the only version of this that matters.",
     },
 
     {
@@ -305,14 +305,14 @@ Get-ItemPropertyValue -Path $key -Name InstallationState`,
         "**Keep the blocking list to what must exist before first sign-in.** The limit is 100 apps; treating that as a target is how deployments end up timing out. Everything that is not required for the first login can install after the desktop appears.",
         "**Set the timeout to what your slowest realistic network can meet.** Microsoft's guidance notes that a timeout set to five minutes against fifteen required applications cannot succeed. If you cannot state the number your estate needs, the blocking list is too long.",
         '**Enable "allow users to use device if installation error occurs".** A usable desktop with a retry behind it beats a locked screen and a support call. Keep *allow reset* available for genuinely broken builds.',
-        "**Decide deliberately about quality updates during OOBE.** Installing them adds 20–40 minutes and may restart the device, which breaks some autologon scenarios. They are also skipped entirely on metered networks. If you enable them, *Block device use until all apps and profiles are installed* must be Yes, or the device can exit the ESP before the updates apply.",
+        "**Decide deliberately about quality updates during OOBE.** Installing them adds 20â€“40 minutes and may restart the device, which breaks some autologon scenarios. They are also skipped entirely on metered networks. If you enable them, *Block device use until all apps and profiles are installed* must be Yes, or the device can exit the ESP before the updates apply.",
         "**Test detection rules against a device where the app is already present**, not only against a clean build. A detection rule that never returns true produces an app that installs successfully and reports failure forever.",
         "**Treat one failed ESP as a fleet signal.** If the cause is a policy, a licence or an app rather than the individual device, it will repeat on every device that follows.",
       ],
     },
     {
       type: "p",
-      text: "If you genuinely need to remove the user-facing half of the process — for shared or kiosk devices where nobody is waiting at first sign-in — the user ESP can be skipped with a custom OMA-URI rather than by disabling the profile:",
+      text: "If you genuinely need to remove the user-facing half of the process â€” for shared or kiosk devices where nobody is waiting at first sign-in â€” the user ESP can be skipped with a custom OMA-URI rather than by disabling the profile:",
     },
     {
       type: "code",
@@ -346,7 +346,7 @@ Value:     True`,
     },
     {
       type: "p",
-      text: "Work the phases in order and let the registry answer the question. Read the on-screen phase, capture the cab file before doing anything destructive, open `EnrollmentStatusTracking`, and find the item whose `InstallationState` is 4 — that is the blocking item, and everything queued behind it never started. Check the documented known-issues list before treating anything as a novel fault, because a large share of them are behaviours rather than bugs.",
+      text: "Work the phases in order and let the registry answer the question. Read the on-screen phase, capture the cab file before doing anything destructive, open `EnrollmentStatusTracking`, and find the item whose `InstallationState` is 4 â€” that is the blocking item, and everything queued behind it never started. Check the documented known-issues list before treating anything as a novel fault, because a large share of them are behaviours rather than bugs.",
     },
     {
       type: "p",

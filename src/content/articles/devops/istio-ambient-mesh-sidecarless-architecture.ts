@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "istio-ambient-mesh-sidecarless-architecture",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "A sidecar per pod means the mesh scales with pod count, not with traffic. Ambient mode breaks that link, and moves the failure domain.",
   excerpt:
-    "The sidecar model works and is expensive. Ambient replaces it with a node proxy for Layer 4 and opt-in waypoints for Layer 7 — a real reduction in overhead, and a new node-level dependency.",
+    "The sidecar model works and is expensive. Ambient replaces it with a node proxy for Layer 4 and opt-in waypoints for Layer 7 â€” a real reduction in overhead, and a new node-level dependency.",
   authorId: "rahul-velapure",
   publishedAt: "2026-05-11",
   lastReviewedAt: "2026-08-24",
@@ -143,7 +143,7 @@ export const article: Article = {
         ["L4 authorisation", "Yes", "Yes"],
         ["HTTP routing and retries", "No", "Yes"],
         ["Request-level authorisation", "No", "Yes"],
-        ["Envoy extensions and filters", "No — not Envoy", "Yes"],
+        ["Envoy extensions and filters", "No â€” not Envoy", "Yes"],
         ["Deployment unit", "One per node", "One per service or namespace"],
       ],
     },

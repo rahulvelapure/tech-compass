@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "postgresql-declarative-partitioning-query-pruning",
@@ -85,7 +85,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Pruning is on by default. If a query is scanning everything, the setting is almost never the reason — the expression is.",
+      text: "Pruning is on by default. If a query is scanning everything, the setting is almost never the reason â€” the expression is.",
     },
     { type: "h3", id: "types", text: "Types are the usual culprit" },
     {
@@ -139,7 +139,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Set storage parameters per partition. Lower the scale factor on the hot one so it is vacuumed more often. Raise it on the cold ones so you are not paying for scans of data that never changes. Statistics matter too — a partition analyzed when it was empty gives the planner numbers that are now wrong.",
+      text: "Set storage parameters per partition. Lower the scale factor on the hot one so it is vacuumed more often. Raise it on the cold ones so you are not paying for scans of data that never changes. Statistics matter too â€” a partition analyzed when it was empty gives the planner numbers that are now wrong.",
     },
     { type: "h2", id: "automation", text: "Automate creation before you need it" },
     {
@@ -148,7 +148,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "An extension such as pg_partman handles this. It creates partitions ahead of time, detaches or drops old ones on a retention policy, and can run maintenance per partition. Set the pre-make window generously — the cost of a few empty partitions is nothing next to the cost of discovering the gap on the first of the month.",
+      text: "An extension such as pg_partman handles this. It creates partitions ahead of time, detaches or drops old ones on a retention policy, and can run maintenance per partition. Set the pre-make window generously â€” the cost of a few empty partitions is nothing next to the cost of discovering the gap on the first of the month.",
     },
     { type: "h2", id: "limits", text: "What partitioning still will not do" },
     {
@@ -165,7 +165,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Finally, partitioning is not a substitute for indexing. A pruned partition still needs the right index to answer the query quickly — the selection problem is covered in [PostgreSQL index types](/cloud/postgresql-index-types-btree-gin-brin-gist).",
+      text: "Finally, partitioning is not a substitute for indexing. A pruned partition still needs the right index to answer the query quickly â€” the selection problem is covered in [PostgreSQL index types](/cloud/postgresql-index-types-btree-gin-brin-gist).",
     },
   ],
   faq: [

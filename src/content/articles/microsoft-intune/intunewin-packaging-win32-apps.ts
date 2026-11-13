@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "intunewin-packaging-win32-apps",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "Producing a .intunewin file takes about thirty seconds. Almost everything that goes wrong with a Win32 app was decided in the ten minutes before that.",
   excerpt:
-    "The Content Prep Tool is simple. The choices around it — what to include, how to reference files, which command lines to use, and why powershell.exe is not the executable you think — are where packaging succeeds or fails.",
+    "The Content Prep Tool is simple. The choices around it â€” what to include, how to reference files, which command lines to use, and why powershell.exe is not the executable you think â€” are where packaging succeeds or fails.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
   readingMinutes: 10,
@@ -30,7 +30,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "The Microsoft Win32 Content Prep Tool does one job: it takes a folder of installation files and compresses them into a single encrypted `.intunewin` file that Intune can distribute. Along the way it reads some metadata — for an MSI it pulls out the information Intune needs to identify the product.",
+      text: "The Microsoft Win32 Content Prep Tool does one job: it takes a folder of installation files and compresses them into a single encrypted `.intunewin` file that Intune can distribute. Along the way it reads some metadata â€” for an MSI it pulls out the information Intune needs to identify the product.",
     },
     {
       type: "p",
@@ -44,7 +44,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Microsoft's own troubleshooting guidance opens with this and it is easy to skip: install the application manually on a device, without Intune, before packaging anything. The stated reasons are to confirm the application supports silent installation, that the installation commands are correct, and that you know the installation folder — which is what you will use for detection logic.",
+      text: "Microsoft's own troubleshooting guidance opens with this and it is easy to skip: install the application manually on a device, without Intune, before packaging anything. The stated reasons are to confirm the application supports silent installation, that the installation commands are correct, and that you know the installation folder â€” which is what you will use for detection logic.",
     },
     {
       type: "p",
@@ -52,7 +52,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Two constraints to establish at the same time. Windows S mode does not support MSI installation at all, so if S mode devices are in scope the packaging conversation is a different one. And Win32 app management supports 32-bit, 64-bit and ARM64 Windows — but that says nothing about whether your specific installer does.",
+      text: "Two constraints to establish at the same time. Windows S mode does not support MSI installation at all, so if S mode devices are in scope the packaging conversation is a different one. And Win32 app management supports 32-bit, 64-bit and ARM64 Windows â€” but that says nothing about whether your specific installer does.",
     },
 
     {
@@ -68,7 +68,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Do not run the tool from inside the source folder",
-      text: "Microsoft's documentation is explicit: keep the Content Prep Tool separate from the installer files and folders, so that the tool and other unnecessary files are not included in the `.intunewin`. Unpack the tool once to its own location and package from elsewhere. Otherwise every package you produce contains a copy of the packaging tool, its licence, its readme and its release notes — shipped to every device.",
+      text: "Microsoft's documentation is explicit: keep the Content Prep Tool separate from the installer files and folders, so that the tool and other unnecessary files are not included in the `.intunewin`. Unpack the tool once to its own location and package from elsewhere. Otherwise every package you produce contains a copy of the packaging tool, its licence, its readme and its release notes â€” shipped to every device.",
     },
     {
       type: "p",
@@ -140,15 +140,15 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**The installation timeout defaults to 60 minutes**, with a maximum of 1440 minutes — one day. If the app takes longer than the configured time, the install is failed. For a large suite on slow hardware the default is not always generous, and a package that fails at almost exactly an hour on some devices is worth checking here before anywhere else.",
+      text: "**The installation timeout defaults to 60 minutes**, with a maximum of 1440 minutes â€” one day. If the app takes longer than the configured time, the install is failed. For a large suite on slow hardware the default is not always generous, and a package that fails at almost exactly an hour on some devices is worth checking here before anywhere else.",
     },
     {
       type: "p",
-      text: "**Install behaviour is either System or User.** System applies to all users of the device; User applies to the specific user. This interacts with targeting in a way that produces a documented failure: a Win32 app deployed with user targeting that requires administrative privileges the standard user does not have will fail to install. That failure reads like a packaging problem and is a context problem. Two related details are worth knowing: for a device that is Microsoft Entra registered, Microsoft's guidance is to select System — and users do not need to be signed in for Win32 apps to install.",
+      text: "**Install behaviour is either System or User.** System applies to all users of the device; User applies to the specific user. This interacts with targeting in a way that produces a documented failure: a Win32 app deployed with user targeting that requires administrative privileges the standard user does not have will fail to install. That failure reads like a packaging problem and is a context problem. Two related details are worth knowing: for a device that is Microsoft Entra registered, Microsoft's guidance is to select System â€” and users do not need to be signed in for Win32 apps to install.",
     },
     {
       type: "p",
-      text: "**Silent installation is a hard requirement, not a preference.** Microsoft states that Intune does not support interactive application installations: applications deployed through Intune must install silently and cannot require dialog boxes, prompts or any user input. The documentation goes further and names the workaround people reach for — techniques that force interaction with the signed-in user session, such as `serviceui.exe` — as unsupported, with the caveat that even where they appear to work the behaviour should not be relied on in production. If a vendor installer genuinely cannot run silently, the answer is a different package, not a cleverer wrapper.",
+      text: "**Silent installation is a hard requirement, not a preference.** Microsoft states that Intune does not support interactive application installations: applications deployed through Intune must install silently and cannot require dialog boxes, prompts or any user input. The documentation goes further and names the workaround people reach for â€” techniques that force interaction with the signed-in user session, such as `serviceui.exe` â€” as unsupported, with the caveat that even where they appear to work the behaviour should not be relied on in production. If a vendor installer genuinely cannot run silently, the answer is a different package, not a cleverer wrapper.",
     },
 
     {
@@ -158,7 +158,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For MSI packages, an MST transform applies customisation — a licence key, a suppressed feature, a disabled auto-updater — without repackaging the vendor's installer. It is the difference between a package you can rebuild in five minutes when the vendor ships an update, and one somebody has to reverse-engineer.",
+      text: "For MSI packages, an MST transform applies customisation â€” a licence key, a suppressed feature, a disabled auto-updater â€” without repackaging the vendor's installer. It is the difference between a package you can rebuild in five minutes when the vendor ships an update, and one somebody has to reverse-engineer.",
     },
     {
       type: "code",
@@ -173,7 +173,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The reason a bare filename works here explains a lot of packaging behaviour more generally. Intune extracts the package content to `C:\\Windows\\IMECache\\<app id>` and runs the installer from there, so the extracted folder is the working directory. Anything shipped inside the package is reachable by relative path — `site.mst`, `.\\Install.ps1`, `licenses\\license.txt` — with no need to know where the content landed. That is why Microsoft's own update-package example uses `wusa.exe .\\update.msu` rather than an absolute path.",
+      text: "The reason a bare filename works here explains a lot of packaging behaviour more generally. Intune extracts the package content to `C:\\Windows\\IMECache\\<app id>` and runs the installer from there, so the extracted folder is the working directory. Anything shipped inside the package is reachable by relative path â€” `site.mst`, `.\\Install.ps1`, `licenses\\license.txt` â€” with no need to know where the content landed. That is why Microsoft's own update-package example uses `wusa.exe .\\update.msu` rather than an absolute path.",
     },
     {
       type: "callout",
@@ -203,7 +203,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The consequences of getting this wrong are subtle rather than loud. A 32-bit PowerShell process sees the redirected registry view, so a script writing to `HKLM\\Software\\Vendor` actually writes to `HKLM\\Software\\WOW6432Node\\Vendor`. It sees `Program Files (x86)` when it asks for `%ProgramFiles%`. It cannot load 64-bit modules. The script runs, reports success, and leaves the machine in a state your detection rule — evaluated in the 64-bit context by default — cannot see.",
+      text: "The consequences of getting this wrong are subtle rather than loud. A 32-bit PowerShell process sees the redirected registry view, so a script writing to `HKLM\\Software\\Vendor` actually writes to `HKLM\\Software\\WOW6432Node\\Vendor`. It sees `Program Files (x86)` when it asks for `%ProgramFiles%`. It cannot load 64-bit modules. The script runs, reports success, and leaves the machine in a state your detection rule â€” evaluated in the 64-bit context by default â€” cannot see.",
     },
     {
       type: "p",
@@ -213,7 +213,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "PowerShell as the installer itself",
-      text: "Rather than shelling out to a script from a command line, a PowerShell script can be uploaded to serve as the installer directly. Documented limits: scripts are capped at 50 KB, they run in the same context as the app installer, and their return codes determine the reported installation status. Where Multi-Admin Approval is enabled, scripts cannot be uploaded during app creation — the app has to be created first and the script added afterwards.",
+      text: "Rather than shelling out to a script from a command line, a PowerShell script can be uploaded to serve as the installer directly. Documented limits: scripts are capped at 50 KB, they run in the same context as the app installer, and their return codes determine the reported installation status. Where Multi-Admin Approval is enabled, scripts cannot be uploaded during app creation â€” the app has to be created first and the script added afterwards.",
     },
 
     {
@@ -227,7 +227,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For a genuinely transient failure — a file lock, a service still stopping — that is exactly right. For a deterministic failure mapped to retry by mistake, it means every failing device runs your installer three times per cycle. On a package that makes changes before failing, that is not a neutral outcome.",
+      text: "For a genuinely transient failure â€” a file lock, a service still stopping â€” that is exactly right. For a deterministic failure mapped to retry by mistake, it means every failing device runs your installer three times per cycle. On a package that makes changes before failing, that is not a neutral outcome.",
     },
 
     {
@@ -242,7 +242,7 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "**Run the exact install command in the system context, not as yourself.** This reproduces the account the agent uses. An installer that works from your elevated prompt and fails under `NT AUTHORITY\\SYSTEM` — because it expects a user profile, a mapped drive, or `HKCU` — fails on every managed device and passes every test you do the easy way.",
+        "**Run the exact install command in the system context, not as yourself.** This reproduces the account the agent uses. An installer that works from your elevated prompt and fails under `NT AUTHORITY\\SYSTEM` â€” because it expects a user profile, a mapped drive, or `HKCU` â€” fails on every managed device and passes every test you do the easy way.",
         "**Run it from a copied folder.** Copy the content somewhere neutral first. This catches absolute paths and hard-coded references that happen to resolve on the packaging machine.",
         "**Check the exit code explicitly** with `echo %ERRORLEVEL%`. A wrapper reporting success while the installer failed is invisible from the installer's own output.",
         "**Confirm the artefact your detection rule will look for**, in the context that rule will run in. A 32-bit installer writing to the redirected registry is the mismatch that produces a daily reinstall.",
@@ -259,7 +259,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "**Running the tool from inside the source folder.** Everything in that folder is compressed, including the tool itself.",
-        "**Using absolute paths from the packaging machine.** Reference supporting files by relative path from the setup folder — the extracted content folder is the working directory.",
+        "**Using absolute paths from the packaging machine.** Reference supporting files by relative path from the setup folder â€” the extracted content folder is the working directory.",
         "**Referencing a transform from a network share.** It becomes a runtime dependency on a file server reachable from the system context. Ship the `.mst` inside the package.",
         "**Expecting 64-bit PowerShell by default.** A bare `powershell.exe` call launches the 32-bit host. Use the `Sysnative` path, or accept the redirected registry and file system views.",
         "**Putting environment variables in the uninstall command.** Expansion is not supported there; use a wrapper script.",
@@ -282,7 +282,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Keep the source folder and the exact tool invocation in version control alongside the app. A `.intunewin` is an opaque encrypted blob — you cannot inspect one six months later to work out what went into it, and the person who built it will not remember. The command line is three lines of text and removes that entire class of question.",
+      text: "Keep the source folder and the exact tool invocation in version control alongside the app. A `.intunewin` is an opaque encrypted blob â€” you cannot inspect one six months later to work out what went into it, and the person who built it will not remember. The command line is three lines of text and removes that entire class of question.",
     },
     {
       type: "p",
@@ -293,7 +293,7 @@ export const article: Article = {
     {
       question: "What does the Microsoft Win32 Content Prep Tool actually do?",
       answer:
-        "It converts application installation files into the .intunewin format by compressing everything in the source folder, and it detects some of the attributes Intune needs to determine installation state — for an MSI, it retrieves the product information. It does not validate the installer or test the command line.",
+        "It converts application installation files into the .intunewin format by compressing everything in the source folder, and it detects some of the attributes Intune needs to determine installation state â€” for an MSI, it retrieves the product information. It does not validate the installer or test the command line.",
     },
     {
       question: "Why is the packaging tool ending up inside my .intunewin file?",

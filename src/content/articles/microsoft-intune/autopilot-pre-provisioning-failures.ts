@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "autopilot-pre-provisioning-failures",
@@ -59,7 +59,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Virtual machines are not supported",
-      text: "Pre-provisioning requires physical devices with TPM 2.0 and device attestation. Microsoft states plainly that virtual machines aren't supported. A great deal of time gets lost testing pre-provisioning in a VM and diagnosing what looks like an attestation bug — the documented error for a device that is not TPM 2.0 capable is a generic timeout, `0x800705B4`, which does not obviously say what is wrong.",
+      text: "Pre-provisioning requires physical devices with TPM 2.0 and device attestation. Microsoft states plainly that virtual machines aren't supported. A great deal of time gets lost testing pre-provisioning in a VM and diagnosing what looks like an attestation bug â€” the documented error for a device that is not TPM 2.0 capable is a generic timeout, `0x800705B4`, which does not obviously say what is wrong.",
     },
 
     {
@@ -73,7 +73,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Two consequences follow, and neither is obvious from the interface. Attestation depends on the **TPM vendor's** infrastructure, not only on Microsoft's — which means it can fail for reasons entirely outside your tenant. And it depends on the TPM's firmware being current, which makes it a hardware maintenance issue rather than a deployment issue.",
+      text: "Two consequences follow, and neither is obvious from the interface. Attestation depends on the **TPM vendor's** infrastructure, not only on Microsoft's â€” which means it can fail for reasons entirely outside your tenant. And it depends on the TPM's firmware being current, which makes it a hardware maintenance issue rather than a deployment issue.",
     },
     {
       type: "table",
@@ -82,13 +82,13 @@ export const article: Article = {
       rows: [
         [
           "`0x800705B4`",
-          "A general timeout. A common cause in self-deploying mode is that the device is not TPM 2.0 capable — a virtual machine, for example.",
+          "A general timeout. A common cause in self-deploying mode is that the device is not TPM 2.0 capable â€” a virtual machine, for example.",
           "Confirm the hardware has a TPM 2.0 and that you are not testing on a VM.",
         ],
         [
           "`0x81039001`",
           "`E_AUTOPILOT_CLIENT_TPM_MAX_ATTESTATION_RETRY_EXCEEDED`. Attestation retries were exhausted during **Securing your hardware**.",
-          "Documented as intermittent — subsequent provisioning attempts might resolve it. Retry before escalating.",
+          "Documented as intermittent â€” subsequent provisioning attempts might resolve it. Retry before escalating.",
         ],
         [
           "`0x81039024`",
@@ -112,7 +112,7 @@ export const article: Article = {
         ],
         [
           "`0x801C03F3`",
-          "Microsoft Entra ID cannot find a device object for the device — typically because the object was manually deleted.",
+          "Microsoft Entra ID cannot find a device object for the device â€” typically because the object was manually deleted.",
           "Remove the device from Entra ID, Intune and Autopilot, then re-register it so the object is recreated.",
         ],
         [
@@ -138,7 +138,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The practical problem is that the required endpoints depend on whose TPM is in the machine. A staging network allow-list that was built and tested against one hardware model can fail the moment a different vendor's device arrives, with an attestation error that looks identical to a firmware fault. If pre-provisioning works on one model and fails on another in the same room, this is the first thing I would check — before touching the profile, the ESP or the app assignments.",
+      text: "The practical problem is that the required endpoints depend on whose TPM is in the machine. A staging network allow-list that was built and tested against one hardware model can fail the moment a different vendor's device arrives, with an attestation error that looks identical to a firmware fault. If pre-provisioning works on one model and fails on another in the same room, this is the first thing I would check â€” before touching the profile, the ESP or the app assignments.",
     },
     {
       type: "p",
@@ -156,7 +156,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The technician flow uses the Enrollment Status Page to hold the device in a provisioning state — that is what stops the process completing before software and configuration have applied. Microsoft documents that if the ESP is disabled, **the Reseal button can appear before software and configuration have finished applying**. The wording in the documentation is worth quoting in spirit: the success screen validates that enrollment was successful, not that the technician flow is necessarily complete.",
+      text: "The technician flow uses the Enrollment Status Page to hold the device in a provisioning state â€” that is what stops the process completing before software and configuration have applied. Microsoft documents that if the ESP is disabled, **the Reseal button can appear before software and configuration have finished applying**. The wording in the documentation is worth quoting in spirit: the success screen validates that enrollment was successful, not that the technician flow is necessarily complete.",
     },
     {
       type: "p",
@@ -166,7 +166,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "BitLocker compliance needs a grace period after Autopilot",
-      text: "Until the device reboots, the status of BitLocker and Secure Boot is not captured, so it cannot be evaluated by a compliance policy. Microsoft documents that Conditional Access policies depending on BitLocker compliance require a grace period for Autopilot devices — and that the grace period can be as short as 0.25 days. A freshly provisioned device reported as non-compliant for disk encryption is usually this, not a BitLocker failure.",
+      text: "Until the device reboots, the status of BitLocker and Secure Boot is not captured, so it cannot be evaluated by a compliance policy. Microsoft documents that Conditional Access policies depending on BitLocker compliance require a grace period for Autopilot devices â€” and that the grace period can be as short as 0.25 days. A freshly provisioned device reported as non-compliant for disk encryption is usually this, not a BitLocker failure.",
     },
 
     {
@@ -180,11 +180,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Microsoft's guidance is to use Retry when the issue is easily fixed — restoring network connectivity being the example given — and Reset only when the problem cannot be fixed without starting over. There is also a documented known issue that makes this more than a preference: when the ESP fails during the pre-provisioning flow and the technician selects Reset, **TPM attestation might fail during the retry**. Resetting a device that hit an attestation error can therefore turn an intermittent failure into a repeatable one.",
+      text: "Microsoft's guidance is to use Retry when the issue is easily fixed â€” restoring network connectivity being the example given â€” and Reset only when the problem cannot be fixed without starting over. There is also a documented known issue that makes this more than a preference: when the ESP fails during the pre-provisioning flow and the technician selects Reset, **TPM attestation might fail during the retry**. Resetting a device that hit an attestation error can therefore turn an intermittent failure into a repeatable one.",
     },
     {
       type: "p",
-      text: "Reused hardware has a separate rule. A device cannot automatically re-enroll through Autopilot after an initial deployment with pre-provisioning mode. Attempting it produces `0x80180014`. The documented fix is to delete the device record in Intune — Devices, All devices, select the device, Delete — and then redeploy. Microsoft also documents removing the enrollment restriction that blocks personally owned Windows devices as an alternative, but that changes a control for everyone in the assignment scope to fix one machine, and I would not reach for it.",
+      text: "Reused hardware has a separate rule. A device cannot automatically re-enroll through Autopilot after an initial deployment with pre-provisioning mode. Attempting it produces `0x80180014`. The documented fix is to delete the device record in Intune â€” Devices, All devices, select the device, Delete â€” and then redeploy. Microsoft also documents removing the enrollment restriction that blocks personally owned Windows devices as an alternative, but that changes a control for everyone in the assignment scope to fix one machine, and I would not reach for it.",
     },
 
     {
@@ -198,7 +198,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "In production this is rarely a factor, because devices are boxed and shipped. In a proof of concept it is a very common source of confusing failures — the technician flow succeeded, the user flow failed, nothing was changed in between, and the actual cause is that the test was run too quickly. Worth ruling out before rebuilding a profile that was never wrong.",
+      text: "In production this is rarely a factor, because devices are boxed and shipped. In a proof of concept it is a very common source of confusing failures â€” the technician flow succeeded, the user flow failed, nothing was changed in between, and the actual cause is that the test was run too quickly. Worth ruling out before rebuilding a profile that was never wrong.",
     },
 
     {
@@ -260,7 +260,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "If the device never reached the branded experience at all, this is the wrong article — that is a registration problem, covered in [Autopilot device registration failures](/microsoft-intune/autopilot-device-registration-failures). If the deployment reached the Enrollment Status Page and stalled there, the method is in [Enrollment Status Page stuck](/microsoft-intune/enrollment-status-page-troubleshooting). And if pre-provisioning is proving more trouble than it is worth, [Autopilot device preparation vs Windows Autopilot](/microsoft-intune/autopilot-device-preparation-vs-autopilot) covers what you would give up by moving — pre-provisioning being one of the scenarios device preparation does not support.",
+      text: "If the device never reached the branded experience at all, this is the wrong article â€” that is a registration problem, covered in [Autopilot device registration failures](/microsoft-intune/autopilot-device-registration-failures). If the deployment reached the Enrollment Status Page and stalled there, the method is in [Enrollment Status Page stuck](/microsoft-intune/enrollment-status-page-troubleshooting). And if pre-provisioning is proving more trouble than it is worth, [Autopilot device preparation vs Windows Autopilot](/microsoft-intune/autopilot-device-preparation-vs-autopilot) covers what you would give up by moving â€” pre-provisioning being one of the scenarios device preparation does not support.",
     },
   ],
   faq: [

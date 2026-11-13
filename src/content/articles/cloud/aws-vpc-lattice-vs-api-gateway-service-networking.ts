@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "aws-vpc-lattice-vs-api-gateway-service-networking",
@@ -8,7 +8,7 @@ export const article: Article = {
   title: "VPC Lattice or API Gateway: the question is which way the traffic runs",
   seoTitle: "AWS VPC Lattice vs API Gateway: which to use where",
   metaDescription:
-    "API Gateway is a front door. VPC Lattice is internal plumbing. How they differ on topology, identity and operations — and what happens when you swap them.",
+    "API Gateway is a front door. VPC Lattice is internal plumbing. How they differ on topology, identity and operations â€” and what happens when you swap them.",
   standfirst:
     "One was built to face the internet. The other was built for services talking among themselves. Most of the pain comes from using the first for the second.",
   excerpt:
@@ -39,7 +39,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That is where the trouble starts. API Gateway was built as a front door — something that faces clients you do not control. Internal service traffic has different needs, and forcing it through a front door produces topology work nobody wanted.",
+      text: "That is where the trouble starts. API Gateway was built as a front door â€” something that faces clients you do not control. Internal service traffic has different needs, and forcing it through a front door produces topology work nobody wanted.",
     },
     {
       type: "p",
@@ -101,7 +101,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "On cost, without the numbers",
-      text: "API Gateway's charging is weighted toward request count, and internal service chatter produces request counts that dwarf public traffic. A modest poll interval between two services generates millions of calls a day. That shape is what makes the model a poor fit internally — the specific rates change, and are worth reading on the pricing page rather than trusting from an article.",
+      text: "API Gateway's charging is weighted toward request count, and internal service chatter produces request counts that dwarf public traffic. A modest poll interval between two services generates millions of calls a day. That shape is what makes the model a poor fit internally â€” the specific rates change, and are worth reading on the pricing page rather than trusting from an article.",
     },
     { type: "h2", id: "identity", text: "Network position, or identity" },
     {
@@ -114,7 +114,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "VPC Lattice auth policies work on identity. You can require that the caller presents a specific IAM role — the role an ECS task runs as, or one a Kubernetes pod assumes. The policy then reads as a sentence about workloads: this service may call that one, and nothing else may.",
+      text: "VPC Lattice auth policies work on identity. You can require that the caller presents a specific IAM role â€” the role an ECS task runs as, or one a Kubernetes pod assumes. The policy then reads as a sentence about workloads: this service may call that one, and nothing else may.",
     },
     {
       type: "p",
@@ -135,7 +135,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The second version has fewer moving parts, and — more usefully — the parts scale with the number of services rather than with the number of pairs of services.",
+      text: "The second version has fewer moving parts, and â€” more usefully â€” the parts scale with the number of services rather than with the number of pairs of services.",
     },
     { type: "h2", id: "mistakes", text: "Three ways this goes wrong" },
     { type: "h3", id: "mesh", text: "Treating API Gateway as a service mesh" },
@@ -164,7 +164,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "VPC Lattice routes at Layer 7. Flow logs will show traffic reaching the Lattice endpoint, and then the trail stops — the final hop to the target is not a flow your VPC records. If flow logs are your main network tool, you will be looking at an incomplete picture and drawing wrong conclusions from it.",
+      text: "VPC Lattice routes at Layer 7. Flow logs will show traffic reaching the Lattice endpoint, and then the trail stops â€” the final hop to the target is not a flow your VPC records. If flow logs are your main network tool, you will be looking at an incomplete picture and drawing wrong conclusions from it.",
     },
     {
       type: "ul",

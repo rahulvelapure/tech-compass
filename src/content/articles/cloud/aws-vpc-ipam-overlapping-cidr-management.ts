@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "aws-vpc-ipam-overlapping-cidr-management",
@@ -11,7 +11,7 @@ export const article: Article = {
   standfirst:
     "A spreadsheet cannot enforce anything. IPAM hands out the CIDR when the VPC is built. That is the last moment an overlap is still cheap to stop.",
   excerpt:
-    "The overlap failure is silent and expensive to undo. IPAM removes the human step that causes it — but the cross-account sharing everyone wants is an Advanced tier feature with a per-IP charge.",
+    "The overlap failure is silent and expensive to undo. IPAM removes the human step that causes it â€” but the cross-account sharing everyone wants is an Advanced tier feature with a per-IP charge.",
   authorId: "rahul-velapure",
   publishedAt: "2026-04-20",
   lastReviewedAt: "2026-08-26",
@@ -63,7 +63,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The VPC looks completely healthy",
-      text: "Nothing is down. Instances run, security groups are correct, the attachment shows as available. The VPC is just unreachable from everything on the other side of the gateway. The usual fix is to renumber, which means rebuilding the subnets and moving every resource — and that is a migration project, not a change request.",
+      text: "Nothing is down. Instances run, security groups are correct, the attachment shows as available. The VPC is just unreachable from everything on the other side of the gateway. The usual fix is to renumber, which means rebuilding the subnets and moving every resource â€” and that is a migration project, not a change request.",
     },
     { type: "h2", id: "mechanics", text: "What IPAM actually does" },
     {

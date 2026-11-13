@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "microsoft-365-tenant-to-tenant-migration",
@@ -32,7 +32,7 @@ export const article: Article = {
     "entra-join-vs-hybrid-join",
     "conditional-access-framework",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Verified against Microsoft Learn tenant-to-tenant migration, cross-tenant mailbox, OneDrive, SharePoint, Cross-Tenant Synchronization and Migration Orchestrator documentation current in August 2026. Outdated claims about broken OneDrive links, Teams migration scope, free/busy via synchronization and fixed project timelines were replaced with the current workload model.",
   body: [
@@ -171,7 +171,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That split kills a common mistake. “Teams is migrated” means nothing as an acceptance test. Write one test each for chats, meetings, teams, channels, files, tabs, apps and permissions.",
+      text: "That split kills a common mistake. â€œTeams is migratedâ€ means nothing as an acceptance test. Write one test each for chats, meetings, teams, channels, files, tabs, apps and permissions.",
     },
     {
       type: "h2",

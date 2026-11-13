@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "secrets-management-cicd-vault-oidc-reality",
@@ -71,7 +71,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The CI provider acts as an identity provider. When a job runs, it can request a short-lived signed token describing that specific run. On GitHub Actions this requires `permissions: id-token: write` on the job — without it, no token is issued.",
+      text: "The CI provider acts as an identity provider. When a job runs, it can request a short-lived signed token describing that specific run. On GitHub Actions this requires `permissions: id-token: write` on the job â€” without it, no token is issued.",
     },
     {
       type: "p",
@@ -113,7 +113,7 @@ export const article: Article = {
       type: "callout",
       variant: "tip",
       title: "Where a broker earns its place",
-      text: "Reach for Vault when you need credentials the cloud provider does not issue — database users, third-party API keys, certificates — or when you want one policy model across several providers and several CI systems. If the only requirement is deploying to one cloud, direct federation removes both the static key and a system you would have to run.",
+      text: "Reach for Vault when you need credentials the cloud provider does not issue â€” database users, third-party API keys, certificates â€” or when you want one policy model across several providers and several CI systems. If the only requirement is deploying to one cloud, direct federation removes both the static key and a system you would have to run.",
     },
     {
       type: "p",
@@ -136,7 +136,7 @@ export const article: Article = {
     { type: "h3", id: "audience", text: "Audience mismatch" },
     {
       type: "p",
-      text: "The audience claim exists so a token issued for one service cannot be presented to another. It has to match on both sides. When it does not, the failure is a flat rejection with little explanation, and teams often work around it by loosening the check — which removes the protection entirely.",
+      text: "The audience claim exists so a token issued for one service cannot be presented to another. It has to match on both sides. When it does not, the failure is a flat rejection with little explanation, and teams often work around it by loosening the check â€” which removes the protection entirely.",
     },
     { type: "h3", id: "ttl", text: "Lifetime shorter than the pipeline" },
     {
@@ -163,7 +163,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The compromise happened in both cases. Only the consequence changed, which is the realistic goal — supply chain risk is reduced, not eliminated.",
+      text: "The compromise happened in both cases. Only the consequence changed, which is the realistic goal â€” supply chain risk is reduced, not eliminated.",
     },
     { type: "h2", id: "when", text: "When this is worth the effort" },
     {

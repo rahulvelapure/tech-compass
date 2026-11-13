@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "documentation-that-gets-read",
@@ -27,7 +27,7 @@ export const article: Article = {
   ],
   tags: ["Leadership", "Practice", "Documentation"],
   reviewStatus: "opinion",
-  draft: true,
+  draft: false,
   methodology:
     "Written from established technical-writing practice and widely used documentation frameworks. It is an opinion piece: no research findings are claimed, and no tooling is recommended.",
   body: [
@@ -69,7 +69,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Write the title as the question",
-      text: "People search with the problem they have, not the noun you filed it under. A page called “Certificate renewal” competes with everything else about certificates. A page called “Renewing the load balancer certificate” gets found by the person whose certificate expires tomorrow.",
+      text: "People search with the problem they have, not the noun you filed it under. A page called â€œCertificate renewalâ€ competes with everything else about certificates. A page called â€œRenewing the load balancer certificateâ€ gets found by the person whose certificate expires tomorrow.",
     },
     { type: "h2", id: "trust", text: "Trust is the whole asset" },
     {
@@ -103,7 +103,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Deletion is the habit teams find hardest and gain most from. If nobody will own a page, delete it. The information is not lost — it is in the repository, or in someone's head, exactly where it was before the page gave a false impression of currency.",
+      text: "Deletion is the habit teams find hardest and gain most from. If nobody will own a page, delete it. The information is not lost â€” it is in the repository, or in someone's head, exactly where it was before the page gave a false impression of currency.",
     },
     { type: "h2", id: "moment2", text: "Write it when you learn it" },
     {
@@ -160,8 +160,8 @@ export const article: Article = {
   ],
   sources: [
     {
-      title: "The documentation system (Diátaxis)",
-      publisher: "Diátaxis",
+      title: "The documentation system (DiÃ¡taxis)",
+      publisher: "DiÃ¡taxis",
       url: "https://diataxis.fr/",
     },
     {

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "intune-advanced-analytics-operations",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["device query", "device timeline", "endpoint analytics", "Intune anomalies"],
   tags: ["Intune", "Endpoint Management", "Windows", "Operations"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Intune Advanced Analytics and Device Timeline. The listed capabilities and operational flow are based on those sources.",
   body: [
     { type: "p", text: "Endpoint teams often have lots of data. The hard part is finding the one fact that explains a user problem." },

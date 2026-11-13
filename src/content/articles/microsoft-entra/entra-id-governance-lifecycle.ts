@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-id-governance-lifecycle",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["joiner mover leaver", "access packages", "access reviews", "PIM", "identity lifecycle"],
   tags: ["Microsoft Entra", "Identity Governance", "Security", "Lifecycle"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Microsoft Entra ID Governance, PIM, and access reviews. The article presents a practical operating model and marks recommendations as such.",
   body: [
     { type: "p", text: "Identity governance starts with a simple idea. Access should follow the user's work." },

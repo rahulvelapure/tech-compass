@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "eu-ai-act-obligations-timeline",
@@ -36,7 +36,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "What did not move is the transparency set. Those obligations are in force, and they apply to a much wider group of organisations than the high-risk regime does — including many that concluded the Act was not really about them.",
+      text: "What did not move is the transparency set. Those obligations are in force, and they apply to a much wider group of organisations than the high-risk regime does â€” including many that concluded the Act was not really about them.",
     },
     {
       type: "callout",
@@ -81,12 +81,12 @@ export const article: Article = {
       head: ["Category", "Examples", "Now applies from"],
       rows: [
         [
-          "Annex III — stand-alone high-risk systems",
+          "Annex III â€” stand-alone high-risk systems",
           "Hiring, credit scoring, education, critical infrastructure",
           "2 December 2027",
         ],
         [
-          "Annex I — high-risk AI embedded in regulated products",
+          "Annex I â€” high-risk AI embedded in regulated products",
           "Medical devices, machinery, toys",
           "2 August 2028",
         ],
@@ -94,7 +94,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The deferral is time, not cancellation. The substantive requirements — risk management, data governance, technical documentation, logging, human oversight, accuracy and robustness — are unchanged. For a system that will clearly be classified as high-risk, the sensible reading is that the design work stays on the same trajectory and the compliance deadline moved.",
+      text: "The deferral is time, not cancellation. The substantive requirements â€” risk management, data governance, technical documentation, logging, human oversight, accuracy and robustness â€” are unchanged. For a system that will clearly be classified as high-risk, the sensible reading is that the design work stays on the same trajectory and the compliance deadline moved.",
     },
     { type: "h2", id: "roles", text: "The role question comes before the risk question" },
     {
@@ -120,7 +120,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The distinction has a trap in it. Substantially modifying a purchased high-risk system, or putting your own name on it, can move an organisation from deployer to provider — and provider duties are the heavier set. Fine-tuning a model on internal data, or wrapping a vendor system in an internal product identity, are the kinds of ordinary engineering decisions that can change the classification without anyone raising it as a compliance question.",
+      text: "The distinction has a trap in it. Substantially modifying a purchased high-risk system, or putting your own name on it, can move an organisation from deployer to provider â€” and provider duties are the heavier set. Fine-tuning a model on internal data, or wrapping a vendor system in an internal product identity, are the kinds of ordinary engineering decisions that can change the classification without anyone raising it as a compliance question.",
     },
     { type: "h2", id: "what-to-do", text: "What this means for the next twelve months" },
     {
@@ -128,14 +128,14 @@ export const article: Article = {
       items: [
         "Determine whether anything you operate falls under Article 50. This is the live obligation and it is frequently missed because the systems involved are not thought of as AI deployments.",
         "Check the 2 December 2026 date against any AI-generating system that was already in service, since that grace period ends this year.",
-        "Keep building the inventory. Every route through this regulation begins with knowing which systems exist, what they do, and who owns them — and that work is the long pole regardless of which deadline applies.",
+        "Keep building the inventory. Every route through this regulation begins with knowing which systems exist, what they do, and who owns them â€” and that work is the long pole regardless of which deadline applies.",
         "Do not stand down high-risk preparation. Two extra years is a planning benefit only if the work continues at a lower intensity rather than stopping.",
         "Re-verify the dates before acting on them. This timeline has already been amended once, and the amendment was substantial.",
       ],
     },
     {
       type: "p",
-      text: "The broader lesson for IT is that the classification question arrives before the compliance question, and classification depends on facts about deployment that only the operating teams hold. That makes this an inventory and ownership problem long before it becomes a legal one — the same difficulty that [mapping a control framework onto a live estate](/cybersecurity-ciso/iso-27001-microsoft-365-mapping) runs into.",
+      text: "The broader lesson for IT is that the classification question arrives before the compliance question, and classification depends on facts about deployment that only the operating teams hold. That makes this an inventory and ownership problem long before it becomes a legal one â€” the same difficulty that [mapping a control framework onto a live estate](/cybersecurity-ciso/iso-27001-microsoft-365-mapping) runs into.",
     },
   ],
   faq: [
@@ -158,7 +158,7 @@ export const article: Article = {
   sources: [
     {
       title: "Timeline for the implementation of the AI Act",
-      publisher: "European Commission — AI Act Service Desk",
+      publisher: "European Commission â€” AI Act Service Desk",
       url: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act",
     },
     {

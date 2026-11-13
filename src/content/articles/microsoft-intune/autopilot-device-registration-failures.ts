@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "autopilot-device-registration-failures",
@@ -32,7 +32,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "The report that reaches the service desk is almost always the same: the new laptop was supposed to show the company sign-in screen, and instead it is asking which country the user is in and whether they want to set up for personal use. At that point people start looking at Intune — at profiles, at assignments, at groups.",
+      text: "The report that reaches the service desk is almost always the same: the new laptop was supposed to show the company sign-in screen, and instead it is asking which country the user is in and whether they want to set up for personal use. At that point people start looking at Intune â€” at profiles, at assignments, at groups.",
     },
     {
       type: "p",
@@ -50,7 +50,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That fingerprint is the **hardware hash** — a 4K blob derived from a set of firmware and component identifiers rather than a single serial number. Microsoft documents the SMBIOS fields that must carry unique values for the hash to be usable, and the list is longer than most people expect: `ProductKeyID`, `SmbiosSystemManufacturer`, `SmbiosSystemProductName`, `SmbiosSystemSerialNumber`, `SmbiosSkuNumber`, `SmbiosSystemFamily`, `MacAddress`, `SmbiosUuid`, `DiskSerialNumber`, `TPM` and `EkPub`.",
+      text: "That fingerprint is the **hardware hash** â€” a 4K blob derived from a set of firmware and component identifiers rather than a single serial number. Microsoft documents the SMBIOS fields that must carry unique values for the hash to be usable, and the list is longer than most people expect: `ProductKeyID`, `SmbiosSystemManufacturer`, `SmbiosSystemProductName`, `SmbiosSystemSerialNumber`, `SmbiosSkuNumber`, `SmbiosSystemFamily`, `MacAddress`, `SmbiosUuid`, `DiskSerialNumber`, `TPM` and `EkPub`.",
     },
     {
       type: "p",
@@ -60,7 +60,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Registration and enrollment are different failures",
-      text: "A device that never shows the branded screen has a registration problem. A device that shows the branded screen and then hangs has an enrollment or provisioning problem — a different investigation entirely, covered in [Enrollment Status Page stuck: a systematic troubleshooting method](/microsoft-intune/enrollment-status-page-troubleshooting). Establishing which side of that line you are on takes ten seconds and saves an hour.",
+      text: "A device that never shows the branded screen has a registration problem. A device that shows the branded screen and then hangs has an enrollment or provisioning problem â€” a different investigation entirely, covered in [Enrollment Status Page stuck: a systematic troubleshooting method](/microsoft-intune/enrollment-status-page-troubleshooting). Establishing which side of that line you are on takes ten seconds and saves an hour.",
     },
 
     {
@@ -75,9 +75,9 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "**Is the device listed at all?** Devices > Enrollment > Devices, under the Windows Autopilot area. Search by serial number, not by name — an unregistered device has no name in Intune. If it is not there, the import failed or was never attempted, and the next section applies.",
+        "**Is the device listed at all?** Devices > Enrollment > Devices, under the Windows Autopilot area. Search by serial number, not by name â€” an unregistered device has no name in Intune. If it is not there, the import failed or was never attempted, and the next section applies.",
         "**Is it listed but showing a warning?** A status of **Fix pending** or **Attention required** is not a cosmetic flag. It means the service has detected a hardware change, and it has a specific remedy.",
-        "**Does it have a profile assigned?** A registered device with no assigned profile still goes through an Autopilot experience — Microsoft documents that the default profile is used. If your branding is missing but the flow looks Autopilot-ish, this is why.",
+        "**Does it have a profile assigned?** A registered device with no assigned profile still goes through an Autopilot experience â€” Microsoft documents that the default profile is used. If your branding is missing but the flow looks Autopilot-ish, this is why.",
         "**Has this device been deployed before?** Reused hardware behaves differently from new hardware, and the failure code is distinctive.",
       ],
     },
@@ -89,7 +89,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "If the device is not listed, the CSV import is where it went wrong. Microsoft's import errors are precise, and each one points at a different action — the names are unhelpful but the meanings are not.",
+      text: "If the device is not listed, the CSV import is where it went wrong. Microsoft's import errors are precise, and each one points at a different action â€” the names are unhelpful but the meanings are not.",
     },
     {
       type: "table",
@@ -99,7 +99,7 @@ export const article: Article = {
         [
           "`ZtdDeviceAlreadyAssigned`",
           "The hash matches a device already registered **to this tenant**.",
-          "Find the serial in the Windows Autopilot devices list. If it is there, the work is already done — do not import again.",
+          "Find the serial in the Windows Autopilot devices list. If it is there, the work is already done â€” do not import again.",
         ],
         [
           "`ZtdDeviceAssignedToAnotherTenant`",
@@ -113,7 +113,7 @@ export const article: Article = {
         ],
         [
           "`InvalidZtdHardwareHash`",
-          "One or more fields in the hash are invalid or empty — commonly the manufacturer or serial number.",
+          "One or more fields in the hash are invalid or empty â€” commonly the manufacturer or serial number.",
           "Fix at the source device, not in the file. See the next section.",
         ],
         [
@@ -125,7 +125,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "`ZtdDeviceAssignedToAnotherTenant` is the one that turns into a procurement conversation rather than a technical one. It is common with refurbished hardware and with devices that passed through a partner tenant for staging. There is no way to force it from the receiving side, which is a reasonable design — otherwise anyone with a hash could claim someone else's fleet.",
+      text: "`ZtdDeviceAssignedToAnotherTenant` is the one that turns into a procurement conversation rather than a technical one. It is common with refurbished hardware and with devices that passed through a partner tenant for staging. There is no way to force it from the receiving side, which is a reasonable design â€” otherwise anyone with a hash could claim someone else's fleet.",
     },
 
     {
@@ -146,11 +146,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "An empty or generic value here — and strings like `To be filled by O.E.M.` do appear on some builds — means the device cannot be registered until the firmware is corrected. That is a hardware vendor problem. It shows up most often on white-box builds, engineering samples and virtual machines, and it is worth checking on one unit from a new hardware line before the rest of the order arrives.",
+      text: "An empty or generic value here â€” and strings like `To be filled by O.E.M.` do appear on some builds â€” means the device cannot be registered until the firmware is corrected. That is a hardware vendor problem. It shows up most often on white-box builds, engineering samples and virtual machines, and it is worth checking on one unit from a new hardware line before the rest of the order arrives.",
     },
     {
       type: "p",
-      text: "There are four documented ways to collect a hash: Configuration Manager, which gathers them automatically for existing devices; the `Get-WindowsAutopilotInfo` PowerShell script; the diagnostics page during OOBE on Windows 11; and the Access work or school pane in Settings. For anything beyond testing, the manual routes are the wrong tool — Microsoft describes manual registration via CSV as primarily for testing and evaluation, capped at 500 devices per file. At fleet scale, registration should come from the OEM or CSP partner using the PKID or tuple methods, which device owners cannot use themselves.",
+      text: "There are four documented ways to collect a hash: Configuration Manager, which gathers them automatically for existing devices; the `Get-WindowsAutopilotInfo` PowerShell script; the diagnostics page during OOBE on Windows 11; and the Access work or school pane in Settings. For anything beyond testing, the manual routes are the wrong tool â€” Microsoft describes manual registration via CSV as primarily for testing and evaluation, capped at 500 devices per file. At fleet scale, registration should come from the OEM or CSP partner using the PKID or tuple methods, which device owners cannot use themselves.",
     },
     {
       type: "callout",
@@ -170,11 +170,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The first is **OOBE retry exhaustion**. If setup is restarted too many times — which happens constantly during testing — Windows can enter a recovery mode and stop running the Autopilot configuration. Microsoft gives a recognisable symptom for this: the normal experience shows language, region and keyboard on separate pages, so if you are seeing several of those options on one page, you are in the degraded path. The retry count is tracked at `HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UserOOBE`, and setting that value to `1` restores normal behaviour.",
+      text: "The first is **OOBE retry exhaustion**. If setup is restarted too many times â€” which happens constantly during testing â€” Windows can enter a recovery mode and stop running the Autopilot configuration. Microsoft gives a recognisable symptom for this: the normal experience shows language, region and keyboard on separate pages, so if you are seeing several of those options on one page, you are in the degraded path. The retry count is tracked at `HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UserOOBE`, and setting that value to `1` restores normal behaviour.",
     },
     {
       type: "p",
-      text: "The second is **profile assignment timing**. Registration and profile assignment are separate operations, and a device that is registered but has not yet been assigned a profile takes the default Autopilot profile — documented behaviour, and deliberately so, to ensure every registered device goes through some Autopilot experience. If a device should not be going through Autopilot at all, the fix is to remove the registration rather than to remove the profile.",
+      text: "The second is **profile assignment timing**. Registration and profile assignment are separate operations, and a device that is registered but has not yet been assigned a profile takes the default Autopilot profile â€” documented behaviour, and deliberately so, to ensure every registered device goes through some Autopilot experience. If a device should not be going through Autopilot at all, the fix is to remove the registration rather than to remove the profile.",
     },
     {
       type: "p",
@@ -196,13 +196,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Motherboard replacement is a harder case, and Microsoft is direct about it: motherboard replacement is out of scope for Autopilot. A serviced device that can no longer be identified has to go through normal setup. To bring it back, the documented sequence is to unregister the device, replace the board, generate a new 4K hardware hash, and register it again with the new hash. Worth noting for anyone building a repair process: an OEM cannot re-register the device through the OEM direct API, because that path only accepts a PKID or tuple — so the new hash has to come back to you as a CSV.",
+      text: "Motherboard replacement is a harder case, and Microsoft is direct about it: motherboard replacement is out of scope for Autopilot. A serviced device that can no longer be identified has to go through normal setup. To bring it back, the documented sequence is to unregister the device, replace the board, generate a new 4K hardware hash, and register it again with the new hash. Worth noting for anyone building a repair process: an OEM cannot re-register the device through the OEM direct API, because that path only accepts a PKID or tuple â€” so the new hash has to come back to you as a CSV.",
     },
     {
       type: "callout",
       variant: "note",
       title: "Duplicate objects in hybrid deployments are expected",
-      text: "A device object is created in Microsoft Entra ID as soon as a device is registered with Autopilot. If that device then goes through a Microsoft Entra hybrid join deployment, a second object is created — Microsoft documents this as by design. Two entries for one machine in a hybrid estate is not evidence of a fault, and cleaning them up reflexively can break the deployment you are troubleshooting.",
+      text: "A device object is created in Microsoft Entra ID as soon as a device is registered with Autopilot. If that device then goes through a Microsoft Entra hybrid join deployment, a second object is created â€” Microsoft documents this as by design. Two entries for one machine in a hybrid estate is not evidence of a fault, and cleaning them up reflexively can break the deployment you are troubleshooting.",
     },
 
     {
@@ -218,7 +218,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "**Delete the device record in Intune, then redeploy.** This is the targeted fix and the one I would use. It resolves the specific device without changing tenant-wide policy.",
-        "**Remove the enrollment restriction blocking personally owned Windows devices.** This works, but it relaxes a control for the whole assignment scope in order to fix one machine. If you find yourself reaching for it repeatedly, the real issue is the device lifecycle process, not the restriction — and the restriction is doing its job.",
+        "**Remove the enrollment restriction blocking personally owned Windows devices.** This works, but it relaxes a control for the whole assignment scope in order to fix one machine. If you find yourself reaching for it repeatedly, the real issue is the device lifecycle process, not the restriction â€” and the restriction is doing its job.",
       ],
     },
     {
@@ -244,7 +244,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For the Entra side of device registration, Microsoft publishes a Device Registration Troubleshooter that walks the common states — a device stuck as Pending, or a device with no Primary Refresh Token issued. It is a faster first pass than reading event logs when the question is simply whether the device identity exists and is healthy.",
+      text: "For the Entra side of device registration, Microsoft publishes a Device Registration Troubleshooter that walks the common states â€” a device stuck as Pending, or a device with no Primary Refresh Token issued. It is a faster first pass than reading event logs when the question is simply whether the device identity exists and is healthy.",
     },
 
     {
@@ -280,7 +280,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The two decisions that sit underneath all of this — which provisioning model to use, and whether devices should be Microsoft Entra joined or hybrid joined — shape which failure modes you can encounter at all. Both are worth settling before scaling a deployment rather than after.",
+      text: "The two decisions that sit underneath all of this â€” which provisioning model to use, and whether devices should be Microsoft Entra joined or hybrid joined â€” shape which failure modes you can encounter at all. Both are worth settling before scaling a deployment rather than after.",
     },
   ],
   faq: [

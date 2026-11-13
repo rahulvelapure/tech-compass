@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "oauth-2-pushed-authorization-requests-par-fapi",
@@ -147,7 +147,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Be precise about what PAR buys a public client. It does not turn one into a confidential client. What it gives is a request the browser cannot alter — a real gain, and a different one from proving who the caller is. Binding the resulting token to its holder is a separate problem, covered in [OAuth token theft and DPoP](/cybersecurity-ciso/oauth2-token-theft-dpop-mechanics).",
+      text: "Be precise about what PAR buys a public client. It does not turn one into a confidential client. What it gives is a request the browser cannot alter â€” a real gain, and a different one from proving who the caller is. Binding the resulting token to its holder is a separate problem, covered in [OAuth token theft and DPoP](/cybersecurity-ciso/oauth2-token-theft-dpop-mechanics).",
     },
     { type: "h2", id: "operating", text: "Operating it" },
     {
@@ -203,7 +203,7 @@ export const article: Article = {
       url: "https://datatracker.ietf.org/doc/html/rfc9126",
     },
     {
-      title: "RFC 9101: The OAuth 2.0 Authorization Framework — JWT-Secured Authorization Request",
+      title: "RFC 9101: The OAuth 2.0 Authorization Framework â€” JWT-Secured Authorization Request",
       publisher: "IETF",
       url: "https://datatracker.ietf.org/doc/html/rfc9101",
     },

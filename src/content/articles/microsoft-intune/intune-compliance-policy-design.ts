@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "intune-compliance-policy-design",
@@ -52,13 +52,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The schedule accepts 0 to 365 days. Microsoft's documentation notes that entering **0** means Conditional Access takes effect immediately — a device that becomes noncompliant is blocked from email, SharePoint and other resources straight away.",
+      text: "The schedule accepts 0 to 365 days. Microsoft's documentation notes that entering **0** means Conditional Access takes effect immediately â€” a device that becomes noncompliant is blocked from email, SharePoint and other resources straight away.",
     },
     {
       type: "callout",
       variant: "tip",
       title: "The grace period is finer-grained than the interface suggests",
-      text: "The field is labelled in days, but decimal values in 0.25 increments are accepted: `0.25` is six hours, `0.5` is twelve, `1.5` is thirty-six. Other fractions such as `0.33` cannot be set in the admin center — attempting to save one produces an error — but can be configured through Microsoft Graph. A six-hour grace period is often the right answer where a full day is too generous and immediate is too harsh.",
+      text: "The field is labelled in days, but decimal values in 0.25 increments are accepted: `0.25` is six hours, `0.5` is twelve, `1.5` is thirty-six. Other fractions such as `0.33` cannot be set in the admin center â€” attempting to save one produces an error â€” but can be configured through Microsoft Graph. A six-hour grace period is often the right answer where a full day is too generous and immediate is too harsh.",
     },
     {
       type: "p",
@@ -76,7 +76,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "When a setting in a compliance policy returns **Error** — meaning evaluation could not complete, rather than completing with a failure — the device's compliance state **remains unchanged for up to seven days**. The existing status continues to apply while Intune tries to get a real answer. Only if the setting is still in Error after seven days does the device become Not compliant, or move into grace period if one is configured.",
+      text: "When a setting in a compliance policy returns **Error** â€” meaning evaluation could not complete, rather than completing with a failure â€” the device's compliance state **remains unchanged for up to seven days**. The existing status continues to apply while Intune tries to get a real answer. Only if the setting is still in Error after seven days does the device become Not compliant, or move into grace period if one is configured.",
     },
     {
       type: "p",
@@ -121,7 +121,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Additional actions let you do something other than silently flipping a state. You can add several, each with its own schedule, and the same action can be added more than once — so a policy can email at day two, email again at day five, and block at day seven.",
+      text: "Additional actions let you do something other than silently flipping a state. You can add several, each with its own schedule, and the same action can be added more than once â€” so a policy can email at day two, email again at day five, and block at day seven.",
     },
     {
       type: "p",
@@ -130,7 +130,7 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "Intune uses the email address **in the user's profile**, not their user principal name. If there is no email address on file, no notification is sent — silently.",
+        "Intune uses the email address **in the user's profile**, not their user principal name. If there is no email address on file, no notification is sent â€” silently.",
         "Notifications come from `microsoft-noreply (at) microsoft.com`. A mail flow rule or anti-spam policy that filters that sender means your users never see the warning.",
         "Emails are expected to be sent **within six hours** of a device being marked noncompliant. If your grace period is six hours and your first email fires at the same point, the user may be blocked before the warning arrives.",
       ],
@@ -143,7 +143,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Not every action works on every platform",
-      text: "Remote lock is supported on Android device administrator, Android AOSP, the Android Enterprise variants, iOS/iPadOS and macOS — it is not a Windows action. Building an escalation path that assumes remote lock will apply across a mixed estate produces a policy that behaves differently by platform for reasons nothing in the interface explains. Microsoft also documents that devices managed by third-party compliance partners and targeted with device groups cannot currently receive compliance actions at all.",
+      text: "Remote lock is supported on Android device administrator, Android AOSP, the Android Enterprise variants, iOS/iPadOS and macOS â€” it is not a Windows action. Building an escalation path that assumes remote lock will apply across a mixed estate produces a policy that behaves differently by platform for reasons nothing in the interface explains. Microsoft also documents that devices managed by third-party compliance partners and targeted with device groups cannot currently receive compliance actions at all.",
     },
 
     {
@@ -157,7 +157,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Set to compliant, a device with no policy sails through a Conditional Access rule requiring compliance — which means a gap in your assignment coverage is a silent hole in the control. Set to not compliant, the control is honest, but every device you have not yet covered is blocked, including ones enrolled by teams you did not know about.",
+      text: "Set to compliant, a device with no policy sails through a Conditional Access rule requiring compliance â€” which means a gap in your assignment coverage is a silent hole in the control. Set to not compliant, the control is honest, but every device you have not yet covered is blocked, including ones enrolled by teams you did not know about.",
     },
     {
       type: "p",
@@ -177,7 +177,7 @@ export const article: Article = {
       type: "ol",
       items: [
         "**Establish what the tenant does with unassigned devices** before creating anything. This one setting changes the meaning of everything that follows.",
-        "**Create the policy with a long grace period** — several days — and assign it to a pilot group. At this stage you are measuring, not enforcing. The compliance reports show you who would fail without anyone losing access.",
+        "**Create the policy with a long grace period** â€” several days â€” and assign it to a pilot group. At this stage you are measuring, not enforcing. The compliance reports show you who would fail without anyone losing access.",
         "**Read the per-setting report, not just the overall number.** Microsoft's documentation makes a specific point about this: the device compliance column in a per-setting drill-in shows the device's *overall* status, not its status against that policy or setting. A device can appear there marked Not compliant while being perfectly compliant with the policy you are looking at, because it is failing something else entirely.",
         "**Separate the settings that will fail from the settings that are wrong.** Some failures are genuine security gaps to remediate. Others are settings that cannot be met on part of the estate, which is a policy design problem rather than a fleet problem.",
         "**Add notification actions before shortening the grace period.** Users need to be told before the deadline moves.",
@@ -187,7 +187,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "One thing not to do: build the enforcement in Conditional Access first and the compliance policy afterwards. A Conditional Access policy requiring a compliant device, applied to all users before compliance policies are assigned, is one of the configurations Microsoft explicitly warns against — for users who have not enrolled devices, it blocks all access including the Intune portal itself, which is where you would go to fix it.",
+      text: "One thing not to do: build the enforcement in Conditional Access first and the compliance policy afterwards. A Conditional Access policy requiring a compliant device, applied to all users before compliance policies are assigned, is one of the configurations Microsoft explicitly warns against â€” for users who have not enrolled devices, it blocks all access including the Intune portal itself, which is where you would go to fix it.",
     },
 
     {
@@ -197,7 +197,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A brief but load-bearing point about content rather than mechanics. Compliance settings take precedence over configuration settings where both address the same thing, so a value placed in a compliance policy silently overrides your configuration profiles — behaviour worked through in [Intune policy conflicts](/microsoft-intune/intune-policy-conflicts).",
+      text: "A brief but load-bearing point about content rather than mechanics. Compliance settings take precedence over configuration settings where both address the same thing, so a value placed in a compliance policy silently overrides your configuration profiles â€” behaviour worked through in [Intune policy conflicts](/microsoft-intune/intune-policy-conflicts).",
     },
     {
       type: "p",
@@ -220,7 +220,7 @@ export const article: Article = {
         "**Not knowing what the tenant does with unassigned devices.** It decides whether coverage gaps are silent holes or mass blocks.",
         "**Scheduling the warning email at the same point as the block.** Emails are expected within six hours of marking, which can be after the user has already lost access.",
         "**Assuming users will receive the email at all.** It goes to the profile email address, not the UPN, and comes from a sender your mail filtering may not expect.",
-        "**Treating Error like a failure.** It suspends the existing state for up to seven days — useful breathing room, but with a deadline that arrives for everyone at once.",
+        "**Treating Error like a failure.** It suspends the existing state for up to seven days â€” useful breathing room, but with a deadline that arrives for everyone at once.",
         "**Reading the overall compliance column as per-policy status.** A device shown as Not compliant in a per-setting view may be failing a completely different policy.",
         "**Putting enforcement values in compliance policy.** Compliance beats configuration, so the value silently overrides your profiles.",
         "**Assuming remote lock works everywhere.** It is not available for Windows.",
@@ -234,7 +234,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Design the policy backwards from the user experience of failing it. Decide how someone finds out, how long they have, and what they are supposed to do about it — then configure the schedule and actions to match. A grace period long enough to survive a weekend, a notification that lands well before the deadline, and a self-service remediation path turn compliance from a trapdoor into a control people can work with.",
+      text: "Design the policy backwards from the user experience of failing it. Decide how someone finds out, how long they have, and what they are supposed to do about it â€” then configure the schedule and actions to match. A grace period long enough to survive a weekend, a notification that lands well before the deadline, and a self-service remediation path turn compliance from a trapdoor into a control people can work with.",
     },
     {
       type: "p",
@@ -242,7 +242,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "And accept that some devices will be compliant and still blocked. Compliance state is only one input to the access decision, and the gap between a green tick in Intune and a working sign-in is where most of the support burden actually lives — covered in [Why a compliant device still fails Conditional Access](/microsoft-intune/compliant-device-conditional-access-blocked).",
+      text: "And accept that some devices will be compliant and still blocked. Compliance state is only one input to the access decision, and the gap between a green tick in Intune and a working sign-in is where most of the support burden actually lives â€” covered in [Why a compliant device still fails Conditional Access](/microsoft-intune/compliant-device-conditional-access-blocked).",
     },
   ],
   faq: [
@@ -259,7 +259,7 @@ export const article: Article = {
     {
       question: "What happens when a compliance setting reports Error?",
       answer:
-        "The device's compliance state remains unchanged for up to seven days while evaluation is retried, so the existing status continues to apply. If the setting is still in Error after seven days, the device becomes Not compliant — or moves into grace period if the policy has one configured.",
+        "The device's compliance state remains unchanged for up to seven days while evaluation is retried, so the existing status continues to apply. If the setting is still in Error after seven days, the device becomes Not compliant â€” or moves into grace period if the policy has one configured.",
     },
     {
       question: "Why did users not receive the noncompliance email?",
@@ -269,7 +269,7 @@ export const article: Article = {
     {
       question: "What happens to devices with no compliance policy assigned?",
       answer:
-        "That is controlled by the tenant setting Mark devices with no compliance policy assigned as, under compliance policy settings. It determines whether an untargeted device is treated as compliant — creating a silent gap in any Conditional Access rule requiring compliance — or not compliant, which blocks every device you have not yet covered.",
+        "That is controlled by the tenant setting Mark devices with no compliance policy assigned as, under compliance policy settings. It determines whether an untargeted device is treated as compliant â€” creating a silent gap in any Conditional Access rule requiring compliance â€” or not compliant, which blocks every device you have not yet covered.",
     },
     {
       question: "Should enforcement settings go in compliance policy or configuration policy?",

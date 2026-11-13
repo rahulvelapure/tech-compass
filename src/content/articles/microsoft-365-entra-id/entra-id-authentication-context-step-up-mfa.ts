@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-id-authentication-context-step-up-mfa",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "A policy passed at nine in the morning is still passing at four. That is fine for reading email and not fine for moving money.",
   excerpt:
-    "Conditional Access evaluates when a session starts. Authentication context lets an application demand a fresh check at the moment of a high-value action — and it is application work, not a portal setting.",
+    "Conditional Access evaluates when a session starts. Authentication context lets an application demand a fresh check at the moment of a high-value action â€” and it is application work, not a portal setting.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
@@ -55,7 +55,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Or a session token is stolen. The attacker never authenticates, because they do not need to — they hold the outcome of an authentication that already happened.",
+      text: "Or a session token is stolen. The attacker never authenticates, because they do not need to â€” they hold the outcome of an authentication that already happened.",
     },
     {
       type: "p",
@@ -69,7 +69,7 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "You define a context in Entra ID and attach a Conditional Access policy to it — need a fresh sign-in, a compliant device, a phishing-resistant method.",
+        "You define a context in Entra ID and attach a Conditional Access policy to it â€” need a fresh sign-in, a compliant device, a phishing-resistant method.",
         "The app decides which of its operations need that context.",
         "A user attempts one of those operations with an ordinary token.",
         "The API sees the required context is missing and returns a **claims challenge** rather than simply refusing.",
@@ -86,7 +86,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The claim is acrs, not acr",
-      text: "Entra's authentication context uses an `acrs` claim. a great deal of community guidance says `acr` — the standard OIDC claim, which is a different thing. Validating the wrong one means either rejecting good tokens or, worse, accepting tokens that never satisfied your policy.",
+      text: "Entra's authentication context uses an `acrs` claim. a great deal of community guidance says `acr` â€” the standard OIDC claim, which is a different thing. Validating the wrong one means either rejecting good tokens or, worse, accepting tokens that never satisfied your policy.",
     },
     { type: "h2", id: "opportunistic", text: "It does not always redirect" },
     {
@@ -141,7 +141,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Licensing and scope",
-      text: "Conditional Access needs an Entra ID P1 licence. authentication context values are not available in the free edition. The feature also applies to apps that sign users in — an app authenticating as itself cannot use it.",
+      text: "Conditional Access needs an Entra ID P1 licence. authentication context values are not available in the free edition. The feature also applies to apps that sign users in â€” an app authenticating as itself cannot use it.",
     },
     { type: "h2", id: "using-it", text: "Where to point it" },
     {
@@ -170,7 +170,7 @@ export const article: Article = {
     { type: "h2", id: "boundaries", text: "How this relates to the other answers" },
     {
       type: "p",
-      text: "Three different controls address the same underlying problem — a valid session in the wrong hands — and they are not alternatives.",
+      text: "Three different controls address the same underlying problem â€” a valid session in the wrong hands â€” and they are not alternatives.",
     },
     {
       type: "p",
@@ -193,7 +193,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The idea underneath is simple enough: a decision made once at the start of a session is a weak claim about what is happening later in it. Authentication context is the mechanism for asking again at the point where the answer actually matters. It costs real app work, which is why it stays rare — and why the handful of operations you point it at should be chosen carefully.",
+      text: "The idea underneath is simple enough: a decision made once at the start of a session is a weak claim about what is happening later in it. Authentication context is the mechanism for asking again at the point where the answer actually matters. It costs real app work, which is why it stays rare â€” and why the handful of operations you point it at should be chosen carefully.",
     },
   ],
   faq: [
@@ -225,7 +225,7 @@ export const article: Article = {
   ],
   sources: [
     {
-      title: "Conditional Access: Target resources — authentication context",
+      title: "Conditional Access: Target resources â€” authentication context",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps",
     },

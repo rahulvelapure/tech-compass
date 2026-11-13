@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "database-connection-failover-mechanics-timeouts",
@@ -33,7 +33,7 @@ export const article: Article = {
     "aurora-serverless-v2-scaling-connection-limits",
   ],
   methodology:
-    "Written from the Linux tcp(7) manual page, PostgreSQL libpq connection documentation and managed-database failover documentation, verified August 2026. The source draft's central recommendation — that aggressive TCP keepalives shorten failover detection — is corrected here: keepalives probe idle connections only, and a connection blocked mid-query is governed by retransmission instead. Invented failover durations, user counts and a fabricated incident narrative were removed.",
+    "Written from the Linux tcp(7) manual page, PostgreSQL libpq connection documentation and managed-database failover documentation, verified August 2026. The source draft's central recommendation â€” that aggressive TCP keepalives shorten failover detection â€” is corrected here: keepalives probe idle connections only, and a connection blocked mid-query is governed by retransmission instead. Invented failover durations, user counts and a fabricated incident narrative were removed.",
   body: [
     {
       type: "p",
@@ -50,7 +50,7 @@ export const article: Article = {
     { type: "h2", id: "half-open", text: "The socket nobody told" },
     {
       type: "p",
-      text: "TCP is stateful at both ends. When a node dies cleanly it sends a FIN or a RST and the client learns immediately. When a node dies badly — power, hypervisor, a partition that isolates it — it sends nothing at all.",
+      text: "TCP is stateful at both ends. When a node dies cleanly it sends a FIN or a RST and the client learns immediately. When a node dies badly â€” power, hypervisor, a partition that isolates it â€” it sends nothing at all.",
     },
     {
       type: "p",
@@ -81,7 +81,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "It also interacts with keepalives usefully. Where both are set, `TCP_USER_TIMEOUT` determines when a connection is closed for keepalive failure. It does not change when a packet is retransmitted or when a probe is sent — it changes how long the stack will tolerate the silence before giving up.",
+      text: "It also interacts with keepalives usefully. Where both are set, `TCP_USER_TIMEOUT` determines when a connection is closed for keepalive failure. It does not change when a packet is retransmitted or when a probe is sent â€” it changes how long the stack will tolerate the silence before giving up.",
     },
     {
       type: "table",
@@ -89,7 +89,7 @@ export const article: Article = {
       head: ["Situation", "What governs it", "Default behaviour"],
       rows: [
         ["Idle pooled connection, peer gone", "Keepalive timers", "First probe after two hours"],
-        ["Query in flight, peer gone", "`tcp_retries2` retransmission", "Roughly 13–30 minutes"],
+        ["Query in flight, peer gone", "`tcp_retries2` retransmission", "Roughly 13â€“30 minutes"],
         ["Query in flight, with the option set", "`TCP_USER_TIMEOUT`", "Whatever you chose"],
         ["Query running, database alive", "Statement timeout", "None unless you set one"],
       ],
@@ -124,7 +124,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Automatic reconnection is not a feature",
-      text: "Drivers that silently re-establish a dropped connection mid-transaction — MySQL's `autoReconnect` being the well-known example — trade an error you can handle for one you cannot see. The new connection has none of the previous transaction state, so statements that the application believes are inside a transaction are not. Prefer a clean failure and an explicit retry at a point where the application knows what it was doing.",
+      text: "Drivers that silently re-establish a dropped connection mid-transaction â€” MySQL's `autoReconnect` being the well-known example â€” trade an error you can handle for one you cannot see. The new connection has none of the previous transaction state, so statements that the application believes are inside a transaction are not. Prefer a clean failure and an explicit retry at a point where the application knows what it was doing.",
     },
     { type: "h2", id: "pools", text: "Where connection pools sit in this" },
     {
@@ -160,7 +160,7 @@ export const article: Article = {
       items: [
         "The database being healthy is not the end of a failover. The application noticing is.",
         "Keepalives cover idle sockets. `TCP_USER_TIMEOUT` covers a query in flight. Do not use one where you need the other.",
-        "Untuned, a blocked query can wait far longer than the failover took — the manual page says 13 to 30 minutes.",
+        "Untuned, a blocked query can wait far longer than the failover took â€” the manual page says 13 to 30 minutes.",
         "Confirm your driver re-resolves DNS on reconnect. Some never do.",
         "Set a statement timeout as well; a reachable database can still be slow.",
         "A proxy removes the problem from the application entirely, at the cost of another hop.",
@@ -197,7 +197,7 @@ export const article: Article = {
   ],
   sources: [
     {
-      title: "tcp(7) — TCP protocol, socket options and timeouts",
+      title: "tcp(7) â€” TCP protocol, socket options and timeouts",
       publisher: "Linux man-pages project",
       url: "https://man7.org/linux/man-pages/man7/tcp.7.html",
     },

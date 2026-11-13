@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "java-vs-go-garbage-collection-performance-tuning",
@@ -112,7 +112,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Because there is no young generation to sweep cheaply, Go has to walk the live heap each cycle. A service that allocates hard — parsing thousands of requests a second — makes the collector work hard.",
+      text: "Because there is no young generation to sweep cheaply, Go has to walk the live heap each cycle. A service that allocates hard â€” parsing thousands of requests a second â€” makes the collector work hard.",
     },
     { type: "h3", id: "pacer", text: "GOGC decides how often that happens" },
     {
@@ -207,7 +207,7 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "**Measure before tuning.** A P99 spike is usually allocation rate, not collector configuration. Profile first — the tooling trade-offs are covered in [OpenTelemetry versus proprietary APM](/devops/opentelemetry-vs-proprietary-apm-observability-cost).",
+        "**Measure before tuning.** A P99 spike is usually allocation rate, not collector configuration. Profile first â€” the tooling trade-offs are covered in [OpenTelemetry versus proprietary APM](/devops/opentelemetry-vs-proprietary-apm-observability-cost).",
         "**On a current JDK, use the ZGC flag on its own.** The whole setting is `-XX:+UseZGC`, because generational mode is already on. Then leave headroom above your live set so ZGC is not fighting for room.",
         "**In Go, cut allocations first.** Only then raise `GOGC`. Buffer reuse and pre-sized slices beat any flag.",
         "**Set the soft memory limit below the container limit.** `GOMEMLIMIT` protects you from a late collection, not from a real leak.",

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "windows-server-hardening-secured-core-credential-guard",
@@ -8,11 +8,11 @@ export const article: Article = {
   title: "The kernel is the boundary a checklist cannot defend",
   seoTitle: "Windows Server Hardening: VBS, HVCI, and Credential Guard",
   metaDescription:
-    "CIS benchmarks configure the OS. VBS, memory integrity and Credential Guard move the boundary below it — what they protect, what they break, what is already on.",
+    "CIS benchmarks configure the OS. VBS, memory integrity and Credential Guard move the boundary below it â€” what they protect, what they break, what is already on.",
   standfirst:
     "A hardening baseline trusts the kernel to tell the truth. These features are what you use when you cannot.",
   excerpt:
-    "Credential Guard, memory integrity and Secured-core all rest on the same trick: a hypervisor the kernel cannot reach. Knowing what that protects — and the authentication it quietly breaks — is the difference between a clean rollout and a broken one.",
+    "Credential Guard, memory integrity and Secured-core all rest on the same trick: a hypervisor the kernel cannot reach. Knowing what that protects â€” and the authentication it quietly breaks â€” is the difference between a clean rollout and a broken one.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
@@ -32,9 +32,9 @@ export const article: Article = {
     "wdac-vs-applocker-kernel-enforcement",
     "bitlocker-tpm-failure-recovery-enterprise",
   ],
-  draft: true,
+  draft: false,
   methodology:
-    "Written from current Microsoft Learn documentation on virtualization-based security, Credential Guard configuration and protection limits, memory integrity enablement, the vulnerable driver blocklist, and Secured-core server requirements, verified August 2026. The source draft's performance percentages for HVCI were removed as unverifiable. Three factual corrections were made: the Code Integrity event ID, the claim that Secure Boot is a hard prerequisite for VBS, and the recommendation to prioritise domain controllers — which Microsoft's own protection-limits documentation contradicts.",
+    "Written from current Microsoft Learn documentation on virtualization-based security, Credential Guard configuration and protection limits, memory integrity enablement, the vulnerable driver blocklist, and Secured-core server requirements, verified August 2026. The source draft's performance percentages for HVCI were removed as unverifiable. Three factual corrections were made: the Code Integrity event ID, the claim that Secure Boot is a hard prerequisite for VBS, and the recommendation to prioritise domain controllers â€” which Microsoft's own protection-limits documentation contradicts.",
   body: [
     {
       type: "p",
@@ -46,7 +46,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "An attacker who reaches ring 0 — usually by loading a signed driver with a known flaw rather than by finding anything new — is inside that assumption. From there, reading another process's memory is not an exploit. It is an API call.",
+      text: "An attacker who reaches ring 0 â€” usually by loading a signed driver with a known flaw rather than by finding anything new â€” is inside that assumption. From there, reading another process's memory is not an exploit. It is an API call.",
     },
     { type: "h2", id: "boundary", text: "Moving the boundary below the kernel" },
     {
@@ -140,7 +140,7 @@ export const article: Article = {
       rows: [
         ["TPM 2.0 and Secure Boot", "Hardware root of trust; also the recommended baseline"],
         [
-          "DMA remapping — Intel VT-d or AMD-Vi",
+          "DMA remapping â€” Intel VT-d or AMD-Vi",
           "Stops a peripheral reading protected memory directly",
         ],
         [
@@ -177,7 +177,7 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "A benchmark hardens the OS. VBS moves the boundary underneath it — different problem, different control.",
+        "A benchmark hardens the OS. VBS moves the boundary underneath it â€” different problem, different control.",
         "Check what is already enabled before planning a rollout; Server 2025 turns Credential Guard on by itself.",
         "The breakage is authentication protocols, and it is knowable in advance. Go looking for it.",
         "Credential Guard is not a domain controller control. Do not lead with DCs.",

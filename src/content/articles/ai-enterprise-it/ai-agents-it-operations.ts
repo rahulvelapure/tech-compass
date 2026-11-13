@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "ai-agents-it-operations",
@@ -55,14 +55,14 @@ export const article: Article = {
         "Anything requiring a correct model of network or dependency topology that is not written down anywhere.",
         "Unsupervised remediation on systems where a wrong action is expensive and hard to reverse.",
         "Root-cause analysis across tools that do not share identifiers for the same asset.",
-        "Anything where the agent's confidence is reported but its uncertainty is not — a confident wrong answer in an incident is worse than no answer, because it redirects the humans.",
+        "Anything where the agent's confidence is reported but its uncertainty is not â€” a confident wrong answer in an incident is worse than no answer, because it redirects the humans.",
       ],
     },
     {
       type: "callout",
       variant: "note",
       title: "The prerequisite is boring",
-      text: "Agents inherit the quality of your asset inventory, identity model and documentation. Teams that get value from them almost always fixed those first — which is also why the value is often misattributed to the agent.",
+      text: "Agents inherit the quality of your asset inventory, identity model and documentation. Teams that get value from them almost always fixed those first â€” which is also why the value is often misattributed to the agent.",
     },
     {
       type: "h2",
@@ -99,7 +99,7 @@ export const article: Article = {
       type: "ol",
       items: [
         "Pick one repetitive investigation that a person performs several times a week and that has a written procedure.",
-        "Have the agent produce the investigation output only — no actions — and compare against what the human concludes.",
+        "Have the agent produce the investigation output only â€” no actions â€” and compare against what the human concludes.",
         "Measure agreement over a few weeks. If agreement is not high on a task with a written procedure, it will not be high on anything harder.",
         "Only then allow the agent to execute the remediation, scoped to actions that are reversible and logged.",
         "Keep the comparison running after you stop reading it daily. Agreement drifts when the underlying systems change, and nothing will tell you unless you are still measuring.",
@@ -107,7 +107,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The step most often skipped is the second one. Running an agent in observation mode produces no headline and feels like delay, but it is the only cheap way to find out whether the task is actually well-defined — and a surprising number turn out not to be, which is a finding worth having before anything is automated.",
+      text: "The step most often skipped is the second one. Running an agent in observation mode produces no headline and feels like delay, but it is the only cheap way to find out whether the task is actually well-defined â€” and a surprising number turn out not to be, which is a finding worth having before anything is automated.",
     },
   ],
   faq: [

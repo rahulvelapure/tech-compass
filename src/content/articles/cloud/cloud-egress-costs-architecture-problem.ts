@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "cloud-egress-costs-architecture-problem",
@@ -56,7 +56,7 @@ export const article: Article = {
         "The billing boundaries, in rough order of cost. Rates vary by provider, region and tier, so only the ordering is given.",
       head: ["Boundary", "Typical treatment"],
       rows: [
-        ["Inbound from the internet", "Generally free — providers want your data"],
+        ["Inbound from the internet", "Generally free â€” providers want your data"],
         ["Within one availability zone", "Usually free over private addresses"],
         [
           "Between availability zones, same region",
@@ -157,7 +157,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Compression helps, but it treats the symptom. Two structural fixes do more. Batch before sending, so you pay for fewer and larger transfers. Then land the first hop on an endpoint rather than the NAT gateway. Kubernetes makes this easy to get wrong. The agent is a daemon on every node, and the path it takes is invisible from the manifest — [what actually happens when a pod sends a packet](/devops/kubernetes-pod-networking-packet-flow) covers the hops involved.",
+      text: "Compression helps, but it treats the symptom. Two structural fixes do more. Batch before sending, so you pay for fewer and larger transfers. Then land the first hop on an endpoint rather than the NAT gateway. Kubernetes makes this easy to get wrong. The agent is a daemon on every node, and the path it takes is invisible from the manifest â€” [what actually happens when a pod sends a packet](/devops/kubernetes-pod-networking-packet-flow) covers the hops involved.",
     },
     { type: "h2", id: "cdn", text: "Anything public should leave through a CDN" },
     {
@@ -226,7 +226,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "None of this is a negotiation with your provider. Every charge here was triggered by a path something took, and paths are a design decision. That is the good news: it means the bill is something you control, and the same changes usually make the system faster as well as cheaper. Where the cost lands organisationally, and who is expected to act on it, is a separate problem — [cloud cost controls that work](/cloud/cloud-cost-controls) deals with that side.",
+      text: "None of this is a negotiation with your provider. Every charge here was triggered by a path something took, and paths are a design decision. That is the good news: it means the bill is something you control, and the same changes usually make the system faster as well as cheaper. Where the cost lands organisationally, and who is expected to act on it, is a separate problem â€” [cloud cost controls that work](/cloud/cloud-cost-controls) deals with that side.",
     },
   ],
   faq: [

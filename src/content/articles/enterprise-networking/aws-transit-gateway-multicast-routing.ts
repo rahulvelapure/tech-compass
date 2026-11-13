@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "aws-transit-gateway-multicast-routing",
@@ -29,7 +29,7 @@ export const article: Article = {
   reviewStatus: "research-based",
   relatedSlugs: ["aws-transit-gateway-vs-vpc-peering", "aws-vpc-ipam-overlapping-cidr-management"],
   methodology:
-    "Written from the AWS Transit Gateway multicast documentation and the associated quotas page, verified August 2026. Three corrections were made to the source draft. It described a feed arriving over Direct Connect and distributed by multicast; AWS states plainly that multicast routing is not supported over Direct Connect, Site-to-Site VPN, peering or Connect attachments. It recommended the feature for financial trading feeds, where AWS says it may not be suitable for high-frequency trading or performance-sensitive applications. And it gave MTU figures for VPN attachments, where the documented behaviour is that a transit gateway does not fragment multicast packets at all — fragmented ones are dropped. The draft's cost incident and its billing figure were removed.",
+    "Written from the AWS Transit Gateway multicast documentation and the associated quotas page, verified August 2026. Three corrections were made to the source draft. It described a feed arriving over Direct Connect and distributed by multicast; AWS states plainly that multicast routing is not supported over Direct Connect, Site-to-Site VPN, peering or Connect attachments. It recommended the feature for financial trading feeds, where AWS says it may not be suitable for high-frequency trading or performance-sensitive applications. And it gave MTU figures for VPN attachments, where the documented behaviour is that a transit gateway does not fragment multicast packets at all â€” fragmented ones are dropped. The draft's cost incident and its billing figure were removed.",
   body: [
     {
       type: "p",
@@ -153,7 +153,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Model it before you build, from the current rate card rather than a number in an article. For a small control or discovery feed the cost is a rounding error. For heavy video to many receivers it is not. There, a stream broker or a media service built for the job usually costs less. It also gives you replay and backpressure. The same per-gigabyte thinking runs across the whole gateway — see [Transit Gateway versus VPC peering](/cloud/aws-transit-gateway-vs-vpc-peering).",
+      text: "Model it before you build, from the current rate card rather than a number in an article. For a small control or discovery feed the cost is a rounding error. For heavy video to many receivers it is not. There, a stream broker or a media service built for the job usually costs less. It also gives you replay and backpressure. The same per-gigabyte thinking runs across the whole gateway â€” see [Transit Gateway versus VPC peering](/cloud/aws-transit-gateway-vs-vpc-peering).",
     },
   ],
   faq: [

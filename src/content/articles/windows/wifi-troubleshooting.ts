@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "wifi-troubleshooting",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "Resetting the network stack fixes some problems and hides others. Work down the layers instead.",
   excerpt:
-    "A layered diagnostic order for Windows 11 wireless problems — from radio and driver state to DNS — so you fix the cause instead of the symptom.",
+    "A layered diagnostic order for Windows 11 wireless problems â€” from radio and driver state to DNS â€” so you fix the cause instead of the symptom.",
   authorId: "rahul-velapure",
   publishedAt: "2026-07-14",
   lastReviewedAt: "2026-08-28",
@@ -71,7 +71,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "An address in 169.254.x.x means DHCP never answered — that is a network problem, not a Windows problem. A valid address with no gateway means the same thing.",
+      text: "An address in 169.254.x.x means DHCP never answered â€” that is a network problem, not a Windows problem. A valid address with no gateway means the same thing.",
     },
     {
       type: "p",
@@ -94,7 +94,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "On a managed estate, check what the machine is resolving through before you change anything. Encrypted DNS and filtering policy can send queries somewhere other than the network's own resolver, which is worth knowing about — the [DoH and DoT filtering article](/enterprise-networking/enterprise-dns-security-doh-dot-filtering) covers how that plays out.",
+      text: "On a managed estate, check what the machine is resolving through before you change anything. Encrypted DNS and filtering policy can send queries somewhere other than the network's own resolver, which is worth knowing about â€” the [DoH and DoT filtering article](/enterprise-networking/enterprise-dns-security-doh-dot-filtering) covers how that plays out.",
     },
     { type: "h2", id: "driver", text: "The adapter settings that cause repeat faults" },
     {
@@ -141,7 +141,7 @@ export const article: Article = {
     { type: "h2", id: "many", text: "When it is more than one machine" },
     {
       type: "p",
-      text: "One machine is a device problem. Several machines in the same place, at the same time, is not — and the diagnostic order changes.",
+      text: "One machine is a device problem. Several machines in the same place, at the same time, is not â€” and the diagnostic order changes.",
     },
     {
       type: "p",

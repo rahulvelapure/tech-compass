@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "cloud-cost-controls",
@@ -30,7 +30,7 @@ export const article: Article = {
   reviewStatus: "research-based",
   relatedSlugs: ["bgp-in-the-cloud-why-it-matters", "terraform-vs-opentofu"],
   methodology:
-    "Written from Microsoft Cost Management documentation, the Azure Well-Architected Framework Cost Optimization pillar, Azure Advisor reference documentation and the FinOps Foundation's published principles, verified August 2026. Azure-specific behaviour is labelled as such and kept separate from general cloud principles. No pricing figures, savings percentages or customer spend data are used — those are contract-specific and would not survive contact with a reader's own agreement.",
+    "Written from Microsoft Cost Management documentation, the Azure Well-Architected Framework Cost Optimization pillar, Azure Advisor reference documentation and the FinOps Foundation's published principles, verified August 2026. Azure-specific behaviour is labelled as such and kept separate from general cloud principles. No pricing figures, savings percentages or customer spend data are used â€” those are contract-specific and would not survive contact with a reader's own agreement.",
   body: [
     {
       type: "p",
@@ -43,7 +43,7 @@ export const article: Article = {
     { type: "h2", id: "symptoms", text: "Symptoms are not causes" },
     {
       type: "p",
-      text: "Cost investigations tend to stop at the symptom, because the symptom is what the tooling surfaces. The cause is usually one level down, and it is rarely a technical mistake — it is a decision made without a price attached to it.",
+      text: "Cost investigations tend to stop at the symptom, because the symptom is what the tooling surfaces. The cause is usually one level down, and it is rarely a technical mistake â€” it is a decision made without a price attached to it.",
     },
     {
       type: "table",
@@ -61,7 +61,7 @@ export const article: Article = {
         ],
         [
           "A large line item for data transfer",
-          "A placement decision — a chatty service split across zones or regions — priced only after the design was fixed",
+          "A placement decision â€” a chatty service split across zones or regions â€” priced only after the design was fixed",
         ],
         [
           "An oversized managed database at low utilisation",
@@ -86,7 +86,7 @@ export const article: Article = {
         [
           "Design time",
           "Cost stated as a non-functional requirement, priced alongside latency and availability",
-          "Cheapest by far, but unenforceable — it depends on the decision being visible to someone who will ask",
+          "Cheapest by far, but unenforceable â€” it depends on the decision being visible to someone who will ask",
         ],
         [
           "Deploy time",
@@ -96,7 +96,7 @@ export const article: Article = {
         [
           "Run time",
           "Budgets, anomaly alerts, right-sizing, scheduled shutdown of idle environments",
-          "Always available and always reactive — it reduces the bill without addressing why the bill was that shape",
+          "Always available and always reactive â€” it reduces the bill without addressing why the bill was that shape",
         ],
       ],
     },
@@ -117,7 +117,7 @@ export const article: Article = {
     { type: "h2", id: "azure", text: "What Azure gives you, and where it stops" },
     {
       type: "p",
-      text: "Microsoft Cost Management is a reporting and alerting layer rather than an enforcement layer, and reading its documentation with that distinction in mind saves a good deal of disappointment. It is available at billing account, subscription, resource group and management group scope — which means your reporting boundary is whatever your subscription and management group design already decided, long before anyone thought about cost.",
+      text: "Microsoft Cost Management is a reporting and alerting layer rather than an enforcement layer, and reading its documentation with that distinction in mind saves a good deal of disappointment. It is available at billing account, subscription, resource group and management group scope â€” which means your reporting boundary is whatever your subscription and management group design already decided, long before anyone thought about cost.",
     },
     {
       type: "ul",
@@ -125,7 +125,7 @@ export const article: Article = {
         "Budget alerts fire on actual or forecast cost. Microsoft's guidance suggests thresholds at 90 percent of target, 100 percent and 110 percent, with the forecast alert set at 110 percent.",
         "Budgets created in the portal are defined by cost. The Consumption API also supports usage-based budgets, which is the route if you need to alert on quantity rather than spend.",
         "Subscription and resource group budgets can notify an action group. That is the one place the platform crosses from alerting into automated response.",
-        "Anomaly detection runs daily against normalised usage, and is available for subscriptions only — not resource groups or management groups. If your teams are separated by resource group rather than subscription, this capability does not reach them.",
+        "Anomaly detection runs daily against normalised usage, and is available for subscriptions only â€” not resource groups or management groups. If your teams are separated by resource group rather than subscription, this capability does not reach them.",
         "Tag inheritance can fill gaps where resources were deployed untagged, and allocation rules can redistribute shared costs. Neither changes the invoice; both change the report.",
         "Azure Advisor surfaces idle and underutilised resources. It is a reasonable starting inventory for right-sizing, not a substitute for knowing why the resource was that size.",
       ],
@@ -139,7 +139,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "Small estates with one team and one subscription. The coordination overhead of allocation, showback and guardrails exceeds the recoverable spend, and reviewing the bill monthly is genuinely sufficient.",
-        "Workloads that are spiky by design — batch research, simulation, seasonal processing. Utilisation-based right-sizing produces the wrong answer when low average utilisation is the intended shape.",
+        "Workloads that are spiky by design â€” batch research, simulation, seasonal processing. Utilisation-based right-sizing produces the wrong answer when low average utilisation is the intended shape.",
         "Estates where SKU and region are dictated by regulation or a data residency commitment. Several rate levers are simply unavailable, and pretending otherwise wastes review cycles.",
         "Products still searching for fit, where speed of iteration is worth more than efficiency until the workload's shape is stable enough to be worth optimising.",
       ],
@@ -151,7 +151,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Rate problems — paying list price for consumption that is predictable and continuous — are addressed by commitment purchasing, which is largely a finance exercise and trades flexibility for a lower unit price. Usage problems are addressed by changing what runs, and no purchasing decision will touch them. Confusing the two is the most expensive mistake in this area: committing to a multi-year discount on infrastructure that should not have been running at all locks in the waste and makes it materially harder to remove later.",
+      text: "Rate problems â€” paying list price for consumption that is predictable and continuous â€” are addressed by commitment purchasing, which is largely a finance exercise and trades flexibility for a lower unit price. Usage problems are addressed by changing what runs, and no purchasing decision will touch them. Confusing the two is the most expensive mistake in this area: committing to a multi-year discount on infrastructure that should not have been running at all locks in the waste and makes it materially harder to remove later.",
     },
   ],
   faq: [
@@ -173,7 +173,7 @@ export const article: Article = {
     {
       question: "Do budget alerts stop spending?",
       answer:
-        "Not by themselves — a budget alert notifies. In Azure, subscription and resource group budgets can trigger an action group, which is what allows an automated response to be attached. The automation and its blast radius are yours to design, and automatically stopping resources in production is rarely the right default.",
+        "Not by themselves â€” a budget alert notifies. In Azure, subscription and resource group budgets can trigger an action group, which is what allows an automated response to be attached. The automation and its blast radius are yours to design, and automatically stopping resources in production is rarely the right default.",
     },
   ],
   sources: [
@@ -188,7 +188,7 @@ export const article: Article = {
       url: "https://learn.microsoft.com/azure/cost-management-billing/costs/cost-mgt-alerts-monitor-usage-spending",
     },
     {
-      title: "Cost Optimization design principles — Azure Well-Architected Framework",
+      title: "Cost Optimization design principles â€” Azure Well-Architected Framework",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/azure/well-architected/cost-optimization/principles",
     },

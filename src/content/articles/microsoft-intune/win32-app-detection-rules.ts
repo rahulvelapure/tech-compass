@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "win32-app-detection-rules",
@@ -30,7 +30,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "Detection rules are usually treated as an afterthought — the last page of the wizard before assignments, filled in with whatever the installer happened to leave behind. That works until it doesn't, and when it stops working the symptoms rarely point back at detection.",
+      text: "Detection rules are usually treated as an afterthought â€” the last page of the wizard before assignments, filled in with whatever the installer happened to leave behind. That works until it doesn't, and when it stops working the symptoms rarely point back at detection.",
     },
     {
       type: "p",
@@ -38,7 +38,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The reason detection has that much leverage is in the client-side flow. Microsoft's documented processing sequence for a Win32 app evaluates detection **twice**: once before download, where a positive result skips the download and install entirely, and again after installation, where the result becomes the compliance and enforcement state reported back to the service. A rule that returns the wrong answer therefore does not just misreport — it decides whether the install happens at all.",
+      text: "The reason detection has that much leverage is in the client-side flow. Microsoft's documented processing sequence for a Win32 app evaluates detection **twice**: once before download, where a positive result skips the download and install entirely, and again after installation, where the result becomes the compliance and enforcement state reported back to the service. A rule that returns the wrong answer therefore does not just misreport â€” it decides whether the install happens at all.",
     },
 
     {
@@ -58,7 +58,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Detection describes the outcome, not the installer",
-      text: "The rule should answer one question: is the thing this package was supposed to put on the machine actually there? It should not describe how the installer works. This distinction matters because installers change — a vendor switches from MSI to a bootstrapper, or starts writing to a different registry hive — and a rule written against installer mechanics breaks on an upgrade that should have been routine.",
+      text: "The rule should answer one question: is the thing this package was supposed to put on the machine actually there? It should not describe how the installer works. This distinction matters because installers change â€” a vendor switches from MSI to a bootstrapper, or starts writing to a different registry hive â€” and a rule written against installer mechanics breaks on an upgrade that should have been routine.",
     },
 
     {
@@ -89,7 +89,7 @@ export const article: Article = {
         [
           "Custom script",
           "A PowerShell script. Detected when it exits `0` **and** writes something to STDOUT.",
-          "The most flexible and the easiest to get subtly wrong. STDERR is fatal — see below.",
+          "The most flexible and the easiest to get subtly wrong. STDERR is fatal â€” see below.",
         ],
       ],
     },
@@ -105,7 +105,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Custom scripts are the right answer whenever the truth cannot be expressed as a single path or key — a version that must be greater than rather than equal to, an app that can live in two locations, a package whose real success condition is a service running rather than a file existing.",
+      text: "Custom scripts are the right answer whenever the truth cannot be expressed as a single path or key â€” a version that must be greater than rather than equal to, an app that can live in two locations, a package whose real success condition is a service running rather than a file existing.",
     },
     {
       type: "p",
@@ -114,9 +114,9 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "**Exit code non-zero** — the script failed and the app is treated as not installed. Nothing else is considered.",
-        "**Exit code zero with data on STDOUT** — the app is detected. Microsoft is explicit that it does not look for any particular string; the presence of output is the signal, not its content.",
-        "**Exit code zero, but something was written to STDERR** — the result is evaluated as **not installed**, even though the exit code was zero and STDOUT had data.",
+        "**Exit code non-zero** â€” the script failed and the app is treated as not installed. Nothing else is considered.",
+        "**Exit code zero with data on STDOUT** â€” the app is detected. Microsoft is explicit that it does not look for any particular string; the presence of output is the signal, not its content.",
+        "**Exit code zero, but something was written to STDERR** â€” the result is evaluated as **not installed**, even though the exit code was zero and STDOUT had data.",
       ],
     },
     {
@@ -150,13 +150,13 @@ exit 1`,
     },
     {
       type: "p",
-      text: "Two details from Microsoft's guidance are worth carrying into every script: encode the file as UTF-8 BOM, and remember the 32-bit toggle applies here too — the script runs in a 64-bit process on 64-bit clients unless you say otherwise. There is also an **Enforce script signature check** option, which is off by default; turning it on means an unsigned script will not run at all.",
+      text: "Two details from Microsoft's guidance are worth carrying into every script: encode the file as UTF-8 BOM, and remember the 32-bit toggle applies here too â€” the script runs in a 64-bit process on 64-bit clients unless you say otherwise. There is also an **Enforce script signature check** option, which is off by default; turning it on means an unsigned script will not run at all.",
     },
     {
       type: "callout",
       variant: "warning",
       title: "Trim the version string",
-      text: "Microsoft's own sample for detecting a file version calls `.Trim()` on the result before comparing it. That is not decoration. `FileVersionInfo` frequently returns a version with surrounding whitespace, and an exact string comparison against an untrimmed value fails silently — producing a detection rule that is wrong for reasons no log will explain.",
+      text: "Microsoft's own sample for detecting a file version calls `.Trim()` on the result before comparing it. That is not decoration. `FileVersionInfo` frequently returns a version with surrounding whitespace, and an exact string comparison against an untrimmed value fails silently â€” producing a detection rule that is wrong for reasons no log will explain.",
     },
 
     {
@@ -176,7 +176,7 @@ exit 1`,
         [
           "A well-behaved MSI where the product code is stable across versions",
           "MSI rule with product version check",
-          "Cheapest correct answer. Verify the code actually is stable before relying on it — for many vendors it is not.",
+          "Cheapest correct answer. Verify the code actually is stable before relying on it â€” for many vendors it is not.",
         ],
         [
           "An MSI or EXE whose version increments and whose main binary is predictable",
@@ -217,15 +217,15 @@ exit 1`,
     {
       type: "ol",
       items: [
-        "**Confirm which symptom you have.** Reinstalling daily means detection returns false after a successful install. Reported installed but absent means detection returns true when it should not — usually a rule matching a leftover from a previous version.",
+        "**Confirm which symptom you have.** Reinstalling daily means detection returns false after a successful install. Reported installed but absent means detection returns true when it should not â€” usually a rule matching a leftover from a previous version.",
         "**Read the agent's own detection lines.** `AppWorkload.log` in `C:\\ProgramData\\Microsoft\\IntuneManagementExtension\\Logs` carries app applicability and detection logging, and `AppActionProcessor.log` tracks detection and applicability checks specifically. The agent logs the path it expanded and the result it reached, which usually settles a 32-bit toggle question immediately.",
-        "**Reproduce the rule by hand.** For file and registry rules, check the exact path the log says it used. For script rules, run the script as SYSTEM rather than as yourself — a rule that works in your admin console and fails on the device is often a context problem.",
+        "**Reproduce the rule by hand.** For file and registry rules, check the exact path the log says it used. For script rules, run the script as SYSTEM rather than as yourself â€” a rule that works in your admin console and fails on the device is often a context problem.",
         "**Check STDERR explicitly** for script rules. Run the script and inspect the error stream, not just the exit code and output.",
       ],
     },
     {
       type: "p",
-      text: "For the SYSTEM-context check there is no substitute for actually running it that way. A detection script that reads `HKCU` will find nothing when the agent evaluates it, because the agent is not running as the user — and this is a genuinely common cause of an app that reinstalls forever on exactly the machines where a user did install it.",
+      text: "For the SYSTEM-context check there is no substitute for actually running it that way. A detection script that reads `HKCU` will find nothing when the agent evaluates it, because the agent is not running as the user â€” and this is a genuinely common cause of an app that reinstalls forever on exactly the machines where a user did install it.",
     },
     {
       type: "p",
@@ -243,7 +243,7 @@ exit 1`,
         "**Adding extra rules for thoroughness.** Every rule must pass. Two rules are twice the opportunity to be wrong, not twice the confidence.",
         "**Pinning to an MSI product code that changes per version.** Verify stability across at least two releases before relying on it.",
         "**Leaving the 32-bit toggle at its default for a 32-bit app.** File paths and registry views both resolve differently, and the default assumes 64-bit.",
-        "**Writing a detection script that touches STDERR.** Exit code zero plus STDOUT data is not enough — anything on the error stream forces a not-installed result.",
+        "**Writing a detection script that touches STDERR.** Exit code zero plus STDOUT data is not enough â€” anything on the error stream forces a not-installed result.",
         "**Comparing version strings without trimming.** Microsoft's own sample trims for a reason.",
         "**Detecting a user-context artefact.** The agent evaluates in the system context; `HKCU` and per-user paths will not be found.",
         "**Treating a daily reinstall as an installer problem.** The installer is usually fine. Detection is telling the agent to try again.",
@@ -261,7 +261,7 @@ exit 1`,
     },
     {
       type: "p",
-      text: "Prefer a version-aware check over an existence check for anything you will ever update, because an existence check makes upgrades invisible — the old version satisfies the rule and the new package never installs. And prefer a script when the honest answer is a comparison rather than an equality, rather than bending a file rule into approximately the right shape.",
+      text: "Prefer a version-aware check over an existence check for anything you will ever update, because an existence check makes upgrades invisible â€” the old version satisfies the rule and the new package never installs. And prefer a script when the honest answer is a comparison rather than an equality, rather than bending a file rule into approximately the right shape.",
     },
     {
       type: "p",
@@ -277,7 +277,7 @@ exit 1`,
     {
       question: "How does a custom detection script tell Intune the app is installed?",
       answer:
-        "The script must exit with code 0 and write data to STDOUT. Microsoft does not look for a specific string — the presence of output is the signal. However, if anything is written to STDERR the result is evaluated as not installed, even when the exit code is 0 and STDOUT contains data.",
+        "The script must exit with code 0 and write data to STDOUT. Microsoft does not look for a specific string â€” the presence of output is the signal. However, if anything is written to STDERR the result is evaluated as not installed, even when the exit code is 0 and STDOUT contains data.",
     },
     {
       question: "Can I use more than one detection rule?",

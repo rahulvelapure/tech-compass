@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "sase-vs-sse-sd-wan-architecture-reality",
@@ -43,7 +43,7 @@ export const article: Article = {
     { type: "h2", id: "definitions", text: "What each term actually denotes" },
     {
       type: "p",
-      text: "**SD-WAN** is a networking technology. It abstracts the transport — MPLS, broadband, cellular — measures path health, and steers traffic accordingly. It is good at getting packets somewhere efficiently. It does not, by itself, have an opinion about what is inside them.",
+      text: "**SD-WAN** is a networking technology. It abstracts the transport â€” MPLS, broadband, cellular â€” measures path health, and steers traffic accordingly. It is good at getting packets somewhere efficiently. It does not, by itself, have an opinion about what is inside them.",
     },
     {
       type: "p",
@@ -57,7 +57,7 @@ export const article: Article = {
         ["SWG", "Whether web traffic is allowed, and what is inside it once decrypted"],
         [
           "CASB",
-          "What may be done inside sanctioned SaaS — often via the provider's API, not just inline",
+          "What may be done inside sanctioned SaaS â€” often via the provider's API, not just inline",
         ],
         ["ZTNA", "Whether this identity, on this device, may reach this one internal application"],
         ["FWaaS", "Layer 3 to 7 policy for the traffic that is not web"],
@@ -74,7 +74,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Whether that is efficient depends entirely on geography and peering. If the inspection point is near the user and well connected to the SaaS provider, the detour is small. If it is not — if the traffic crosses a region to be inspected and then crosses back — you have added latency to every request in exchange for the inspection.",
+      text: "Whether that is efficient depends entirely on geography and peering. If the inspection point is near the user and well connected to the SaaS provider, the detour is small. If it is not â€” if the traffic crosses a region to be inspected and then crosses back â€” you have added latency to every request in exchange for the inspection.",
     },
     {
       type: "p",

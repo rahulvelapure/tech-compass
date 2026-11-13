@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "wdac-vs-applocker-kernel-enforcement",
@@ -52,7 +52,7 @@ export const article: Article = {
     { type: "h2", id: "where", text: "Where each one enforces" },
     {
       type: "p",
-      text: "AppLocker rules are evaluated by a service when a process is created. Rules can be based on publisher, path or hash. — usefully — can apply to specific users or groups.",
+      text: "AppLocker rules are evaluated by a service when a process is created. Rules can be based on publisher, path or hash. â€” usefully â€” can apply to specific users or groups.",
     },
     {
       type: "p",
@@ -94,7 +94,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "There is also a case where AppLocker does something App Control cannot. App Control policies apply to the entire device. AppLocker rules can apply to particular users or groups. On a shared device where one group should be able to run something and another should not, AppLocker is the tool that expresses it — and Microsoft describes using the two together for exactly that.",
+      text: "There is also a case where AppLocker does something App Control cannot. App Control policies apply to the entire device. AppLocker rules can apply to particular users or groups. On a shared device where one group should be able to run something and another should not, AppLocker is the tool that expresses it â€” and Microsoft describes using the two together for exactly that.",
     },
     {
       type: "callout",
@@ -126,7 +126,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A **managed installer** is a rollout tool you designate as trusted — Intune, for example, which can be configured as one directly. Files it installs are tagged. policy can trust anything carrying that tag. Internal software deploys and runs without being signed.",
+      text: "A **managed installer** is a rollout tool you designate as trusted â€” Intune, for example, which can be configured as one directly. Files it installs are tagged. policy can trust anything carrying that tag. Internal software deploys and runs without being signed.",
     },
     {
       type: "p",
@@ -134,7 +134,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Supplemental policies** solve the change problem. A locked base policy trusts Microsoft-signed code and little else. Supplemental policies extend it — your code signing certificate, a specific vendor. A vendor change means updating one supplemental policy rather than rebuilding and redeploying the base.",
+      text: "**Supplemental policies** solve the change problem. A locked base policy trusts Microsoft-signed code and little else. Supplemental policies extend it â€” your code signing certificate, a specific vendor. A vendor change means updating one supplemental policy rather than rebuilding and redeploying the base.",
     },
     { type: "h2", id: "isg", text: "Reputation. what it is called" },
     {
@@ -213,7 +213,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The honest summary is that App Control gives a stronger guarantee and asks for organisational maturity in exchange — code signing, a real rollout pipeline. the discipline to audit before enforcing. That is why it is worth planning rather than switching on. why the tool it supposedly replaces is still the right answer in specific places.",
+      text: "The honest summary is that App Control gives a stronger guarantee and asks for organisational maturity in exchange â€” code signing, a real rollout pipeline. the discipline to audit before enforcing. That is why it is worth planning rather than switching on. why the tool it supposedly replaces is still the right answer in specific places.",
     },
   ],
   faq: [

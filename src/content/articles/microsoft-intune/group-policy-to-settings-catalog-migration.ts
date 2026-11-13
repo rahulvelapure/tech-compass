@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "group-policy-to-settings-catalog-migration",
@@ -8,7 +8,7 @@ export const article: Article = {
   title: "Migrating from Group Policy to the Intune settings catalog",
   seoTitle: "Group Policy to Intune Settings Catalog: A Migration Method",
   metaDescription:
-    "Export GPOs, read the Group Policy analytics report honestly, migrate what maps cleanly, and rebuild the rest — without running two policy engines at once.",
+    "Export GPOs, read the Group Policy analytics report honestly, migrate what maps cleanly, and rebuild the rest â€” without running two policy engines at once.",
   standfirst:
     "Group Policy analytics will tell you what percentage of a GPO maps to Intune. That number is a starting point for a decision, not a migration plan.",
   excerpt:
@@ -36,7 +36,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The hard half is everything the percentage does not tell you — which settings map to something *slightly different*, which ones belong in a different Intune workload entirely, which ones no longer make sense on a cloud-native device, and how to run the period where both policy engines are live without them fighting. This article covers the mechanics accurately and then the decisions the mechanics leave to you.",
+      text: "The hard half is everything the percentage does not tell you â€” which settings map to something *slightly different*, which ones belong in a different Intune workload entirely, which ones no longer make sense on a cloud-native device, and how to run the period where both policy engines are live without them fighting. This article covers the mechanics accurately and then the decisions the mechanics leave to you.",
     },
 
     {
@@ -61,7 +61,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: 'Anything outside those may appear under **Unknown Settings**, which means the tool saw the setting but could not analyse it. That is not the same as "not supported" — it is "no answer", and those settings need a manual decision.',
+      text: 'Anything outside those may appear under **Unknown Settings**, which means the tool saw the setting but could not analyse it. That is not the same as "not supported" â€” it is "no answer", and those settings need a manual decision.',
     },
     {
       type: "callout",
@@ -93,7 +93,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Two constraints cause most import failures, and both are silent until they bite. A **single GPO XML file cannot exceed 4 MB** — if it does, the import fails and you have to reduce the number of settings in the object. And files without proper Unicode encoding also fail. Check both before you queue up fifty exports.",
+      text: "Two constraints cause most import failures, and both are silent until they bite. A **single GPO XML file cannot exceed 4 MB** â€” if it does, the import fails and you have to reduce the number of settings in the object. And files without proper Unicode encoding also fail. Check both before you queue up fifty exports.",
     },
     {
       type: "p",
@@ -113,7 +113,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Scope tags decide who can see the import at all",
-      text: "If you do not choose one, the Default scope tag is applied — and only admins scoped to Default will see the imported GPO. An admin with a different scope tag cannot see it in the list or in the reporting, and cannot migrate it. On a distributed IT team this is the difference between a colleague continuing your work and a colleague concluding the import never happened.",
+      text: "If you do not choose one, the Default scope tag is applied â€” and only admins scoped to Default will see the imported GPO. An admin with a different scope tag cannot see it in the list or in the reporting, and cannot migrate it. On a distributed IT team this is the difference between a colleague continuing your work and a colleague concluding the import never happened.",
     },
     {
       type: "p",
@@ -134,11 +134,11 @@ export const article: Article = {
         ],
         [
           "Min OS Version",
-          "The minimum Windows build the setting applies to — for example 18362 for Windows 10 1903. A setting that maps perfectly but requires a build newer than your fleet is not migratable today.",
+          "The minimum Windows build the setting applies to â€” for example 18362 for Windows 10 1903. A setting that maps perfectly but requires a build newer than your fleet is not migratable today.",
         ],
         [
           "CSP Name",
-          "Which CSP exposes the setting — Policy, BitLocker, PassportForWork and so on. Useful because CSP boundaries determine several conflict behaviours later.",
+          "Which CSP exposes the setting â€” Policy, BitLocker, PassportForWork and so on. Useful because CSP boundaries determine several conflict behaviours later.",
         ],
         [
           "CSP Mapping",
@@ -164,7 +164,7 @@ export const article: Article = {
         [
           "Ready for migration",
           "The policy has a matching setting in Intune.",
-          "Migrate — but still confirm the setting is one you want, not just one you have.",
+          "Migrate â€” but still confirm the setting is one you want, not just one you have.",
         ],
         [
           "Not supported",
@@ -180,7 +180,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Two timing details. The mapping logic is maintained by Microsoft, and when it is updated **your imported GPOs update automatically** — you do not need to re-import to benefit from newly supported settings. But after you add or remove imports, the readiness reporting takes around **20 minutes** to catch up, so a report that looks wrong immediately after an import is probably just early.",
+      text: "Two timing details. The mapping logic is maintained by Microsoft, and when it is updated **your imported GPOs update automatically** â€” you do not need to re-import to benefit from newly supported settings. But after you add or remove imports, the readiness reporting takes around **20 minutes** to catch up, so a report that looks wrong immediately after an import is probably just early.",
     },
 
     {
@@ -226,13 +226,13 @@ export const article: Article = {
         ],
         [
           "A setting migrates to a different setting",
-          "Intune substitutes an alternate with a similar effect — common with older Office Administrative Template and older Google Chrome settings.",
+          "Intune substitutes an alternate with a similar effect â€” common with older Office Administrative Template and older Google Chrome settings.",
           "Read what it substituted. Similar effect is not identical effect.",
         ],
         [
           "A setting fails during creation",
           "The value is in an unexpected format, or a required child setting was missing from the imported GPO.",
-          "Check Notifications immediately after creating the profile — that is where these are reported.",
+          "Check Notifications immediately after creating the profile â€” that is where these are reported.",
         ],
         [
           "A setting suggests a newer version",
@@ -280,7 +280,7 @@ export const article: Article = {
         [
           "Genuinely needed, genuinely unavailable",
           "Some logon scripts, some drive mappings, some folder redirection",
-          "Solve with a different mechanism — a platform script, a modern file service — or accept the setting as a reason that particular workload stays where it is.",
+          "Solve with a different mechanism â€” a platform script, a modern file service â€” or accept the setting as a reason that particular workload stays where it is.",
         ],
       ],
     },
@@ -300,7 +300,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The `MDMWinsOverGP` setting in the ControlPolicyConflict CSP inverts that, but only for settings in the Policy CSP — not the Defender CSP, not Windows Hello in PassportForWork, and Group Policy still takes precedence for Windows Update policies. Because Group Policy analytics parses several CSPs beyond Policy CSP, a single migrated profile can easily contain a mixture of settings where MDM wins and settings where it does not. The precedence detail is covered in [the policy conflicts article](/microsoft-intune/intune-policy-conflicts).",
+      text: "The `MDMWinsOverGP` setting in the ControlPolicyConflict CSP inverts that, but only for settings in the Policy CSP â€” not the Defender CSP, not Windows Hello in PassportForWork, and Group Policy still takes precedence for Windows Update policies. Because Group Policy analytics parses several CSPs beyond Policy CSP, a single migrated profile can easily contain a mixture of settings where MDM wins and settings where it does not. The precedence detail is covered in [the policy conflicts article](/microsoft-intune/intune-policy-conflicts).",
     },
     {
       type: "p",
@@ -311,7 +311,7 @@ export const article: Article = {
       items: [
         "Migrate a GPO into a settings catalog profile and assign it to a **pilot group only**.",
         "Remove or unlink the equivalent settings from the on-premises GPO for that same pilot scope, so exactly one engine owns them.",
-        "Verify on a device that the setting took effect — not that the profile reports success, but that the actual configured value changed.",
+        "Verify on a device that the setting took effect â€” not that the profile reports success, but that the actual configured value changed.",
         "Expand the pilot scope, then retire the GPO settings for the wider estate.",
         "Only then move to the next GPO.",
       ],
@@ -380,7 +380,7 @@ export const article: Article = {
     {
       question: "Will my migrated Intune policy override Group Policy during the cutover?",
       answer:
-        "Not by default. Group Policy takes precedence over MDM unless MDMWinsOverGP is configured, and that setting applies only to the Policy CSP — not the Defender CSP, not Windows Hello for Business, and Group Policy still wins for Windows Update policies. The reliable approach is to remove the setting from the GPO as you migrate it, so only one engine owns it.",
+        "Not by default. Group Policy takes precedence over MDM unless MDMWinsOverGP is configured, and that setting applies only to the Policy CSP â€” not the Defender CSP, not Windows Hello for Business, and Group Policy still wins for Windows Update policies. The reliable approach is to remove the setting from the GPO as you migrate it, so only one engine owns it.",
     },
     {
       question: "Can I migrate a setting that Group Policy analytics reports as not supported?",

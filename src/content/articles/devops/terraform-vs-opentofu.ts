@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "terraform-vs-opentofu",
@@ -8,7 +8,7 @@ export const article: Article = {
   title: "Terraform or OpenTofu: a decision that is now about governance, not features",
   seoTitle: "Terraform vs OpenTofu: choosing in 2026",
   metaDescription:
-    "The two tools remain largely interchangeable in daily use. What separates them is licence, governance and ownership — decide on those terms.",
+    "The two tools remain largely interchangeable in daily use. What separates them is licence, governance and ownership â€” decide on those terms.",
   standfirst:
     "Comparing them on capability produces a near-tie and misses the point. The question is what you are willing to depend on for the next five years.",
   excerpt:
@@ -78,12 +78,12 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The BUSL restriction is narrower than it is often described",
-      text: "The Business Source License restricts competing commercial use of the software — offering it as a competing product or service. Ordinary internal use to manage your own infrastructure is not what it targets. Teams sometimes migrate believing their own use is prohibited when it is not, which is a poor reason to change tooling.",
+      text: "The Business Source License restricts competing commercial use of the software â€” offering it as a competing product or service. Ordinary internal use to manage your own infrastructure is not what it targets. Teams sometimes migrate believing their own use is prohibited when it is not, which is a poor reason to change tooling.",
     },
     { type: "h2", id: "deciding", text: "How to decide" },
     {
       type: "p",
-      text: "The question that separates them cleanly is whether a single vendor controlling the licence is an acceptable dependency for this part of your estate. Infrastructure as code sits underneath everything else you run — including the deploy-time guardrails that keep [cloud spend predictable](/cloud/cloud-cost-controls) — so the cost of being forced to move later is high, and the 2023 relicensing demonstrated that the terms can change without warning. The [archiving of the Ingress NGINX controller](/devops/ingress-nginx-archived-migration) is the same lesson arriving from the opposite direction: there, the risk was not a licence change but a maintainer walking away.",
+      text: "The question that separates them cleanly is whether a single vendor controlling the licence is an acceptable dependency for this part of your estate. Infrastructure as code sits underneath everything else you run â€” including the deploy-time guardrails that keep [cloud spend predictable](/cloud/cloud-cost-controls) â€” so the cost of being forced to move later is high, and the 2023 relicensing demonstrated that the terms can change without warning. The [archiving of the Ingress NGINX controller](/devops/ingress-nginx-archived-migration) is the same lesson arriving from the opposite direction: there, the risk was not a licence change but a maintainer walking away.",
     },
     {
       type: "ul",
@@ -117,7 +117,7 @@ export const article: Article = {
     {
       question: "Does the Business Source License prohibit internal use of Terraform?",
       answer:
-        "No. It restricts competing commercial use — offering the software as a rival product or service. Using it to manage your own infrastructure is not the restricted activity, and this is frequently misread.",
+        "No. It restricts competing commercial use â€” offering the software as a rival product or service. Using it to manage your own infrastructure is not the restricted activity, and this is frequently misread.",
     },
     {
       question: "Will the two diverge to the point where switching stops being possible?",

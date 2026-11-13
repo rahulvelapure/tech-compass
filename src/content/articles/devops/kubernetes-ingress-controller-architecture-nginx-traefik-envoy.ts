@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-ingress-controller-architecture-nginx-traefik-envoy",
@@ -82,7 +82,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Two different projects share the name",
-      text: "The community project ingress-nginx was retired in March 2026. The repository is archived. There are no further releases, bug fixes or security patches. F5 maintains a separate controller, nginxinc/kubernetes-ingress. It is a different codebase and still supported. The two are often confused, including in vendor comparisons. If you run the community one today, what faces you is a migration rather than a choice — see the [ingress-nginx retirement guide](/devops/ingress-nginx-archived-migration).",
+      text: "The community project ingress-nginx was retired in March 2026. The repository is archived. There are no further releases, bug fixes or security patches. F5 maintains a separate controller, nginxinc/kubernetes-ingress. It is a different codebase and still supported. The two are often confused, including in vendor comparisons. If you run the community one today, what faces you is a migration rather than a choice â€” see the [ingress-nginx retirement guide](/devops/ingress-nginx-archived-migration).",
     },
     { type: "h2", id: "traefik", text: "Traefik: rebuild the routing table in place" },
     {

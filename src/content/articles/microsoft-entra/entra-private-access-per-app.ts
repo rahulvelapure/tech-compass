@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-private-access-per-app",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["Global Secure Access", "per-app access", "VPN replacement", "private network connector"],
   tags: ["Microsoft Entra", "Global Secure Access", "Zero Trust", "Networking", "VPN"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Microsoft Entra Private Access and Global Secure Access. Configuration steps and limits are based on the cited Microsoft sources.",
   body: [
     { type: "p", text: "A VPN can give a user access to a network. That is simple. It can also give the user more access than the task needs." },

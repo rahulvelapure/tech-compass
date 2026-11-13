@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "defender-asr-audit-to-block",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["attack surface reduction", "ASR audit mode", "ASR block mode", "Defender for Endpoint"],
   tags: ["Microsoft Defender", "Endpoint Security", "Windows", "Intune", "CISO"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn guidance for Attack Surface Reduction rule deployment. The rollout stages and audit-to-block flow follow Microsoft's published deployment guide.",
   body: [
     { type: "p", text: "Attack Surface Reduction rules stop risky behavior on Windows devices. They can block actions that attackers use. They can also affect real business apps." },

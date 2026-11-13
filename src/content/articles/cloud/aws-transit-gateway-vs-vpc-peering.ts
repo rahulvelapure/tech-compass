@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "aws-transit-gateway-vs-vpc-peering",
@@ -30,14 +30,14 @@ export const article: Article = {
   reviewStatus: "research-based",
   relatedSlugs: ["bgp-in-the-cloud-why-it-matters", "cloud-egress-costs-architecture-problem"],
   methodology:
-    "Written from AWS documentation on Transit Gateway, VPC peering and VPC quotas, verified August 2026. The mesh arithmetic is stated because it is arithmetic. Quota values are described relative to what a growing estate needs rather than quoted, since they are adjustable and change; the same applies to rates, which are not given. Scope is deliberately the network layer — service-level routing is a different decision.",
+    "Written from AWS documentation on Transit Gateway, VPC peering and VPC quotas, verified August 2026. The mesh arithmetic is stated because it is arithmetic. Quota values are described relative to what a growing estate needs rather than quoted, since they are adjustable and change; the same applies to rates, which are not given. Scope is deliberately the network layer â€” service-level routing is a different decision.",
   body: [
     { type: "p", text: "Most AWS estates start with one VPC. Then the estate grows. A team needs a new VPC. A test system needs its own space. An acquisition brings another network." },
     { type: "p", text: "Soon, those VPCs need to talk. AWS gives you two main choices. You can use VPC peering. Or you can use Transit Gateway." },
     { type: "p", text: "The choice matters. Peering grows as a mesh. Transit Gateway uses a hub. The math gets hard long before the design looks hard." },
     { type: "h2", id: "maths", text: "The arithmetic that decides it" },
     { type: "p", text: "VPC peering is one to one. Each pair of VPCs gets a link. Each link needs route work on both sides." },
-    { type: "p", text: "A full mesh across n VPCs needs n(n−1)/2 links. The count rises fast." },
+    { type: "p", text: "A full mesh across n VPCs needs n(nâˆ’1)/2 links. The count rises fast." },
     { type: "table", caption: "Connections required for a full mesh", head: ["VPCs", "Peering connections"], rows: [["5", "10"], ["10", "45"], ["20", "190"], ["50", "1,225"]] },
     { type: "p", text: "There is also a per-VPC limit on active peer links. That limit can be changed. It still puts a cap on large meshes." },
     { type: "p", text: "The bigger cost is daily work. Add one VPC. Then update every VPC that must reach it. Each change touches more route tables." },
@@ -73,7 +73,7 @@ export const article: Article = {
     { type: "p", text: "Do not wait for the mesh to hurt. Moving a large mesh later means changing many route tables. A hub is often easier to adopt while the estate is still small." },
     { type: "callout", variant: "note", title: "This is the network layer", text: "This article covers VPC routing. Service discovery and service auth are different problems. For that layer, see [VPC Lattice or API Gateway](/cloud/aws-vpc-lattice-vs-api-gateway-service-networking)." },
     { type: "h2", id: "takeaways", text: "What to do with this" },
-    { type: "ul", items: ["Count the VPCs on the roadmap, not just today’s VPCs.", "Plan IP ranges early. Overlap is hard to fix later.", "Use route tables to make network segments clear.", "Use appliance mode with stateful inspection appliances.", "Give Transit Gateway attachments their own subnets."] },
+    { type: "ul", items: ["Count the VPCs on the roadmap, not just todayâ€™s VPCs.", "Plan IP ranges early. Overlap is hard to fix later.", "Use route tables to make network segments clear.", "Use appliance mode with stateful inspection appliances.", "Give Transit Gateway attachments their own subnets."] },
     { type: "p", text: "Peering is not wrong. Transit Gateway is not always right. The key is scale. Use the mesh while it is small. Use a hub when the network needs one." },
   ],
   faq: [

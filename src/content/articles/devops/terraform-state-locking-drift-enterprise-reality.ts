@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "terraform-state-locking-drift-enterprise-reality",
@@ -51,7 +51,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "This exists to stop a specific disaster. Two runs read the same state, each decides what to change. each writes back — the second overwriting the first. You end up with cloud resources nothing is tracking and a state file that describes neither reality.",
+      text: "This exists to stop a specific disaster. Two runs read the same state, each decides what to change. each writes back â€” the second overwriting the first. You end up with cloud resources nothing is tracking and a state file that describes neither reality.",
     },
     {
       type: "callout",
@@ -92,7 +92,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The emergency fix gets reverted",
-      text: "An engineer detaches a volume by hand to rescue data from a failing instance. State still says it should be attached. The next apply sets about making that true. the fix — along with what it was protecting — can be undone by a pipeline doing exactly what it was told.",
+      text: "An engineer detaches a volume by hand to rescue data from a failing instance. State still says it should be attached. The next apply sets about making that true. the fix â€” along with what it was protecting â€” can be undone by a pipeline doing exactly what it was told.",
     },
     {
       type: "p",
@@ -146,7 +146,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Splitting state into layers — network, data, compute, app — fixes all three. Layers read from each other using a remote state data source. So an app workspace can look up a network identifier without being able to change the network.",
+      text: "Splitting state into layers â€” network, data, compute, app â€” fixes all three. Layers read from each other using a remote state data source. So an app workspace can look up a network identifier without being able to change the network.",
     },
     {
       type: "p",

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "oidc-workload-identity-federation-cross-cloud",
@@ -41,7 +41,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Federation replaces the key with a token the workload cannot forge and cannot keep. Something already knows what the workload is — the CI system running the job, the cluster running the pod — and it will say so, signed.",
+      text: "Federation replaces the key with a token the workload cannot forge and cannot keep. Something already knows what the workload is â€” the CI system running the job, the cluster running the pod â€” and it will say so, signed.",
     },
     {
       type: "p",
@@ -113,7 +113,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Two things differ in practice. AWS puts the test inside the role's own trust policy, so it sits with the permissions. Azure hangs a federated identity credential on the identity itself. That identity can be a user-assigned managed identity, which is worth knowing. A lot of guidance still says you need an app registration — see [managed identities versus app registrations](/cloud/azure-managed-identities-vs-app-registrations-secrets).",
+      text: "Two things differ in practice. AWS puts the test inside the role's own trust policy, so it sits with the permissions. Azure hangs a federated identity credential on the identity itself. That identity can be a user-assigned managed identity, which is worth knowing. A lot of guidance still says you need an app registration â€” see [managed identities versus app registrations](/cloud/azure-managed-identities-vs-app-registrations-secrets).",
     },
     {
       type: "p",
@@ -132,7 +132,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "A wildcard on the organisation is close to no control at all",
-      text: "It is tempting to trust any repository in your organisation, because it makes the configuration work everywhere at once. It also means every repository in the organisation can assume that role. Anyone who can add a workflow to any repository — including a new one nobody is watching — can reach whatever that role can reach. Bind the subject to the specific repository, and for anything sensitive to the branch or the deployment environment as well.",
+      text: "It is tempting to trust any repository in your organisation, because it makes the configuration work everywhere at once. It also means every repository in the organisation can assume that role. Anyone who can add a workflow to any repository â€” including a new one nobody is watching â€” can reach whatever that role can reach. Bind the subject to the specific repository, and for anything sensitive to the branch or the deployment environment as well.",
     },
     {
       type: "p",

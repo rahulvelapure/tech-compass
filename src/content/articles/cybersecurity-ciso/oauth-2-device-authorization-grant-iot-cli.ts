@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "oauth-2-device-authorization-grant-iot-cli",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "A device with no browser cannot run a redirect. RFC 8628 solves that by moving the login to a phone. It also hands attackers a phishing lure that looks like a real login.",
   excerpt:
-    "The device code flow replaced pasted access tokens on headless devices. It works, and it is now a common phishing route — which is why Microsoft ships a policy to block it by default.",
+    "The device code flow replaced pasted access tokens on headless devices. It works, and it is now a common phishing route â€” which is why Microsoft ships a policy to block it by default.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-27",
   lastReviewedAt: "2026-08-26",
@@ -33,7 +33,7 @@ export const article: Article = {
     "entra-id-authentication-context-step-up-mfa",
   ],
   methodology:
-    "Written from RFC 8628, the Microsoft Entra documentation on the device authorization grant and on blocking authentication flows with Conditional Access, and the GitHub CLI documentation, verified August 2026. Two corrections were made to the source draft. It said the flow is disabled by default for new Entra tenants; the control is a Conditional Access authentication-flows policy, and since 2025 Microsoft has rolled out a managed policy that blocks the flow for tenants not using it. And it suggested extending the flow with PKCE, which does not apply — there is no redirect and no authorization code to bind. The spec's `verification_uri_complete` option and its session-spying risk were added, since both change the security analysis.",
+    "Written from RFC 8628, the Microsoft Entra documentation on the device authorization grant and on blocking authentication flows with Conditional Access, and the GitHub CLI documentation, verified August 2026. Two corrections were made to the source draft. It said the flow is disabled by default for new Entra tenants; the control is a Conditional Access authentication-flows policy, and since 2025 Microsoft has rolled out a managed policy that blocks the flow for tenants not using it. And it suggested extending the flow with PKCE, which does not apply â€” there is no redirect and no authorization code to bind. The spec's `verification_uri_complete` option and its session-spying risk were added, since both change the security analysis.",
   body: [
     {
       type: "p",
@@ -135,7 +135,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Two things follow. Exclude the characters people confuse — zero against O, one against I — because a user who mistypes burns an attempt. And rate limit the verification page hard, per client and per source address.",
+      text: "Two things follow. Exclude the characters people confuse â€” zero against O, one against I â€” because a user who mistypes burns an attempt. And rate limit the verification page hard, per client and per source address.",
     },
     { type: "h2", id: "pkce", text: "PKCE does not apply here" },
     {
@@ -161,7 +161,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That is the right default. If you do need it, scope it. Allow it for the specific applications that cannot use a browser, block it everywhere else, and require step-up at the approval point — see [authentication context and step-up MFA](/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa).",
+      text: "That is the right default. If you do need it, scope it. Allow it for the specific applications that cannot use a browser, block it everywhere else, and require step-up at the approval point â€” see [authentication context and step-up MFA](/microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa).",
     },
     { type: "h2", id: "checklist", text: "If you are implementing it" },
     {

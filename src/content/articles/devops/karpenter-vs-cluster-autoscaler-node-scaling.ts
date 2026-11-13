@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "karpenter-vs-cluster-autoscaler-node-scaling",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "One asks for another node of a shape you chose in advance. The other looks at what is waiting and picks something that fits.",
   excerpt:
-    "Cluster Autoscaler scales predefined node groups, so the shape of your nodes is decided before the workload exists. Karpenter provisions to fit pending pods — and then keeps rearranging.",
+    "Cluster Autoscaler scales predefined node groups, so the shape of your nodes is decided before the workload exists. Karpenter provisions to fit pending pods â€” and then keeps rearranging.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
   lastReviewedAt: "2026-08-23",
@@ -62,7 +62,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "It also introduces a sharper failure. Each group is tied to specific instance types. If those types are unavailable in that zone right now, the pod stays pending — even when plenty of other perfectly suitable instance types are available in the same zone. The autoscaler cannot see them, because they are not in the group.",
+      text: "It also introduces a sharper failure. Each group is tied to specific instance types. If those types are unavailable in that zone right now, the pod stays pending â€” even when plenty of other perfectly suitable instance types are available in the same zone. The autoscaler cannot see them, because they are not in the group.",
     },
     { type: "h2", id: "karpenter", text: "What Karpenter does instead" },
     {
@@ -77,7 +77,7 @@ export const article: Article = {
       type: "ol",
       items: [
         "Pods cannot be scheduled and sit pending.",
-        "Karpenter reads what they actually need — CPU, memory, selectors, tolerations, topology constraints.",
+        "Karpenter reads what they actually need â€” CPU, memory, selectors, tolerations, topology constraints.",
         "It matches them against the NodePools you defined.",
         "It asks the provider what is available right now that satisfies those needs, and picks.",
         "It creates a NodeClaim, the instance launches, joins, and the pods schedule.",
@@ -94,7 +94,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "With a node group pinned to one instance type, the replacement request asks for the same type — and the reason your instance was reclaimed is often that this type is under pressure. The request can fail, repeatedly, while the workload waits.",
+      text: "With a node group pinned to one instance type, the replacement request asks for the same type â€” and the reason your instance was reclaimed is often that this type is under pressure. The request can fail, repeatedly, while the workload waits.",
     },
     {
       type: "p",
@@ -162,7 +162,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That first row has been changing. Karpenter began as an AWS project and is now developed in the open under the Kubernetes autoscaling community, with other platforms building on it — Azure's node autoprovisioning is Karpenter-based. Check what your provider now supports rather than assuming it is AWS-only.",
+      text: "That first row has been changing. Karpenter began as an AWS project and is now developed in the open under the Kubernetes autoscaling community, with other platforms building on it â€” Azure's node autoprovisioning is Karpenter-based. Check what your provider now supports rather than assuming it is AWS-only.",
     },
     { type: "h2", id: "takeaways", text: "What to do with this" },
     {

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "ransomware-recovery-backups-immutable-ad-forest",
@@ -40,13 +40,13 @@ export const article: Article = {
     "bitlocker-tpm-failure-recovery-enterprise",
     "entra-id-pim-implementation-failures",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Verified against Microsoft Active Directory forest recovery guidance for Windows Server 2025, AWS S3 Object Lock documentation, current Azure Backup immutability guidance and CISA ransomware recovery guidance. Unsourced recovery timelines, generic attacker statistics and fixed dwell-time assumptions were removed.",
   body: [
     {
       type: "p",
-      text: "The phrase “restore from backup” hides the hard part. A backup can hold your data safely while the thing you need in order to use that data is still owned by the attacker.",
+      text: "The phrase â€œrestore from backupâ€ hides the hard part. A backup can hold your data safely while the thing you need in order to use that data is still owned by the attacker.",
     },
     {
       type: "p",
@@ -228,12 +228,12 @@ export const article: Article = {
   ],
   sources: [
     {
-      title: "Active Directory Forest Recovery — Perform initial recovery",
+      title: "Active Directory Forest Recovery â€” Perform initial recovery",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-perform-initial-recovery",
     },
     {
-      title: "Active Directory Forest Recovery — Reset the krbtgt password",
+      title: "Active Directory Forest Recovery â€” Reset the krbtgt password",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-reset-the-krbtgt-password",
     },

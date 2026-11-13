@@ -1,4 +1,4 @@
-import type { Block } from "../../types";
+﻿import type { Block } from "../../types";
 
 export const bodyPart2: Block[] = [
     {"type": "p", "text": "The result is an uptime graph. It is more useful than a list of Kubernetes objects because it shows where failures can join together."},

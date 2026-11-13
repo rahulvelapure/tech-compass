@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-external-id-b2b-b2c-cross-tenant-access",
@@ -59,7 +59,7 @@ export const article: Article = {
           "Partners and contractors",
           "Their home tenant; a guest object in yours",
         ],
-        ["Cross-tenant access settings", "Nobody — it is the policy layer over B2B", "n/a"],
+        ["Cross-tenant access settings", "Nobody â€” it is the policy layer over B2B", "n/a"],
         [
           "External ID for customers",
           "Consumers of your application",
@@ -105,7 +105,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The default is open, and silence looks like a decision",
-      text: "If you have never configured cross-tenant access, the default settings apply, and they generally permit B2B collaboration broadly. That is not a misconfiguration you can find in a report — nothing is wrong, no policy is broken. It just means any tenant on the internet is a potential source of guests in your directory. Configure the default explicitly, then allow named partners.",
+      text: "If you have never configured cross-tenant access, the default settings apply, and they generally permit B2B collaboration broadly. That is not a misconfiguration you can find in a report â€” nothing is wrong, no policy is broken. It just means any tenant on the internet is a potential source of guests in your directory. Configure the default explicitly, then allow named partners.",
     },
     {
       type: "p",
@@ -158,7 +158,7 @@ export const article: Article = {
       type: "callout",
       variant: "tip",
       title: "Access reviews are the control, and they need a licence",
-      text: "Recurring access reviews are how guest access expires by default instead of persisting by default. Reviewers confirm continued need, and access is removed when nobody does. This sits in Entra ID Governance and needs the appropriate licensing, which is worth establishing early — a governance design that assumes access reviews and then discovers the licence gap has to be redone.",
+      text: "Recurring access reviews are how guest access expires by default instead of persisting by default. Reviewers confirm continued need, and access is removed when nobody does. This sits in Entra ID Governance and needs the appropriate licensing, which is worth establishing early â€” a governance design that assumes access reviews and then discovers the licence gap has to be redone.",
     },
     { type: "h2", id: "customers", text: "When it is customers, not partners" },
     {

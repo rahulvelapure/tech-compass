@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "model-context-protocol-explained",
@@ -38,10 +38,10 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "Tools — callable operations the model may invoke, with a described input schema so the client knows what arguments are valid.",
-        "Resources — readable context the model can pull in, addressed by URI rather than pasted into a prompt.",
-        "Prompts — reusable templates the server offers to the client, so a server can supply its own recommended usage.",
-        "Authorisation — how a client proves it is entitled to the call it is making, which is where most enterprise scrutiny lands.",
+        "Tools â€” callable operations the model may invoke, with a described input schema so the client knows what arguments are valid.",
+        "Resources â€” readable context the model can pull in, addressed by URI rather than pasted into a prompt.",
+        "Prompts â€” reusable templates the server offers to the client, so a server can supply its own recommended usage.",
+        "Authorisation â€” how a client proves it is entitled to the call it is making, which is where most enterprise scrutiny lands.",
       ],
     },
     {
@@ -82,7 +82,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "This is the change that moves MCP servers into standard infrastructure. Session affinity is an operational tax — it constrains autoscaling, complicates deployments and creates a failure mode where losing one instance loses in-flight work. Removing it means an MCP server can be run on the same platform, with the same patterns, as any other internal HTTP service.",
+      text: "This is the change that moves MCP servers into standard infrastructure. Session affinity is an operational tax â€” it constrains autoscaling, complicates deployments and creates a failure mode where losing one instance loses in-flight work. Removing it means an MCP server can be run on the same platform, with the same patterns, as any other internal HTTP service.",
     },
     {
       type: "p",
@@ -107,7 +107,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "None of this is unique to MCP. It is the same problem as any service-to-service integration with a non-human principal, which is the useful way to think about it — the protocol is new, the authorisation questions are not.",
+      text: "None of this is unique to MCP. It is the same problem as any service-to-service integration with a non-human principal, which is the useful way to think about it â€” the protocol is new, the authorisation questions are not.",
     },
   ],
   faq: [
@@ -124,7 +124,7 @@ export const article: Article = {
     {
       question: "Do we need MCP to connect a model to an internal system?",
       answer:
-        "No — a direct integration works. The argument for MCP is reuse: one server can serve any compliant client, which matters once more than one assistant or agent needs the same system.",
+        "No â€” a direct integration works. The argument for MCP is reuse: one server can serve any compliant client, which matters once more than one assistant or agent needs the same system.",
     },
   ],
   sources: [

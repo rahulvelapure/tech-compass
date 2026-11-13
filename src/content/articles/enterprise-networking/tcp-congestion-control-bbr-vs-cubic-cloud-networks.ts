@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "tcp-congestion-control-bbr-vs-cubic-cloud-networks",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "The link is idle. Loss is tiny. Throughput is a fraction of what you pay for. Nothing is broken.",
   excerpt:
-    "CUBIC infers congestion from loss. BBR measures bandwidth and round-trip time and paces to fit. On long-haul cloud paths the difference is large — and inside a data centre it can go the other way.",
+    "CUBIC infers congestion from loss. BBR measures bandwidth and round-trip time and paces to fit. On long-haul cloud paths the difference is large â€” and inside a data centre it can go the other way.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-27",
   lastReviewedAt: "2026-08-24",
@@ -51,7 +51,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "CUBIC grows that window until it sees loss. Loss is its congestion signal. On detecting it, CUBIC multiplies the window by a factor below one — a substantial cut — and then grows again along a cubic curve.",
+      text: "CUBIC grows that window until it sees loss. Loss is its congestion signal. On detecting it, CUBIC multiplies the window by a factor below one â€” a substantial cut â€” and then grows again along a cubic curve.",
     },
     {
       type: "p",
@@ -63,7 +63,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Now add loss that has nothing to do with congestion — a marginal optical link, a wireless hop, a device dropping under a microburst. CUBIC cannot tell that loss apart from a full queue. It cuts anyway, and on a long path it spends most of its time recovering rather than at full rate.",
+      text: "Now add loss that has nothing to do with congestion â€” a marginal optical link, a wireless hop, a device dropping under a microburst. CUBIC cannot tell that loss apart from a full queue. It cuts anyway, and on a long path it spends most of its time recovering rather than at full rate.",
     },
     {
       type: "callout",
@@ -78,7 +78,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Bottleneck bandwidth** is the highest delivery rate it has recently observed. **Round-trip propagation time** is the lowest round-trip time it has recently seen — the path with no queue in it.",
+      text: "**Bottleneck bandwidth** is the highest delivery rate it has recently observed. **Round-trip propagation time** is the lowest round-trip time it has recently seen â€” the path with no queue in it.",
     },
     {
       type: "p",
@@ -126,7 +126,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Inside a data centre**, paths are short and nearly lossless. CUBIC's assumption — that loss means congestion — is largely true there, and its feedback loop is fast because the round trip is short. BBR's probing adds variation for no gain. Where the fabric supports it, algorithms built for that environment do better than either.",
+      text: "**Inside a data centre**, paths are short and nearly lossless. CUBIC's assumption â€” that loss means congestion â€” is largely true there, and its feedback loop is fast because the round trip is short. BBR's probing adds variation for no gain. Where the fabric supports it, algorithms built for that environment do better than either.",
     },
     {
       type: "p",
@@ -227,7 +227,7 @@ export const article: Article = {
       url: "https://www.kernel.org/doc/html/latest/networking/tcp.html",
     },
     {
-      title: "tcp(7) — TCP protocol and socket options",
+      title: "tcp(7) â€” TCP protocol and socket options",
       publisher: "Linux man-pages project",
       url: "https://man7.org/linux/man-pages/man7/tcp.7.html",
     },

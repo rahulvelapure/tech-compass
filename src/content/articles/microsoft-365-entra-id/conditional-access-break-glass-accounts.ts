@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "conditional-access-break-glass-accounts",
@@ -32,7 +32,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The configuration guidance has moved, and a good deal of published advice has not moved with it. The older pattern — a long password, stored in a safe, excluded from everything — no longer survives contact with mandatory multifactor authentication requirements. The current shape is passwordless and phishing-resistant.",
+      text: "The configuration guidance has moved, and a good deal of published advice has not moved with it. The older pattern â€” a long password, stored in a safe, excluded from everything â€” no longer survives contact with mandatory multifactor authentication requirements. The current shape is passwordless and phishing-resistant.",
     },
     { type: "h2", id: "what-the-account-is", text: "What the account has to be" },
     {
@@ -53,7 +53,7 @@ export const article: Article = {
     { type: "h2", id: "credentials", text: "Credentials: passwordless, not a long password" },
     {
       type: "p",
-      text: "Microsoft's current guidance is to register a phishing-resistant passwordless method on these accounts — a passkey (FIDO2) as the recommended option, or certificate-based authentication where a PKI already exists. This is what satisfies the mandatory MFA requirements without leaving the account dependent on a method that could itself be unavailable.",
+      text: "Microsoft's current guidance is to register a phishing-resistant passwordless method on these accounts â€” a passkey (FIDO2) as the recommended option, or certificate-based authentication where a PKI already exists. This is what satisfies the mandatory MFA requirements without leaving the account dependent on a method that could itself be unavailable.",
     },
     {
       type: "p",
@@ -63,7 +63,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The self-service password reset trap",
-      text: "If self-service password reset is enabled for administrators, signing in to a break-glass account can trigger a registration prompt demanding Authenticator and a mobile number — which is exactly the personal dependency these accounts exist to avoid. The administrator SSPR policy cannot be edited, so the fix is to disable SSPR for administrator accounts at the authorisation-policy level. Changes can take around an hour to apply.",
+      text: "If self-service password reset is enabled for administrators, signing in to a break-glass account can trigger a registration prompt demanding Authenticator and a mobile number â€” which is exactly the personal dependency these accounts exist to avoid. The administrator SSPR policy cannot be edited, so the fix is to disable SSPR for administrator accounts at the authorisation-policy level. Changes can take around an hour to apply.",
     },
     { type: "h2", id: "what-to-exclude", text: "What to exclude, and what not to" },
     {
@@ -73,15 +73,15 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "Create a dedicated security group — EmergencyAccess or similar — and exclude the group rather than the individual accounts. New policies then have one obvious thing to exclude, and the exclusion is auditable in one place.",
+        "Create a dedicated security group â€” EmergencyAccess or similar â€” and exclude the group rather than the individual accounts. New policies then have one obvious thing to exclude, and the exclusion is auditable in one place.",
         "Report-only policies do not need an exclusion. They do not block access, and excluding them removes the very signal that would have warned you the policy was going to cause a lockout.",
         "Do not exclude the accounts from logging, alerting or access review. The exclusion is from enforcement, never from oversight.",
-        "Re-verify exclusions after every Conditional Access change. A new policy includes everyone unless told otherwise, and that default is how tenants lock themselves out — which is why the exclusion belongs in the [Conditional Access design framework](/microsoft-365-entra-id/conditional-access-framework) rather than being remembered policy by policy.",
+        "Re-verify exclusions after every Conditional Access change. A new policy includes everyone unless told otherwise, and that default is how tenants lock themselves out â€” which is why the exclusion belongs in the [Conditional Access design framework](/microsoft-365-entra-id/conditional-access-framework) rather than being remembered policy by policy.",
       ],
     },
     {
       type: "p",
-      text: "It is also worth preparing contingency policies in advance — policies that are configured but disabled, ready to be enabled during an outage to restore access for a defined set of critical users. Writing them under time pressure, while locked out, is not a plan.",
+      text: "It is also worth preparing contingency policies in advance â€” policies that are configured but disabled, ready to be enabled during an outage to restore access for a defined set of critical users. Writing them under time pressure, while locked out, is not a plan.",
     },
     { type: "h2", id: "monitoring", text: "Alert on every sign-in" },
     {
@@ -104,7 +104,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The quarterly test is the part most often skipped and the part that most often finds the problem, because the thing that breaks these accounts is rarely the account itself — it is a policy someone added three weeks ago with the best of intentions.",
+      text: "The quarterly test is the part most often skipped and the part that most often finds the problem, because the thing that breaks these accounts is rarely the account itself â€” it is a policy someone added three weeks ago with the best of intentions.",
     },
   ],
   faq: [
@@ -121,7 +121,7 @@ export const article: Article = {
     {
       question: "Is a long password still acceptable instead of a passkey?",
       answer:
-        "Current Microsoft guidance points to phishing-resistant passwordless methods — passkey (FIDO2), or certificate-based authentication where a PKI exists — because these satisfy mandatory multifactor authentication requirements. A password-only emergency account risks being unusable under those requirements at the moment it is needed.",
+        "Current Microsoft guidance points to phishing-resistant passwordless methods â€” passkey (FIDO2), or certificate-based authentication where a PKI exists â€” because these satisfy mandatory multifactor authentication requirements. A password-only emergency account risks being unusable under those requirements at the moment it is needed.",
     },
     {
       question:
@@ -137,7 +137,7 @@ export const article: Article = {
       url: "https://learn.microsoft.com/entra/identity/role-based-access-control/security-emergency-access",
     },
     {
-      title: "Microsoft cloud security benchmark — Privileged Access (PA-5)",
+      title: "Microsoft cloud security benchmark â€” Privileged Access (PA-5)",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/security/benchmark/azure/mcsb-v2-privileged-access",
     },

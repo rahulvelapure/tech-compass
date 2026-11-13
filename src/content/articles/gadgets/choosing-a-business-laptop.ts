@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "choosing-a-business-laptop",
@@ -31,7 +31,7 @@ export const article: Article = {
     "bitlocker-tpm-failure-recovery-enterprise",
     "windows-11-vs-windows-10-enterprise",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Written from published vendor specifications, firmware management documentation and standard enterprise procurement criteria, verified August 2026. No pricing is quoted, because it varies by region and contract, and no brand is recommended.",
   body: [
@@ -65,7 +65,7 @@ export const article: Article = {
       type: "ul",
       items: [
         "Firmware and BIOS settings must be manageable from your existing tooling, not a separate console with its own agent.",
-        "Zero-touch provisioning support with your identity provider — otherwise every device gets touched by a person.",
+        "Zero-touch provisioning support with your identity provider â€” otherwise every device gets touched by a person.",
         "A published, stable model line so the image and driver set do not fork mid-refresh.",
       ],
     },
@@ -130,7 +130,7 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "Get one sample of each finalist. Not a specification sheet — a machine.",
+        "Get one sample of each finalist. Not a specification sheet â€” a machine.",
         "Enrol it through your real provisioning path, end to end, with no manual steps you would not scale.",
         "Push a firmware setting and a driver update from your existing tooling. Note whether it needed another console.",
         "Confirm the encryption and recovery behaviour, including what a user sees when it goes wrong.",

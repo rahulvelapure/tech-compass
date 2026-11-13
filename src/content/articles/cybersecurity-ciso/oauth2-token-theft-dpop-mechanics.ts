@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "oauth2-token-theft-dpop-mechanics",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "Steal a bearer token and you are the user. No password, no MFA prompt, nothing to break. That is the design, not a bug.",
   excerpt:
-    "OAuth bearer tokens authenticate the token, not the holder. DPoP binds the token to a key the client must prove it has — and it is worth knowing exactly which attack that closes.",
+    "OAuth bearer tokens authenticate the token, not the holder. DPoP binds the token to a key the client must prove it has â€” and it is worth knowing exactly which attack that closes.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-23",
   draft: false,
@@ -68,7 +68,7 @@ export const article: Article = {
     { type: "h2", id: "dpop", text: "What DPoP changes" },
     {
       type: "p",
-      text: "DPoP — Demonstrating Proof of Possession, RFC 9449 — ties the token to a key pair the client generates. The private key stays with the client. Using the token now requires proving you hold that key.",
+      text: "DPoP â€” Demonstrating Proof of Possession, RFC 9449 â€” ties the token to a key pair the client generates. The private key stays with the client. Using the token now requires proving you hold that key.",
     },
     {
       type: "p",
@@ -88,7 +88,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "When the authorisation server issues the token, it records the key's thumbprint against it — in a JWT access token this appears as a `cnf` confirmation claim. The token now names the key it belongs to.",
+      text: "When the authorisation server issues the token, it records the key's thumbprint against it â€” in a JWT access token this appears as a `cnf` confirmation claim. The token now names the key it belongs to.",
     },
     {
       type: "p",
@@ -129,7 +129,7 @@ export const article: Article = {
       rows: [
         [
           "Client capability",
-          "The client must generate keys and sign proofs. It is code, not configuration — no drop-in swap for Bearer.",
+          "The client must generate keys and sign proofs. It is code, not configuration â€” no drop-in swap for Bearer.",
         ],
         [
           "Edge infrastructure",
@@ -160,7 +160,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Now the same application with DPoP and a non-extractable key. The script still steals the token, and the token is useless on the attacker's machine — no key, no valid proof, request refused.",
+      text: "Now the same application with DPoP and a non-extractable key. The script still steals the token, and the token is useless on the attacker's machine â€” no key, no valid proof, request refused.",
     },
     {
       type: "p",
@@ -208,7 +208,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The broader point outlives the protocol. Bearer credentials authenticate the token rather than the holder, which is why the same pattern recurs — a signed assertion in [SAML federation](/cybersecurity-ciso/saml-federation-security-risks-trust-boundaries), a session cookie after [a passkey sign-in](/cybersecurity-ciso/passkeys-enterprise-deployment-reality). Binding the credential to something the legitimate holder has is the move that changes it, and DPoP is that move for OAuth.",
+      text: "The broader point outlives the protocol. Bearer credentials authenticate the token rather than the holder, which is why the same pattern recurs â€” a signed assertion in [SAML federation](/cybersecurity-ciso/saml-federation-security-risks-trust-boundaries), a session cookie after [a passkey sign-in](/cybersecurity-ciso/passkeys-enterprise-deployment-reality). Binding the credential to something the legitimate holder has is the move that changes it, and DPoP is that move for OAuth.",
     },
   ],
   faq: [
@@ -245,7 +245,7 @@ export const article: Article = {
       url: "https://www.rfc-editor.org/rfc/rfc9449",
     },
     {
-      title: "RFC 6750: The OAuth 2.0 Authorization Framework — Bearer Token Usage",
+      title: "RFC 6750: The OAuth 2.0 Authorization Framework â€” Bearer Token Usage",
       publisher: "IETF",
       url: "https://www.rfc-editor.org/rfc/rfc6750",
     },

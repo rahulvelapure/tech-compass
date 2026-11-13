@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "mongodb-sharding-jumbo-chunk-trap",
@@ -32,7 +32,7 @@ export const article: Article = {
     "kubernetes-statefulset-vs-deployment-storage-identity",
   ],
   methodology:
-    "Written from the MongoDB manual on data partitioning with chunks, choosing a shard key, the sharded cluster balancer, refining a shard key and resharding a collection, verified August 2026. Three corrections were made to the source draft. It gave the default chunk size as 64 MB; it has been 128 MB since MongoDB 6.0. It dated `reshardCollection` to 4.2, and separately dated `refineCollectionShardKey` to 5.0 — the correct versions are 5.0 and 4.4 respectively. And it described continuous auto-splitting, which changed in 6.0: chunks are now split only when a migration requires it. The draft's IoT firmware incident was rewritten as the mechanism.",
+    "Written from the MongoDB manual on data partitioning with chunks, choosing a shard key, the sharded cluster balancer, refining a shard key and resharding a collection, verified August 2026. Three corrections were made to the source draft. It gave the default chunk size as 64 MB; it has been 128 MB since MongoDB 6.0. It dated `reshardCollection` to 4.2, and separately dated `refineCollectionShardKey` to 5.0 â€” the correct versions are 5.0 and 4.4 respectively. And it described continuous auto-splitting, which changed in 6.0: chunks are now split only when a migration requires it. The draft's IoT firmware incident was rewritten as the mechanism.",
   body: [
     {
       type: "p",
@@ -75,7 +75,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "It costs you range queries. Ask for a week of timestamps on a hashed key and the router cannot tell which shards hold them, so it asks all of them. Range queries are not impossible — they are just answered by every shard at once.",
+      text: "It costs you range queries. Ask for a week of timestamps on a hashed key and the router cannot tell which shards hold them, so it asks all of them. Range queries are not impossible â€” they are just answered by every shard at once.",
     },
     { type: "h3", id: "ranged", text: "Ranged keys" },
     {
@@ -167,11 +167,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Resharding is the heavier answer for when the key itself was wrong. It runs in the background against a live collection, and it is genuinely resource-intensive — it rewrites the collection. Plan capacity for it and run it when you have headroom, not when the cluster is already struggling.",
+      text: "Resharding is the heavier answer for when the key itself was wrong. It runs in the background against a live collection, and it is genuinely resource-intensive â€” it rewrites the collection. Plan capacity for it and run it when you have headroom, not when the cluster is already struggling.",
     },
     {
       type: "p",
-      text: "Neither one is a substitute for choosing well. Both are the reason a wrong choice is now recoverable rather than permanent. The same set of concerns — identity, distribution, and what happens during a rebalance — shapes any sharded store, including [Redis Cluster](/cloud/redis-cluster-vs-sentinel-architecture).",
+      text: "Neither one is a substitute for choosing well. Both are the reason a wrong choice is now recoverable rather than permanent. The same set of concerns â€” identity, distribution, and what happens during a rebalance â€” shapes any sharded store, including [Redis Cluster](/cloud/redis-cluster-vs-sentinel-architecture).",
     },
   ],
   faq: [

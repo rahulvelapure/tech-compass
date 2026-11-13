@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "usb-c-cables-explained",
@@ -27,7 +27,7 @@ export const article: Article = {
   ],
   tags: ["Electronics", "Hardware", "Standards"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology:
     "Written from the published USB-IF specifications and connector certification documentation, verified August 2026. No cable is tested or recommended by brand, and no throughput measurements are quoted.",
   body: [

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "enterprise-ipv6-migration-dual-stack-security",
@@ -33,7 +33,7 @@ export const article: Article = {
     "enterprise-dns-security-doh-dot-filtering",
     "zero-trust-network-segmentation",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Researched against IETF IPv6 standards, Microsoft Windows IPv6 guidance and Cloudflare Radar. Version-sensitive vendor behaviour was described only where current documentation supports it. The original draft's Cloudflare percentage, rigid address-allocation assumptions, unsupported Cisco command example and performance claims were removed or qualified.",
   body: [
@@ -106,7 +106,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "So the usual question, “SLAAC or DHCPv6”, is the wrong one to start with. Ask what you actually need first. Central control of addresses? A host inventory? DNS options? Or just hosts that configure themselves? Then pick the control flags and tools that give you it.",
+      text: "So the usual question, â€œSLAAC or DHCPv6â€, is the wrong one to start with. Ask what you actually need first. Central control of addresses? A host inventory? DNS options? Or just hosts that configure themselves? Then pick the control flags and tools that give you it.",
     },
     {
       type: "h2",
@@ -262,22 +262,22 @@ export const article: Article = {
   ],
   sources: [
     {
-      title: "RFC 8415 — Dynamic Host Configuration Protocol for IPv6",
+      title: "RFC 8415 â€” Dynamic Host Configuration Protocol for IPv6",
       publisher: "IETF",
       url: "https://datatracker.ietf.org/doc/html/rfc8415",
     },
     {
-      title: "RFC 6105 — IPv6 Router Advertisement Guard",
+      title: "RFC 6105 â€” IPv6 Router Advertisement Guard",
       publisher: "IETF",
       url: "https://datatracker.ietf.org/doc/html/rfc6105",
     },
     {
-      title: "RFC 8106 — IPv6 Router Advertisement Options for DNS Configuration",
+      title: "RFC 8106 â€” IPv6 Router Advertisement Options for DNS Configuration",
       publisher: "IETF",
       url: "https://datatracker.ietf.org/doc/rfc8106/",
     },
     {
-      title: "RFC 8981 — Temporary Address Extensions for SLAAC",
+      title: "RFC 8981 â€” Temporary Address Extensions for SLAAC",
       publisher: "IETF",
       url: "https://datatracker.ietf.org/doc/html/rfc8981",
     },

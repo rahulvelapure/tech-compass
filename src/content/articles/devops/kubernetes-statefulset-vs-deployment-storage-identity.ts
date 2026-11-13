@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-statefulset-vs-deployment-storage-identity",
@@ -181,7 +181,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That wait is the safety mechanism working. It is not a bug to engineer around, and forcing the detach early is how you get two writers. Budget for the delay in your recovery targets, and treat voluntary disruptions separately with a budget — the mechanics are in [pod disruption budgets](/devops/kubernetes-pod-disruption-budgets-eviction-mechanics).",
+      text: "That wait is the safety mechanism working. It is not a bug to engineer around, and forcing the detach early is how you get two writers. Budget for the delay in your recovery targets, and treat voluntary disruptions separately with a budget â€” the mechanics are in [pod disruption budgets](/devops/kubernetes-pod-disruption-budgets-eviction-mechanics).",
     },
   ],
   faq: [

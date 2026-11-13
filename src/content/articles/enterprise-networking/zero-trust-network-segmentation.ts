@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "zero-trust-network-segmentation",
@@ -8,7 +8,7 @@ export const article: Article = {
   title: "Segmentation under zero trust: what still needs a boundary",
   seoTitle: "Network segmentation under zero trust",
   metaDescription:
-    "Zero trust says network location does not imply trust. That does not retire segmentation — it changes its job from access control to containment.",
+    "Zero trust says network location does not imply trust. That does not retire segmentation â€” it changes its job from access control to containment.",
   standfirst:
     "If location no longer confers trust, it is fair to ask why anyone still segments a network. The answer is that segmentation stopped being the access control and became the blast radius control.",
   excerpt:
@@ -28,11 +28,11 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "NIST SP 800-207 is unusually blunt about this. Its second tenet states that all communication is secured regardless of network location, and that network location alone does not imply trust — a request from a device sitting inside the legacy perimeter has to meet the same requirements as one arriving from a coffee shop. The abstract goes further, describing zero trust as protecting resources rather than network segments.",
+      text: "NIST SP 800-207 is unusually blunt about this. Its second tenet states that all communication is secured regardless of network location, and that network location alone does not imply trust â€” a request from a device sitting inside the legacy perimeter has to meet the same requirements as one arriving from a coffee shop. The abstract goes further, describing zero trust as protecting resources rather than network segments.",
     },
     {
       type: "p",
-      text: "Read quickly, that sounds like an argument for giving up on segmentation. It is not. What those statements remove is the *assumption* that being on the inside is evidence of anything. The boundary itself still does useful work — just not the work it used to do.",
+      text: "Read quickly, that sounds like an argument for giving up on segmentation. It is not. What those statements remove is the *assumption* that being on the inside is evidence of anything. The boundary itself still does useful work â€” just not the work it used to do.",
     },
     { type: "h2", id: "what-changes", text: "What the boundary is actually for now" },
     {
@@ -51,7 +51,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "The third job is the one that decides your design",
-      text: "Enterprise estates routinely contain devices that will never authenticate per session. Zero trust guidance does not pretend otherwise — SP 800-207 presents its tenets as an ideal goal and acknowledges that not all of them will be fully implemented for a given strategy. Segmentation is where that gap gets managed.",
+      text: "Enterprise estates routinely contain devices that will never authenticate per session. Zero trust guidance does not pretend otherwise â€” SP 800-207 presents its tenets as an ideal goal and acknowledges that not all of them will be fully implemented for a given strategy. Segmentation is where that gap gets managed.",
     },
     { type: "h2", id: "where-to-draw", text: "Choosing where the boundary goes" },
     {
@@ -113,7 +113,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The test worth applying is whether an on-call engineer who did not build the design can determine, at three in the morning, whether a given flow should be permitted. If answering that needs the original architect, the rule set is already unmaintainable — it is simply not failing yet.",
+      text: "The test worth applying is whether an on-call engineer who did not build the design can determine, at three in the morning, whether a given flow should be permitted. If answering that needs the original architect, the rule set is already unmaintainable â€” it is simply not failing yet.",
     },
     { type: "h2", id: "mistakes", text: "The mistakes that recur" },
     {
@@ -136,7 +136,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The other limit is timing. SP 800-207 devotes a section to hybrid zero trust and perimeter-based architecture precisely because the transition is long and enterprises commonly operate both models at once for years. Designs that assume a clean end state tend to strand the least tractable part of the estate — the oldest equipment, with the least documentation — outside any coherent model at all.",
+      text: "The other limit is timing. SP 800-207 devotes a section to hybrid zero trust and perimeter-based architecture precisely because the transition is long and enterprises commonly operate both models at once for years. Designs that assume a clean end state tend to strand the least tractable part of the estate â€” the oldest equipment, with the least documentation â€” outside any coherent model at all.",
     },
     {
       type: "p",
@@ -152,7 +152,7 @@ export const article: Article = {
     {
       question: "How many zones should an enterprise have?",
       answer:
-        "Fewer than most designs propose. The number that works is the number your team can reason about and audit without consulting the person who built it. Start with the boundaries that clearly justify themselves — management plane, backup and recovery, regulated data — and add only where an incident scenario argues for it.",
+        "Fewer than most designs propose. The number that works is the number your team can reason about and audit without consulting the person who built it. Start with the boundaries that clearly justify themselves â€” management plane, backup and recovery, regulated data â€” and add only where an incident scenario argues for it.",
     },
     {
       question: "How long should policy run in monitor mode before enforcement?",

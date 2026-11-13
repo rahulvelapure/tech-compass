@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-pod-networking-packet-flow",
@@ -8,7 +8,7 @@ export const article: Article = {
   title: "What actually happens when a pod sends a packet",
   seoTitle: "Kubernetes pod networking: the real packet flow",
   metaDescription:
-    "Kubernetes promises a flat network until it breaks. The namespaces, veth pairs and CNI routing a packet really crosses — and how to trace it when it stops.",
+    "Kubernetes promises a flat network until it breaks. The namespaces, veth pairs and CNI routing a packet really crosses â€” and how to trace it when it stops.",
   standfirst:
     "Kubernetes gives every pod an IP and promises they can all talk. That works until it does not, and then you need to know what is under it.",
   excerpt:
@@ -48,7 +48,7 @@ export const article: Article = {
     { type: "h2", id: "primitives", text: "The two kernel features it all rests on" },
     {
       type: "p",
-      text: "A network namespace is an isolated network stack. Its own interfaces, its own routing table, its own firewall rules. When a pod starts, the runtime gives it a fresh one. Inside, the pod sees a loopback interface and nothing else — not the node's interfaces, not other pods.",
+      text: "A network namespace is an isolated network stack. Its own interfaces, its own routing table, its own firewall rules. When a pod starts, the runtime gives it a fresh one. Inside, the pod sees a loopback interface and nothing else â€” not the node's interfaces, not other pods.",
     },
     {
       type: "p",
@@ -66,7 +66,7 @@ export const article: Article = {
     {
       type: "ol",
       items: [
-        "**The pod sends.** The application builds a packet with the pod IP as its source. Nothing in the pod's routing table matches the destination, so it goes to the default gateway — usually the CNI bridge or router address on the node.",
+        "**The pod sends.** The application builds a packet with the pod IP as its source. Nothing in the pod's routing table matches the destination, so it goes to the default gateway â€” usually the CNI bridge or router address on the node.",
         "**The cable is crossed.** The packet leaves eth0 and appears immediately on the host end of the veth pair. It is now in the node's root namespace, and the namespace boundary is behind it.",
         "**The node decides.** What happens here depends on the CNI, and this is where plugins genuinely differ.",
         "**The node sends.** The packet reaches a physical interface. Depending on the plugin it may be wrapped in an overlay header first.",
@@ -95,7 +95,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "For traffic leaving the node there is a second choice, and it is the one that causes MTU problems. An overlay such as VXLAN or Geneve wraps the packet so the physical network never sees pod addresses. Native routing does not wrap anything, which is faster, but the physical network then has to know how to route the pod CIDR back — often over BGP.",
+      text: "For traffic leaving the node there is a second choice, and it is the one that causes MTU problems. An overlay such as VXLAN or Geneve wraps the packet so the physical network never sees pod addresses. Native routing does not wrap anything, which is faster, but the physical network then has to know how to route the pod CIDR back â€” often over BGP.",
     },
     {
       type: "p",
@@ -160,7 +160,7 @@ export const article: Article = {
     { type: "h3", id: "step-trace", text: "Find where the packet stops" },
     {
       type: "p",
-      text: "Now trace it on the node. Capture on the pod's host-side veth first. Seeing the packet there proves it left the namespace. Then capture on the node's physical interface. If it appears on the first and not the second, it is being dropped on the node — and you have narrowed a vague fault to one hop.",
+      text: "Now trace it on the node. Capture on the pod's host-side veth first. Seeing the packet there proves it left the namespace. Then capture on the node's physical interface. If it appears on the first and not the second, it is being dropped on the node â€” and you have narrowed a vague fault to one hop.",
     },
     { type: "h3", id: "step-conntrack", text: "Suspect conntrack before iptables" },
     {
@@ -179,7 +179,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "So ping works. DNS works. A large HTTP response or a TLS handshake hangs. If you only remember one thing from this article, make it that pattern — it points at MTU almost every time. The fix is lowering the pod MTU so the wrapped packet fits, commonly 1450 for VXLAN on a 1500-byte network.",
+      text: "So ping works. DNS works. A large HTTP response or a TLS handshake hangs. If you only remember one thing from this article, make it that pattern â€” it points at MTU almost every time. The fix is lowering the pod MTU so the wrapped packet fits, commonly 1450 for VXLAN on a 1500-byte network.",
     },
     { type: "h3", id: "cidr", text: "Overlapping CIDRs" },
     {
@@ -202,7 +202,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The same segmentation thinking applies here as anywhere else — [segmenting a network without breaking it](/enterprise-networking/zero-trust-network-segmentation) covers the general shape.",
+      text: "The same segmentation thinking applies here as anywhere else â€” [segmenting a network without breaking it](/enterprise-networking/zero-trust-network-segmentation) covers the general shape.",
     },
     {
       type: "p",

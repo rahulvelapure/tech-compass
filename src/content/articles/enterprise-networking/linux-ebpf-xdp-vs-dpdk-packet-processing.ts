@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "linux-ebpf-xdp-vs-dpdk-packet-processing",
@@ -31,7 +31,7 @@ export const article: Article = {
     "linux-xdp-vs-tc-ebpf-packet-drop",
     "tcp-congestion-control-bbr-vs-cubic-cloud-networks",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Written from the Linux kernel AF_XDP documentation and the DPDK Programmer's Guide, verified August 2026. Two claims in the source draft were corrected against those documents and are noted in the article. No packet rates, latency figures, CPU utilisation or memory overhead numbers are quoted, because none were measured for this article and published figures describe specific hardware.",
   body: [
@@ -45,7 +45,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Everything that follows — the tooling you keep, the memory model you inherit, the way a crash behaves — comes out of that one decision.",
+      text: "Everything that follows â€” the tooling you keep, the memory model you inherit, the way a crash behaves â€” comes out of that one decision.",
     },
     { type: "h2", id: "ownership", text: "Who holds the NIC queues" },
     {
@@ -84,7 +84,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The header is kept deliberately small — currently two 64-byte cache lines, with the most frequently used fields on the first. Packet data does not start at the beginning of the buffer. It starts RTE_PKTMBUF_HEADROOM bytes in, cache aligned, so protocol headers can be prepended without moving anything.",
+      text: "The header is kept deliberately small â€” currently two 64-byte cache lines, with the most frequently used fields on the first. Packet data does not start at the beginning of the buffer. It starts RTE_PKTMBUF_HEADROOM bytes in, cache aligned, so protocol headers can be prepended without moving anything.",
     },
     {
       type: "p",

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "intune-enrollment-restrictions",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "Microsoft's own documentation says enrollment restrictions are not security features. Designing them as though they are produces a control that blocks the wrong people and reassures you about the wrong risk.",
   excerpt:
-    "Platform restrictions, device limits and ownership rules — how Intune decides whether a device is corporate or personal, why that decision differs on every platform, and the enrollment errors these settings produce.",
+    "Platform restrictions, device limits and ownership rules â€” how Intune decides whether a device is corporate or personal, why that decision differs on every platform, and the enrollment errors these settings produce.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
   readingMinutes: 8,
@@ -63,13 +63,13 @@ export const article: Article = {
         ],
         [
           "Device platform",
-          "Whether a platform may enroll at all — allow or block.",
+          "Whether a platform may enroll at all â€” allow or block.",
           "Android device administrator, Android Enterprise personally-owned work profile, iOS/iPadOS, macOS, Windows",
         ],
         [
           "OS version",
           "Minimum and maximum OS version permitted to enroll.",
-          "Windows, plus Android and iOS/iPadOS — but on those platforms **only for devices enrolled through the Company Portal**",
+          "Windows, plus Android and iOS/iPadOS â€” but on those platforms **only for devices enrolled through the Company Portal**",
         ],
         [
           "Device manufacturer",
@@ -99,7 +99,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The personally owned setting is the one that causes the most confusion, because Intune does not simply know who owns a device. It applies a default and then looks for evidence to the contrary — and both the default and the acceptable evidence vary by platform.",
+      text: "The personally owned setting is the one that causes the most confusion, because Intune does not simply know who owns a device. It applies a default and then looks for evidence to the contrary â€” and both the default and the acceptable evidence vary by platform.",
     },
     {
       type: "table",
@@ -136,7 +136,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Windows is checked differently",
-      text: "If you block personally owned Windows devices, Intune checks that each new Windows enrollment request has been authorised for corporate enrollment and blocks the ones that have not. Only three paths are documented as authorised: Windows Autopilot, GPO, and automatic enrollment from Configuration Manager for co-management. A user signing in through **Set up for work or school** during OOBE is not one of them — which is exactly why that flow fails with error 80180014 in tenants that block personal Windows devices.",
+      text: "If you block personally owned Windows devices, Intune checks that each new Windows enrollment request has been authorised for corporate enrollment and blocks the ones that have not. Only three paths are documented as authorised: Windows Autopilot, GPO, and automatic enrollment from Configuration Manager for co-management. A user signing in through **Set up for work or school** during OOBE is not one of them â€” which is exactly why that flow fails with error 80180014 in tenants that block personal Windows devices.",
     },
 
     {
@@ -158,7 +158,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Second, **only one role can change these**. Creating, editing, deleting and reprioritising device platform restrictions requires the Intune Administrator role. All other built-in Intune roles have read-only access, and scope tags can narrow it further. That is a sensible default, but it means the person triaging a blocked enrollment often cannot fix it — worth knowing when designing the support process rather than discovering it at 5pm.",
+      text: "Second, **only one role can change these**. Creating, editing, deleting and reprioritising device platform restrictions requires the Intune Administrator role. All other built-in Intune roles have read-only access, and scope tags can narrow it further. That is a sensible default, but it means the person triaging a blocked enrollment often cannot fix it â€” worth knowing when designing the support process rather than discovering it at 5pm.",
     },
     {
       type: "callout",
@@ -178,11 +178,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Error 80180014 during Windows OOBE.** The user chooses Set up for work or school, signs in, and enrollment fails. The device is being treated as personal, and personal Windows enrollment is blocked for the tenant. The documented remedy is to allow personal enrollment — but Microsoft's own guidance is to limit that to the users who actually need it rather than opening it tenant-wide, precisely so that other users do not accidentally enroll personal machines. This is the restriction working as designed.",
+      text: "**Error 80180014 during Windows OOBE.** The user chooses Set up for work or school, signs in, and enrollment fails. The device is being treated as personal, and personal Windows enrollment is blocked for the tenant. The documented remedy is to allow personal enrollment â€” but Microsoft's own guidance is to limit that to the users who actually need it rather than opening it tenant-wide, precisely so that other users do not accidentally enroll personal machines. This is the restriction working as designed.",
     },
     {
       type: "p",
-      text: "The same error code appears in a different context: redeploying a device previously enrolled through self-deploying or pre-provisioning mode. There the correct fix is to delete the stale device record rather than to change the restriction, which is covered in [Autopilot pre-provisioning failures](/microsoft-intune/autopilot-pre-provisioning-failures). Same code, different cause — worth confirming which one you have before touching policy.",
+      text: "The same error code appears in a different context: redeploying a device previously enrolled through self-deploying or pre-provisioning mode. There the correct fix is to delete the stale device record rather than to change the restriction, which is covered in [Autopilot pre-provisioning failures](/microsoft-intune/autopilot-pre-provisioning-failures). Same code, different cause â€” worth confirming which one you have before touching policy.",
     },
     {
       type: "p",
@@ -190,7 +190,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The second half of that sentence is the part worth acting on. A device cap that is being hit regularly usually indicates a retirement problem rather than a limit that is too low — users replacing hardware while the old records persist. Raising the cap hides that; removing stale records fixes it. Microsoft's guidance is explicitly to remove stale device records to avoid hitting caps.",
+      text: "The second half of that sentence is the part worth acting on. A device cap that is being hit regularly usually indicates a retirement problem rather than a limit that is too low â€” users replacing hardware while the old records persist. Raising the cap hides that; removing stale records fixes it. Microsoft's guidance is explicitly to remove stale device records to avoid hitting caps.",
     },
     {
       type: "callout",
@@ -229,7 +229,7 @@ export const article: Article = {
       items: [
         "**Treating enrollment restrictions as a security boundary.** Microsoft documents them as a best-effort barrier for non-malicious users, because a compromised device can misrepresent its character.",
         "**Blocking personally owned Apple devices before uploading corporate identifiers.** iOS/iPadOS and macOS default to personally owned, so this blocks corporate hardware too.",
-        "**Relaxing a tenant-wide restriction to unblock one device.** Use a narrower, higher-priority policy instead — the pattern Microsoft documents for Windows 365 Link.",
+        "**Relaxing a tenant-wide restriction to unblock one device.** Use a narrower, higher-priority policy instead â€” the pattern Microsoft documents for Windows 365 Link.",
         "**Testing immediately after a group change.** Assignment processing typically takes up to 15 minutes, so an immediate failure proves nothing.",
         "**Expecting OS version limits to apply everywhere.** On Android and iOS/iPadOS they apply to Company Portal enrollments only.",
         "**Raising the device limit whenever users hit it.** The usual root cause is stale device records that were never retired.",
@@ -321,7 +321,7 @@ export const article: Article = {
       url: "https://learn.microsoft.com/windows-365/link/enrollment-restrictions",
     },
     {
-      title: "Step 5 – Enroll devices in Microsoft Intune",
+      title: "Step 5 â€“ Enroll devices in Microsoft Intune",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/intune/device-enrollment/enroll-devices",
     },

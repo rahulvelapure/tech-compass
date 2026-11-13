@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "global-secure-access-traffic-profiles",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["Microsoft traffic profile", "Private Access profile", "Internet Access profile", "Global Secure Access"],
   tags: ["Microsoft Entra", "Global Secure Access", "Networking", "Zero Trust"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Global Secure Access traffic profiles. The traffic roles and routing behavior are based on the cited Microsoft sources.",
   body: [
     { type: "p", text: "Global Secure Access uses traffic profiles to decide which traffic the client should acquire. The main profiles are Microsoft traffic, Private Access, and Internet Access." },

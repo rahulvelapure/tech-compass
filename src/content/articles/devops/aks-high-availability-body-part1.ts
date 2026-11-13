@@ -1,4 +1,4 @@
-import type { Block } from "../../types";
+﻿import type { Block } from "../../types";
 
 export const bodyPart1: Block[] = [
     {"type": "p", "text": "High uptime is easy to describe and much harder to prove. An AKS workload can have several replicas, a load balancer, health probes, and spare nodes. The service can still stop when every request depends on one thing that has no independent path."},
@@ -8,7 +8,7 @@ export const bodyPart1: Block[] = [
     {"type": "p", "text": "Take a normal customer request and follow it. It enters through a public endpoint, reaches an ingress or gateway, passes through a Kubernetes Service, lands on a Pod, calls other services, reads or writes data, and returns a response."},
     {"type": "p", "text": "Now ask one question at every step: what happens if this part or dependency disappears? If the answer is that every valid request fails until someone intervenes, you have found a candidate single point of failure."},
     {"type": "p", "text": "The shared dependency is often outside the Deployment. Three Pods can all depend on the same database endpoint, identity service, storage system, external API, DNS path, or network route. Kubernetes can replace a failed Pod. It cannot make an unrelated dependency redundant simply because the app has more replicas."},
-    {"type": "callout", "variant": "note", "title": "The uptime question that matters", "text": "Do not begin with “How many Pods do we have?” Begin with “Which failures can still affect every successful request at the same time?”"},
+    {"type": "callout", "variant": "note", "title": "The uptime question that matters", "text": "Do not begin with â€œHow many Pods do we have?â€ Begin with â€œWhich failures can still affect every successful request at the same time?â€"},
     {"type": "h2", "id": "four-pillars", "text": "The four pillars prevent a common design mistake"},
     {"type": "p", "text": "Microsoft organizes AKS app uptime around redundancy, monitoring, recovery, and checkpointing. The four pillars are useful because each one answers a different question."},
     {"type": "h3", "id": "redundancy", "text": "Redundancy: is there another place to do the work?"},

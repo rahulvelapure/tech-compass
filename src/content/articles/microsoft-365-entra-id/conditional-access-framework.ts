@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "conditional-access-framework",
@@ -12,7 +12,7 @@ export const article: Article = {
   standfirst:
     "Most Conditional Access problems are not policy problems. They are structure problems that only become visible once there are thirty policies and nobody can say what applies to whom.",
   excerpt:
-    "A persona-based structure for Conditional Access that keeps the policy count low, makes exclusions auditable, and stays readable after two years of change — built around how the platform actually evaluates policy.",
+    "A persona-based structure for Conditional Access that keeps the policy count low, makes exclusions auditable, and stays readable after two years of change â€” built around how the platform actually evaluates policy.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-13",
   readingMinutes: 15,
@@ -36,7 +36,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "That question has a precise answer, and the platform will give it to you. The problem is that a tenant with forty overlapping policies makes the answer expensive to obtain, and expensive answers do not get looked up before a change. The fix is structural — decide the axes before writing policies, and never let a policy exist outside that structure.",
+      text: "That question has a precise answer, and the platform will give it to you. The problem is that a tenant with forty overlapping policies makes the answer expensive to obtain, and expensive answers do not get looked up before a change. The fix is structural â€” decide the axes before writing policies, and never let a policy exist outside that structure.",
     },
     {
       type: "p",
@@ -50,7 +50,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A Conditional Access policy is an if-then statement of **assignments** and **access controls**. To be enforced it needs at minimum a name, the users or groups it applies to, the target resources, and a grant or block control. Everything else — network, device platform, client app, risk, device filters — narrows the *if*. Network appears here as a condition rather than as a control; what a compromised session can actually reach is decided by [how the network is segmented](/enterprise-networking/zero-trust-network-segmentation).",
+      text: "A Conditional Access policy is an if-then statement of **assignments** and **access controls**. To be enforced it needs at minimum a name, the users or groups it applies to, the target resources, and a grant or block control. Everything else â€” network, device platform, client app, risk, device filters â€” narrows the *if*. Network appears here as a condition rather than as a control; what a compromised session can actually reach is decided by [how the network is segmented](/enterprise-networking/zero-trust-network-segmentation).",
     },
     {
       type: "p",
@@ -63,7 +63,7 @@ export const article: Article = {
       rows: [
         [
           "All applicable policies must be satisfied. Assignments within a policy are combined with **AND**.",
-          "Policies compose but never cancel. You cannot write a policy that relaxes another one — only one that does not apply. Overlap is additive, so a small policy set is not a stylistic preference.",
+          "Policies compose but never cancel. You cannot write a policy that relaxes another one â€” only one that does not apply. Overlap is additive, so a small policy set is not a stylistic preference.",
         ],
         [
           "Evaluation runs in two phases: session details are collected, then requirements are enforced. **A block control stops enforcement immediately.**",
@@ -81,13 +81,13 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The third row is the one that catches people, and Microsoft's own documentation works through the example. Consider a policy that targets the finance group accessing the payroll app and requires multifactor authentication. A user in finance is challenged. A user *outside* finance is issued an access token and reaches the payroll app with no challenge at all — because no condition matched, so no control fired. Restricting everyone else requires a second, separate policy that blocks all users except the finance group for that app.",
+      text: "The third row is the one that catches people, and Microsoft's own documentation works through the example. Consider a policy that targets the finance group accessing the payroll app and requires multifactor authentication. A user in finance is challenged. A user *outside* finance is issued an access token and reaches the payroll app with no challenge at all â€” because no condition matched, so no control fired. Restricting everyone else requires a second, separate policy that blocks all users except the finance group for that app.",
     },
     {
       type: "callout",
       variant: "note",
       title: "Grant policies do not restrict, they qualify",
-      text: "A policy that requires MFA for a group says what that group must do. It says nothing about anyone else. Any resource that should be limited to a population needs an explicit block policy for everybody outside it, which is why Microsoft's guidance is to ensure **every app has at least one Conditional Access policy applied** — most simply by targeting all resources rather than naming applications individually.",
+      text: "A policy that requires MFA for a group says what that group must do. It says nothing about anyone else. Any resource that should be limited to a population needs an explicit block policy for everybody outside it, which is why Microsoft's guidance is to ensure **every app has at least one Conditional Access policy applied** â€” most simply by targeting all resources rather than naming applications individually.",
     },
 
     {
@@ -97,11 +97,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Applications multiply; populations do not. The structure that stays readable is a grid: a small set of personas down one axis, a small set of policy purposes across the other. This is a recommendation rather than documented product behaviour, but it follows directly from the evaluation rules above — if policies only ever compose, the only way to keep the combination predictable is to keep the number of things being combined small and named.",
+      text: "Applications multiply; populations do not. The structure that stays readable is a grid: a small set of personas down one axis, a small set of policy purposes across the other. This is a recommendation rather than documented product behaviour, but it follows directly from the evaluation rules above â€” if policies only ever compose, the only way to keep the combination predictable is to keep the number of things being combined small and named.",
     },
     {
       type: "p",
-      text: "A workable persona set is usually internal users, administrators, guests and external identities, workload identities and service principals, and — where it exists as a distinct population — unmanaged or bring-your-own devices. Each persona gets its own row, and each policy names its persona.",
+      text: "A workable persona set is usually internal users, administrators, guests and external identities, workload identities and service principals, and â€” where it exists as a distinct population â€” unmanaged or bring-your-own devices. Each persona gets its own row, and each policy names its persona.",
     },
     {
       type: "diagram",
@@ -125,7 +125,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The value is in the constraint, not in these particular columns. When a request arrives that does not fit a cell — a contractor population that is neither internal nor guest, a supplier portal that needs its own device rules — the framework forces an explicit decision about whether to add a persona or absorb the case into an existing one. Without the grid, that decision is made implicitly by adding policy number thirty-one.",
+      text: "The value is in the constraint, not in these particular columns. When a request arrives that does not fit a cell â€” a contractor population that is neither internal nor guest, a supplier portal that needs its own device rules â€” the framework forces an explicit decision about whether to add a persona or absorb the case into an existing one. Without the grid, that decision is made implicitly by adding policy number thirty-one.",
     },
     {
       type: "table",
@@ -155,7 +155,7 @@ export const article: Article = {
         [
           "Exception",
           "Documented, owned, time-bound deviations",
-          "Varies — but always with a review date",
+          "Varies â€” but always with a review date",
         ],
       ],
     },
@@ -171,11 +171,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Conditional Access policies have no owner attribute. There is no field recording who created a policy, why, or who should be consulted before it changes — so whatever the name does not carry is lost. Microsoft's recommendation is to encode ownership in the name, typically as a team prefix, and to maintain an out-of-band registry mapping each policy to a responsible admin or team.",
+      text: "Conditional Access policies have no owner attribute. There is no field recording who created a policy, why, or who should be consulted before it changes â€” so whatever the name does not carry is lost. Microsoft's recommendation is to encode ownership in the name, typically as a team prefix, and to maintain an out-of-band registry mapping each policy to a responsible admin or team.",
     },
     {
       type: "p",
-      text: "The documented naming standard covers five elements: a sequence number, the resources it applies to, the response, who it applies to, and when it applies. A sequence number matters more than it looks — it gives the policy a short name people can say out loud, so an incident call can be about `CA204` rather than about a description everyone paraphrases differently.",
+      text: "The documented naming standard covers five elements: a sequence number, the resources it applies to, the response, who it applies to, and when it applies. A sequence number matters more than it looks â€” it gives the policy a short name people can say out loud, so an incident call can be about `CA204` rather than about a description everyone paraphrases differently.",
     },
     {
       type: "code",
@@ -192,7 +192,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
     },
     {
       type: "p",
-      text: "That last entry is a category people forget until they need it. Alongside the active set, Microsoft recommends maintaining **disabled** contingency policies that act as secondary access controls during a disruption — an MFA provider outage, for instance, where the normal control cannot be satisfied by anyone. The naming standard for those is deliberately shouty: `ENABLE IN EMERGENCY` at the front so it stands out in the list, the disruption it applies to, and an ordering number so whoever is on call knows which to turn on first. These count towards your policy total whether or not they are enabled, which is the subject of the next section.",
+      text: "That last entry is a category people forget until they need it. Alongside the active set, Microsoft recommends maintaining **disabled** contingency policies that act as secondary access controls during a disruption â€” an MFA provider outage, for instance, where the normal control cannot be satisfied by anyone. The naming standard for those is deliberately shouty: `ENABLE IN EMERGENCY` at the front so it stands out in the list, the disruption it applies to, and an ordering number so whoever is on call knows which to turn on first. These count towards your policy total whether or not they are enabled, which is the subject of the next section.",
     },
 
     {
@@ -202,21 +202,21 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
     },
     {
       type: "p",
-      text: "Conditional Access has a hard ceiling of **240 policies per tenant**, and that count includes every policy in any state — on, off, and report-only. Contingency policies count. Report-only copies you made to test a change count. Policies someone disabled in 2024 rather than deleting count.",
+      text: "Conditional Access has a hard ceiling of **240 policies per tenant**, and that count includes every policy in any state â€” on, off, and report-only. Contingency policies count. Report-only copies you made to test a change count. Policies someone disabled in 2024 rather than deleting count.",
     },
     {
       type: "p",
-      text: "There is a second limit inside each policy. A policy applies to a maximum of 250 applications, and because a policy is stored as a JSON document with a size limit, a long list of individually named users or application GUIDs can hit that ceiling independently. Microsoft's documented remedies are the same two moves in both cases: target groups or directory roles instead of listing users, and use a [filter for applications](https://learn.microsoft.com/entra/identity/conditional-access/concept-filter-for-applications) — matching on application attributes — instead of naming applications one at a time.",
+      text: "There is a second limit inside each policy. A policy applies to a maximum of 250 applications, and because a policy is stored as a JSON document with a size limit, a long list of individually named users or application GUIDs can hit that ceiling independently. Microsoft's documented remedies are the same two moves in both cases: target groups or directory roles instead of listing users, and use a [filter for applications](https://learn.microsoft.com/entra/identity/conditional-access/concept-filter-for-applications) â€” matching on application attributes â€” instead of naming applications one at a time.",
     },
     {
       type: "callout",
       variant: "warning",
       title: "Block plus all resources can lock you out of the fix",
-      text: "Microsoft's guidance is explicit that combining **block** with **all resources** in a single policy risks locking out administrators, and that exclusions cannot be configured for some important endpoints — Microsoft Graph among them. A block policy scoped that broadly can therefore remove the route you would use to correct it. This is the single configuration that most justifies report-only mode and a tested [emergency access account](/microsoft-365-entra-id/conditional-access-break-glass-accounts).",
+      text: "Microsoft's guidance is explicit that combining **block** with **all resources** in a single policy risks locking out administrators, and that exclusions cannot be configured for some important endpoints â€” Microsoft Graph among them. A block policy scoped that broadly can therefore remove the route you would use to correct it. This is the single configuration that most justifies report-only mode and a tested [emergency access account](/microsoft-365-entra-id/conditional-access-break-glass-accounts).",
     },
     {
       type: "p",
-      text: "The practical reading of the 240-policy limit is that scaling means consolidating, not adding. If your policy count is growing faster than your persona count, the structure has stopped doing its job — and the usual cause is that conditions which belong in a group or an application filter are being expressed as new policies instead.",
+      text: "The practical reading of the 240-policy limit is that scaling means consolidating, not adding. If your policy count is growing faster than your persona count, the structure has stopped doing its job â€” and the usual cause is that conditions which belong in a group or an application filter are being expressed as new policies instead.",
     },
 
     {
@@ -232,7 +232,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
       type: "ul",
       items: [
         "**Put exclusions in dedicated groups, not in the policy body.** A group has membership you can report on, an owner you can name, and an access review you can attach. A user picked directly into a policy has none of those.",
-        "**Give every exclusion group a review date and an owner.** An exclusion nobody has to renew becomes permanent by default. This is a process recommendation, not a product feature — nothing in Conditional Access will expire it for you.",
+        "**Give every exclusion group a review date and an owner.** An exclusion nobody has to renew becomes permanent by default. This is a process recommendation, not a product feature â€” nothing in Conditional Access will expire it for you.",
         "**Remember that membership changes are not retroactive.** Because policies targeting groups and roles are evaluated at token issuance, adding a user to an exclusion group does not help them until they get a new token, and removing them does not stop their current session. Microsoft's recommended pattern for the privileged case is to trigger evaluation on role activation through Privileged Identity Management.",
         "**Test the exclusions, not just the inclusions.** Microsoft's deployment guidance calls this out specifically: an excluded user may still be prompted for MFA because a *different* policy requires it. Verifying that an exclusion works means signing in as someone in it, not reading the policy.",
       ],
@@ -241,11 +241,11 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
       type: "callout",
       variant: "warning",
       title: "Emergency access accounts are excluded from everything",
-      text: "Maintain emergency access accounts excluded from every Conditional Access policy — including [Microsoft-managed policies](https://learn.microsoft.com/entra/identity/conditional-access/managed-policies), which appear in the same list with **Microsoft** in the Created by column and allow their state and exclusions to be edited. A tenant-wide policy mistake with no excluded account is an outage you cannot fix from inside. Configuring those accounts correctly is a subject in its own right, and one where the details matter more than the principle.",
+      text: "Maintain emergency access accounts excluded from every Conditional Access policy â€” including [Microsoft-managed policies](https://learn.microsoft.com/entra/identity/conditional-access/managed-policies), which appear in the same list with **Microsoft** in the Created by column and allow their state and exclusions to be edited. A tenant-wide policy mistake with no excluded account is an outage you cannot fix from inside. Configuring those accounts correctly is a subject in its own right, and one where the details matter more than the principle.",
     },
     {
       type: "p",
-      text: "Service accounts need a different treatment rather than an exclusion. Conditional Access policies scoped to users do not block calls made by service principals at all, so an exclusion for one is usually a no-op protecting nothing. The documented approach is to target workload identities with their own policies, and — where the account exists only because a script needs to authenticate — to replace it with a [managed identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview).",
+      text: "Service accounts need a different treatment rather than an exclusion. Conditional Access policies scoped to users do not block calls made by service principals at all, so an exclusion for one is usually a no-op protecting nothing. The documented approach is to target workload identities with their own policies, and â€” where the account exists only because a script needs to authenticate â€” to replace it with a [managed identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview).",
     },
 
     {
@@ -264,7 +264,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
       rows: [
         [
           "Early-bound",
-          "Before the user can sign in to the calling app — the dependent service's policy must be met first",
+          "Before the user can sign in to the calling app â€” the dependent service's policy must be met first",
           "Teams to Exchange and SharePoint; Azure portal to Exchange, SharePoint and Windows 365; Power Automate to Power Apps",
         ],
         [
@@ -276,7 +276,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
     },
     {
       type: "p",
-      text: "The design consequence is to set common policies across related services rather than per-application ones. For the Microsoft 365 stack specifically, Microsoft's documented shortcut is to target the **Office 365** application group instead of naming Exchange, SharePoint and Teams separately — which avoids the dependency problem and the inconsistent prompting that comes with it. It also collapses three policies into one, which the 240 ceiling will eventually thank you for.",
+      text: "The design consequence is to set common policies across related services rather than per-application ones. For the Microsoft 365 stack specifically, Microsoft's documented shortcut is to target the **Office 365** application group instead of naming Exchange, SharePoint and Teams separately â€” which avoids the dependency problem and the inconsistent prompting that comes with it. It also collapses three policies into one, which the 240 ceiling will eventually thank you for.",
     },
 
     {
@@ -291,15 +291,15 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
     {
       type: "ol",
       items: [
-        "**Create or copy the policy in report-only mode.** Report-only policies are evaluated but not enforced, and — importantly for testing a modification — you can run a report-only copy of a policy alongside the enforced original and compare the two before switching.",
+        "**Create or copy the policy in report-only mode.** Report-only policies are evaluated but not enforced, and â€” importantly for testing a modification â€” you can run a report-only copy of a policy alongside the enforced original and compare the two before switching.",
         "**Leave it there long enough to cover a full working week**, including whatever happens at month-end. Microsoft's phased deployment guidance suggests at least one week per policy before enforcement.",
         "**Read the results, not the summary.** Each sign-in event has **Conditional Access** and **Report-only** tabs listing every policy that was enabled, in report-only, applied or not applied, with the reason.",
-        "**Enable for a pilot group** that includes at least one person from each affected function, then expand to the full persona — keeping the pilot group as the first ring for future changes.",
+        "**Enable for a pilot group** that includes at least one person from each affected function, then expand to the full persona â€” keeping the pilot group as the first ring for future changes.",
       ],
     },
     {
       type: "p",
-      text: "Report-only mode has two documented limitations worth knowing before you rely on it. Policies scoped to **User Actions** cannot be evaluated in report-only mode at all. And a report-only policy that requires a compliant device can prompt users on macOS, iOS and Android to select a device certificate — repeatedly, until the device is compliant — despite enforcing nothing. Microsoft's own remedy is to exclude those device platforms from report-only device-compliance policies, which means the report you get is not the report you wanted for exactly the platforms where device compliance is most likely to fail.",
+      text: "Report-only mode has two documented limitations worth knowing before you rely on it. Policies scoped to **User Actions** cannot be evaluated in report-only mode at all. And a report-only policy that requires a compliant device can prompt users on macOS, iOS and Android to select a device certificate â€” repeatedly, until the device is compliant â€” despite enforcing nothing. Microsoft's own remedy is to exclude those device platforms from report-only device-compliance policies, which means the report you get is not the report you wanted for exactly the platforms where device compliance is most likely to fail.",
     },
     {
       type: "table",
@@ -308,7 +308,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
       rows: [
         [
           "Report-only: Success",
-          "Conditions matched and the non-interactive controls were already satisfied — an MFA claim was present in the token, or the device check passed.",
+          "Conditions matched and the non-interactive controls were already satisfied â€” an MFA claim was present in the token, or the device check passed.",
         ],
         [
           "Report-only: Failure",
@@ -320,23 +320,23 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
         ],
         [
           "Report-only: Not applied",
-          "Conditions did not all match — the user was excluded, or a location condition did not fire.",
+          "Conditions did not all match â€” the user was excluded, or a location condition did not fire.",
         ],
       ],
     },
     {
       type: "p",
-      text: "For aggregate rather than per-sign-in impact, the **policy impact** view shows a snapshot over the past 24 hours, 7 days or one month and is available to the Security Reader role. The [Conditional Access Insights and Reporting workbook](https://learn.microsoft.com/entra/identity/conditional-access/howto-conditional-access-insights-reporting) shows the combined effect of several policies at once, which is the number you actually care about — but it requires Entra ID P1 and a Log Analytics workspace already receiving sign-in logs, so it is worth setting up before you need it rather than during an incident.",
+      text: "For aggregate rather than per-sign-in impact, the **policy impact** view shows a snapshot over the past 24 hours, 7 days or one month and is available to the Security Reader role. The [Conditional Access Insights and Reporting workbook](https://learn.microsoft.com/entra/identity/conditional-access/howto-conditional-access-insights-reporting) shows the combined effect of several policies at once, which is the number you actually care about â€” but it requires Entra ID P1 and a Log Analytics workspace already receiving sign-in logs, so it is worth setting up before you need it rather than during an incident.",
     },
     {
       type: "callout",
       variant: "tip",
       title: "What If answers a narrower question than it appears to",
-      text: "The What If tool simulates policy evaluation for a specific user and set of conditions, and it is the fastest way to answer *which policies apply here*. Two documented limits: it does not test service dependencies — a Teams simulation will not surface the Exchange Online policy that Teams depends on — and the current evaluation API only evaluates conditions whose sign-in parameters you supplied, so an unspecified condition means the policy is reported as not applying. Give it every parameter, and treat it as a design aid rather than a substitute for a test sign-in.",
+      text: "The What If tool simulates policy evaluation for a specific user and set of conditions, and it is the fastest way to answer *which policies apply here*. Two documented limits: it does not test service dependencies â€” a Teams simulation will not surface the Exchange Online policy that Teams depends on â€” and the current evaluation API only evaluates conditions whose sign-in parameters you supplied, so an unspecified condition means the policy is reported as not applying. Give it every parameter, and treat it as a design aid rather than a substitute for a test sign-in.",
     },
     {
       type: "p",
-      text: "Two further controls belong in the change process rather than the policy set. [Protected actions](https://learn.microsoft.com/entra/identity/role-based-access-control/protected-actions-add) require a fresh multifactor authentication before anyone creates, modifies or deletes a Conditional Access policy — the framework protecting itself. And for teams already comfortable with the pattern, the Microsoft Graph `conditionalAccessPolicy` API and Graph PowerShell allow policies to be managed as code, with the review, versioning and revert behaviour that source control brings. If you do neither, at least know that a deleted policy or named location can be restored within a 30-day soft-delete window.",
+      text: "Two further controls belong in the change process rather than the policy set. [Protected actions](https://learn.microsoft.com/entra/identity/role-based-access-control/protected-actions-add) require a fresh multifactor authentication before anyone creates, modifies or deletes a Conditional Access policy â€” the framework protecting itself. And for teams already comfortable with the pattern, the Microsoft Graph `conditionalAccessPolicy` API and Graph PowerShell allow policies to be managed as code, with the review, versioning and revert behaviour that source control brings. If you do neither, at least know that a deleted policy or named location can be restored within a 30-day soft-delete window.",
     },
 
     {
@@ -351,7 +351,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
         "**One policy per application.** It does not scale, it burns the 240-policy budget, and it walks straight into service dependencies. Group applications by shared requirement instead.",
         "**Excluding users directly in the policy body.** There is no report, no owner and no review. Use a group, even for one person.",
         "**Treating an exclusion group change as immediate.** Policies targeting groups and roles are evaluated at token issuance, so nothing changes until a new token is issued.",
-        "**Disabling policies instead of deleting them.** Disabled policies still count towards the tenant limit. Delete what is dead — there is a 30-day soft-delete window if you are wrong.",
+        "**Disabling policies instead of deleting them.** Disabled policies still count towards the tenant limit. Delete what is dead â€” there is a 30-day soft-delete window if you are wrong.",
         "**Relying on report-only mode for device compliance on mobile.** The documented workaround excludes exactly the platforms you most wanted to measure.",
         "**Excluding a service account from a user-scoped policy.** Calls made by service principals are not blocked by user-scoped policies to begin with. Target workload identities, or replace the account with a managed identity.",
       ],
@@ -364,7 +364,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
     },
     {
       type: "p",
-      text: "Start from coverage rather than from controls. Establish that every resource is reached by at least one policy, because anything uncovered is uncontrolled by default — then decide your personas, fix the columns, and require that every future policy occupies exactly one cell in the grid. A request that does not fit is a framework decision, and treating it as one is the entire discipline.",
+      text: "Start from coverage rather than from controls. Establish that every resource is reached by at least one policy, because anything uncovered is uncontrolled by default â€” then decide your personas, fix the columns, and require that every future policy occupies exactly one cell in the grid. A request that does not fit is a framework decision, and treating it as one is the entire discipline.",
     },
     {
       type: "p",
@@ -372,19 +372,19 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
     },
     {
       type: "p",
-      text: "The same instinct applies one layer down, at the endpoint, where competing device policies produce a structurally identical problem — two sources of authority over one outcome and no automatic tie-break. That case is worked through in [Intune policy conflicts: how to detect, diagnose and prevent them](/microsoft-intune/intune-policy-conflicts), and the migration equivalent in [Group Policy to the settings catalog](/microsoft-intune/group-policy-to-settings-catalog-migration). How claims on this site are labelled and researched is set out in [about this publication](/about).",
+      text: "The same instinct applies one layer down, at the endpoint, where competing device policies produce a structurally identical problem â€” two sources of authority over one outcome and no automatic tie-break. That case is worked through in [Intune policy conflicts: how to detect, diagnose and prevent them](/microsoft-intune/intune-policy-conflicts), and the migration equivalent in [Group Policy to the settings catalog](/microsoft-intune/group-policy-to-settings-catalog-migration). How claims on this site are labelled and researched is set out in [about this publication](/about).",
     },
   ],
   faq: [
     {
       question: "How many Conditional Access policies can a tenant have?",
       answer:
-        "Microsoft documents a hard limit of 240 policies per tenant, counting policies in every state — enabled, disabled and report-only. Because disabled and report-only policies count, tenants reach the limit sooner than expected. Scaling past it means consolidating policies using groups, directory roles and application filters rather than creating more.",
+        "Microsoft documents a hard limit of 240 policies per tenant, counting policies in every state â€” enabled, disabled and report-only. Because disabled and report-only policies count, tenants reach the limit sooner than expected. Scaling past it means consolidating policies using groups, directory roles and application filters rather than creating more.",
     },
     {
       question: "Which Conditional Access policy wins when several apply?",
       answer:
-        "None of them win — all applicable policies must be satisfied. Assignments are combined with AND, so requirements accumulate: if one policy requires MFA and another requires a compliant device, the user needs both. The one exception is block, which is evaluated in the enforcement phase and stops evaluation immediately.",
+        "None of them win â€” all applicable policies must be satisfied. Assignments are combined with AND, so requirements accumulate: if one policy requires MFA and another requires a compliant device, the user needs both. The one exception is block, which is evaluated in the enforcement phase and stops evaluation immediately.",
     },
     {
       question: "Does a policy requiring MFA for one group stop everyone else?",
@@ -404,7 +404,7 @@ EM01 - ENABLE IN EMERGENCY: MFA Disruption [1/4] - Exchange
     {
       question: "Should a Conditional Access policy target applications or all resources?",
       answer:
-        "Generally all resources. Microsoft's guidance is that every app should have at least one policy applied, and targeting all resources means new applications are covered on the day they are onboarded rather than when someone remembers. Targeting individual applications also runs into service dependencies — a policy on Teams does not cover the Exchange Online and SharePoint Online calls Teams makes on the user's behalf.",
+        "Generally all resources. Microsoft's guidance is that every app should have at least one policy applied, and targeting all resources means new applications are covered on the day they are onboarded rather than when someone remembers. Targeting individual applications also runs into service dependencies â€” a policy on Teams does not cover the Exchange Online and SharePoint Online calls Teams makes on the user's behalf.",
     },
     {
       question: "What does the What If tool not account for?",

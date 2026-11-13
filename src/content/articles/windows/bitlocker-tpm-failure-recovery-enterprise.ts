@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "bitlocker-tpm-failure-recovery-enterprise",
@@ -51,7 +51,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The TPM does not simply hold the key and hand it over. It measures the machine as it boots — firmware, boot components, configuration — and records those measurements in registers. It releases the key only when the measurements match what they were when BitLocker was set up.",
+      text: "The TPM does not simply hold the key and hand it over. It measures the machine as it boots â€” firmware, boot components, configuration â€” and records those measurements in registers. It releases the key only when the measurements match what they were when BitLocker was set up.",
     },
     {
       type: "p",
@@ -65,7 +65,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The recovery key is the separate path. It is a long numeric password that unlocks the volume without the TPM's cooperation, and it lives outside the machine — which is precisely why where you put it matters so much.",
+      text: "The recovery key is the separate path. It is a long numeric password that unlocks the volume without the TPM's cooperation, and it lives outside the machine â€” which is precisely why where you put it matters so much.",
     },
     { type: "h2", id: "triggers", text: "What sets recovery off" },
     {
@@ -96,7 +96,7 @@ export const article: Article = {
       type: "callout",
       variant: "tip",
       title: "Suspend before you update, resume after",
-      text: "BitLocker can be suspended so that protection is temporarily satisfied without the TPM check, the firmware update applied, and protection resumed against the new measurements. Doing this in the patching pipeline turns a fleet-wide recovery event into a non-event. Suspending is not decrypting — the volume stays encrypted throughout.",
+      text: "BitLocker can be suspended so that protection is temporarily satisfied without the TPM check, the firmware update applied, and protection resumed against the new measurements. Doing this in the patching pipeline turns a fleet-wide recovery event into a non-event. Suspending is not decrypting â€” the volume stays encrypted throughout.",
     },
     { type: "h2", id: "tpm-failure", text: "When the chip actually fails" },
     {
@@ -154,7 +154,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The remedy is an audit rather than a policy. Ask, for every encrypted device, whether a recovery key actually exists in your directory — not whether policy says it should. Those are different questions and only one of them helps at three in the morning.",
+      text: "The remedy is an audit rather than a policy. Ask, for every encrypted device, whether a recovery key actually exists in your directory â€” not whether policy says it should. Those are different questions and only one of them helps at three in the morning.",
     },
     {
       type: "p",

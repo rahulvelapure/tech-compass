@@ -1,4 +1,4 @@
-import type { Block } from "../../types";
+﻿import type { Block } from "../../types";
 
 export const bodyPart3: Block[] = [
     {"type": "p", "text": "The recovery path should also produce evidence. Operators need to know whether the part is failed, recovering, healthy, or serving traffic. Otherwise a restart can look like success while the app remains unavailable."},

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "intune-management-extension-logs",
@@ -31,7 +31,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "The Intune admin center reports app installation as a status per device. That status is genuinely useful for scale — it tells you whether one machine is broken or four hundred are. What it cannot tell you is why, because the decision was made on the device by an agent that wrote down its reasoning locally and then reported only the conclusion.",
+      text: "The Intune admin center reports app installation as a status per device. That status is genuinely useful for scale â€” it tells you whether one machine is broken or four hundred are. What it cannot tell you is why, because the decision was made on the device by an agent that wrote down its reasoning locally and then reported only the conclusion.",
     },
     {
       type: "p",
@@ -49,7 +49,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Microsoft's guidance is to view them with `CMTrace.exe`, which is worth taking seriously rather than reaching for Notepad. These files interleave several threads and are written in the Configuration Manager log format, so a plain text editor shows you a wall of timestamps with no structure. CMTrace parses the format, colours errors and warnings, and — most usefully — follows the file as it is written, so you can trigger a sync and watch what happens.",
+      text: "Microsoft's guidance is to view them with `CMTrace.exe`, which is worth taking seriously rather than reaching for Notepad. These files interleave several threads and are written in the Configuration Manager log format, so a plain text editor shows you a wall of timestamps with no structure. CMTrace parses the format, colours errors and warnings, and â€” most usefully â€” follows the file as it is written, so you can trigger a sync and watch what happens.",
     },
     {
       type: "p",
@@ -72,7 +72,7 @@ export const article: Article = {
       rows: [
         [
           "`AppWorkload.log`",
-          "Win32 app deployment activity — app check-ins, installs, applicability and detection.",
+          "Win32 app deployment activity â€” app check-ins, installs, applicability and detection.",
           "**Start here for any Win32 app problem.** This is the main app log.",
         ],
         [
@@ -92,7 +92,7 @@ export const article: Article = {
         ],
         [
           "`HealthScripts.log`",
-          "Remediation script execution — and everything else built on that plumbing, including **custom compliance scripts**, managed installer and hardware configuration.",
+          "Remediation script execution â€” and everything else built on that plumbing, including **custom compliance scripts**, managed installer and hardware configuration.",
           "A remediation or a custom compliance script is not behaving. This is a genuinely surprising place for compliance logging to live.",
         ],
         [
@@ -107,7 +107,7 @@ export const article: Article = {
         ],
         [
           "`Sensor.log`",
-          "The Endpoint analytics data collector — boot performance, app reliability.",
+          "The Endpoint analytics data collector â€” boot performance, app reliability.",
           "Endpoint analytics data is missing or stale.",
         ],
       ],
@@ -135,7 +135,7 @@ export const article: Article = {
         "It requests policy and receives the full policy body. This is where you confirm the device actually got the app definition you think you assigned.",
         "**Dependencies are checked** for the discovered apps. Dependent apps are downloaded and installed first.",
         "**Detection rules are evaluated.** If the app is detected at this point, the download and install are skipped entirely.",
-        "**Applicability is checked** — the requirement rules, including any PowerShell requirement script.",
+        "**Applicability is checked** â€” the requirement rules, including any PowerShell requirement script.",
         "Content is downloaded to `Content\\Incoming` as a `.bin` file, the encrypted hash is verified, and the content is decrypted.",
         "Content is unzipped from `Content\\Staging` into `C:\\Windows\\IMECache\\<app id>`.",
         "The installer executes with the command line configured in the portal.",
@@ -146,11 +146,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Reading that list against a failing device answers the question that matters — how far did it get? An app that never appears in the log at all did not receive policy. An app that reaches step 4 and stops was already detected. An app that fails between 6 and 7 has a content or disk problem rather than an installer problem. An app that reaches step 8 and returns a non-zero code has a genuine installer failure, and at that point the vendor's own log is the next stop rather than anything in Intune.",
+      text: "Reading that list against a failing device answers the question that matters â€” how far did it get? An app that never appears in the log at all did not receive policy. An app that reaches step 4 and stops was already detected. An app that fails between 6 and 7 has a content or disk problem rather than an installer problem. An app that reaches step 8 and returns a non-zero code has a genuine installer failure, and at that point the vendor's own log is the next stop rather than anything in Intune.",
     },
     {
       type: "p",
-      text: "The distinction between step 4 and step 10 is worth dwelling on, because both are detection and they mean opposite things. A positive result at step 4 means Intune decided no work was needed. A negative result at step 10 means the install ran and the agent does not believe it worked — which is what produces an app that reinstalls on the roughly 24-hour re-offer cycle. That failure mode is covered in [Win32 app detection rules](/microsoft-intune/win32-app-detection-rules).",
+      text: "The distinction between step 4 and step 10 is worth dwelling on, because both are detection and they mean opposite things. A positive result at step 4 means Intune decided no work was needed. A negative result at step 10 means the install ran and the agent does not believe it worked â€” which is what produces an app that reinstalls on the roughly 24-hour re-offer cycle. That failure mode is covered in [Win32 app detection rules](/microsoft-intune/win32-app-detection-rules).",
     },
 
     {
@@ -168,11 +168,11 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "**Establish the install context.** An app configured to install in the user context, targeted at a user, and requiring administrative rights the user does not have, will fail — Microsoft documents this specifically. This is a configuration problem that reads like a packaging problem, and it is invisible unless you check what context the app was set to run in.",
+      text: "**Establish the install context.** An app configured to install in the user context, targeted at a user, and requiring administrative rights the user does not have, will fail â€” Microsoft documents this specifically. This is a configuration problem that reads like a packaging problem, and it is invisible unless you check what context the app was set to run in.",
     },
     {
       type: "p",
-      text: "**Check the exit code against your return code mapping.** The agent evaluates the installer's exit code against the codes configured on the app. Intune's documented retry logic is three attempts with a five-minute wait between them, on a global re-evaluation cadence of roughly 24 hours — so an app configured with a retry return code will appear in the log three times before it gives up. Three failures in a row is not three separate problems.",
+      text: "**Check the exit code against your return code mapping.** The agent evaluates the installer's exit code against the codes configured on the app. Intune's documented retry logic is three attempts with a five-minute wait between them, on a global re-evaluation cadence of roughly 24 hours â€” so an app configured with a retry return code will appear in the log three times before it gives up. Three failures in a row is not three separate problems.",
     },
     {
       type: "p",
@@ -202,13 +202,13 @@ x86 clients:
     },
     {
       type: "p",
-      text: "When a scanner holds a lock on content the agent is trying to decrypt, extract or execute, the failure surfaces as an intermittent install error rather than as anything mentioning antivirus. It affects large packages more than small ones and slow disks more than fast ones, which makes it look like a flaky app or a flaky network. A package that fails on some machines and succeeds on others with no pattern in the app configuration is worth checking here — particularly where a third-party security product is in play and these paths were never added to it.",
+      text: "When a scanner holds a lock on content the agent is trying to decrypt, extract or execute, the failure surfaces as an intermittent install error rather than as anything mentioning antivirus. It affects large packages more than small ones and slow disks more than fast ones, which makes it look like a flaky app or a flaky network. A package that fails on some machines and succeeds on others with no pattern in the app configuration is worth checking here â€” particularly where a third-party security product is in play and these paths were never added to it.",
     },
     {
       type: "callout",
       variant: "warning",
       title: "Mixing Win32 and LOB apps during Autopilot",
-      text: "Microsoft documents that mixing the installation of Win32 apps and line-of-business apps during Windows Autopilot **enrollment** might cause app installation to fail, and recommends using the Intune Management Extension approach exclusively — particularly for multi-file installers. The same mixing **is** supported during Autopilot device preparation. If provisioning-time app failures are unexplained and your build mixes both types, that difference is worth knowing before you spend a day in the logs.",
+      text: "Microsoft documents that mixing the installation of Win32 apps and line-of-business apps during Windows Autopilot **enrollment** might cause app installation to fail, and recommends using the Intune Management Extension approach exclusively â€” particularly for multi-file installers. The same mixing **is** supported during Autopilot device preparation. If provisioning-time app failures are unexplained and your build mixes both types, that difference is worth knowing before you spend a day in the logs.",
     },
 
     {
@@ -222,7 +222,7 @@ x86 clients:
     },
     {
       type: "p",
-      text: "The documented constraints are worth knowing before you promise someone a quick answer. Collection takes approximately 15 to 20 minutes. The maximum is 250 MB or 25 files, whichever comes first. Only specific extensions are accepted — `.log`, `.txt`, `.dmp`, `.cab`, `.zip`, `.xml`, `.evtx`, `.evtl` — and paths must be complete, though a set of environment variables including `%PROGRAMDATA%` and `%WINDIR%` is supported. The device must be running Windows 11, or Windows 10 version 1909 or later. Collected diagnostics are encrypted at rest, which matters because they can contain personal information.",
+      text: "The documented constraints are worth knowing before you promise someone a quick answer. Collection takes approximately 15 to 20 minutes. The maximum is 250 MB or 25 files, whichever comes first. Only specific extensions are accepted â€” `.log`, `.txt`, `.dmp`, `.cab`, `.zip`, `.xml`, `.evtx`, `.evtl` â€” and paths must be complete, though a set of environment variables including `%PROGRAMDATA%` and `%WINDIR%` is supported. The device must be running Windows 11, or Windows 10 version 1909 or later. Collected diagnostics are encrypted at rest, which matters because they can contain personal information.",
     },
     {
       type: "p",
@@ -255,7 +255,7 @@ x86 clients:
     },
     {
       type: "p",
-      text: "Treat the logs as a sequence rather than a search. Open `AppWorkload.log` in CMTrace, find the app's GUID, and establish how far it got against the documented flow — policy received, dependency resolved, detection evaluated, applicability passed, content downloaded, installer executed, exit code returned, detection re-evaluated. The step where the trail stops is the problem, and it is usually not the step the ticket describes.",
+      text: "Treat the logs as a sequence rather than a search. Open `AppWorkload.log` in CMTrace, find the app's GUID, and establish how far it got against the documented flow â€” policy received, dependency resolved, detection evaluated, applicability passed, content downloaded, installer executed, exit code returned, detection re-evaluated. The step where the trail stops is the problem, and it is usually not the step the ticket describes.",
     },
     {
       type: "p",
@@ -263,7 +263,7 @@ x86 clients:
     },
     {
       type: "p",
-      text: "Where the log shows the install succeeding but the app still reporting as not installed, the problem has moved to detection. Where it shows an app being uninstalled that nobody asked to remove, the cause is usually a supersedence relationship — covered in [Win32 app supersedence and dependencies](/microsoft-intune/win32-app-supersedence-dependencies).",
+      text: "Where the log shows the install succeeding but the app still reporting as not installed, the problem has moved to detection. Where it shows an app being uninstalled that nobody asked to remove, the cause is usually a supersedence relationship â€” covered in [Win32 app supersedence and dependencies](/microsoft-intune/win32-app-supersedence-dependencies).",
     },
   ],
   faq: [
@@ -275,12 +275,12 @@ x86 clients:
     {
       question: "Which log should I open for a Win32 app installation failure?",
       answer:
-        "AppWorkload.log. Microsoft's documentation identifies it as the file for troubleshooting and analysing Win32 app deployment activity, including app check-ins, installs, applicability and detection. IntuneManagementExtension.log covers the agent itself — check-ins, policy requests and reporting — which is a different question.",
+        "AppWorkload.log. Microsoft's documentation identifies it as the file for troubleshooting and analysing Win32 app deployment activity, including app check-ins, installs, applicability and detection. IntuneManagementExtension.log covers the agent itself â€” check-ins, policy requests and reporting â€” which is a different question.",
     },
     {
       question: "Why does an app fail to install for standard users but work for admins?",
       answer:
-        "If a Win32 app is deployed with user targeting and requires device administrator privileges or other permissions the standard user does not have, Microsoft documents that the app will fail to install. Check the app's install behaviour setting — system or user context — against what the installer actually needs.",
+        "If a Win32 app is deployed with user targeting and requires device administrator privileges or other permissions the standard user does not have, Microsoft documents that the app will fail to install. Check the app's install behaviour setting â€” system or user context â€” against what the installer actually needs.",
     },
     {
       question: "Do I need antivirus exclusions for Intune app deployment?",

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-access-reviews-stale-access",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["stale access", "identity governance", "guest access reviews", "group access review"],
   tags: ["Microsoft Entra", "Identity Governance", "Security", "Zero Trust"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Microsoft Entra access reviews. Product behavior and review scope are based on the cited Microsoft sources.",
   body: [
     { type: "p", text: "Access is not static. People change jobs. Projects end. Guests leave. Groups grow. Old access can stay behind." },

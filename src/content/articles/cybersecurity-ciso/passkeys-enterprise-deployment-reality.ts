@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "passkeys-enterprise-deployment-reality",
@@ -95,7 +95,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Both types are phishing-resistant, because origin binding does not depend on where the key lives. What changes is who controls recovery. With a synced passkey, that is often the user's personal Apple or Google account — outside your tenant, outside your policy, and outside your leaver process.",
+      text: "Both types are phishing-resistant, because origin binding does not depend on where the key lives. What changes is who controls recovery. With a synced passkey, that is often the user's personal Apple or Google account â€” outside your tenant, outside your policy, and outside your leaver process.",
     },
     { type: "h2", id: "recovery", text: "The recovery problem" },
     {
@@ -112,7 +112,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "If the passkeys were synced to a personal account, they may technically still exist — on a personal account the user cannot reach from a fresh corporate device, and one your administrators have no rights over.",
+      text: "If the passkeys were synced to a personal account, they may technically still exist â€” on a personal account the user cannot reach from a fresh corporate device, and one your administrators have no rights over.",
     },
     {
       type: "p",
@@ -166,7 +166,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "Attestation is the third consideration, and it is a genuine trade-off. Attestation lets you verify what kind of authenticator was used — a specific hardware model, say. Consumer platform authenticators often provide little or none, deliberately, to avoid becoming a tracking mechanism. Requiring strong attestation is defensible, but it narrows your users to hardware keys. Decide that on purpose.",
+      text: "Attestation is the third consideration, and it is a genuine trade-off. Attestation lets you verify what kind of authenticator was used â€” a specific hardware model, say. Consumer platform authenticators often provide little or none, deliberately, to avoid becoming a tracking mechanism. Requiring strong attestation is defensible, but it narrows your users to hardware keys. Decide that on purpose.",
     },
     { type: "h2", id: "when", text: "When passkeys fit, and when they do not" },
     {

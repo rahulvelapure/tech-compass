@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "iso-27001-microsoft-365-mapping",
@@ -11,7 +11,7 @@ export const article: Article = {
   standfirst:
     "A control is not implemented because a product feature exists. The mapping only holds if the configuration, the evidence and the review are all present.",
   excerpt:
-    "A practical approach to mapping the 93 Annex A controls onto Microsoft 365 capabilities — and the mapping mistakes auditors reliably find.",
+    "A practical approach to mapping the 93 Annex A controls onto Microsoft 365 capabilities â€” and the mapping mistakes auditors reliably find.",
   authorId: "rahul-velapure",
   publishedAt: "2026-08-15",
   lastReviewedAt: "2026-08-15",
@@ -27,7 +27,7 @@ export const article: Article = {
   body: [
     {
       type: "p",
-      text: "Mapping exercises fail in one specific way: a spreadsheet lists an Annex A control, names a Microsoft feature next to it, and marks the control implemented. The auditor then asks for the configuration, the evidence that it applies to everyone in scope, and the record of the last review — and two of the three do not exist.",
+      text: "Mapping exercises fail in one specific way: a spreadsheet lists an Annex A control, names a Microsoft feature next to it, and marks the control implemented. The auditor then asks for the configuration, the evidence that it applies to everyone in scope, and the record of the last review â€” and two of the three do not exist.",
     },
     {
       type: "p",
@@ -36,7 +36,7 @@ export const article: Article = {
     { type: "h2", id: "structure", text: "What the 2022 revision changed" },
     {
       type: "p",
-      text: "ISO/IEC 27001:2022 reorganised Annex A from 114 controls across 14 domains into 93 controls across four themes: Organisational, People, Physical and Technological. Eleven controls are entirely new, covering ground the 2013 edition predated — threat intelligence, cloud service security, data masking, secure development and monitoring activities among them.",
+      text: "ISO/IEC 27001:2022 reorganised Annex A from 114 controls across 14 domains into 93 controls across four themes: Organisational, People, Physical and Technological. Eleven controls are entirely new, covering ground the 2013 edition predated â€” threat intelligence, cloud service security, data masking, secure development and monitoring activities among them.",
     },
     {
       type: "p",
@@ -67,7 +67,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The review column is the one that separates a live control from a snapshot. A configuration that was correct at certification and has drifted since is a finding, and drift is normal — policies get exclusions added, licences get reassigned, scopes get narrowed during an incident and never widened again.",
+      text: "The review column is the one that separates a live control from a snapshot. A configuration that was correct at certification and has drifted since is a finding, and drift is normal â€” policies get exclusions added, licences get reassigned, scopes get narrowed during an incident and never widened again.",
     },
     { type: "h2", id: "examples", text: "Representative mappings" },
     {
@@ -110,7 +110,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "Licensing determines what you can claim",
-      text: "Several capabilities commonly used in mappings depend on specific licence tiers, and entitlement is frequently uneven across a workforce. Confirm the licence covers the whole population in scope before recording a control as implemented — partial coverage is a finding, not a rounding error.",
+      text: "Several capabilities commonly used in mappings depend on specific licence tiers, and entitlement is frequently uneven across a workforce. Confirm the licence covers the whole population in scope before recording a control as implemented â€” partial coverage is a finding, not a rounding error.",
     },
     { type: "h2", id: "evidence", text: "Making the evidence reproducible" },
     {
@@ -151,7 +151,7 @@ export const article: Article = {
     {
       question: "Can one capability satisfy several Annex A controls?",
       answer:
-        "Yes, and it commonly does — but each control still needs its own configuration, evidence and review entry. A shared capability concentrates risk: one misconfiguration then affects every control mapped to it.",
+        "Yes, and it commonly does â€” but each control still needs its own configuration, evidence and review entry. A shared capability concentrates risk: one misconfiguration then affects every control mapped to it.",
     },
     {
       question: "Is Compliance Manager enough on its own?",
@@ -171,7 +171,7 @@ export const article: Article = {
       url: "https://learn.microsoft.com/purview/",
     },
     {
-      title: "ISO/IEC 27001:2022 — Microsoft compliance offering",
+      title: "ISO/IEC 27001:2022 â€” Microsoft compliance offering",
       publisher: "Microsoft Learn",
       url: "https://learn.microsoft.com/compliance/regulatory/offering-iso-27001",
     },

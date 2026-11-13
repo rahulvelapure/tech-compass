@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "kubernetes-topology-spread-constraints-vs-pod-anti-affinity",
@@ -33,7 +33,7 @@ export const article: Article = {
     "karpenter-vs-cluster-autoscaler-node-scaling",
   ],
   methodology:
-    "Written from the Kubernetes documentation on pod topology spread constraints and on assigning pods to nodes, verified August 2026. One correction was made to the source draft. It said a hard anti-affinity rule blocks a node drain from completing; eviction removes the pod regardless, and what actually happens is that the replacement cannot be scheduled — the drain succeeds and the workload is left short. The draft's Black Friday incident was rewritten as the capacity mechanism that produces it.",
+    "Written from the Kubernetes documentation on pod topology spread constraints and on assigning pods to nodes, verified August 2026. One correction was made to the source draft. It said a hard anti-affinity rule blocks a node drain from completing; eviction removes the pod regardless, and what actually happens is that the replacement cannot be scheduled â€” the drain succeeds and the workload is left short. The draft's Black Friday incident was rewritten as the capacity mechanism that produces it.",
   body: [
     {
       type: "p",
@@ -50,7 +50,7 @@ export const article: Article = {
     { type: "h2", id: "anti-affinity", text: "Anti-affinity is a rule with no middle" },
     {
       type: "p",
-      text: "Pod anti-affinity tells the scheduler not to place this pod where a matching pod already sits. You choose the domain with a topology key — a node, a zone, a rack.",
+      text: "Pod anti-affinity tells the scheduler not to place this pod where a matching pod already sits. You choose the domain with a topology key â€” a node, a zone, a rack.",
     },
     {
       type: "p",
@@ -122,7 +122,7 @@ export const article: Article = {
     { type: "h2", id: "capacity", text: "The scenario that decides it" },
     {
       type: "p",
-      text: "Consider what happens when a zone runs out of the instance type you use. This is ordinary, not exotic — capacity is per zone and per type, and demand spikes are correlated across tenants.",
+      text: "Consider what happens when a zone runs out of the instance type you use. This is ordinary, not exotic â€” capacity is per zone and per type, and demand spikes are correlated across tenants.",
     },
     {
       type: "p",
@@ -155,7 +155,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "One last thing. Spread rules cover placement, not eviction. Keeping a spread deployment whole during planned disruption is a different control — see [pod disruption budgets](/devops/kubernetes-pod-disruption-budgets-eviction-mechanics).",
+      text: "One last thing. Spread rules cover placement, not eviction. Keeping a spread deployment whole during planned disruption is a different control â€” see [pod disruption budgets](/devops/kubernetes-pod-disruption-budgets-eviction-mechanics).",
     },
   ],
   faq: [

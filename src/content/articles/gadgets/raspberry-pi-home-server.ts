@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "raspberry-pi-home-server",
@@ -27,7 +27,7 @@ export const article: Article = {
   ],
   tags: ["Gadgets", "Home Lab", "Hardware"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology:
     "Written from published board specifications, vendor storage guidance and standard home-lab practice, verified August 2026. No power or throughput measurements are quoted, because none were taken for this article.",
   body: [

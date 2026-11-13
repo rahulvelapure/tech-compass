@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "ai-coding-assistants-enterprise",
@@ -31,7 +31,7 @@ export const article: Article = {
     "enterprise-ai-agents-security-governance-reality",
     "eu-ai-act-obligations-timeline",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Analysis based on published vendor documentation, licensing terms and widely reported engineering practice. Productivity figures are deliberately not claimed, because the published ones measure specific tasks in specific settings and do not transfer to an organisation.",
   body: [

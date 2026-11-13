@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "enterprise-ai-agents-security-governance-reality",
@@ -31,7 +31,7 @@ export const article: Article = {
   reviewStatus: "research-based",
   relatedSlugs: ["ai-agents-it-operations", "model-context-protocol-explained"],
   methodology:
-    "Written from the OWASP Top 10 for LLM Applications, the NIST AI Risk Management Framework, Microsoft identity platform documentation on the on-behalf-of flow, and the Model Context Protocol specification, verified August 2026. Attack patterns are described structurally rather than as exploit recipes. Controls are labelled as recommendations where no standard mandates them, which is most of them — this area has practice but little settled regulation.",
+    "Written from the OWASP Top 10 for LLM Applications, the NIST AI Risk Management Framework, Microsoft identity platform documentation on the on-behalf-of flow, and the Model Context Protocol specification, verified August 2026. Attack patterns are described structurally rather than as exploit recipes. Controls are labelled as recommendations where no standard mandates them, which is most of them â€” this area has practice but little settled regulation.",
   body: [
     {
       type: "p",
@@ -127,7 +127,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "The important variant is indirect. The hostile text does not come from the person typing. It arrives inside something the agent reads — a log file, a ticket, a page it fetched, a document in the knowledge base. The user never sees it and has done nothing wrong.",
+      text: "The important variant is indirect. The hostile text does not come from the person typing. It arrives inside something the agent reads â€” a log file, a ticket, a page it fetched, a document in the knowledge base. The user never sees it and has done nothing wrong.",
     },
     {
       type: "p",
@@ -158,7 +158,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "A developer pastes a failing build log into the chat. Inside that log, from an earlier compromised step, sits text addressed to whatever reads it — instructions to copy a storage bucket somewhere else.",
+      text: "A developer pastes a failing build log into the chat. Inside that log, from an earlier compromised step, sits text addressed to whatever reads it â€” instructions to copy a storage bucket somewhere else.",
     },
     {
       type: "p",
@@ -177,14 +177,14 @@ export const article: Article = {
       type: "ul",
       items: [
         "**An inventory.** Every agent registered with its purpose, its tools and its data scope. You cannot review what nobody listed.",
-        "**Tool vetting.** A new tool is a new capability, and it needs a security review of its own — authorisation, rate limits, and what it can destroy.",
+        "**Tool vetting.** A new tool is a new capability, and it needs a security review of its own â€” authorisation, rate limits, and what it can destroy.",
         "**Audit logging.** The prompt, the reasoning, the tool called, the parameters and the result. Without the parameters you cannot answer what happened, which is the only question anyone asks afterwards.",
         "**Adversarial testing.** Test specifically for injection through data the agent reads, not only through what a user types. That is the path that gets missed.",
       ],
     },
     {
       type: "p",
-      text: "Where tools are exposed through a standard interface, the same questions apply to the interface itself — [what the Model Context Protocol actually standardises](/ai-enterprise-it/model-context-protocol-explained) is worth understanding before wiring one in.",
+      text: "Where tools are exposed through a standard interface, the same questions apply to the interface itself â€” [what the Model Context Protocol actually standardises](/ai-enterprise-it/model-context-protocol-explained) is worth understanding before wiring one in.",
     },
     { type: "h2", id: "when", text: "When an agent is the wrong answer" },
     {

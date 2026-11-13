@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "graph-api-intune-reporting",
@@ -31,7 +31,7 @@ export const article: Article = {
     "intune-compliance-policy-design",
     "windows-laps-entra-id-architecture-deployment",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "Written against the Microsoft Graph documentation and the Microsoft Graph PowerShell SDK, verified August 2026. Permission names and paging behaviour were checked against the current reference. No tenant data or device counts are quoted.",
   body: [

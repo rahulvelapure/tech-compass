@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "github-actions-self-hosted-runner-security",
@@ -33,7 +33,7 @@ export const article: Article = {
     "container-image-security-beyond-scanning",
   ],
   methodology:
-    "Written from the GitHub documentation on security hardening for Actions and on self-hosted runners, the Actions Runner Controller project documentation, and the OWASP Top 10 CI/CD Security Risks, verified August 2026. Two clarifications were made to the source draft. It treated the Actions Runner Controller as one thing; GitHub now supports the runner scale sets mode and the older controller behaves differently, which matters when following any deployment guide. And it framed organisation-level runners as the core risk, where GitHub's own stated boundary is repository visibility — a public repository accepting fork pull requests is the condition that makes any self-hosted runner dangerous. The draft's dependency-confusion incident was rewritten as the mechanism.",
+    "Written from the GitHub documentation on security hardening for Actions and on self-hosted runners, the Actions Runner Controller project documentation, and the OWASP Top 10 CI/CD Security Risks, verified August 2026. Two clarifications were made to the source draft. It treated the Actions Runner Controller as one thing; GitHub now supports the runner scale sets mode and the older controller behaves differently, which matters when following any deployment guide. And it framed organisation-level runners as the core risk, where GitHub's own stated boundary is repository visibility â€” a public repository accepting fork pull requests is the condition that makes any self-hosted runner dangerous. The draft's dependency-confusion incident was rewritten as the mechanism.",
   body: [
     {
       type: "p",

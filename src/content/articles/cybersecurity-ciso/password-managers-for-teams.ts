@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "password-managers-for-teams",
@@ -31,7 +31,7 @@ export const article: Article = {
     "passkeys-enterprise-deployment-reality",
     "fido2-discoverable-credentials-resident-keys",
   ],
-  draft: true,
+  draft: false,
   methodology:
     "An evaluation framework built from vendor documentation and published security architecture descriptions, verified August 2026. No product is scored, because scoring without standardised hands-on testing across every candidate would be misleading.",
   body: [

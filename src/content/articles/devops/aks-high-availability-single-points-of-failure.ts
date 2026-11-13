@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 import { bodyPart1 } from "./aks-high-availability-body-part1";
 import { bodyPart2 } from "./aks-high-availability-body-part2";
 import { bodyPart3 } from "./aks-high-availability-body-part3";
@@ -36,7 +36,7 @@ export const article: Article = {
     "DevOps",
   ],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   relatedSlugs: [
     "kubernetes-topology-spread-constraints-vs-pod-anti-affinity",
     "kubernetes-pod-disruption-budgets-eviction-mechanics",

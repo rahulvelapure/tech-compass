@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "redis-cluster-vs-sentinel-architecture",
@@ -32,7 +32,7 @@ export const article: Article = {
     "kubernetes-statefulset-vs-deployment-storage-identity",
   ],
   methodology:
-    "Written from the Redis cluster specification, the Redis Sentinel documentation and the Redis licensing pages, verified August 2026. One correction was made to the source draft. It named `cluster-require-full-coverage` as the mitigation for split-brain write loss; that setting governs behaviour when a hash slot is uncovered, and the mechanism that actually bounds the loss is `cluster-node-timeout` — a master isolated from the majority refuses writes once that timeout elapses. The draft's holiday-sale outage was replaced with the capacity argument itself. Redis licensing history was added, because the article's commercial-tier section is no longer accurate without it.",
+    "Written from the Redis cluster specification, the Redis Sentinel documentation and the Redis licensing pages, verified August 2026. One correction was made to the source draft. It named `cluster-require-full-coverage` as the mitigation for split-brain write loss; that setting governs behaviour when a hash slot is uncovered, and the mechanism that actually bounds the loss is `cluster-node-timeout` â€” a master isolated from the majority refuses writes once that timeout elapses. The draft's holiday-sale outage was replaced with the capacity argument itself. Redis licensing history was added, because the article's commercial-tier section is no longer accurate without it.",
   body: [
     {
       type: "p",
@@ -135,7 +135,7 @@ export const article: Article = {
       type: "callout",
       variant: "warning",
       title: "The bound is cluster-node-timeout, not full coverage",
-      text: "A master that cannot reach the majority starts refusing writes once `cluster-node-timeout` has elapsed. That is what limits the loss: writes accepted in the minority up to that point may be lost, and after it there are none to lose. `cluster-require-full-coverage` is a different control — it decides whether the cluster serves requests when a hash slot has no owner at all. Tuning it does not shrink the split-brain window.",
+      text: "A master that cannot reach the majority starts refusing writes once `cluster-node-timeout` has elapsed. That is what limits the loss: writes accepted in the minority up to that point may be lost, and after it there are none to lose. `cluster-require-full-coverage` is a different control â€” it decides whether the cluster serves requests when a hash slot has no owner at all. Tuning it does not shrink the split-brain window.",
     },
     {
       type: "p",

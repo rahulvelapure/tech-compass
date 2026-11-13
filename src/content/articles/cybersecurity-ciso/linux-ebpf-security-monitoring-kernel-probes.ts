@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "linux-ebpf-security-monitoring-kernel-probes",
@@ -147,7 +147,7 @@ export const article: Article = {
           "Policy work",
         ],
         ["Kernel lockdown", "Reading kernel memory, even as root", "May break legitimate tracing"],
-        ["Audit the bpf() syscall", "Nothing — it tells you it happened", "Log volume"],
+        ["Audit the bpf() syscall", "Nothing â€” it tells you it happened", "Log volume"],
         ["Signed programs and BPF tokens", "Unsigned code loading", "Kernel and tooling support"],
       ],
     },
@@ -167,7 +167,7 @@ export const article: Article = {
       type: "callout",
       variant: "tip",
       title: "Baseline the loaders, then alert on anything else",
-      text: "Spend an afternoon recording which processes legitimately load eBPF programs in your estate. It is a short list — an agent or two, a CNI, possibly a profiler. Alert on any bpf() call from outside that list. This is cheap, needs no new tooling, and catches the case the rest of the stack cannot see, because it watches the loading rather than the loaded.",
+      text: "Spend an afternoon recording which processes legitimately load eBPF programs in your estate. It is a short list â€” an agent or two, a CNI, possibly a profiler. Alert on any bpf() call from outside that list. This is cheap, needs no new tooling, and catches the case the rest of the stack cannot see, because it watches the loading rather than the loaded.",
     },
     { type: "h2", id: "response", text: "What to do about it" },
     {
@@ -183,7 +183,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "None of this argues against eBPF-based security tooling. It is the best kernel visibility available, and the alternative — invasive kernel modules — was worse on both stability and risk.",
+      text: "None of this argues against eBPF-based security tooling. It is the best kernel visibility available, and the alternative â€” invasive kernel modules â€” was worse on both stability and risk.",
     },
     {
       type: "p",
@@ -234,7 +234,7 @@ export const article: Article = {
       url: "https://www.kernel.org/doc/html/latest/bpf/",
     },
     {
-      title: "capabilities(7) — CAP_BPF and CAP_PERFMON",
+      title: "capabilities(7) â€” CAP_BPF and CAP_PERFMON",
       publisher: "Linux man-pages project",
       url: "https://man7.org/linux/man-pages/man7/capabilities.7.html",
     },

@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "smartphone-security-for-work",
@@ -28,7 +28,7 @@ export const article: Article = {
   tags: ["Smartphones", "Security", "Mobile", "Endpoint Management"],
   reviewStatus: "research-based",
   relatedSlugs: ["passkeys-enterprise-deployment-reality", "conditional-access-framework"],
-  draft: true,
+  draft: false,
   methodology:
     "Written from published platform security documentation and vendor management guidance, verified August 2026. No breach statistics or product comparisons are quoted, because the available figures do not transfer between estates.",
   body: [
@@ -44,7 +44,7 @@ export const article: Article = {
     {
       type: "ul",
       items: [
-        "A device passcode of reasonable length with biometric unlock — the biometric is convenience, the passcode is the actual secret.",
+        "A device passcode of reasonable length with biometric unlock â€” the biometric is convenience, the passcode is the actual secret.",
         "Automatic OS updates enabled, because unpatched mobile platforms are exploited far more often than misconfigured ones.",
         "Phishing-resistant multi-factor authentication on the work account, not SMS.",
         "Application-level protection for work data so a wipe removes company data without touching personal content.",
@@ -110,7 +110,7 @@ export const article: Article = {
       type: "callout",
       variant: "note",
       title: "Say what a wipe does, before anyone needs one",
-      text: "The most common BYOD complaint is a person believing the organisation erased their phone. With app-level protection it did not — it removed the work container. Put that in writing when people enrol, in plain language, and the complaint mostly disappears.",
+      text: "The most common BYOD complaint is a person believing the organisation erased their phone. With app-level protection it did not â€” it removed the work container. Put that in writing when people enrol, in plain language, and the complaint mostly disappears.",
     },
     { type: "h2", id: "noise", text: "What does not earn its place" },
     {

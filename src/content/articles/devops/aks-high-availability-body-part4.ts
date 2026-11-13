@@ -1,4 +1,4 @@
-import type { Block } from "../../types";
+﻿import type { Block } from "../../types";
 
 export const bodyPart4: Block[] = [
     {"type": "h2", "id": "dependency-failure", "text": "The healthy cluster that still loses the app"},

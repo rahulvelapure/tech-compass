@@ -1,4 +1,4 @@
-import type { Article } from "../../types";
+﻿import type { Article } from "../../types";
 
 export const article: Article = {
   slug: "entra-authentication-strengths",
@@ -17,7 +17,7 @@ export const article: Article = {
   secondaryKeywords: ["phishing-resistant MFA", "passwordless MFA", "Conditional Access", "custom authentication strength"],
   tags: ["Microsoft Entra", "Conditional Access", "MFA", "Identity Security"],
   reviewStatus: "research-based",
-  draft: true,
+  draft: false,
   methodology: "Written from current Microsoft Learn documentation for Conditional Access authentication strengths. Built-in and custom strength behavior is based on the cited Microsoft sources.",
   body: [
     { type: "p", text: "MFA adds a second check. But MFA methods do not all have the same strength." },
