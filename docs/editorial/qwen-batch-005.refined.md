@@ -2,26 +2,26 @@
 
 Companion to the Qwen source draft. **The source is not edited.**
 
-| | |
-|---|---|
-| Source file | `docs/editorial/batch-005.md` |
+|                       |                                    |
+| --------------------- | ---------------------------------- |
+| Source file           | `docs/editorial/batch-005.md`      |
 | Source checksum (MD5) | `4dff8a191455ea61e02d149399ce0d6e` |
-| Articles in batch | 5 |
-| Refined and published | 5 |
-| Held | 0 |
-| Refined on | 2026-08-23 |
+| Articles in batch     | 5                                  |
+| Refined and published | 5                                  |
+| Held                  | 0                                  |
+| Refined on            | 2026-08-23                         |
 
 ---
 
 ## Gate results
 
-| Article | Body | Standfirst | Opening | Worst FAQ | ASL | Longest |
-|---|--:|--:|--:|--:|--:|--:|
-| `service-mesh-mtls-operational-overhead` | 57.9 | 73.8 | 78.9 | 72.3 | 12.7 | 29 |
-| `aws-lambda-cold-start-optimization-snapstart` | 59.4 | 83.4 | 86.7 | 78.9 | 11.1 | 31 |
-| `entra-id-authentication-context-step-up-mfa` | 61.4 | 82.5 | 74.4 | 72.5 | 12.4 | 31 |
-| `terraform-state-locking-drift-enterprise-reality` | 64.5 | 99.5 | 79.6 | 72.6 | 12.6 | 35 |
-| `postgresql-connection-pooling-pgbouncer-rds-proxy` | 58.3 | 75.3 | 76.6 | 71.1 | 12.1 | 29 |
+| Article                                             | Body | Standfirst | Opening | Worst FAQ |  ASL | Longest |
+| --------------------------------------------------- | ---: | ---------: | ------: | --------: | ---: | ------: |
+| `service-mesh-mtls-operational-overhead`            | 57.9 |       73.8 |    78.9 |      72.3 | 12.7 |      29 |
+| `aws-lambda-cold-start-optimization-snapstart`      | 59.4 |       83.4 |    86.7 |      78.9 | 11.1 |      31 |
+| `entra-id-authentication-context-step-up-mfa`       | 61.4 |       82.5 |    74.4 |      72.5 | 12.4 |      31 |
+| `terraform-state-locking-drift-enterprise-reality`  | 64.5 |       99.5 |    79.6 |      72.6 | 12.6 |      35 |
+| `postgresql-connection-pooling-pgbouncer-rds-proxy` | 58.3 |       75.3 |    76.6 |      71.1 | 12.1 |      29 |
 
 ---
 
@@ -30,12 +30,12 @@ Companion to the Qwen source draft. **The source is not edited.**
 All four were adjacent enough to be worth verifying rather than assuming, and
 all four came back clean:
 
-| Proposed article | Checked against | Result |
-|---|---|---|
-| PostgreSQL pooling | `aurora-serverless-v2-scaling-connection-limits` | Zero mentions of PgBouncer, pooling modes or the process model |
-| Authentication context | `conditional-access-framework` | Zero mentions of authentication context or step-up |
-| Authentication context | `saml-federation-security-risks-trust-boundaries` | Zero mentions of Entra's authentication context feature |
-| Terraform state | `terraform-vs-opentofu` | Tool comparison only; no state management |
+| Proposed article       | Checked against                                   | Result                                                         |
+| ---------------------- | ------------------------------------------------- | -------------------------------------------------------------- |
+| PostgreSQL pooling     | `aurora-serverless-v2-scaling-connection-limits`  | Zero mentions of PgBouncer, pooling modes or the process model |
+| Authentication context | `conditional-access-framework`                    | Zero mentions of authentication context or step-up             |
+| Authentication context | `saml-federation-security-risks-trust-boundaries` | Zero mentions of Entra's authentication context feature        |
+| Terraform state        | `terraform-vs-opentofu`                           | Tool comparison only; no state management                      |
 
 ---
 
@@ -59,7 +59,7 @@ the only option — which materially changes the overhead argument.
 
 Also reframed the control-plane failure. The draft is right that certificate
 expiry causes a cluster-wide outage, but the useful framing is that certificate
-lifetime *is* your grace period: the fault happens hours before the symptom.
+lifetime _is_ your grace period: the fault happens hours before the symptom.
 
 ---
 
@@ -200,16 +200,16 @@ PgBouncer pooling modes; PgBouncer FAQ on prepared statements.
 
 ## Validation at completion
 
-| Gate | Result |
-|---|---|
-| TypeScript | pass — no diagnostics |
-| ESLint | pass — 0 errors, 6 pre-existing warnings |
-| Tests | pass — 215/215 |
-| Content validation | pass — 63 articles, 0 errors |
-| Internal link integrity | pass — 6 body links, none to a draft |
-| Readability gates | pass — 5/5 this batch, 27/27 cumulative |
-| Production build | pass |
-| Source integrity | pass — batches 001–005 all byte-identical |
+| Gate                    | Result                                    |
+| ----------------------- | ----------------------------------------- |
+| TypeScript              | pass — no diagnostics                     |
+| ESLint                  | pass — 0 errors, 6 pre-existing warnings  |
+| Tests                   | pass — 215/215                            |
+| Content validation      | pass — 63 articles, 0 errors              |
+| Internal link integrity | pass — 6 body links, none to a draft      |
+| Readability gates       | pass — 5/5 this batch, 27/27 cumulative   |
+| Production build        | pass                                      |
+| Source integrity        | pass — batches 001–005 all byte-identical |
 
 URL pin updated 46 → 51, purely additive.
 

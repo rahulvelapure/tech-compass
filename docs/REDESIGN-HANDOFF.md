@@ -21,15 +21,15 @@ architecture is untouched.
 
 ## 2. The design system now
 
-| Decision | Value | Why |
-| -------- | ----- | --- |
-| Display serif | **Newsreader** (was Merriweather) | Merriweather is the default blog serif. Newsreader has optical sizing and real character. Same request count — a swap, not an addition. |
-| UI face | Inter | Unchanged. UI and meta only. |
-| Radius | **0.125rem** (was 0.375rem) | Editorial surfaces are square. |
-| `--brand` | Vermilion `oklch(0.52 0.19 32)` | Identity only: wordmark rule, kickers, active nav, hovers. |
-| `--link` | Ink blue, unchanged | **Deliberately separate from brand.** The old system conflated them, so every link was a brand mark and the accent meant nothing. Link legibility is a usability property, not a style choice. |
-| `--container-wide` | 78rem | Outer frame. |
-| `--container-editorial` | 42rem | Reading measure. See §4. |
+| Decision                | Value                             | Why                                                                                                                                                                                            |
+| ----------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Display serif           | **Newsreader** (was Merriweather) | Merriweather is the default blog serif. Newsreader has optical sizing and real character. Same request count — a swap, not an addition.                                                        |
+| UI face                 | Inter                             | Unchanged. UI and meta only.                                                                                                                                                                   |
+| Radius                  | **0.125rem** (was 0.375rem)       | Editorial surfaces are square.                                                                                                                                                                 |
+| `--brand`               | Vermilion `oklch(0.52 0.19 32)`   | Identity only: wordmark rule, kickers, active nav, hovers.                                                                                                                                     |
+| `--link`                | Ink blue, unchanged               | **Deliberately separate from brand.** The old system conflated them, so every link was a brand mark and the accent meant nothing. Link legibility is a usability property, not a style choice. |
+| `--container-wide`      | 78rem                             | Outer frame.                                                                                                                                                                                   |
+| `--container-editorial` | 42rem                             | Reading measure. See §4.                                                                                                                                                                       |
 
 **Type scale, verified in the browser:** 64 / 34 / 23 / 19 / 16 px.
 `display-1` → `display-2` → row headline → `display-3` → body. Each step is
@@ -137,16 +137,16 @@ Do not merge `brand` back into `link`.
 
 ## 10. Gate results at handoff
 
-| Gate | Result |
-| ---- | ------ |
-| Typecheck | 0 errors |
-| Lint | 0 errors, 6 warnings (pre-existing, shadcn/ui `react-refresh`) |
-| Tests | 137 passed |
-| Accessibility | 32/32 passed |
-| Content validation | 0 errors, 32 warnings |
-| Build | Succeeds (Cloudflare and Node adapters) |
-| URL safety | **PASS — 0 published URLs changed.** Sitemap 63, RSS 29, canonicals 29, all unchanged |
-| Scope | 24 files, **0 article / backlog / taxonomy files** |
+| Gate               | Result                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| Typecheck          | 0 errors                                                                              |
+| Lint               | 0 errors, 6 warnings (pre-existing, shadcn/ui `react-refresh`)                        |
+| Tests              | 137 passed                                                                            |
+| Accessibility      | 32/32 passed                                                                          |
+| Content validation | 0 errors, 32 warnings                                                                 |
+| Build              | Succeeds (Cloudflare and Node adapters)                                               |
+| URL safety         | **PASS — 0 published URLs changed.** Sitemap 63, RSS 29, canonicals 29, all unchanged |
+| Scope              | 24 files, **0 article / backlog / taxonomy files**                                    |
 
 ## 11. Next
 

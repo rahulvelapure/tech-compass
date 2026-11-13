@@ -5,9 +5,7 @@
 
   "compatibility_date": "2026-08-12",
 
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
 
   "workers_dev": true,
 
@@ -16,11 +14,11 @@
       "binding": "REACTIONS_DB",
       "database_name": "tech-compass-reactions",
       "database_id": "44d319e1-d41c-427a-a7f1-b8b54fdcb337",
-      "migrations_dir": "migrations"
-    }
+      "migrations_dir": "migrations",
+    },
   ],
 
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 }

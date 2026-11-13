@@ -81,6 +81,7 @@ import { article as bgpAnycastVsGeoDnsGlobalLoadBalancing } from "./enterprise-n
 import { article as bgpInTheCloudWhyItMatters } from "./enterprise-networking/bgp-in-the-cloud-why-it-matters";
 import { article as enterpriseDnsSecurityDohDotFiltering } from "./enterprise-networking/enterprise-dns-security-doh-dot-filtering";
 import { article as enterpriseIpv6MigrationDualStackSecurity } from "./enterprise-networking/enterprise-ipv6-migration-dual-stack-security";
+import { article as linuxEbpfXdpVsDpdkPacketProcessing } from "./enterprise-networking/linux-ebpf-xdp-vs-dpdk-packet-processing";
 import { article as linuxXdpVsTcEbpfPacketDrop } from "./enterprise-networking/linux-xdp-vs-tc-ebpf-packet-drop";
 import { article as saseVsSseSdWanArchitectureReality } from "./enterprise-networking/sase-vs-sse-sd-wan-architecture-reality";
 import { article as tcpCongestionControlBbrVsCubicCloudNetworks } from "./enterprise-networking/tcp-congestion-control-bbr-vs-cubic-cloud-networks";
@@ -206,6 +207,7 @@ export const articles: Article[] = [
   bgpInTheCloudWhyItMatters,
   enterpriseDnsSecurityDohDotFiltering,
   enterpriseIpv6MigrationDualStackSecurity,
+  linuxEbpfXdpVsDpdkPacketProcessing,
   linuxXdpVsTcEbpfPacketDrop,
   saseVsSseSdWanArchitectureReality,
   tcpCongestionControlBbrVsCubicCloudNetworks,

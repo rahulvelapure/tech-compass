@@ -2,15 +2,15 @@
 
 Companion to the Qwen source draft. **The source is not edited.**
 
-| | |
-|---|---|
-| Source file | `docs/editorial/batch-006.md` |
-| Duplicate copy | `docs/editorial/qwen-batch-006.md` — byte-identical, preserved as-is |
-| Source checksum (MD5) | `dbb956579dae9ef5b1076e683f1d24c6` (both files) |
-| Articles in batch | 5 |
-| Refined and published | 4 |
-| Held | 1 |
-| Refined on | 2026-08-23 |
+|                       |                                                                      |
+| --------------------- | -------------------------------------------------------------------- |
+| Source file           | `docs/editorial/batch-006.md`                                        |
+| Duplicate copy        | `docs/editorial/qwen-batch-006.md` — byte-identical, preserved as-is |
+| Source checksum (MD5) | `dbb956579dae9ef5b1076e683f1d24c6` (both files)                      |
+| Articles in batch     | 5                                                                    |
+| Refined and published | 4                                                                    |
+| Held                  | 1                                                                    |
+| Refined on            | 2026-08-23                                                           |
 
 > **Two copies of this batch exist.** `batch-006.md` and `qwen-batch-006.md`
 > have identical checksums. Both are left untouched — neither renamed nor
@@ -21,16 +21,16 @@ Companion to the Qwen source draft. **The source is not edited.**
 
 ## Gate results
 
-| Article | Body | Standfirst | Opening | Worst FAQ | ASL | Longest |
-|---|--:|--:|--:|--:|--:|--:|
-| `enterprise-dns-security-doh-dot-filtering` | 65.7 | 79.1 | 85.0 | 83.3 | 11.7 | 34 |
-| `bitlocker-tpm-failure-recovery-enterprise` | 66.6 | 82.5 | 70.9 | 75.4 | 12.6 | 33 |
-| `entra-id-pim-implementation-failures` | 57.9 | 77.5 | 79.3 | 72.6 | 12.2 | 32 |
-| `container-image-security-beyond-scanning` | 64.7 | 92.4 | 95.7 | 77.6 | 11.5 | 33 |
+| Article                                     | Body | Standfirst | Opening | Worst FAQ |  ASL | Longest |
+| ------------------------------------------- | ---: | ---------: | ------: | --------: | ---: | ------: |
+| `enterprise-dns-security-doh-dot-filtering` | 65.7 |       79.1 |    85.0 |      83.3 | 11.7 |      34 |
+| `bitlocker-tpm-failure-recovery-enterprise` | 66.6 |       82.5 |    70.9 |      75.4 | 12.6 |      33 |
+| `entra-id-pim-implementation-failures`      | 57.9 |       77.5 |    79.3 |      72.6 | 12.2 |      32 |
+| `container-image-security-beyond-scanning`  | 64.7 |       92.4 |    95.7 |      77.6 | 11.5 |      33 |
 
 The PIM article was the hardest in the corpus to bring over the line. Its
-subject vocabulary — *administrator*, *privilege*, *activation*, *eligibility*,
-*authentication* — is uniformly four and five syllables and cannot be removed.
+subject vocabulary — _administrator_, _privilege_, _activation_, _eligibility_,
+_authentication_ — is uniformly four and five syllables and cannot be removed.
 It came in at body 49.0 with all four tiers failing. Eleven passages were
 rewritten, keeping every term and changing the sentences around them. Nothing
 technical was dropped.
@@ -100,7 +100,7 @@ and the article now says so explicitly.
 **Removed:** fleet sizes, affected-machine counts and a productivity cost from
 the scenario. Event IDs are not quoted — they vary by provider and version.
 
-**Kept as the central point:** escrow must be configured *before* encryption is
+**Kept as the central point:** escrow must be configured _before_ encryption is
 enabled. Enable first and the key is generated with nowhere to go, applying the
 policy afterwards does not retroactively collect it, and the device looks
 compliant throughout.
@@ -136,7 +136,7 @@ rather than roles.
 `devops-23`
 
 **Correction — a factual inversion.** The draft cited an OpenSSL version as
-vulnerable to a CVE that this version had in fact *fixed*. Versions before it
+vulnerable to a CVE that this version had in fact _fixed_. Versions before it
 were affected. This is the same inversion recorded in `docs/HANDOVER.md` for an
 earlier batch, which makes it a pattern rather than a one-off.
 
@@ -206,16 +206,16 @@ software supply chain guidance.
 
 ## Validation at completion
 
-| Gate | Result |
-|---|---|
-| TypeScript | pass — no diagnostics |
-| ESLint | pass — 0 errors, 6 pre-existing warnings |
-| Tests | pass — 215/215 |
-| Content validation | pass — 67 articles, 0 errors |
-| Internal link integrity | pass — 8 body links, none to a draft |
-| Readability gates | pass — 4/4 this batch, 31/31 cumulative |
-| Production build | pass |
-| Source integrity | pass — both copies of batch 006 byte-identical |
+| Gate                    | Result                                         |
+| ----------------------- | ---------------------------------------------- |
+| TypeScript              | pass — no diagnostics                          |
+| ESLint                  | pass — 0 errors, 6 pre-existing warnings       |
+| Tests                   | pass — 215/215                                 |
+| Content validation      | pass — 67 articles, 0 errors                   |
+| Internal link integrity | pass — 8 body links, none to a draft           |
+| Readability gates       | pass — 4/4 this batch, 31/31 cumulative        |
+| Production build        | pass                                           |
+| Source integrity        | pass — both copies of batch 006 byte-identical |
 
 URL pin updated 51 → 55, purely additive. All four new slugs cleared the seed
 round-number pre-check before being written.

@@ -45,15 +45,15 @@ factual error in most batches.
 
 ## 3. Where the editorial run stands
 
-| | |
-|---|---|
-| Batches complete | 001–006 |
-| Batches remaining | 007, 008, 009, 010, 011 — 5 articles each, 25 total |
-| Articles refined | 31 |
-| Held | 4 |
-| Rejected | 1 |
-| Readability gate pass rate | 31 / 31 |
-| Corpus now | 67 articles: 55 published, 12 draft |
+|                            |                                                     |
+| -------------------------- | --------------------------------------------------- |
+| Batches complete           | 001–006                                             |
+| Batches remaining          | 007, 008, 009, 010, 011 — 5 articles each, 25 total |
+| Articles refined           | 31                                                  |
+| Held                       | 4                                                   |
+| Rejected                   | 1                                                   |
+| Readability gate pass rate | 31 / 31                                             |
+| Corpus now                 | 67 articles: 55 published, 12 draft                 |
 
 Batch 007's source is `docs/editorial/batch-007.md`. Note `batch-009 .md` has a
 **space before the extension** — quote the path.
@@ -62,14 +62,14 @@ Batch 007's source is `docs/editorial/batch-007.md`. Note `batch-009 .md` has a
 
 Do not change these without the user saying so.
 
-| Tier | Threshold |
-|---|---|
-| Standfirst | Flesch Reading Ease ≥ 70 |
-| FAQ answers | ≥ 70 |
-| Opening paragraph | ≥ 65 |
-| Technical body | ≥ 55 |
-| Average sentence length | ≤ 15 words |
-| Longest sentence | ≤ 35 words |
+| Tier                    | Threshold                |
+| ----------------------- | ------------------------ |
+| Standfirst              | Flesch Reading Ease ≥ 70 |
+| FAQ answers             | ≥ 70                     |
+| Opening paragraph       | ≥ 65                     |
+| Technical body          | ≥ 55                     |
+| Average sentence length | ≤ 15 words               |
+| Longest sentence        | ≤ 35 words               |
 
 Measured with `bun run scripts/readability.cli.ts <slug>`. Both scripts
 (`readability.ts`, `readability.cli.ts`) were written during this run and are
@@ -118,7 +118,7 @@ Follow it in order. Skipping the audit step is how duplicates get published.
 
 **Seed round numbers.** Every slug derives a "likes" baseline, and
 `tests/reactions.test.ts` rejects any that lands on a multiple of 50. Check
-*before* writing the file:
+_before_ writing the file:
 
 ```bash
 node -e 'const f=(s)=>{const i="likes:v1:"+s;let h=0x811c9dc5;for(let k=0;k<i.length;k++){h^=i.charCodeAt(k);h=Math.imul(h,0x01000193)>>>0;}h^=h>>>16;h=Math.imul(h,0x7feb352d)>>>0;h^=h>>>15;h=Math.imul(h,0x846ca68b)>>>0;h^=h>>>16;return 1500+((h>>>0)%1001);};console.log(f("your-slug-here"))'
@@ -150,13 +150,13 @@ Roughly one factual error per two articles. Categories, with examples:
 - **Product confusion.** Linkerd does not use Envoy; it has its own Rust proxy.
 - **Stale product names.** WDAC is now App Control for Business.
 - **CVE/version inversions.** A draft named an OpenSSL version as vulnerable to
-  a CVE that version *fixed*. Recorded twice now. Check whether a version is the
+  a CVE that version _fixed_. Recorded twice now. Check whether a version is the
   last affected or the first fixed.
 - **Security overstatements.** DPoP does not stop XSS — with a non-extractable
   key an attacker cannot exfiltrate the token but can still sign requests from
   the victim's origin.
 - **Omissions that change a design.** PIM requires Entra ID P2 and emergency
-  access accounts must be excluded from it. RDS Proxy *pins* on session state
+  access accounts must be excluded from it. RDS Proxy _pins_ on session state
   and silently stops pooling.
 
 ---
@@ -225,7 +225,7 @@ Constraints found in the audit, worth not rediscovering:
 - `zero-trust-network-segmentation-boundaries` — direct duplicate of a published
   article. Recommend reject.
 - `intune-vs-group-policy-migration-reality` — strong overlap. The only distinct
-  space is the *decision* of whether to migrate a given GPO, which is a
+  space is the _decision_ of whether to migrate a given GPO, which is a
   different article.
 - `linux-ebpf-security-monitoring-kernel-probes` — overlaps the eBPF draft.
 - `kubernetes-gateway-api-vs-ingress-migration` — **recommend reject.** The
@@ -250,7 +250,7 @@ via `console.error`; a clean tail rules it out. `isReactable` is ruled out by th
 failure being systemic. That leaves line 6:
 
 ```ts
-if (!db || !secret) return UNAVAILABLE;   // logs nothing
+if (!db || !secret) return UNAVAILABLE; // logs nothing
 ```
 
 So either `reactionDb()` returned null or `reactionSecret()` returned null. Both
@@ -304,19 +304,19 @@ secret disables the public like count when it only needs to disable writes.
 Every Qwen source is byte-identical to its state at the start of the run.
 Verify with `md5sum docs/editorial/batch-0*.md`.
 
-| File | MD5 |
-|---|---|
-| batch-001.md | `c40b3df5f2ed28501a8621438bbfa21c` |
-| batch-002.md | `567c46844000348d3e8fda0b6dd028e1` |
-| batch-003.md | `a5069dd4f0d5bfa03a46ff522f130116` |
-| batch-004.md | `44f475633584c1d1c151fb2de56d91bb` |
-| batch-005.md | `4dff8a191455ea61e02d149399ce0d6e` |
-| batch-006.md | `dbb956579dae9ef5b1076e683f1d24c6` |
-| batch-007.md | `68411951c8a1038f0528dc5ec2b2b519` |
-| batch-008.md | `9c5c410467eb0f829de45b7e26a27078` |
-| `batch-009 .md` | `04a61e1262c21fa14d992efd5d2e199d` |
-| batch-010.md | `7163997d7bbfcbc2398ed9073055390e` |
-| batch-011.md | `60a51588553b5f98558728450f9c9e55` |
+| File              | MD5                                |
+| ----------------- | ---------------------------------- |
+| batch-001.md      | `c40b3df5f2ed28501a8621438bbfa21c` |
+| batch-002.md      | `567c46844000348d3e8fda0b6dd028e1` |
+| batch-003.md      | `a5069dd4f0d5bfa03a46ff522f130116` |
+| batch-004.md      | `44f475633584c1d1c151fb2de56d91bb` |
+| batch-005.md      | `4dff8a191455ea61e02d149399ce0d6e` |
+| batch-006.md      | `dbb956579dae9ef5b1076e683f1d24c6` |
+| batch-007.md      | `68411951c8a1038f0528dc5ec2b2b519` |
+| batch-008.md      | `9c5c410467eb0f829de45b7e26a27078` |
+| `batch-009 .md`   | `04a61e1262c21fa14d992efd5d2e199d` |
+| batch-010.md      | `7163997d7bbfcbc2398ed9073055390e` |
+| batch-011.md      | `60a51588553b5f98558728450f9c9e55` |
 | qwen-batch-006.md | `dbb956579dae9ef5b1076e683f1d24c6` |
 
 `batch-006.md` and `qwen-batch-006.md` are byte-identical duplicates. The user

@@ -2,30 +2,30 @@
 
 Companion to the Qwen source draft. **The source is not edited.**
 
-| | |
-|---|---|
-| Source file | `docs/editorial/batch-004.md` |
+|                       |                                    |
+| --------------------- | ---------------------------------- |
+| Source file           | `docs/editorial/batch-004.md`      |
 | Source checksum (MD5) | `44f475633584c1d1c151fb2de56d91bb` |
-| Articles in batch | 5 |
-| Refined and published | 5 |
-| Held | 0 |
-| Refined on | 2026-08-23 |
+| Articles in batch     | 5                                  |
+| Refined and published | 5                                  |
+| Held                  | 0                                  |
+| Refined on            | 2026-08-23                         |
 
 ---
 
 ## Gate results
 
-| Article | Body | Standfirst | Opening | Worst FAQ | ASL | Longest |
-|---|--:|--:|--:|--:|--:|--:|
-| `aws-transit-gateway-vs-vpc-peering` | 59.0 | 96.6 | 65.6 | 72.6 | 13.4 | 32 |
-| `fido2-discoverable-credentials-resident-keys` | 58.6 | 84.0 | 88.3 | 71.8 | 12.7 | 35 |
-| `wdac-vs-applocker-kernel-enforcement` | 58.3 | 70.3 | 82.5 | 71.8 | 11.6 | 34 |
-| `aurora-serverless-v2-scaling-connection-limits` | 55.2 | 70.1 | 68.3 | 74.0 | 13.3 | 33 |
-| `karpenter-vs-cluster-autoscaler-node-scaling` | 65.4 | 85.4 | 91.4 | 74.5 | 11.5 | 32 |
+| Article                                          | Body | Standfirst | Opening | Worst FAQ |  ASL | Longest |
+| ------------------------------------------------ | ---: | ---------: | ------: | --------: | ---: | ------: |
+| `aws-transit-gateway-vs-vpc-peering`             | 59.0 |       96.6 |    65.6 |      72.6 | 13.4 |      32 |
+| `fido2-discoverable-credentials-resident-keys`   | 58.6 |       84.0 |    88.3 |      71.8 | 12.7 |      35 |
+| `wdac-vs-applocker-kernel-enforcement`           | 58.3 |       70.3 |    82.5 |      71.8 | 11.6 |      34 |
+| `aurora-serverless-v2-scaling-connection-limits` | 55.2 |       70.1 |    68.3 |      74.0 | 13.3 |      33 |
+| `karpenter-vs-cluster-autoscaler-node-scaling`   | 65.4 |       85.4 |    91.4 |      74.5 | 11.5 |      32 |
 
 The FIDO2 and App Control articles were the hardest of the corpus so far. Both
-have subject vocabulary — *discoverable credential*, *authenticator*,
-*application control*, *code integrity* — that is unavoidable and expensive in
+have subject vocabulary — _discoverable credential_, _authenticator_,
+_application control_, _code integrity_ — that is unavoidable and expensive in
 syllables. Neither had terminology removed. Both were brought over the line by
 shortening sentences and by using the concrete noun where the referent was
 genuinely concrete (a hardware key is a key; the general concept stays an
@@ -40,7 +40,7 @@ authenticator).
 **Corrections.** Pricing removed. The peering quota claim was
 self-contradictory — it named a figure as a hard limit and then said quota
 increases were available — so it is now described relative to what a growing
-mesh needs. The draft also offered *Transit Gateway multicast* as part of the
+mesh needs. The draft also offered _Transit Gateway multicast_ as part of the
 fix for stateful firewall asymmetry; multicast is unrelated to that problem and
 appliance mode is the actual mechanism.
 
@@ -220,14 +220,14 @@ Autoscaler FAQ; pod disruption budgets.
 
 ## Validation at completion
 
-| Gate | Result |
-|---|---|
-| TypeScript | pass — no diagnostics |
-| ESLint | pass — 0 errors, 6 pre-existing warnings |
-| Tests | pass — 215/215 |
-| Content validation | pass — 58 articles, 0 errors |
-| Readability gates | pass — 5/5 this batch, 22/22 cumulative |
-| Production build | pass |
+| Gate               | Result                                   |
+| ------------------ | ---------------------------------------- |
+| TypeScript         | pass — no diagnostics                    |
+| ESLint             | pass — 0 errors, 6 pre-existing warnings |
+| Tests              | pass — 215/215                           |
+| Content validation | pass — 58 articles, 0 errors             |
+| Readability gates  | pass — 5/5 this batch, 22/22 cumulative  |
+| Production build   | pass                                     |
 
 URL pin updated 41 → 46 after confirming the change was purely additive.
 

@@ -2,14 +2,14 @@
 
 Companion to the Qwen source draft. **The source is not edited.**
 
-| | |
-|---|---|
-| Source file | `docs/editorial/batch-003.md` |
+|                       |                                    |
+| --------------------- | ---------------------------------- |
+| Source file           | `docs/editorial/batch-003.md`      |
 | Source checksum (MD5) | `a5069dd4f0d5bfa03a46ff522f130116` |
-| Articles in batch | 5 |
-| Refined and published | 5 |
-| Held | 0 |
-| Refined on | 2026-08-23 |
+| Articles in batch     | 5                                  |
+| Refined and published | 5                                  |
+| Held                  | 0                                  |
+| Refined on            | 2026-08-23                         |
 
 First batch where every article was publishable. It was also the batch with the
 most factual errors, which is not a coincidence — these are configuration-level
@@ -20,13 +20,13 @@ miss.
 
 ## Gate results
 
-| Article | Body | Standfirst | Opening | Worst FAQ | ASL | Longest |
-|---|--:|--:|--:|--:|--:|--:|
-| `aws-vpc-lattice-vs-api-gateway-service-networking` | 64.6 | 85.6 | 83.8 | 73.5 | 12.2 | 31 |
-| `oauth2-token-theft-dpop-mechanics` | 69.5 | 93.0 | 76.2 | 77.2 | 11.5 | 29 |
-| `windows-laps-entra-id-architecture-deployment` | 57.1 | 79.8 | 72.6 | 71.6 | 12.3 | 33 |
-| `kubernetes-storage-classes-costs-performance-traps` | 63.6 | 83.5 | 74.7 | 72.6 | 12.4 | 31 |
-| `secrets-management-cicd-vault-oidc-reality` | 60.6 | 74.8 | 66.8 | 71.8 | 13.5 | 33 |
+| Article                                              | Body | Standfirst | Opening | Worst FAQ |  ASL | Longest |
+| ---------------------------------------------------- | ---: | ---------: | ------: | --------: | ---: | ------: |
+| `aws-vpc-lattice-vs-api-gateway-service-networking`  | 64.6 |       85.6 |    83.8 |      73.5 | 12.2 |      31 |
+| `oauth2-token-theft-dpop-mechanics`                  | 69.5 |       93.0 |    76.2 |      77.2 | 11.5 |      29 |
+| `windows-laps-entra-id-architecture-deployment`      | 57.1 |       79.8 |    72.6 |      71.6 | 12.3 |      33 |
+| `kubernetes-storage-classes-costs-performance-traps` | 63.6 |       83.5 |    74.7 |      72.6 | 12.4 |      31 |
+| `secrets-management-cicd-vault-oidc-reality`         | 60.6 |       74.8 |    66.8 |      71.8 | 13.5 |      33 |
 
 ---
 
@@ -76,7 +76,7 @@ all match RFC 9449.
 **Correction — one security overstatement.** The draft concluded that after
 DPoP, a stolen token leaves "the theft of a useless string", attributing this to
 the private key being unreachable. That is wrong in the case that matters. With
-a non-extractable key, injected script cannot *exfiltrate* the key — but it is
+a non-extractable key, injected script cannot _exfiltrate_ the key — but it is
 running in the same origin and can still ask the browser to sign proofs. The
 attacker cannot use the token elsewhere; they can still act from the victim's
 browser.
@@ -229,12 +229,12 @@ with OpenID Connect; Configuring OIDC in AWS.
 
 ## Validation at completion
 
-| Gate | Result |
-|---|---|
-| TypeScript | pass — no diagnostics |
-| ESLint | pass — 0 errors, 6 pre-existing warnings |
-| Content validation | pass — 53 articles, 0 errors |
-| Readability gates | pass — 5/5 this batch, 12/12 cumulative |
+| Gate               | Result                                   |
+| ------------------ | ---------------------------------------- |
+| TypeScript         | pass — no diagnostics                    |
+| ESLint             | pass — 0 errors, 6 pre-existing warnings |
+| Content validation | pass — 53 articles, 0 errors             |
+| Readability gates  | pass — 5/5 this batch, 12/12 cumulative  |
 
 URL pin updated 36 → 41 after confirming the change was purely additive — 5
 added, 0 existing URLs altered.
