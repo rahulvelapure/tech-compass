@@ -57,6 +57,7 @@ import { article as samlFederationSecurityRisksTrustBoundaries } from "./cyberse
 import { article as graphqlVsRestVsGrpcApiGatewayPerformance } from "./development/graphql-vs-rest-vs-grpc-api-gateway-performance";
 import { article as javaVsGoGarbageCollectionPerformanceTuning } from "./development/java-vs-go-garbage-collection-performance-tuning";
 import { article as nodejsReleaseScheduleChange } from "./development/nodejs-release-schedule-change";
+import { article as a20YearsPowershellChangedEnterpriseIt } from "./devops/20-years-powershell-changed-enterprise-it";
 import { article as aksHighAvailabilitySinglePointsOfFailure } from "./devops/aks-high-availability-single-points-of-failure";
 import { article as containerImageSecurityBeyondScanning } from "./devops/container-image-security-beyond-scanning";
 import { article as ebpfProductionObservabilitySecurityBoundaries } from "./devops/ebpf-production-observability-security-boundaries";
@@ -192,6 +193,7 @@ export const articles: Article[] = [
   graphqlVsRestVsGrpcApiGatewayPerformance,
   javaVsGoGarbageCollectionPerformanceTuning,
   nodejsReleaseScheduleChange,
+  a20YearsPowershellChangedEnterpriseIt,
   aksHighAvailabilitySinglePointsOfFailure,
   containerImageSecurityBeyondScanning,
   ebpfProductionObservabilitySecurityBoundaries,
