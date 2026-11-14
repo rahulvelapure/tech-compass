@@ -41,6 +41,7 @@ import { article as iso27001Microsoft365Mapping } from "./cybersecurity-ciso/iso
 import { article as linuxEbpfSecurityMonitoringKernelProbes } from "./cybersecurity-ciso/linux-ebpf-security-monitoring-kernel-probes";
 import { article as linuxFilePermissionsPosixAclsCapabilities } from "./cybersecurity-ciso/linux-file-permissions-posix-acls-capabilities";
 import { article as linuxSecurityModulesSelinuxApparmorSeccompContainers } from "./cybersecurity-ciso/linux-security-modules-selinux-apparmor-seccomp-containers";
+import { article as microsoft365OutageNovember2026AdminPlane } from "./cybersecurity-ciso/microsoft-365-outage-november-2026-admin-plane";
 import { article as oauth2DeviceAuthorizationGrantIotCli } from "./cybersecurity-ciso/oauth-2-device-authorization-grant-iot-cli";
 import { article as oauth2PushedAuthorizationRequestsParFapi } from "./cybersecurity-ciso/oauth-2-pushed-authorization-requests-par-fapi";
 import { article as oauth2TokenTheftDpopMechanics } from "./cybersecurity-ciso/oauth2-token-theft-dpop-mechanics";
@@ -173,6 +174,7 @@ export const articles: Article[] = [
   linuxEbpfSecurityMonitoringKernelProbes,
   linuxFilePermissionsPosixAclsCapabilities,
   linuxSecurityModulesSelinuxApparmorSeccompContainers,
+  microsoft365OutageNovember2026AdminPlane,
   oauth2DeviceAuthorizationGrantIotCli,
   oauth2PushedAuthorizationRequestsParFapi,
   oauth2TokenTheftDpopMechanics,
