@@ -7,6 +7,7 @@
 import type { Article } from "../types";
 
 import { article as aiAgentsItOperations } from "./ai-enterprise-it/ai-agents-it-operations";
+import { article as aiCodingAgentSupplyChainBackdoors } from "./ai-enterprise-it/ai-coding-agent-supply-chain-backdoors";
 import { article as aiCodingAssistantsEnterprise } from "./ai-enterprise-it/ai-coding-assistants-enterprise";
 import { article as aiModelServingInfrastructureKvCacheVllm } from "./ai-enterprise-it/ai-model-serving-infrastructure-kv-cache-vllm";
 import { article as enterpriseAiAgentsSecurityGovernanceReality } from "./ai-enterprise-it/enterprise-ai-agents-security-governance-reality";
@@ -141,6 +142,7 @@ import { article as windowsServerHardeningSecuredCoreCredentialGuard } from "./w
 
 export const articles: Article[] = [
   aiAgentsItOperations,
+  aiCodingAgentSupplyChainBackdoors,
   aiCodingAssistantsEnterprise,
   aiModelServingInfrastructureKvCacheVllm,
   enterpriseAiAgentsSecurityGovernanceReality,
