@@ -34,6 +34,7 @@ import { article as postgresqlDeclarativePartitioningQueryPruning } from "./clou
 import { article as postgresqlIndexTypesBtreeGinBrinGist } from "./cloud/postgresql-index-types-btree-gin-brin-gist";
 import { article as postgresqlPitrWalArchivingLsnMechanics } from "./cloud/postgresql-pitr-wal-archiving-lsn-mechanics";
 import { article as redisClusterVsSentinelArchitecture } from "./cloud/redis-cluster-vs-sentinel-architecture";
+import { article as agenticAiGithubSecretsCloudCompromise } from "./cybersecurity-ciso/agentic-ai-github-secrets-cloud-compromise";
 import { article as backupRestoreTesting } from "./cybersecurity-ciso/backup-restore-testing";
 import { article as defenderAsrAuditToBlock } from "./cybersecurity-ciso/defender-asr-audit-to-block";
 import { article as fido2DiscoverableCredentialsResidentKeys } from "./cybersecurity-ciso/fido2-discoverable-credentials-resident-keys";
@@ -167,6 +168,7 @@ export const articles: Article[] = [
   postgresqlIndexTypesBtreeGinBrinGist,
   postgresqlPitrWalArchivingLsnMechanics,
   redisClusterVsSentinelArchitecture,
+  agenticAiGithubSecretsCloudCompromise,
   backupRestoreTesting,
   defenderAsrAuditToBlock,
   fido2DiscoverableCredentialsResidentKeys,
