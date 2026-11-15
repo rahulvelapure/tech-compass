@@ -100,6 +100,7 @@ import { article as raspberryPiHomeServer } from "./gadgets/raspberry-pi-home-se
 import { article as graphApiIntuneReporting } from "./it-automation/graph-api-intune-reporting";
 import { article as conditionalAccessBreakGlassAccounts } from "./microsoft-365-entra-id/conditional-access-break-glass-accounts";
 import { article as conditionalAccessFramework } from "./microsoft-365-entra-id/conditional-access-framework";
+import { article as enterprisePasskeysPasswordlessReadiness } from "./microsoft-365-entra-id/enterprise-passkeys-passwordless-readiness";
 import { article as entraExternalIdB2bB2cCrossTenantAccess } from "./microsoft-365-entra-id/entra-external-id-b2b-b2c-cross-tenant-access";
 import { article as entraIdAuthenticationContextStepUpMfa } from "./microsoft-365-entra-id/entra-id-authentication-context-step-up-mfa";
 import { article as entraIdPimImplementationFailures } from "./microsoft-365-entra-id/entra-id-pim-implementation-failures";
@@ -236,6 +237,7 @@ export const articles: Article[] = [
   graphApiIntuneReporting,
   conditionalAccessBreakGlassAccounts,
   conditionalAccessFramework,
+  enterprisePasskeysPasswordlessReadiness,
   entraExternalIdB2bB2cCrossTenantAccess,
   entraIdAuthenticationContextStepUpMfa,
   entraIdPimImplementationFailures,

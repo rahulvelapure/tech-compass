@@ -149,6 +149,20 @@ function ArticlePage() {
             )}
           </header>
 
+          {article.heroImage && (
+            <figure className="mt-8 overflow-hidden border border-border bg-surface">
+              <img
+                src={article.heroImage}
+                alt={article.heroImageAlt ?? ""}
+                width={1200}
+                height={630}
+                className="block h-auto w-full object-cover"
+                loading="eager"
+                fetchPriority="high"
+              />
+            </figure>
+          )}
+
           <div className="lg:hidden">
             <div className="mt-8 border border-border p-5">
               <TableOfContents items={toc} />
