@@ -6,6 +6,7 @@
 
 import type { Article } from "../types";
 
+import { article as aiAgentPermissionsTaskScopedAccess } from "./ai-enterprise-it/ai-agent-permissions-task-scoped-access";
 import { article as aiAgentsItOperations } from "./ai-enterprise-it/ai-agents-it-operations";
 import { article as aiCodingAgentSupplyChainBackdoors } from "./ai-enterprise-it/ai-coding-agent-supply-chain-backdoors";
 import { article as aiCodingAssistantsEnterprise } from "./ai-enterprise-it/ai-coding-assistants-enterprise";
@@ -143,6 +144,7 @@ import { article as windows365VsAzureVirtualDesktopArchitecture } from "./window
 import { article as windowsServerHardeningSecuredCoreCredentialGuard } from "./windows/windows-server-hardening-secured-core-credential-guard";
 
 export const articles: Article[] = [
+  aiAgentPermissionsTaskScopedAccess,
   aiAgentsItOperations,
   aiCodingAgentSupplyChainBackdoors,
   aiCodingAssistantsEnterprise,
