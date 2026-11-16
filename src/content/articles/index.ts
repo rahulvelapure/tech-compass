@@ -6,6 +6,7 @@
 
 import type { Article } from "../types";
 
+import { article as aiAgentOffboardingLifecycleGovernance } from "./ai-enterprise-it/ai-agent-offboarding-lifecycle-governance";
 import { article as aiAgentPermissionsTaskScopedAccess } from "./ai-enterprise-it/ai-agent-permissions-task-scoped-access";
 import { article as aiAgentsItOperations } from "./ai-enterprise-it/ai-agents-it-operations";
 import { article as aiCodingAgentSupplyChainBackdoors } from "./ai-enterprise-it/ai-coding-agent-supply-chain-backdoors";
@@ -49,6 +50,7 @@ import { article as oauth2DeviceAuthorizationGrantIotCli } from "./cybersecurity
 import { article as oauth2PushedAuthorizationRequestsParFapi } from "./cybersecurity-ciso/oauth-2-pushed-authorization-requests-par-fapi";
 import { article as oauth2TokenTheftDpopMechanics } from "./cybersecurity-ciso/oauth2-token-theft-dpop-mechanics";
 import { article as oidcWorkloadIdentityFederationCrossCloud } from "./cybersecurity-ciso/oidc-workload-identity-federation-cross-cloud";
+import { article as outlookCve2026124194NtlmPatchGuide } from "./cybersecurity-ciso/outlook-cve-2026-124194-ntlm-patch-guide";
 import { article as passkeysEnterpriseDeploymentReality } from "./cybersecurity-ciso/passkeys-enterprise-deployment-reality";
 import { article as passwordManagersForTeams } from "./cybersecurity-ciso/password-managers-for-teams";
 import { article as postQuantumCryptographyNistMigrationEnterprise } from "./cybersecurity-ciso/post-quantum-cryptography-nist-migration-enterprise";
@@ -144,6 +146,7 @@ import { article as windows365VsAzureVirtualDesktopArchitecture } from "./window
 import { article as windowsServerHardeningSecuredCoreCredentialGuard } from "./windows/windows-server-hardening-secured-core-credential-guard";
 
 export const articles: Article[] = [
+  aiAgentOffboardingLifecycleGovernance,
   aiAgentPermissionsTaskScopedAccess,
   aiAgentsItOperations,
   aiCodingAgentSupplyChainBackdoors,
@@ -187,6 +190,7 @@ export const articles: Article[] = [
   oauth2PushedAuthorizationRequestsParFapi,
   oauth2TokenTheftDpopMechanics,
   oidcWorkloadIdentityFederationCrossCloud,
+  outlookCve2026124194NtlmPatchGuide,
   passkeysEnterpriseDeploymentReality,
   passwordManagersForTeams,
   postQuantumCryptographyNistMigrationEnterprise,
