@@ -46,6 +46,7 @@ import { article as linuxEbpfSecurityMonitoringKernelProbes } from "./cybersecur
 import { article as linuxFilePermissionsPosixAclsCapabilities } from "./cybersecurity-ciso/linux-file-permissions-posix-acls-capabilities";
 import { article as linuxSecurityModulesSelinuxApparmorSeccompContainers } from "./cybersecurity-ciso/linux-security-modules-selinux-apparmor-seccomp-containers";
 import { article as microsoft365OutageNovember2026AdminPlane } from "./cybersecurity-ciso/microsoft-365-outage-november-2026-admin-plane";
+import { article as microsoftNtlmSigningChanges2027 } from "./cybersecurity-ciso/microsoft-ntlm-signing-changes-2027";
 import { article as oauth2DeviceAuthorizationGrantIotCli } from "./cybersecurity-ciso/oauth-2-device-authorization-grant-iot-cli";
 import { article as oauth2PushedAuthorizationRequestsParFapi } from "./cybersecurity-ciso/oauth-2-pushed-authorization-requests-par-fapi";
 import { article as oauth2TokenTheftDpopMechanics } from "./cybersecurity-ciso/oauth2-token-theft-dpop-mechanics";
@@ -186,6 +187,7 @@ export const articles: Article[] = [
   linuxFilePermissionsPosixAclsCapabilities,
   linuxSecurityModulesSelinuxApparmorSeccompContainers,
   microsoft365OutageNovember2026AdminPlane,
+  microsoftNtlmSigningChanges2027,
   oauth2DeviceAuthorizationGrantIotCli,
   oauth2PushedAuthorizationRequestsParFapi,
   oauth2TokenTheftDpopMechanics,
