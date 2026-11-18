@@ -9,6 +9,7 @@ import type { Article } from "../types";
 import { article as aiAgentOffboardingLifecycleGovernance } from "./ai-enterprise-it/ai-agent-offboarding-lifecycle-governance";
 import { article as aiAgentPermissionsTaskScopedAccess } from "./ai-enterprise-it/ai-agent-permissions-task-scoped-access";
 import { article as aiAgentsItOperations } from "./ai-enterprise-it/ai-agents-it-operations";
+import { article as aiBrowserAgentsIdentityAccountabilityRisk } from "./ai-enterprise-it/ai-browser-agents-identity-accountability-risk";
 import { article as aiCodingAgentSupplyChainBackdoors } from "./ai-enterprise-it/ai-coding-agent-supply-chain-backdoors";
 import { article as aiCodingAssistantsEnterprise } from "./ai-enterprise-it/ai-coding-assistants-enterprise";
 import { article as aiModelServingInfrastructureKvCacheVllm } from "./ai-enterprise-it/ai-model-serving-infrastructure-kv-cache-vllm";
@@ -150,6 +151,7 @@ export const articles: Article[] = [
   aiAgentOffboardingLifecycleGovernance,
   aiAgentPermissionsTaskScopedAccess,
   aiAgentsItOperations,
+  aiBrowserAgentsIdentityAccountabilityRisk,
   aiCodingAgentSupplyChainBackdoors,
   aiCodingAssistantsEnterprise,
   aiModelServingInfrastructureKvCacheVllm,
