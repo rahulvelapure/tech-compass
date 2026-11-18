@@ -14,8 +14,13 @@ export const article: Article = {
   standfirst:
     "AI browser agents can read websites, open email, fill forms and take actions. That creates a new security question. If an AI agent acts through your account, can your company prove that the action came from the agent and not from you?",
 
-  excerpt:
+    excerpt:
     "AI browser security is not only about prompt injection. It is also about identity, access, approval and proving who actually performed an action.",
+
+  heroImage: "/images/articles/ai-browser-agents-identity-accountability-risk.webp",
+
+  heroImageAlt:
+    "AI browser agent working across business applications while identity, permissions and audit controls separate the agent from the user.",
 
   authorId: "rahul-velapure",
 
