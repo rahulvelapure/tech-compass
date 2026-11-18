@@ -59,6 +59,7 @@ import { article as postQuantumCryptographyNistMigrationEnterprise } from "./cyb
 import { article as purviewAdaptiveProtectionDlp } from "./cybersecurity-ciso/purview-adaptive-protection-dlp";
 import { article as ransomwareRecoveryBackupsImmutableAdForest } from "./cybersecurity-ciso/ransomware-recovery-backups-immutable-ad-forest";
 import { article as samlFederationSecurityRisksTrustBoundaries } from "./cybersecurity-ciso/saml-federation-security-risks-trust-boundaries";
+import { article as thirdPartyJavascriptSupplyChainAttack } from "./cybersecurity-ciso/third-party-javascript-supply-chain-attack";
 import { article as graphqlVsRestVsGrpcApiGatewayPerformance } from "./development/graphql-vs-rest-vs-grpc-api-gateway-performance";
 import { article as javaVsGoGarbageCollectionPerformanceTuning } from "./development/java-vs-go-garbage-collection-performance-tuning";
 import { article as nodejsReleaseScheduleChange } from "./development/nodejs-release-schedule-change";
@@ -201,6 +202,7 @@ export const articles: Article[] = [
   purviewAdaptiveProtectionDlp,
   ransomwareRecoveryBackupsImmutableAdForest,
   samlFederationSecurityRisksTrustBoundaries,
+  thirdPartyJavascriptSupplyChainAttack,
   graphqlVsRestVsGrpcApiGatewayPerformance,
   javaVsGoGarbageCollectionPerformanceTuning,
   nodejsReleaseScheduleChange,
