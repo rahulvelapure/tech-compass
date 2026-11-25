@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { ArticleCard } from "@/components/site/ArticleCard";
 import { NewsletterCTA } from "@/components/site/NewsletterCTA";
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
    * as slugs.
    *
    * Choosing while rendering would mean the server and the browser each ran the
-   * selection and disagreed — the classic hydration mismatch. Resolved here,
+   * selection and disagreed â€” the classic hydration mismatch. Resolved here,
    * both renders read the same answer.
    *
    * Only slugs cross the wire. The component looks each article up from the
@@ -24,12 +24,12 @@ export const Route = createFileRoute("/")({
 
   /**
    * Metadata is fixed and does not read the lead. The front page's title,
-   * description and canonical must not move when the rotation does — that is
+   * description and canonical must not move when the rotation does â€” that is
    * the difference between a fresh homepage and an unstable one.
    */
   head: () => ({
     meta: pageMeta({
-      title: `${site.name} — Technology, explained properly`,
+      title: `${site.name} â€” Technology, explained properly`,
       description: site.description,
       path: "/",
     }),
@@ -73,7 +73,7 @@ function SectionHead({
           params={{ category: href }}
           className="eyebrow shrink-0 text-muted-foreground transition-colors hover:text-brand"
         >
-          All {title} →
+          All {title} â†’
         </Link>
       )}
     </div>
@@ -103,7 +103,7 @@ function HomePage() {
       {/*
         Dateline strip.
 
-        Carries the page's only h1 — a front page's heading is the publication,
+        Carries the page's only h1 â€” a front page's heading is the publication,
         not any one story, so every headline below stays an h2. It doubles as a
         masthead device: what this is, and when it was last added to.
       */}
@@ -116,9 +116,9 @@ function HomePage() {
         </div>
       </Shell>
 
-      {/* ---- Front page: one dominant story, a ruled contents rail beside it ---- */}
+      {/* ---- Latest published article and supporting stories ---- */}
       <Shell>
-        <section className="grid grid-cols-1 gap-x-12 gap-y-12 py-10 lg:grid-cols-12 lg:py-14">
+        <section className="py-10 lg:py-14"><div className="mb-7"><p className="eyebrow text-brand">Latest published</p></div><div className="grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <ArticleCard article={lead} variant="lead" />
           </div>
@@ -131,6 +131,7 @@ function HomePage() {
               ))}
             </div>
           </aside>
+          </div>
         </section>
       </Shell>
 
@@ -228,7 +229,7 @@ function HomePage() {
               to="/about"
               className="eyebrow mt-5 inline-block text-muted-foreground transition-colors hover:text-brand"
             >
-              About the publication →
+              About the publication â†’
             </Link>
           </div>
           <div className="lg:col-span-5 lg:border-l lg:border-border lg:pl-12">
@@ -240,7 +241,7 @@ function HomePage() {
               to="/resources"
               className="eyebrow mt-5 inline-block text-muted-foreground transition-colors hover:text-brand"
             >
-              Browse resources →
+              Browse resources â†’
             </Link>
           </div>
         </section>
@@ -250,3 +251,5 @@ function HomePage() {
     </>
   );
 }
+
+

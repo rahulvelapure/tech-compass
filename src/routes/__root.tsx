@@ -125,6 +125,13 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3680769252416096"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <ScriptOnce>{themeInitScript}</ScriptOnce>

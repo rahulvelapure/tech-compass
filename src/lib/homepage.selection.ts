@@ -1,4 +1,4 @@
-import type { Article } from "@/content/types";
+﻿import type { Article } from "@/content/types";
 
 /**
  * Front-page composition.
@@ -17,7 +17,7 @@ import type { Article } from "@/content/types";
  * Both are satisfied by seeding: the caller supplies one random number per
  * request, and everything here is a pure function of that seed. Vary the seed
  * and the page varies; hold it and the page is stable. Nothing in this file
- * calls `Math.random`, reads a clock, or touches a request — which is also
+ * calls `Math.random`, reads a clock, or touches a request â€” which is also
  * what keeps it testable.
  */
 
@@ -96,7 +96,7 @@ function shuffled<T>(items: T[], rng: () => number): T[] {
  *
  * A flat shuffle would lead as often with the eighth-newest article as with
  * today's. Weighting the pool by position keeps the front page broadly current
- * while still giving older entries a real chance — which is the difference
+ * while still giving older entries a real chance â€” which is the difference
  * between a front page that varies and one that looks arbitrary.
  */
 function weightedPick<T>(items: T[], rng: () => number): T | undefined {
@@ -120,7 +120,7 @@ function weightedPick<T>(items: T[], rng: () => number): T | undefined {
  * Articles eligible to lead.
  *
  * Editorially flagged articles come first and stay eligible however old they
- * are — that is what the flag has always meant. The pool is then backfilled by
+ * are â€” that is what the flag has always meant. The pool is then backfilled by
  * recency so the front page cannot end up rotating between two pieces from
  * last spring.
  */
@@ -138,8 +138,8 @@ const byDateDesc = (a: Article, b: Article) => b.publishedAt.localeCompare(a.pub
 /**
  * Build one front page.
  *
- * Slots are filled in order — lead, then sections, then the rail, then Latest
- * — and every chosen article is recorded, so nothing appears twice on the
+ * Slots are filled in order â€” lead, then sections, then the rail, then Latest
+ * â€” and every chosen article is recorded, so nothing appears twice on the
  * page. Sections are filled early because they are the constrained slots; the
  * reasoning is at that step.
  */
@@ -167,8 +167,8 @@ export function composeHomepage({
   /* --- subject sections claim next ---
    *
    * Sections are filled before the rail and the Latest list, and the ordering
-   * is deliberate. A subject category can be small — Cybersecurity currently
-   * has one published article — so if the general lists took their pick first,
+   * is deliberate. A subject category can be small â€” Cybersecurity currently
+   * has one published article â€” so if the general lists took their pick first,
    * that section would either render empty or repeat an article already shown
    * above. Letting constrained sections reserve what they need keeps every
    * section populated and keeps the page free of duplicates. Sections claim
@@ -177,13 +177,13 @@ export function composeHomepage({
   const sectionSlugs: Record<string, string[]> = {};
   for (const section of sections) {
     const available = section.articles.filter((article) => !used.has(article.slug));
-    // Reachable only if two sections overlap heavily — a content-type index
+    // Reachable only if two sections overlap heavily â€” a content-type index
     // shares articles with the subject categories it draws from. An empty
     // section is worse than a repeat, so the category's own list is the floor.
     const source = available.length > 0 ? available : section.articles;
 
-    // The section keeps its most recent article at the front — a section lead
-    // should be current — and varies the entries behind it.
+    // The section keeps its most recent article at the front â€” a section lead
+    // should be current â€” and varies the entries behind it.
     const [head, ...tail] = source;
     const ordered = head ? [head, ...shuffled(tail, rng)] : [];
 
@@ -215,3 +215,4 @@ export function composeHomepage({
     sectionSlugs,
   };
 }
+
