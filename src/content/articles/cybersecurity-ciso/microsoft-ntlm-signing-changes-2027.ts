@@ -76,7 +76,7 @@ export const article: Article = {
   draft: false,
 
   methodology:
-    "This article is based primarily on Microsoft's November 10, 2026 NTLM signing security improvements documentation (KB5135557) and Microsoft's NTLM enhanced auditing documentation (KB5064479). Microsoft documentation is the authority for the rollout phases, protocol flags, registry settings, operating-system support and audit guidance. The enterprise deployment recommendations, compatibility checks, change-management process and validation approach are Tech Compass operational guidance. Administrators should recheck the latest Microsoft documentation and installed Windows build before implementing changes.",
+    "This article is based primarily on Microsoft's November 10, 2026 NTLM signing security improvements documentation (KB5135557) and Microsoft's NTLM enhanced auditing documentation (KB5064479). Microsoft documentation is the authority for the rollout phases, protocol flags, registry settings, operating-system support and audit guidance. The enterprise deployment recommendations, compatibility checks, change-management process and validation approach are Substrate operational guidance. Administrators should recheck the latest Microsoft documentation and installed Windows build before implementing changes.",
 
   body: [
     {

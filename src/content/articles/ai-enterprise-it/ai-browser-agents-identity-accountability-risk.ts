@@ -487,7 +487,7 @@ export const article: Article = {
     },
     {
       type: "p",
-      text: "I use five factors when thinking about the possible impact of an AI agent. This is a Tech Compass mental model. It is not an industry standard or a formal risk formula.",
+      text: "I use five factors when thinking about the possible impact of an AI agent. This is a Substrate mental model. It is not an industry standard or a formal risk formula.",
     },
 
     {
