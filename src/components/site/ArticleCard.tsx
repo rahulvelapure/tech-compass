@@ -1,4 +1,4 @@
-﻿import { Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 import {
   articlePath,
@@ -112,25 +112,22 @@ export function ArticleCard({ article, variant = "card", index }: Props) {
 
   if (variant === "index") {
     return (
-      <article className="group">
-        <ArticleImage
-          article={article}
-          className="mb-3 aspect-[16/9] rounded-sm border border-border"
-        />
-
-        <div className="grid grid-cols-[1.75rem_1fr] gap-x-3">
-          <span aria-hidden="true" className="index-num pt-[0.3rem]">
+      <article className="group border-b border-border pb-5 last:border-b-0 last:pb-0">
+        <div className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3">
+          <span aria-hidden="true" className="index-num pt-[0.2rem]">
             {String((index ?? 0) + 1).padStart(2, "0")}
           </span>
 
-          <div>
-            <h3 className="display-3">
+          <div className="min-w-0">
+            <Kicker article={article} />
+
+            <h3 className="mt-2 font-display text-[1.12rem] font-semibold leading-snug">
               <Link to={to} className="transition-colors group-hover:text-brand">
                 {article.title}
               </Link>
             </h3>
 
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
               {article.excerpt}
             </p>
           </div>
@@ -138,16 +135,15 @@ export function ArticleCard({ article, variant = "card", index }: Props) {
       </article>
     );
   }
-
   if (variant === "row") {
     return (
-      <article className="group grid gap-x-7 gap-y-4 py-6 sm:grid-cols-[10rem_1fr] md:grid-cols-[12rem_1fr]">
+      <article className="group grid w-full gap-x-8 gap-y-4 py-6 sm:grid-cols-[11rem_minmax(0,1fr)] lg:grid-cols-[14rem_minmax(0,1fr)]">
         <ArticleImage
           article={article}
-          className="aspect-[16/10] rounded-sm border border-border"
+          className="aspect-[16/10] w-full rounded-sm border border-border"
         />
 
-        <div>
+        <div className="min-w-0 self-center">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <Kicker article={article} />
 
@@ -159,20 +155,19 @@ export function ArticleCard({ article, variant = "card", index }: Props) {
             </time>
           </div>
 
-          <h3 className="headline mt-2 max-w-3xl text-[1.35rem] sm:text-[1.55rem]">
+          <h3 className="headline mt-2 text-[1.35rem] sm:text-[1.55rem]">
             <Link to={to} className="transition-colors group-hover:text-brand">
               {article.title}
             </Link>
           </h3>
 
-          <p className="mt-2 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+          <p className="mt-2 line-clamp-3 max-w-4xl text-[15px] leading-relaxed text-muted-foreground">
             {article.excerpt}
           </p>
         </div>
       </article>
     );
   }
-
   if (variant === "brief") {
     return (
       <article className="group border-b border-border py-4 last:border-0">

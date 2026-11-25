@@ -2,7 +2,6 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 
 import { ArticleBody } from "@/components/article/ArticleBody";
 import { ArticleReactions } from "@/components/article/ArticleReactions";
-import { TableOfContents } from "@/components/article/TableOfContents";
 import { ShareLinks } from "@/components/article/ShareLinks";
 import { ArticleCard, ArticleMeta } from "@/components/site/ArticleCard";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
@@ -12,7 +11,6 @@ import {
   AfterArticleAdSlot,
   ArticleAdSlot,
   BeforeRelatedAdSlot,
-  SidebarAdSlot,
 } from "@/components/monetization/AdSlot";
 import { AffiliateDisclosure } from "@/components/monetization/AffiliateDisclosure";
 import {
@@ -23,7 +21,6 @@ import {
   getCategory,
   relatedArticles,
   reviewStatusLabel,
-  tableOfContents,
   tagSlug,
 } from "@/lib/content";
 import {
@@ -96,7 +93,6 @@ function ArticlePage() {
   const params = Route.useParams();
   const article = getArticle(params.category, params.slug)!;
   const category = getCategory(article.category);
-  const toc = tableOfContents(article.body);
   const related = relatedArticles(article);
   const { previous, next } = articleNeighbours(article);
   const url = absoluteUrl(articlePath(article));
@@ -123,15 +119,7 @@ function ArticlePage() {
       )}
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-        {/* Sticky contents rail */}
-        <aside aria-label="On this page" className="hidden lg:col-span-3 lg:block">
-          <div className="sticky top-24 space-y-8">
-            <TableOfContents items={toc} />
-            <SidebarAdSlot />
-          </div>
-        </aside>
-
-        <article className="lg:col-span-6">
+        <article className="min-w-0 lg:col-span-8">
           <header className="border-b border-border pb-7">
             <p className="eyebrow text-brand">
               {category?.label}
@@ -162,12 +150,6 @@ function ArticlePage() {
               />
             </figure>
           )}
-
-          <div className="lg:hidden">
-            <div className="mt-8 border border-border p-5">
-              <TableOfContents items={toc} />
-            </div>
-          </div>
 
           <ArticleBody body={article.body} />
 
@@ -279,7 +261,7 @@ function ArticlePage() {
         </article>
 
         {/* Related rail */}
-        <aside className="lg:col-span-3">
+        <aside className="min-w-0 lg:col-span-4">
           <div className="lg:sticky lg:top-24">
             <h2 className="eyebrow mb-5 border-b border-border pb-2 text-muted-foreground">
               Related reading

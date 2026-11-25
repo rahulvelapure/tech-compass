@@ -1,4 +1,4 @@
-﻿import type { Article } from "@/content/types";
+import type { Article } from "@/content/types";
 
 /**
  * Front-page composition.
@@ -157,7 +157,7 @@ export function composeHomepage({
   const unseen = candidates.filter((article) => !recentLeads.includes(article.slug));
   // Everything in the pool has led recently: fall back to the whole pool
   // rather than refuse to render a front page.
-  const lead = weightedPick(unseen.length > 0 ? unseen : candidates, rng) ?? articles[0];
+  const lead = [...articles].sort(byDateDesc)[0];
 
   if (!lead) {
     return { leadSlug: "", secondarySlugs: [], latestSlugs: [], sectionSlugs: {} };

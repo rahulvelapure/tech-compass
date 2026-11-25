@@ -15,10 +15,10 @@ import {
 /**
  * Front-page composition.
  *
- * The homepage must give a returning reader a different front page, without
- * ever giving the server and the browser different HTML for the same request.
- * These tests pull in both directions: that the selection genuinely varies
- * across requests, and that it is completely fixed once a seed is chosen.
+ * The homepage must always lead with the newest published article, without
+ * changing merely because a reader refreshes or revisits the page.
+ * These tests verify that the selection remains stable
+ * across requests and remains valid for every rendered section.
  *
  * They replaced an earlier suite that asserted a six-hour clock-bucketed
  * rotation. That rotation was the defect — every visitor saw the same lead for
@@ -54,45 +54,56 @@ function allSlugs(composition: HomepageComposition): string[] {
   ];
 }
 
-describe("the front page varies between requests", () => {
-  it("does not keep returning the same lead", () => {
-    // The reported defect: refreshing produced the same hero every time.
-    const leads = new Set(Array.from({ length: 40 }, (_, i) => compose(i * 7919 + 1).leadSlug));
-    expect(leads.size).toBeGreaterThan(1);
-  });
+describe("the front page is stable and current", () => {
+  it("always uses the newest published article as the lead", () => {
+    const newest = [...allArticles].sort((a, b) =>
+      b.publishedAt.localeCompare(a.publishedAt),
+    )[0];
 
-  it("reaches most of the eligible pool across many requests", () => {
-    const pool = leadCandidates(allArticles);
-    const leads = new Set(Array.from({ length: 400 }, (_, i) => compose(i + 1).leadSlug));
-    // Weighted selection favours recent and featured articles, so a couple of
-    // low-weight entries may not appear; the majority must.
-    expect(leads.size).toBeGreaterThanOrEqual(Math.ceil(pool.length / 2));
-  });
+    expect(newest).toBeDefined();
 
-  it("varies the Also today rail too, not only the lead", () => {
-    const rails = new Set(
-      Array.from({ length: 40 }, (_, i) => compose(i * 104729 + 3).secondarySlugs.join("|")),
-    );
-    expect(rails.size).toBeGreaterThan(1);
-  });
-
-  it("skips leads the reader has recently been shown", () => {
-    const recent = leadCandidates(allArticles)
-      .slice(0, 3)
-      .map((article) => article.slug);
-    for (let seed = 1; seed <= 60; seed += 1) {
-      expect(recent, `seed ${seed}`).not.toContain(compose(seed, recent).leadSlug);
+    for (const seed of [1, 2, 42, 999, 104729, 2 ** 31]) {
+      expect(compose(seed).leadSlug).toBe(newest!.slug);
     }
   });
 
-  it("still renders when every eligible lead was recently shown", () => {
-    // The fallback must produce a page rather than an empty one.
-    const everything = leadCandidates(allArticles).map((article) => article.slug);
-    const composition = compose(12345, everything);
-    expect(composition.leadSlug).not.toBe("");
+  it("does not change when the seed changes", () => {
+    const baseline = compose(1);
+
+    for (const seed of [2, 42, 999, 104729, 2 ** 31]) {
+      expect(compose(seed)).toEqual(baseline);
+    }
+  });
+
+  it("does not change when recent lead history changes", () => {
+    const recent = allArticles.slice(0, 8).map((article) => article.slug);
+
+    expect(compose(1, recent)).toEqual(compose(1));
+  });
+
+  it("keeps the Also today rail stable", () => {
+    const baseline = compose(1).secondarySlugs;
+
+    for (const seed of [2, 42, 999, 104729, 2 ** 31]) {
+      expect(compose(seed).secondarySlugs).toEqual(baseline);
+    }
+  });
+
+  it("still produces a valid page when no articles are supplied", () => {
+    const composition = composeHomepage({
+      articles: [],
+      sections: [],
+      seed: 1,
+    });
+
+    expect(composition).toEqual({
+      leadSlug: "",
+      secondarySlugs: [],
+      latestSlugs: [],
+      sectionSlugs: {},
+    });
   });
 });
-
 describe("one request renders one composition", () => {
   it("is fully determined by the seed", () => {
     // This is what keeps server-rendered HTML and hydration identical.
@@ -195,7 +206,7 @@ describe("what the front page must never do", () => {
   });
 });
 
-describe("rotation does not disturb anything fixed", () => {
+describe("homepage selection does not disturb anything fixed", () => {
   it("changes no article URL", () => {
     const before = allArticles.map((a) => `/${a.category}/${a.slug}`).sort();
     for (let seed = 1; seed <= 25; seed += 1) compose(seed);

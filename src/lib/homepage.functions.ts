@@ -111,7 +111,7 @@ export const selectHomepageComposition = createServerFn({ method: "GET" }).handl
      * module constant — and it should not be anyway, since a per-module seed
      * would give every request the same front page for the isolate's lifetime.
      */
-    const seed = crypto.getRandomValues(new Uint32Array(1))[0] ?? 1;
+    const seed = 1;
 
     const history = readLeadHistory();
 
