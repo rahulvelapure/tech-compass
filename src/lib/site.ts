@@ -17,7 +17,7 @@ export const site = {
   shortName: "SB",
   domain: "rahulvelapure.dpdns.org",
   url: "https://rahulvelapure.dpdns.org",
-  tagline: "Practical technology for the real world",
+  tagline: "",
   /**
    * Default social card, 1200x630. Used for every page that does not set its
    * own, and as the fallback image in Article structured data.
