@@ -16,10 +16,7 @@ function Wordmark() {
       className="group inline-flex shrink-0 items-baseline gap-2"
     >
       <span className="font-display text-[1.8rem] font-semibold leading-none tracking-[-0.045em] text-foreground sm:text-[2.15rem]">
-        Tech
-      </span>
-      <span className="font-display text-[1.8rem] font-semibold leading-none tracking-[-0.045em] text-brand sm:text-[2.15rem]">
-        Compass
+        Substrate
       </span>
     </Link>
   );

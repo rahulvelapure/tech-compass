@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { ArticleCard } from "@/components/site/ArticleCard";
 import { NewsletterCTA } from "@/components/site/NewsletterCTA";
@@ -116,9 +116,9 @@ function HomePage() {
         </div>
       </Shell>
 
-      {/* ---- Latest published article and supporting stories ---- */}
+      {/* ---- Lead article and supporting stories ---- */}
       <Shell>
-        <section className="py-10 lg:py-14"><div className="mb-7"><p className="eyebrow text-brand">Latest published</p></div><div className="grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-12">
+        <section className="py-5 lg:py-7"><div className="grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <ArticleCard article={lead} variant="lead" />
           </div>
