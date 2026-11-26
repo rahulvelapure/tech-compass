@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, X } from "lucide-react";
 
-import { primaryNav, footerColumns } from "@/content/categories";
-import { getCategory } from "@/lib/content";
+import { primaryNav } from "@/content/categories";
 import { site } from "@/lib/site";
 import { CommandPalette } from "./CommandPalette";
 import { ThemeToggle } from "./ThemeToggle";
+
+const navLink =
+  "block whitespace-nowrap border-b-2 border-transparent py-3 text-[0.9375rem] font-medium text-ink-soft transition-colors hover:text-foreground";
+const navLinkActive =
+  "block whitespace-nowrap border-b-2 border-brand py-3 text-[0.9375rem] font-medium text-foreground";
+const textControl =
+  "inline-flex min-h-11 items-center gap-2 px-2 text-[0.9375rem] font-medium text-ink-soft transition-colors hover:text-foreground sm:min-h-0 sm:py-2";
 
 function Wordmark() {
   return (
     <Link
       to="/"
       aria-label={`${site.name} homepage`}
-      className="group inline-flex shrink-0 items-baseline gap-2"
+      className="t-masthead inline-block text-foreground"
     >
-      <span className="font-display text-[1.8rem] font-semibold leading-none tracking-[-0.045em] text-foreground sm:text-[2.15rem]">
-        Substrate
-      </span>
+      {site.name}
     </Link>
   );
 }
@@ -44,28 +47,29 @@ export function Header() {
   const [menu, setMenu] = useState(false);
   const { open, setOpen } = useCommandPalette();
 
+  useEffect(() => {
+    if (!menu) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setMenu(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menu]);
+
   return (
     <>
-      <header className="sticky top-0 z-40 border-t-4 border-brand bg-background/95 backdrop-blur-xl">
-        <div className="border-b border-border">
-          <div className="wrap flex items-center gap-5 py-4 sm:py-5">
+      <header className="border-t-[3px] border-foreground">
+        <div className="border-b border-border lg:border-b-0">
+          <div className="wrap flex items-end justify-between gap-4 py-4 sm:py-5">
             <div className="min-w-0">
               <Wordmark />
-              <p className="mt-1 hidden text-[0.67rem] font-semibold uppercase tracking-[0.13em] text-muted-foreground sm:block">
-                Practical technology analysis for people who run IT
-              </p>
+              <p className="eyebrow mt-1.5 hidden text-muted-foreground sm:block">{site.tagline}</p>
             </div>
 
-            <div className="ml-auto flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="flex items-center gap-2 rounded-md border border-border bg-surface px-3 py-2 text-sm text-muted-foreground transition-colors hover:border-brand/40 hover:text-foreground"
-              >
-                <Search className="size-4" aria-hidden="true" />
-                <span className="hidden sm:inline">Search</span>
-                <span className="sr-only sm:hidden">Search articles</span>
-                <kbd className="hidden font-mono text-[0.65rem] text-muted-foreground lg:inline">
+            <div className="flex items-center gap-1 sm:gap-3">
+              <button type="button" onClick={() => setOpen(true)} className={textControl}>
+                <span>Search</span>
+                <kbd className="hidden font-mono text-[0.75rem] text-muted-foreground lg:inline">
                   Ctrl K
                 </kbd>
               </button>
@@ -77,49 +81,34 @@ export function Header() {
                 aria-expanded={menu}
                 aria-controls="mobile-nav"
                 onClick={() => setMenu((value) => !value)}
-                className="rounded-md border border-border bg-surface p-2 text-muted-foreground transition-colors hover:border-brand/40 hover:text-foreground lg:hidden"
+                className={`${textControl} lg:hidden`}
               >
-                <span className="sr-only">{menu ? "Close menu" : "Open menu"}</span>
-                {menu ? (
-                  <X className="size-4" aria-hidden="true" />
-                ) : (
-                  <Menu className="size-4" aria-hidden="true" />
-                )}
+                {menu ? "Close" : "Menu"}
               </button>
             </div>
           </div>
         </div>
 
-        <nav
-          aria-label="Primary"
-          className="hidden border-b border-border bg-surface lg:block"
-        >
+        <nav aria-label="Primary" className="hidden border-y border-border lg:block">
           <div className="wrap">
-            <ul className="flex items-center gap-7 overflow-x-auto">
+            <ul className="flex items-center gap-8 overflow-x-auto">
               <li>
                 <Link
                   to="/"
-                  className="block border-b-2 border-transparent py-3 text-[0.7rem] font-bold uppercase tracking-[0.09em] text-muted-foreground transition-colors hover:text-brand"
-                  activeProps={{
-                    className:
-                      "block border-b-2 border-brand py-3 text-[0.7rem] font-bold uppercase tracking-[0.09em] text-brand",
-                  }}
+                  className={navLink}
+                  activeProps={{ className: navLinkActive }}
                   activeOptions={{ exact: true }}
                 >
                   Latest
                 </Link>
               </li>
-
               {primaryNav.map((item) => (
                 <li key={item.slug}>
                   <Link
                     to="/$category"
                     params={{ category: item.slug }}
-                    className="block whitespace-nowrap border-b-2 border-transparent py-3 text-[0.7rem] font-bold uppercase tracking-[0.09em] text-muted-foreground transition-colors hover:text-brand"
-                    activeProps={{
-                      className:
-                        "block whitespace-nowrap border-b-2 border-brand py-3 text-[0.7rem] font-bold uppercase tracking-[0.09em] text-brand",
-                    }}
+                    className={navLink}
+                    activeProps={{ className: navLinkActive }}
                   >
                     {item.label}
                   </Link>
@@ -134,64 +123,59 @@ export function Header() {
             id="mobile-nav"
             className="max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-border bg-background lg:hidden"
           >
-            <nav aria-label="All sections" className="wrap py-6">
-              <Link
-                to="/"
-                onClick={() => setMenu(false)}
-                className="mb-6 block border-b border-border pb-3 text-sm font-semibold text-brand"
-              >
-                Latest articles
-              </Link>
-
-              <div className="space-y-7">
-                {footerColumns.map((column) => (
-                  <section key={column.heading}>
-                    <h2 className="eyebrow mb-3 text-muted-foreground">
-                      {column.heading}
-                    </h2>
-
-                    <ul className="grid grid-cols-2 gap-x-5">
-                      {column.slugs.map((slug) => {
-                        const category = getCategory(slug);
-                        if (!category) return null;
-
-                        return (
-                          <li key={slug} className="border-b border-border">
-                            <Link
-                              to="/$category"
-                              params={{ category: slug }}
-                              onClick={() => setMenu(false)}
-                              className="block py-2.5 text-sm text-foreground/80 hover:text-brand"
-                            >
-                              {category.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </section>
+            <nav aria-label="Sections" className="wrap py-2">
+              <ul>
+                <li className="border-b border-border">
+                  <Link
+                    to="/"
+                    onClick={() => setMenu(false)}
+                    className="flex min-h-11 items-center font-display text-lg text-foreground"
+                  >
+                    Latest
+                  </Link>
+                </li>
+                {primaryNav.map((item) => (
+                  <li key={item.slug} className="border-b border-border">
+                    <Link
+                      to="/$category"
+                      params={{ category: item.slug }}
+                      onClick={() => setMenu(false)}
+                      className="flex min-h-11 items-center font-display text-lg text-foreground"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
                 ))}
-              </div>
-
-              <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-5 text-sm text-muted-foreground">
-                <Link to="/about" onClick={() => setMenu(false)} className="hover:text-brand">
-                  About
-                </Link>
-                <Link
-                  to="/resources"
-                  onClick={() => setMenu(false)}
-                  className="hover:text-brand"
-                >
-                  Resources
-                </Link>
-                <Link
-                  to="/newsletter"
-                  onClick={() => setMenu(false)}
-                  className="hover:text-brand"
-                >
-                  Newsletter
-                </Link>
-              </div>
+              </ul>
+              <ul className="flex flex-wrap gap-x-6 py-3 text-[0.9375rem] text-ink-soft">
+                <li>
+                  <Link
+                    to="/about"
+                    onClick={() => setMenu(false)}
+                    className="inline-flex min-h-11 items-center hover:text-foreground"
+                  >
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/resources"
+                    onClick={() => setMenu(false)}
+                    className="inline-flex min-h-11 items-center hover:text-foreground"
+                  >
+                    Resources
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/newsletter"
+                    onClick={() => setMenu(false)}
+                    className="inline-flex min-h-11 items-center hover:text-foreground"
+                  >
+                    Newsletter
+                  </Link>
+                </li>
+              </ul>
             </nav>
           </div>
         )}
