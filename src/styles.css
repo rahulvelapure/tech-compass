@@ -5,32 +5,22 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — "Substrate"
+ * Substrate design system.
  *
- * Editorial technology publication. Light is the primary identity; dark is a
- * designed counterpart rather than an inversion.
- *
- * Type:   Newsreader (display, long-form headlines)
- *         Manrope (UI, body, meta)
- *         JetBrains Mono (code, identifiers, tabular marks)
- * Colour: a single editorial blue carries identity. All values are oklch.
- *         Components never hard-code a colour — every surface goes through a
- *         token so the two themes stay in step.
- *
- * Two token families exist on purpose:
- *
- *   shadcn tokens (--background, --card, --muted, …) keep the vendored UI
- *   primitives in src/components/ui working untouched.
- *
- *   editorial tokens (--ink, --surface, --hairline, --brand, …) are what the
- *   publication's own components use. They are the vocabulary the design is
- *   actually written in.
+ * Type:    Newsreader (headlines and article text), Manrope (UI and metadata),
+ *          JetBrains Mono (code).
+ * Colour:  ink on near-white paper, one oxide accent. All values oklch.
+ * Tokens:  shadcn tokens keep src/components/ui working untouched. Editorial
+ *          tokens (--ink, --surface, --hairline, --brand, ...) are what the
+ *          publication's own components use.
+ * Breakpoints (Tailwind defaults): sm 40rem, md 48rem, lg 64rem, xl 80rem.
+ * Surfaces are flat: hairline rules, no shadows, no blur, no gradients.
  */
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
@@ -56,7 +46,6 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
 
-  /* Editorial extensions */
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-surface-strong: var(--surface-2);
@@ -76,6 +65,7 @@
   --color-note-foreground: var(--note-foreground);
   --color-warn: var(--warn);
   --color-warn-foreground: var(--warn-foreground);
+  --color-ad-label: var(--ad-label);
   --color-code-bg: var(--code-bg);
   --color-code-fg: var(--code-fg);
   --color-code-key: var(--code-key);
@@ -84,42 +74,30 @@
   --color-code-com: var(--code-com);
 
   --font-display: Newsreader, ui-serif, Georgia, Cambria, serif;
-  /* Alias. `font-serif` is used throughout the publication components. */
   --font-serif: Newsreader, ui-serif, Georgia, Cambria, serif;
   --font-sans: Manrope, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /*
-   * Measures.
-   *
-   * --container-prose is the text measure and is set by character count, not
-   * by taste. Measured on rendered lines it lands at a 72-character median;
-   * long-form wants 60-75, and past about 85 the eye starts losing its place
-   * on the return sweep.
-   *
-   * It is narrower than the 44rem the palette was drawn at because Manrope is
-   * a narrower face than the Inter this replaced — the same rem width fits
-   * roughly eight more characters, so carrying the old number across would
-   * have widened the measure twice over.
-   *
-   * --container-reading stays 44rem as a layout column for reading-width page
-   * furniture; --container-wide is the outer frame the masthead and grids
-   * align to.
+   * --container-prose is the article text measure: 36rem of Newsreader at
+   * about 19px lands near 68 characters a line (target 60-75).
+   * --container-reading is the column for page furniture around the text.
+   * --container-wide is the outer frame the masthead and grids align to.
    */
-  --container-prose: 38rem;
+  --container-prose: 36rem;
   --container-reading: 44rem;
-  --container-editorial: 38rem;
-  --container-wide: 82.5rem;
+  --container-editorial: 36rem;
+  --container-wide: 76rem;
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-  --animate-rise: rise 0.6s var(--ease-out-quint) both;
-  --animate-fade: fade 0.4s var(--ease-out-quint) both;
+  --animate-rise: rise 0.2s ease-out both;
+  --animate-fade: fade 0.2s ease-out both;
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translate3d(0, 14px, 0);
+    transform: translate3d(0, 4px, 0);
   }
   to {
     opacity: 1;
@@ -137,84 +115,107 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  color-scheme: light;
+  --radius: 0.25rem;
+
+  /* Type scale (rem). One scale; utilities below read from it. */
+  --fs-label: 0.75rem;
+  --fs-meta: 0.8125rem;
+  --fs-ui: 0.9375rem;
+  --fs-small: 1rem;
+  --fs-body: clamp(1.125rem, 1.085rem + 0.2vw, 1.2rem);
+  --fs-deck: clamp(1.1rem, 1.04rem + 0.35vw, 1.3rem);
+  --fs-h2: clamp(1.5rem, 1.38rem + 0.5vw, 1.75rem);
+  --fs-title-s: 1.25rem;
+  --fs-title-m: clamp(1.5rem, 1.3rem + 0.9vw, 1.9rem);
+  --fs-title-l: clamp(1.9rem, 1.45rem + 1.9vw, 2.9rem);
+  --fs-article: clamp(2rem, 1.6rem + 1.5vw, 2.6rem);
+  --fs-masthead: clamp(2rem, 1.7rem + 1.2vw, 2.6rem);
+
+  /* Spacing scale (rem). */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+
+  /* Layering. */
+  --z-header: 40;
+  --z-overlay: 50;
+  --z-skip: 60;
 
   --background: oklch(0.988 0.003 92);
-  --foreground: oklch(0.19 0.014 268);
+  --foreground: oklch(0.19 0.012 268);
   --surface: oklch(1 0 0);
-  --surface-2: oklch(0.965 0.005 95);
+  --surface-2: oklch(0.966 0.005 90);
   --card: oklch(1 0 0);
   --card-foreground: var(--foreground);
-  --popover: oklch(0.995 0.002 95);
+  --popover: oklch(0.995 0.002 92);
   --popover-foreground: var(--foreground);
 
   --primary: oklch(0.24 0.02 265);
-  --primary-foreground: oklch(0.985 0.002 95);
-  --secondary: oklch(0.955 0.005 95);
+  --primary-foreground: oklch(0.985 0.002 92);
+  --secondary: oklch(0.958 0.005 90);
   --secondary-foreground: oklch(0.26 0.015 265);
-  --muted: oklch(0.958 0.004 95);
-  --accent: oklch(0.952 0.008 250);
+  --muted: oklch(0.96 0.004 90);
+  --accent: oklch(0.955 0.007 90);
   --accent-foreground: oklch(0.24 0.02 265);
   --destructive: oklch(0.545 0.196 24);
-  --destructive-foreground: oklch(0.985 0.002 95);
+  --destructive-foreground: oklch(0.985 0.002 92);
 
-  --border: oklch(0.9 0.006 265);
-  --input: oklch(0.9 0.006 265);
-  --ring: oklch(0.5 0.13 246);
-  --hairline: oklch(0.885 0.006 265);
+  --border: oklch(0.89 0.006 90);
+  --input: oklch(0.86 0.006 90);
+  --ring: oklch(0.52 0.15 38);
+  --hairline: oklch(0.87 0.006 90);
 
   --ink: var(--foreground);
-  --ink-soft: oklch(0.38 0.012 265);
-  /*
-   * Held at 0.52, not the 0.56 the palette was drawn at.
-   *
-   * Secondary text lands on three backgrounds — page, --surface and
-   * --surface-2 — and the strongest surface is the binding constraint. The
-   * small uppercase eyebrow (11px, 600 weight) needs 4.5:1, and this
-   * publication uses that eyebrow in about forty places. At 0.56 it misses on
-   * --surface-2; at 0.52 it clears on every surface with margin.
-   */
-  --ink-faint: oklch(0.52 0.014 265);
+  --ink-soft: oklch(0.36 0.012 265);
+  /* 0.5 clears 4.5:1 on page, surface and surface-2 for small labels. */
+  --ink-faint: oklch(0.5 0.014 265);
   --muted-foreground: var(--ink-faint);
 
   /*
-   * Brand and link are the same hue and deliberately not the same token.
-   *
-   * --brand marks identity: the wordmark, section kickers, the rule before a
-   * heading. --link is a step darker because link legibility inside running
-   * prose is a usability property, not a styling one, and body copy sits at a
-   * smaller size than anything the brand mark appears on.
+   * Brand and link share a hue on purpose and differ in lightness: link
+   * legibility inside running text is a usability property.
    */
-  --brand: oklch(0.5 0.13 246);
-  --brand-soft: oklch(0.94 0.028 246);
-  --brand-foreground: oklch(0.99 0.002 95);
-  --link: oklch(0.46 0.14 250);
+  --brand: oklch(0.52 0.15 38);
+  --brand-soft: oklch(0.95 0.03 50);
+  --brand-foreground: oklch(0.99 0.002 92);
+  --link: oklch(0.47 0.15 38);
 
   --signal: oklch(0.55 0.11 158);
-  --note: oklch(0.955 0.022 246);
-  --note-foreground: oklch(0.38 0.11 250);
+  --note: oklch(0.965 0.007 90);
+  --note-foreground: oklch(0.34 0.014 265);
   --warn: oklch(0.968 0.036 76);
   --warn-foreground: oklch(0.44 0.1 70);
+  --ad-label: var(--ink-faint);
 
-  --glass: oklch(1 0 0 / 72%);
-  --glass-border: oklch(0.3 0.02 265 / 10%);
+  /* Retained so older components resolve; surfaces are flat. */
+  --glass: oklch(1 0 0);
+  --glass-border: var(--hairline);
+  --shadow-soft: none;
+  --shadow-float: none;
+  --blur-glass: 0px;
 
-  --code-bg: oklch(0.973 0.004 95);
+  --code-bg: oklch(0.973 0.004 90);
   --code-fg: oklch(0.28 0.014 265);
   --code-key: oklch(0.44 0.15 292);
   --code-str: oklch(0.4 0.11 155);
   --code-num: oklch(0.47 0.13 40);
   --code-com: oklch(0.52 0.01 265);
 
-  --shadow-soft: 0 1px 2px oklch(0.2 0.02 265 / 6%), 0 8px 24px oklch(0.2 0.02 265 / 6%);
-  --shadow-float: 0 2px 6px oklch(0.2 0.02 265 / 8%), 0 18px 48px oklch(0.2 0.02 265 / 10%);
-  --blur-glass: 20px;
-  --dur-fast: 140ms;
-  --dur-base: 240ms;
-  --dur-slow: 520ms;
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 360ms;
 }
 
 .dark {
+  color-scheme: dark;
+
   --background: oklch(0.166 0.011 268);
   --foreground: oklch(0.955 0.004 250);
   --surface: oklch(0.203 0.013 268);
@@ -229,35 +230,35 @@
   --secondary: oklch(0.252 0.014 268);
   --secondary-foreground: oklch(0.95 0.004 250);
   --muted: oklch(0.248 0.013 268);
-  --accent: oklch(0.27 0.02 258);
+  --accent: oklch(0.27 0.014 268);
   --accent-foreground: oklch(0.96 0.004 250);
   --destructive: oklch(0.66 0.17 22);
   --destructive-foreground: oklch(0.16 0.011 268);
 
   --border: oklch(1 0 0 / 11%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.74 0.11 245);
-  --hairline: oklch(1 0 0 / 9%);
+  --ring: oklch(0.76 0.12 48);
+  --hairline: oklch(1 0 0 / 11%);
 
   --ink: var(--foreground);
   --ink-soft: oklch(0.855 0.008 255);
   --ink-faint: oklch(0.7 0.012 258);
   --muted-foreground: var(--ink-faint);
 
-  /* Lifted and desaturated so the blue reads on ink without vibrating. */
-  --brand: oklch(0.74 0.11 245);
-  --brand-soft: oklch(0.3 0.05 245);
+  --brand: oklch(0.76 0.12 48);
+  --brand-soft: oklch(0.3 0.05 45);
   --brand-foreground: oklch(0.16 0.011 268);
-  --link: oklch(0.78 0.1 245);
+  --link: oklch(0.8 0.11 50);
 
   --signal: oklch(0.75 0.12 160);
-  --note: oklch(0.245 0.032 250);
-  --note-foreground: oklch(0.84 0.08 248);
+  --note: oklch(0.235 0.012 268);
+  --note-foreground: oklch(0.86 0.01 255);
   --warn: oklch(0.26 0.045 80);
   --warn-foreground: oklch(0.86 0.09 85);
+  --ad-label: var(--ink-faint);
 
-  --glass: oklch(0.24 0.014 268 / 68%);
-  --glass-border: oklch(1 0 0 / 10%);
+  --glass: oklch(0.215 0.014 268);
+  --glass-border: var(--hairline);
 
   --code-bg: oklch(0.188 0.013 268);
   --code-fg: oklch(0.9 0.006 250);
@@ -265,9 +266,6 @@
   --code-str: oklch(0.79 0.11 155);
   --code-num: oklch(0.82 0.11 60);
   --code-com: oklch(0.66 0.012 260);
-
-  --shadow-soft: 0 1px 2px oklch(0 0 0 / 40%), 0 10px 30px oklch(0 0 0 / 34%);
-  --shadow-float: 0 2px 8px oklch(0 0 0 / 46%), 0 22px 60px oklch(0 0 0 / 44%);
 }
 
 @layer base {
@@ -278,8 +276,7 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    /* Clears the floating glass nav when jumping to a heading anchor. */
-    scroll-padding-top: 6rem;
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -287,6 +284,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "cv11", "ss01";
+    font-optical-sizing: auto;
     font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -336,18 +334,9 @@
 }
 
 /*
- * The theme swap must not animate.
- *
- * Switching themes rewrites inherited custom properties (--foreground,
- * --ink-soft, --ink-faint). Any element carrying a `color` transition starts
- * interpolating from its old value, and the browser does not re-resolve the
- * end value when that value derives from a custom property that changed —
- * so the element stays on the previous theme's colour until the next
- * navigation. Going dark to light, that left near-white headlines sitting on
- * white cards at 1.14:1.
- *
- * ThemeToggle adds this class for the two frames the swap takes. Hover and
- * focus transitions are untouched; only the switch itself is instant.
+ * The theme swap must not animate. ThemeToggle adds this class for the two
+ * frames the swap takes; otherwise colour transitions can stay on the old
+ * theme's value because the end value derives from a changed custom property.
  */
 .theme-switching *,
 .theme-switching *::before,
@@ -355,66 +344,46 @@
   transition: none !important;
 }
 
-/* ---------- Glass surfaces ----------
- *
- * Used selectively: the nav, floating controls, the command palette. Glass on
- * everything stops reading as depth and starts reading as fog.
+/* ---------- Flat-surface aliases ----------
+ * These names are still used by older components. They are redrawn as flat
+ * hairline surfaces so nothing blurs, glows or casts a shadow.
  */
 
 @utility glass {
-  background: var(--color-glass);
-  /*
-   * Prefixed first, standard last.
-   *
-   * The CSS minifier collapses the pair when it decides they are equivalent,
-   * and it keeps whichever it sees as authoritative. Written the other way
-   * round it kept only the -webkit- form, which current Chrome does not
-   * honour — the panel lost its blur and became a flat translucent bar.
-   */
-  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(180%);
-  backdrop-filter: blur(var(--blur-glass)) saturate(180%);
-  border: 1px solid var(--color-glass-border);
-  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
 }
 
 @utility glass-strong {
-  background: color-mix(in oklab, var(--color-surface) 82%, transparent);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid var(--color-glass-border);
-  box-shadow: var(--shadow-float);
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
 }
 
-/* Light refraction highlight along the top edge of a glass panel. */
 @utility glass-sheen {
-  position: relative;
-  isolation: isolate;
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      color-mix(in oklab, white 26%, transparent),
-      transparent 42%
-    );
-    opacity: 0.7;
-    z-index: -1;
-  }
+  --sheen: none;
+}
+
+@utility grain {
+  --grain: none;
+}
+
+@utility shadow-soft {
+  box-shadow: none;
+}
+
+@utility shadow-float {
+  box-shadow: none;
 }
 
 @utility hairline {
   border-color: var(--color-hairline);
 }
 
-@utility shadow-soft {
-  box-shadow: var(--shadow-soft);
-}
-
-@utility shadow-float {
-  box-shadow: var(--shadow-float);
+@utility card-lift {
+  transition: border-color var(--dur-fast) ease;
+  &:hover {
+    border-color: color-mix(in oklab, var(--color-brand) 45%, var(--color-border));
+  }
 }
 
 /* ---------- Containers ---------- */
@@ -434,57 +403,114 @@
 
 @utility reading {
   width: 100%;
-  max-width: 44rem;
+  max-width: var(--container-reading);
   margin-inline: auto;
-  @media (width >= 90rem) {
-    max-width: 48.75rem;
-  }
 }
 
-/* ---------- Typography scale ----------
- *
- * `t-*` is the publication scale. Each step carries its own tracking, because
- * large display type needs tighter letterfit than small type or it looks loose
- * at the top and cramped at the bottom.
- */
+@utility measure {
+  max-width: var(--container-prose);
+}
+
+/* ---------- Typography scale ---------- */
+
+@utility t-masthead {
+  font-family: var(--font-display);
+  font-size: var(--fs-masthead);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+@utility display-1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-title-l);
+  line-height: 1.05;
+  letter-spacing: -0.026em;
+  text-wrap: balance;
+}
+
+@utility display-2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-title-m);
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+@utility display-3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-title-s);
+  line-height: 1.22;
+  letter-spacing: -0.014em;
+  text-wrap: balance;
+}
+
+@utility article-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-article);
+  line-height: 1.08;
+  letter-spacing: -0.024em;
+  text-wrap: balance;
+}
+
+@utility headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
 
 @utility t-display {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 6.2vw, 4.6rem);
-  line-height: 0.98;
-  letter-spacing: -0.03em;
+  font-size: var(--fs-title-l);
+  line-height: 1.05;
+  letter-spacing: -0.026em;
   font-weight: 500;
   text-wrap: balance;
 }
 
 @utility t-page {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.6vw, 2.9rem);
-  line-height: 1.06;
-  letter-spacing: -0.024em;
+  font-size: var(--fs-title-m);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
   text-wrap: balance;
 }
 
 @utility t-title {
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 3.4vw, 3.1rem);
+  font-size: var(--fs-article);
   line-height: 1.08;
   letter-spacing: -0.024em;
   text-wrap: balance;
 }
 
 @utility t-section {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-family: var(--font-sans);
+  font-size: var(--fs-label);
   line-height: 1.2;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 700;
+}
+
+@utility standfirst {
+  font-family: var(--font-sans);
+  font-size: var(--fs-deck);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-ink-soft);
+  text-wrap: pretty;
 }
 
 @utility t-sub {
   font-family: var(--font-sans);
-  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+  font-size: var(--fs-deck);
   line-height: 1.5;
   color: var(--color-ink-soft);
   font-weight: 400;
@@ -492,23 +518,22 @@
 }
 
 @utility t-body {
-  font-size: 1.115rem;
-  line-height: 1.72;
-  letter-spacing: -0.003em;
+  font-size: 1.0625rem;
+  line-height: 1.7;
   color: var(--color-ink-soft);
 }
 
 @utility t-meta {
-  font-size: 0.775rem;
+  font-size: var(--fs-meta);
   line-height: 1.3;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-ink-faint);
   font-weight: 600;
 }
 
 @utility t-caption {
-  font-size: 0.85rem;
+  font-size: var(--fs-meta);
   line-height: 1.5;
   color: var(--color-ink-faint);
 }
@@ -516,39 +541,31 @@
 @utility t-quote {
   font-family: var(--font-display);
   font-size: 1.45rem;
-  line-height: 1.42;
-  letter-spacing: -0.014em;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
   font-style: italic;
 }
 
-/* ---------- Publication utilities ----------
- *
- * These names predate the Substrate palette and are used across the site's own
- * components. They are kept and redrawn on the new scale rather than renamed,
- * so the visual change lands in one place instead of in ninety className edits.
- */
-
 @utility eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.6875rem;
+  font-size: var(--fs-label);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 /*
- * Section kicker. The brand appears as a short rule before the label rather
- * than as coloured text — colour on small uppercase type is the first thing to
- * fail contrast, and a rule reads as a publication device.
+ * Section kicker. A short brand rule precedes the label; colour on small
+ * uppercase type fails contrast first, a rule reads as a publication device.
  */
 @utility kicker {
   display: flex;
   align-items: center;
   gap: 0.625rem;
   font-family: var(--font-sans);
-  font-size: 0.6875rem;
+  font-size: var(--fs-label);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-foreground);
 
@@ -561,59 +578,22 @@
   }
 }
 
-@utility display-1 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(2.4rem, 1.4rem + 4vw, 4.2rem);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-}
-
-@utility display-2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.4rem);
-  line-height: 1.1;
-  letter-spacing: -0.024em;
-  text-wrap: balance;
-}
-
-@utility display-3 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.3rem;
-  line-height: 1.22;
-  letter-spacing: -0.016em;
-  text-wrap: balance;
-}
-
-@utility headline {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.022em;
-  line-height: 1.1;
-  text-wrap: balance;
-}
-
-/* Standfirst under a lead headline. */
-@utility standfirst {
-  font-family: var(--font-sans);
-  font-size: clamp(1.05rem, 0.98rem + 0.5vw, 1.28rem);
-  line-height: 1.5;
-  font-weight: 400;
-  color: var(--color-ink-soft);
-  text-wrap: pretty;
-}
-
-/* Numerals in an index list: tabular, quiet, unmistakably an index. */
 @utility index-num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.75rem;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--color-ink-faint);
+}
+
+@utility ad-label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ad-label);
 }
 
 @utility rule-top {
@@ -642,59 +622,29 @@
   }
 }
 
-@utility card-lift {
-  transition:
-    transform var(--dur-base) var(--ease-out-quint),
-    box-shadow var(--dur-base) var(--ease-out-quint),
-    border-color var(--dur-base) ease;
-  &:hover {
-    transform: translate3d(0, -2px, 0);
-    box-shadow: var(--shadow-soft);
-    border-color: color-mix(in oklab, var(--color-brand) 32%, var(--color-border));
-  }
-}
-
-@utility grain {
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.5;
-    background-image: radial-gradient(
-      color-mix(in oklab, var(--color-foreground) 8%, transparent) 0.5px,
-      transparent 0.5px
-    );
-    background-size: 4px 4px;
-    mask-image: linear-gradient(to bottom, black, transparent 70%);
-  }
-}
-
-/* ---------- Long-form article typography ---------- */
+/* ---------- Long-form article typography ----------
+ *
+ * Newsreader at about 19px, line-height 1.62. The measure is capped on text
+ * blocks, not the container, so tables, figures and code can use the full
+ * column while prose stays at about 68 characters a line.
+ */
 
 @utility article-prose {
-  font-size: 1.0625rem;
-  line-height: 1.75;
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  line-height: 1.62;
   color: var(--color-foreground);
 
-  /*
-   * Reading measure.
-   *
-   * Capped on the text blocks rather than the container, so tables, figures
-   * and code keep the full column while prose stays inside a comfortable line
-   * length. Without this the article ran the full width between the sm and lg
-   * breakpoints — 87 characters a line, where long-form wants 60-75 and the
-   * eye starts losing its place on the return sweep.
-   */
   & > p,
   & > ul,
   & > ol,
+  & > h2,
   & > h3 {
     max-width: var(--container-prose);
   }
 
   & > p {
-    margin-block: 1.35em;
+    margin-block: 1.2em;
     text-wrap: pretty;
   }
 
@@ -702,37 +652,45 @@
     color: var(--color-link);
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
+    text-underline-offset: 0.18em;
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
   }
 
   & strong {
-    font-weight: 700;
+    font-weight: 600;
+  }
+
+  & em {
+    font-style: italic;
   }
 
   & h2 {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 1.6rem;
+    font-weight: 600;
+    font-size: var(--fs-h2);
     line-height: 1.2;
-    letter-spacing: -0.022em;
-    margin-top: 2.75em;
-    margin-bottom: 0.75em;
-    padding-top: 0.9em;
-    border-top: 1px solid var(--color-hairline);
+    letter-spacing: -0.02em;
+    margin-top: 2.4em;
+    margin-bottom: 0.6em;
+    scroll-margin-top: 5rem;
   }
 
   & h3 {
     font-family: var(--font-sans);
     font-weight: 700;
-    font-size: 1.125rem;
-    letter-spacing: -0.008em;
-    margin-top: 2em;
-    margin-bottom: 0.6em;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    letter-spacing: -0.006em;
+    margin-top: 1.9em;
+    margin-bottom: 0.5em;
+    scroll-margin-top: 5rem;
   }
 
   & ul,
   & ol {
-    margin-block: 1.35em;
+    margin-block: 1.2em;
     padding-inline-start: 1.35em;
   }
 
@@ -745,7 +703,7 @@
   }
 
   & li {
-    margin-block: 0.45em;
+    margin-block: 0.4em;
     padding-inline-start: 0.15em;
   }
 
@@ -753,26 +711,13 @@
     color: var(--color-ink-faint);
   }
 
-  /*
-   * Inline code only. Without the :not(pre) guard this also chipped every
-   * <code> inside a code block, painting a light surface behind light
-   * --code-fg text and boxing each block in a stray border.
-   */
+  /* Inline code only; the :not(pre) guard keeps code blocks unboxed. */
   & :not(pre) > code {
     font-family: var(--font-mono);
-    font-size: 0.875em;
+    font-size: 0.84em;
     background: var(--color-surface-2);
-    border: 1px solid var(--color-hairline);
-    border-radius: 3px;
+    border-radius: 2px;
     padding: 0.1em 0.3em;
-  }
-
-  @media (width >= 40rem) {
-    font-size: 1.125rem;
-    line-height: 1.78;
-
-    & h2 {
-      font-size: 1.9rem;
-    }
+    overflow-wrap: anywhere;
   }
 }

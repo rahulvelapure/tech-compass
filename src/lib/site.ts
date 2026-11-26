@@ -17,7 +17,8 @@ export const site = {
   shortName: "SB",
   domain: "rahulvelapure.dpdns.org",
   url: "https://rahulvelapure.dpdns.org",
-  tagline: "",
+  tagline: "PRACTICAL TECHNOLOGY ANALYSIS FOR PEOPLE WHO RUN IT",
+  metaTagline: "Practical technology analysis for people who run IT",
   /**
    * Default social card, 1200x630. Used for every page that does not set its
    * own, and as the fallback image in Article structured data.
@@ -25,7 +26,7 @@ export const site = {
    */
   ogImage: "/og/default.png",
   description:
-    "A practical technology publication covering enterprise IT, AI, cybersecurity, software, electronics and gadgets — explained, compared and tested where possible.",
+    "Practical technology analysis for CIOs, CISOs and the people who run IT: enterprise IT, Microsoft 365 and Entra, Intune, cybersecurity, AI and infrastructure.",
   newsletter: {
     pitch: "Practical technology insights. No noise.",
     detail:
