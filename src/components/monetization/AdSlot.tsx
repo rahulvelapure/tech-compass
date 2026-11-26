@@ -3,12 +3,7 @@ import { useEffect, useRef } from "react";
 import { flags } from "@/lib/site";
 
 type Placement =
-  | "header"
-  | "in-article"
-  | "sidebar"
-  | "after-article"
-  | "in-feed"
-  | "before-related";
+  "header" | "in-article" | "sidebar" | "after-article" | "in-feed" | "before-related";
 
 const ADSENSE_CLIENT = "ca-pub-3680769252416096";
 
@@ -16,11 +11,6 @@ const AD_SLOTS: Partial<Record<Placement, string>> = {
   "in-article": "1654553828",
   "after-article": "7537435890",
   "in-feed": "5019083762",
-
-  // Deliberately disabled for the initial Substrate rollout:
-  // header
-  // sidebar
-  // before-related
 };
 
 declare global {
@@ -29,13 +19,7 @@ declare global {
   }
 }
 
-function AdSlot({
-  placement,
-  label,
-}: {
-  placement: Placement;
-  label?: string;
-}) {
+function AdSlot({ placement, label }: { placement: Placement; label?: string }) {
   const initialized = useRef(false);
   const slot = AD_SLOTS[placement];
 
@@ -61,12 +45,9 @@ function AdSlot({
     <aside
       data-ad-placement={placement}
       aria-label={label ?? "Advertisement"}
-      className="my-8 w-full overflow-hidden"
+      className="my-10 w-full overflow-hidden border-y border-hairline py-3"
     >
-      <div className="mb-2 text-center text-[0.65rem] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-        Advertisement
-      </div>
-
+      <p className="ad-label mb-2 text-center">Advertisement</p>
       <ins
         className="adsbygoogle"
         style={{

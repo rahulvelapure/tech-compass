@@ -31,10 +31,6 @@ export const Route = createFileRoute("/$category/")({
           description: category.description,
           path,
         }),
-        // A section with nothing published in it is an empty page. It stays
-        // reachable and crawlable so its links still work, but asking Google
-        // to index a heading and an "await content" notice earns nothing and
-        // dilutes the crawl budget across the sections that do have articles.
         ...(published.length === 0 ? [{ name: "robots", content: "noindex, follow" }] : []),
       ],
       links: canonical(path),
@@ -71,41 +67,29 @@ function CategoryPage() {
 
   return (
     <div className="wrap">
-      <div className="border-b border-border py-8">
+      <div className="border-b border-border py-6">
         <Breadcrumbs items={[{ name: category.title }]} />
-        <h1 className="headline mt-5 text-3xl sm:text-4xl">{category.title}</h1>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          {category.intro}
-        </p>
-        {category.subcategories && (
-          <ul className="mt-6 flex flex-wrap gap-2">
-            {category.subcategories.map((sub) => (
-              <li
-                key={sub}
-                className="border border-border px-2.5 py-1 text-xs text-muted-foreground"
-              >
-                {sub}
-              </li>
-            ))}
-          </ul>
+        <h1 className="article-title mt-4">{category.title}</h1>
+        <p className="standfirst mt-3 max-w-[40rem]">{category.intro}</p>
+        {category.subcategories && category.subcategories.length > 0 && (
+          <p className="mt-4 max-w-[40rem] text-[0.9375rem] leading-relaxed text-muted-foreground">
+            Covers: {category.subcategories.join(", ")}.
+          </p>
         )}
       </div>
 
       {featured ? (
         <>
-          <section className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-12 lg:gap-14">
+          <section className="grid grid-cols-1 gap-x-12 gap-y-10 py-8 lg:grid-cols-12 lg:py-10">
             <div className="lg:col-span-8">
-              <h2 className="eyebrow mb-6 text-muted-foreground">Featured</h2>
               <ArticleCard article={featured} variant="lead" />
             </div>
             {rest.length > 0 && (
               <div className="lg:col-span-4 lg:border-l lg:border-border lg:pl-10">
-                <h2 className="eyebrow mb-6 border-b border-border pb-2 text-muted-foreground">
-                  More in {category.label}
-                </h2>
-                <div className="space-y-8">
-                  {rest.slice(0, 3).map((article, i) => (
-                    <ArticleCard key={article.slug} article={article} variant="index" index={i} />
+                <h2 className="kicker mb-5">More in {category.label}</h2>
+                <div className="divide-y divide-border">
+                  {rest.slice(0, 3).map((article) => (
+                    <ArticleCard key={article.slug} article={article} variant="index" />
                   ))}
                 </div>
               </div>
@@ -113,34 +97,33 @@ function CategoryPage() {
           </section>
 
           {rest.length > 3 && (
-            <section className="border-t border-border py-12">
-              <h2 className="eyebrow mb-4 text-muted-foreground">All articles</h2>
-              <div className="divide-y divide-border">
+            <section className="border-t-2 border-foreground py-8">
+              <h2 className="kicker mb-4">All articles</h2>
+              <div className="divide-y divide-border border-y border-border">
                 {rest.slice(3).map((article) => (
                   <ArticleCard key={article.slug} article={article} variant="row" />
                 ))}
               </div>
             </section>
           )}
+
           <InFeedAdSlot />
         </>
       ) : (
-        <section className="border-b border-border py-14">
-          <h2 className="font-serif text-xl font-bold">
-            No articles published in this section yet
-          </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            This section is part of the publication's coverage plan. Articles are added as they are
-            researched rather than generated in bulk. In the meantime, the sections below have
+        <section className="border-b border-border py-12">
+          <h2 className="headline text-[1.4rem]">No articles published in this section yet</h2>
+          <p className="measure mt-3 text-[0.9375rem] leading-relaxed text-ink-soft">
+            This section is part of the publication&apos;s coverage plan. Articles are added as they
+            are researched rather than generated in bulk. In the meantime, the sections below have
             published work.
           </p>
         </section>
       )}
 
       {category.related && category.related.length > 0 && (
-        <section className="border-t border-border py-12">
-          <h2 className="eyebrow mb-4 text-muted-foreground">Related sections</h2>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+        <section className="border-t border-border py-8">
+          <h2 className="kicker mb-3">Related sections</h2>
+          <ul className="flex flex-wrap gap-x-6 gap-y-1">
             {category.related.map((slug) => {
               const related = getCategory(slug);
               if (!related) return null;
@@ -149,7 +132,7 @@ function CategoryPage() {
                   <Link
                     to="/$category"
                     params={{ category: slug }}
-                    className="text-sm font-medium text-brand hover:underline"
+                    className="inline-flex min-h-11 items-center text-[0.9375rem] font-medium text-link hover:underline sm:min-h-0"
                   >
                     {related.title}
                   </Link>
@@ -161,17 +144,17 @@ function CategoryPage() {
       )}
 
       {elsewhere.length > 0 && (
-        <section className="border-t border-border py-12">
-          <h2 className="eyebrow mb-6 text-muted-foreground">Elsewhere on the site</h2>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="border-t border-border py-8">
+          <h2 className="kicker mb-5">Elsewhere on the site</h2>
+          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
             {elsewhere.map((article) => (
-              <ArticleCard key={article.slug} article={article} />
+              <ArticleCard key={article.slug} article={article} variant="column" />
             ))}
           </div>
         </section>
       )}
 
-      <div className="border-t border-border py-12">
+      <div className="border-t border-border py-10">
         <NewsletterCTA variant="inline" />
       </div>
     </div>

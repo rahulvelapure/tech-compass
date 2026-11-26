@@ -6,18 +6,6 @@ import { site } from "@/lib/site";
 import { HONEYPOT_FIELD } from "@/lib/newsletter.spam";
 import { issueNewsletterToken, subscribeToNewsletter } from "@/lib/newsletter.functions";
 
-/**
- * Newsletter capture with confirmed opt-in.
- *
- * Subscribing is deliberately two steps: this form only asks the provider to
- * send a confirmation email, and the address joins the list when the reader
- * clicks the link in it. The copy says so, because a form that claims "you are
- * subscribed" while an unopened confirmation sits in an inbox is the main way
- * double opt-in lists quietly lose people.
- *
- * A signed token is fetched on first interaction rather than on page load, so
- * readers who never engage cost nothing.
- */
 export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inline" }) {
   const subscribe = useServerFn(subscribeToNewsletter);
   const getToken = useServerFn(issueNewsletterToken);
@@ -28,7 +16,6 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
   );
   const [message, setMessage] = useState("");
 
-  /** Kept in a ref: the token is never rendered and must not trigger a redraw. */
   const token = useRef<string | null>(null);
   const tokenRequest = useRef<Promise<void> | null>(null);
   const honeypot = useRef<HTMLInputElement>(null);
@@ -36,20 +23,15 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
   const inline = variant === "inline";
   const fieldId = `newsletter-${variant}`;
 
-  /** Idempotent: several focus/change events must not mint several tokens. */
   function primeToken() {
     if (token.current || tokenRequest.current) return;
     tokenRequest.current = getToken()
       .then((result) => {
         token.current = result.token;
-        // The provider is not configured, so no confirmation email can be sent.
-        // Withdraw the form on first interaction rather than collect an address
-        // and fail after the reader has typed it — and say nothing about why,
-        // since the cause is a deployment detail.
         if (!result.configured) setStatus("unavailable");
       })
       .catch(() => {
-        // Leave the token null; the server decides how to treat its absence.
+        // The token is optional here; a failed request surfaces on submit.
       });
   }
 
@@ -59,7 +41,6 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
     setStatus("loading");
     setMessage("");
 
-    // A submission can land before the token request settles — wait for it.
     if (tokenRequest.current) await tokenRequest.current;
 
     try {
@@ -71,7 +52,6 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
           [HONEYPOT_FIELD]: honeypot.current?.value ?? "",
         },
       });
-
       if (result.ok) {
         setStatus("done");
         setMessage(
@@ -83,7 +63,6 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
       } else {
         setStatus("error");
         setMessage(result.message);
-        // The old token is spent or rejected; the next attempt needs a new one.
         token.current = null;
         tokenRequest.current = null;
       }
@@ -96,21 +75,22 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
   return (
     <section
       aria-label="Newsletter"
-      className={inline ? "border-y border-border py-8" : "border-t-2 border-foreground bg-surface"}
+      className={inline ? "border-y border-border py-8" : "border-t-2 border-foreground"}
     >
-      <div className={inline ? "" : "wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-12"}>
+      <div className={inline ? "" : "wrap grid gap-x-12 gap-y-6 py-10 lg:grid-cols-12"}>
         <div className={inline ? "" : "lg:col-span-5"}>
           <h2 className="kicker">The newsletter</h2>
-          <p className="display-2 mt-3">{site.newsletter.pitch}</p>
+          <p className="display-3 mt-3">{site.newsletter.pitch}</p>
           <p
-            className={`mt-3 text-sm leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
+            className={`mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
           >
             {site.newsletter.detail}
           </p>
         </div>
-        <div className={inline ? "" : "lg:col-span-7 lg:border-l lg:border-border lg:pl-12"}>
+
+        <div className={inline ? "mt-5" : "lg:col-span-7 lg:border-l lg:border-border lg:pl-10"}>
           {status === "done" || status === "unavailable" ? (
-            <p className="mt-6 text-sm font-medium text-foreground" role="status">
+            <p className="text-[0.9375rem] font-medium text-foreground" role="status">
               {status === "done"
                 ? message
                 : "Subscriptions are unavailable at the moment. Please check back soon."}
@@ -119,7 +99,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
             <form
               onSubmit={onSubmit}
               onFocusCapture={primeToken}
-              className="mt-6 flex flex-col gap-3 sm:flex-row"
+              className="relative flex flex-col gap-3 sm:flex-row"
             >
               <label htmlFor={fieldId} className="sr-only">
                 Email address
@@ -135,15 +115,15 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
                 aria-describedby={`${fieldId}-status ${fieldId}-consent`}
-                className="h-11 w-full border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:w-72"
+                className="h-11 w-full border border-input bg-background px-3 text-[0.9375rem] placeholder:text-muted-foreground sm:w-72"
               />
 
               {/*
-              Honeypot. Hidden from sight, from the tab order and from the
-              accessibility tree, so no real reader can reach it — but it is a
-              normal text input in the DOM, which is what form-filling bots see.
-              Not `display:none`: some bots skip those.
-            */}
+                Honeypot. Hidden from sight, from the tab order and from the
+                accessibility tree, so no real reader can reach it, but it is a
+                normal text input in the DOM, which is what form-filling bots
+                see. Not display:none, because some bots skip those.
+              */}
               <div
                 aria-hidden="true"
                 className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
@@ -165,7 +145,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="h-11 shrink-0 bg-brand px-7 text-sm font-semibold tracking-wide text-brand-foreground transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-60"
+                className="h-11 shrink-0 bg-foreground px-6 text-[0.9375rem] font-semibold text-background transition-colors hover:bg-brand hover:text-brand-foreground disabled:opacity-60"
               >
                 {status === "loading" ? "Sending…" : "Subscribe"}
               </button>
@@ -176,7 +156,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
             id={`${fieldId}-status`}
             role="status"
             aria-live="polite"
-            className={`mt-3 text-sm ${status === "error" ? "text-destructive" : "text-muted-foreground"}`}
+            className={`mt-3 text-[0.9375rem] ${status === "error" ? "text-destructive" : "text-muted-foreground"}`}
           >
             {status === "error" ? message : ""}
           </p>
@@ -184,20 +164,16 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
           {status !== "done" && status !== "unavailable" && (
             <p
               id={`${fieldId}-consent`}
-              className={`mt-4 text-xs leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
+              className={`mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
             >
               We send a confirmation email first — you are only added to the list once you click the
               link in it. Unsubscribe from any email. See the{" "}
-              <Link to="/privacy" className="underline hover:text-brand">
+              <Link to="/privacy" className="underline hover:text-foreground">
                 privacy policy
               </Link>
-              .
+              . No tracking pixels. No sponsored sends.
             </p>
           )}
-
-          <p className="eyebrow mt-4 text-muted-foreground">
-            No tracking pixels. No sponsored sends.
-          </p>
         </div>
       </div>
     </section>
