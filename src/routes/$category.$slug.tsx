@@ -49,6 +49,7 @@ export const Route = createFileRoute("/$category/$slug")({
     const { article } = loaderData;
     const category = getCategory(article.category);
     const path = `/${params.category}/${params.slug}`;
+
     const schemas = [
       ldScript(articleSchema(article)),
       ldScript(
@@ -78,8 +79,6 @@ export const Route = createFileRoute("/$category/$slug")({
           content: article.updatedAt ?? article.publishedAt,
         },
         { property: "article:section", content: category?.title ?? article.category },
-        // A draft keeps its URL for preview and review, but must never enter
-        // the index — thin, unfinished pages drag the whole domain down.
         ...(article.draft ? [{ name: "robots", content: "noindex, nofollow" }] : []),
       ],
       links: canonical(path),
@@ -99,71 +98,79 @@ function ArticlePage() {
 
   return (
     <div className="wrap">
-      <div className="py-8">
-        <Breadcrumbs
-          items={[
-            { name: category?.title ?? article.category, categorySlug: article.category },
-            { name: article.title },
-          ]}
-        />
-      </div>
+      <div className="reading">
+        <div className="py-6">
+          <Breadcrumbs
+            items={[
+              { name: category?.title ?? article.category, categorySlug: article.category },
+              { name: article.title },
+            ]}
+          />
+        </div>
 
-      {article.draft && (
-        <p
-          role="status"
-          className="mb-8 border-l-2 border-warn-foreground/40 bg-warn px-5 py-4 text-sm text-warn-foreground"
-        >
-          <strong className="font-semibold">Draft.</strong> This article is unfinished and is not
-          listed or indexed. It is reachable by direct link only.
-        </p>
-      )}
+        {article.draft && (
+          <p
+            role="status"
+            className="mb-6 border-l-2 border-warn-foreground/50 bg-warn px-4 py-3 text-[0.9375rem] text-warn-foreground"
+          >
+            <strong className="font-semibold">Draft.</strong> This article is unfinished and is not
+            listed or indexed. It is reachable by direct link only.
+          </p>
+        )}
 
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-        <article className="min-w-0 lg:col-span-8">
-          <header className="border-b border-border pb-7">
-            <p className="eyebrow text-brand">
-              {category?.label}
+        <article>
+          <header>
+            <p className="eyebrow">
+              <Link
+                to="/$category"
+                params={{ category: article.category }}
+                className="text-link hover:underline"
+              >
+                {category?.label}
+              </Link>
               {article.subcategory && (
                 <span className="text-muted-foreground"> / {article.subcategory}</span>
               )}
             </p>
-            <h1 className="display-1 mt-4">{article.title}</h1>
-            <p className="standfirst mt-5">{article.standfirst}</p>
-            <ArticleMeta article={article} className="mt-7" />
+            <h1 className="article-title mt-3">{article.title}</h1>
+            <p className="standfirst mt-4">{article.standfirst}</p>
+            <ArticleMeta article={article} className="mt-5" />
             {article.updatedAt && article.updatedAt !== article.publishedAt && (
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-[0.8125rem] text-muted-foreground">
                 Last updated {formatDate(article.updatedAt)}
               </p>
             )}
           </header>
 
           {article.heroImage && (
-            <figure className="mt-8 overflow-hidden border border-border bg-surface">
+            <figure className="mt-7">
               <img
                 src={article.heroImage}
                 alt={article.heroImageAlt ?? ""}
                 width={1200}
                 height={630}
-                className="block h-auto w-full object-cover"
+                className="block aspect-[1200/630] h-auto w-full bg-surface-2 object-cover"
                 loading="eager"
                 fetchPriority="high"
               />
             </figure>
           )}
 
-          <ArticleBody body={article.body} />
+          <div className="mt-8">
+            <ArticleBody body={article.body} />
+          </div>
 
           <ArticleAdSlot />
           <AffiliateDisclosure className="my-8" />
 
           {article.faq && article.faq.length > 0 && (
-            <section className="mt-12 border-t border-border pt-8">
-              <h2 className="font-serif text-2xl font-bold">Frequently asked questions</h2>
-              <dl className="mt-6 divide-y divide-border">
+            <section className="mt-12 border-t border-border pt-6">
+              <h2 className="headline text-[1.5rem]">Frequently asked questions</h2>
+              <dl className="mt-4 divide-y divide-border">
                 {article.faq.map((entry) => (
-                  <div key={entry.question} className="py-5">
+                  <div key={entry.question} className="py-4">
                     <dt className="font-semibold">{entry.question}</dt>
-                    <dd className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+                    <dd className="measure mt-1.5 text-[0.9375rem] leading-relaxed text-ink-soft">
                       {entry.answer}
                     </dd>
                   </div>
@@ -173,27 +180,27 @@ function ArticlePage() {
           )}
 
           {(article.methodology || article.sources) && (
-            <section className="mt-12 border border-border bg-surface p-6">
-              <h2 className="eyebrow text-muted-foreground">How this article was researched</h2>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/90">
+            <section className="mt-12 border-t border-border pt-6">
+              <h2 className="kicker">How this article was researched</h2>
+              <p className="measure mt-3 text-[0.9375rem] leading-relaxed text-ink-soft">
                 Basis of assessment: {reviewStatusLabel[article.reviewStatus]}.{" "}
                 {article.methodology}
               </p>
               {article.sources && article.sources.length > 0 && (
                 <>
-                  <h3 className="eyebrow mt-6 text-muted-foreground">Sources</h3>
-                  <ul className="mt-3 space-y-2 text-sm">
+                  <h3 className="eyebrow mt-5 text-muted-foreground">Sources</h3>
+                  <ul className="mt-2 space-y-1.5 text-[0.9375rem]">
                     {article.sources.map((source) => (
                       <li key={source.url}>
                         <a
                           href={source.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-brand hover:underline"
+                          className="text-link underline underline-offset-2 hover:decoration-2"
                         >
                           {source.title}
                         </a>
-                        <span className="text-muted-foreground"> — {source.publisher}</span>
+                        <span className="text-muted-foreground"> &mdash; {source.publisher}</span>
                       </li>
                     ))}
                   </ul>
@@ -202,28 +209,27 @@ function ArticlePage() {
             </section>
           )}
 
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-y border-border py-5">
-            <ul className="flex flex-wrap gap-2">
+          <div className="mt-10 border-t border-border pt-5">
+            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[0.9375rem]">
               {article.tags.map((tag) => (
                 <li key={tag}>
                   <Link
                     to="/tag/$tag"
                     params={{ tag: tagSlug(tag) }}
-                    className="inline-block border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-brand hover:text-brand"
+                    className="text-ink-soft underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-foreground"
                   >
                     {tag}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="flex items-center gap-5">
-              {/* Drafts are unlisted and unindexed; there is nothing to react to yet. */}
-              {!article.draft && <ArticleReactions slug={article.slug} />}
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-y border-border py-3">
+              {!article.draft ? <ArticleReactions slug={article.slug} /> : <span />}
               <ShareLinks url={url} title={article.title} />
             </div>
           </div>
 
-          <div className="mt-10">
+          <div className="mt-8">
             <AuthorBox authorId={article.authorId} />
           </div>
 
@@ -231,16 +237,16 @@ function ArticlePage() {
 
           <nav
             aria-label="Article navigation"
-            className="mt-10 grid gap-4 border-t border-border pt-8 sm:grid-cols-2"
+            className="mt-8 grid gap-x-8 gap-y-5 border-t border-border pt-5 sm:grid-cols-2"
           >
             {previous && (
               <Link
                 to="/$category/$slug"
                 params={{ category: previous.category, slug: previous.slug }}
-                className="group border border-border p-5"
+                className="group block"
               >
-                <span className="eyebrow text-muted-foreground">Previous</span>
-                <span className="mt-2 block font-serif font-bold group-hover:text-brand">
+                <span className="eyebrow text-muted-foreground">&larr; Previous</span>
+                <span className="headline mt-1 block text-[1.1rem] group-hover:text-link">
                   {previous.title}
                 </span>
               </Link>
@@ -249,10 +255,10 @@ function ArticlePage() {
               <Link
                 to="/$category/$slug"
                 params={{ category: next.category, slug: next.slug }}
-                className="group border border-border p-5 sm:text-right"
+                className="group block sm:col-start-2 sm:text-right"
               >
-                <span className="eyebrow text-muted-foreground">Next</span>
-                <span className="mt-2 block font-serif font-bold group-hover:text-brand">
+                <span className="eyebrow text-muted-foreground">Next &rarr;</span>
+                <span className="headline mt-1 block text-[1.1rem] group-hover:text-link">
                   {next.title}
                 </span>
               </Link>
@@ -260,32 +266,29 @@ function ArticlePage() {
           </nav>
         </article>
 
-        {/* Related rail */}
-        <aside className="min-w-0 lg:col-span-4">
-          <div className="lg:sticky lg:top-24">
-            <h2 className="eyebrow mb-5 border-b border-border pb-2 text-muted-foreground">
-              Related reading
-            </h2>
-            <div className="space-y-7">
-              {related.map((item, i) => (
-                <ArticleCard key={item.slug} article={item} variant="index" index={i} />
+        {related.length > 0 && (
+          <section className="mt-12 border-t-2 border-foreground pt-5">
+            <h2 className="kicker mb-4">Related reading</h2>
+            <div className="divide-y divide-border">
+              {related.map((item) => (
+                <ArticleCard key={item.slug} article={item} variant="index" />
               ))}
             </div>
             <BeforeRelatedAdSlot />
-            <div className="mt-8">
+            <p className="mt-5 text-[0.9375rem]">
               <Link
                 to="/$category"
                 params={{ category: article.category }}
-                className="text-sm font-medium text-brand hover:underline"
+                className="font-medium text-link hover:underline"
               >
-                All {category?.label} articles →
+                All {category?.label} articles &rarr;
               </Link>
-            </div>
-          </div>
-        </aside>
+            </p>
+          </section>
+        )}
       </div>
 
-      <div className="mt-16 border-t border-border py-12">
+      <div className="mt-12 border-t border-border py-10">
         <NewsletterCTA variant="inline" />
       </div>
     </div>
