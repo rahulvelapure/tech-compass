@@ -1,25 +1,18 @@
 import { Link } from "@tanstack/react-router";
 
-import {
-  articlePath,
-  formatDate,
-  getAuthor,
-  getCategory,
-  reviewStatusLabel,
-} from "@/lib/content";
+import { articlePath, formatDate, getAuthor, getCategory, reviewStatusLabel } from "@/lib/content";
 import type { Article } from "@/content/types";
 
 interface Props {
   article: Article;
-  variant?: "card" | "index" | "lead" | "feature" | "row" | "brief";
+  variant?: "card" | "index" | "lead" | "feature" | "row" | "brief" | "column";
   index?: number;
 }
 
 function Kicker({ article }: { article: Article }) {
   const category = getCategory(article.category);
-
   return (
-    <span className="eyebrow text-brand">
+    <span className="eyebrow text-link">
       {category?.label}
       {article.subcategory && (
         <span className="text-muted-foreground"> / {article.subcategory}</span>
@@ -28,6 +21,10 @@ function Kicker({ article }: { article: Article }) {
   );
 }
 
+/*
+ * The headline link already names the story, so the image link is removed from
+ * the keyboard order and the accessibility tree rather than announced twice.
+ */
 function ArticleImage({
   article,
   className = "",
@@ -38,12 +35,12 @@ function ArticleImage({
   eager?: boolean;
 }) {
   if (!article.heroImage) return null;
-
   return (
     <Link
       to={articlePath(article)}
-      aria-label={`Read ${article.title}`}
-      className={`group/image block overflow-hidden bg-surface-2 ${className}`}
+      aria-hidden="true"
+      tabIndex={-1}
+      className={`block bg-surface-2 ${className}`}
     >
       <img
         src={article.heroImage}
@@ -52,35 +49,39 @@ function ArticleImage({
         height={630}
         loading={eager ? "eager" : "lazy"}
         fetchPriority={eager ? "high" : "auto"}
-        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover/image:scale-[1.025]"
+        className="block aspect-[1200/630] h-auto w-full object-cover"
       />
     </Link>
   );
 }
 
-export function ArticleCard({ article, variant = "card", index }: Props) {
-  const to = articlePath(article);
+function Headline({
+  article,
+  as: Tag = "h3",
+  className,
+}: {
+  article: Article;
+  as?: "h2" | "h3";
+  className: string;
+}) {
+  return (
+    <Tag className={className}>
+      <Link to={articlePath(article)} className="transition-colors hover:text-link">
+        {article.title}
+      </Link>
+    </Tag>
+  );
+}
 
+export function ArticleCard({ article, variant = "card" }: Props) {
   if (variant === "lead") {
     return (
       <article>
-        <ArticleImage
-          article={article}
-          eager
-          className="mb-6 aspect-[16/8.6] rounded-md border border-border"
-        />
-
         <Kicker article={article} />
-
-        <h2 className="display-1 mt-4">
-          <Link to={to} className="transition-colors hover:text-brand">
-            {article.title}
-          </Link>
-        </h2>
-
-        <p className="standfirst mt-5 max-w-3xl">{article.standfirst}</p>
-
-        <ArticleMeta article={article} className="mt-6" />
+        <Headline article={article} as="h2" className="display-1 mt-3" />
+        <p className="standfirst mt-4 max-w-[40rem]">{article.standfirst}</p>
+        <ArticleMeta article={article} className="mt-5" />
+        <ArticleImage article={article} eager className="mt-7" />
       </article>
     );
   }
@@ -88,168 +89,106 @@ export function ArticleCard({ article, variant = "card", index }: Props) {
   if (variant === "feature") {
     return (
       <article>
-        <ArticleImage
-          article={article}
-          className="mb-5 aspect-[16/9] rounded-md border border-border"
-        />
-
+        <ArticleImage article={article} className="mb-4" />
         <Kicker article={article} />
-
-        <h3 className="display-2 mt-3">
-          <Link to={to} className="transition-colors hover:text-brand">
-            {article.title}
-          </Link>
-        </h3>
-
-        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
+        <Headline article={article} className="display-2 mt-2" />
+        <p className="mt-2 max-w-[40rem] text-base leading-relaxed text-ink-soft">
           {article.excerpt}
         </p>
-
-        <ArticleMeta article={article} className="mt-4" />
+        <ArticleMeta article={article} className="mt-3" />
       </article>
     );
   }
 
   if (variant === "index") {
     return (
-      <article className="group border-b border-border pb-5 last:border-b-0 last:pb-0">
-        <div className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3">
-          <span aria-hidden="true" className="index-num pt-[0.2rem]">
-            {String((index ?? 0) + 1).padStart(2, "0")}
-          </span>
-
-          <div className="min-w-0">
-            <Kicker article={article} />
-
-            <h3 className="mt-2 font-display text-[1.12rem] font-semibold leading-snug">
-              <Link to={to} className="transition-colors group-hover:text-brand">
-                {article.title}
-              </Link>
-            </h3>
-
-            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
-              {article.excerpt}
-            </p>
-          </div>
-        </div>
+      <article className="py-5 first:pt-0 last:pb-0">
+        <Kicker article={article} />
+        <Headline article={article} className="headline mt-1.5 text-[1.2rem]" />
+        <p className="mt-2 line-clamp-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
+          {article.excerpt}
+        </p>
+        <p className="t-caption mt-2 tabular-nums">
+          {formatDate(article.publishedAt)} &middot; {article.readingMinutes} min
+        </p>
       </article>
     );
   }
+
   if (variant === "row") {
     return (
-      <article className="group grid w-full gap-x-8 gap-y-4 py-6 sm:grid-cols-[11rem_minmax(0,1fr)] lg:grid-cols-[14rem_minmax(0,1fr)]">
-        <ArticleImage
-          article={article}
-          className="aspect-[16/10] w-full rounded-sm border border-border"
-        />
-
-        <div className="min-w-0 self-center">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <Kicker article={article} />
-
-            <time
-              dateTime={article.publishedAt}
-              className="text-xs tabular-nums text-muted-foreground"
-            >
-              {formatDate(article.publishedAt)}
-            </time>
-          </div>
-
-          <h3 className="headline mt-2 text-[1.35rem] sm:text-[1.55rem]">
-            <Link to={to} className="transition-colors group-hover:text-brand">
-              {article.title}
-            </Link>
-          </h3>
-
-          <p className="mt-2 line-clamp-3 max-w-4xl text-[15px] leading-relaxed text-muted-foreground">
+      <article className="grid gap-x-8 gap-y-1 py-5 sm:grid-cols-[8.5rem_minmax(0,1fr)]">
+        <div className="flex flex-wrap items-baseline gap-x-3 sm:block sm:pt-1.5">
+          <time
+            dateTime={article.publishedAt}
+            className="block text-[0.8125rem] tabular-nums text-muted-foreground"
+          >
+            {formatDate(article.publishedAt)}
+          </time>
+          <span className="text-[0.8125rem] tabular-nums text-muted-foreground">
+            {article.readingMinutes} min
+          </span>
+        </div>
+        <div className="min-w-0">
+          <Kicker article={article} />
+          <Headline article={article} className="headline mt-1 text-[1.3rem] sm:text-[1.45rem]" />
+          <p className="mt-1.5 line-clamp-2 max-w-[44rem] text-[0.9375rem] leading-relaxed text-muted-foreground">
             {article.excerpt}
           </p>
         </div>
       </article>
     );
   }
+
   if (variant === "brief") {
     return (
-      <article className="group border-b border-border py-4 last:border-0">
-        <h3 className="font-display text-[1.08rem] leading-snug">
-          <Link to={to} className="transition-colors group-hover:text-brand">
-            {article.title}
-          </Link>
-        </h3>
-
+      <article className="border-b border-border py-4 last:border-0">
+        <Headline article={article} className="headline text-[1.08rem] leading-snug" />
         <p className="t-caption mt-1">
-          {article.subcategory ?? getCategory(article.category)?.label} ·{" "}
+          {article.subcategory ?? getCategory(article.category)?.label} &middot;{" "}
           {article.readingMinutes} min
         </p>
       </article>
     );
   }
 
+  const withImage = variant === "card";
   return (
-    <article className="card-lift group flex flex-col overflow-hidden rounded-md border border-border bg-card">
-      <ArticleImage article={article} className="aspect-[16/9]" />
-
-      <div className="flex flex-1 flex-col p-5">
-        <Kicker article={article} />
-
-        <h3 className="display-3 mt-2.5">
-          <Link to={to} className="transition-colors group-hover:text-brand">
-            {article.title}
-          </Link>
-        </h3>
-
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          {article.excerpt}
-        </p>
-
-        <p className="t-caption mt-auto pt-5 font-mono tabular-nums">
-          {formatDate(article.publishedAt)} · {article.readingMinutes} min
-        </p>
-      </div>
+    <article className={withImage ? "flex flex-col" : "border-t border-border pt-4"}>
+      {withImage && <ArticleImage article={article} className="mb-4" />}
+      <Kicker article={article} />
+      <Headline article={article} className="display-3 mt-2" />
+      <p className="mt-2 line-clamp-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
+        {article.excerpt}
+      </p>
+      <p className="t-caption mt-3 tabular-nums">
+        {formatDate(article.publishedAt)} &middot; {article.readingMinutes} min
+      </p>
     </article>
   );
 }
 
-export function ArticleMeta({
-  article,
-  className = "",
-}: {
-  article: Article;
-  className?: string;
-}) {
+export function ArticleMeta({ article, className = "" }: { article: Article; className?: string }) {
   const author = getAuthor(article.authorId);
-
   return (
     <div
-      className={`flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[13px] text-muted-foreground ${className}`}
+      className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-muted-foreground ${className}`}
     >
       <Link
         to="/author/$authorId"
         params={{ authorId: author.id }}
         rel="author"
-        className="font-medium text-foreground hover:text-brand"
+        className="font-medium text-foreground hover:underline"
       >
         {author.name}
       </Link>
-
-      <span aria-hidden="true" className="text-border">
-        /
-      </span>
-
+      <span aria-hidden="true">&middot;</span>
       <time dateTime={article.publishedAt} className="tabular-nums">
         {formatDate(article.publishedAt)}
       </time>
-
-      <span aria-hidden="true" className="text-border">
-        /
-      </span>
-
+      <span aria-hidden="true">&middot;</span>
       <span className="tabular-nums">{article.readingMinutes} min</span>
-
-      <span aria-hidden="true" className="text-border">
-        /
-      </span>
-
+      <span aria-hidden="true">&middot;</span>
       <span>{reviewStatusLabel[article.reviewStatus]}</span>
     </div>
   );
