@@ -1,3 +1,5 @@
+import type { Article } from "../../types";
+
 export const article: Article = {
   slug: "third-party-javascript-supply-chain-attack",
   category: "cybersecurity-ciso",
@@ -89,6 +91,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "Executive summary",
+      id: "executive-summary",
     },
     {
       type: "ul",
@@ -115,6 +118,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "What happened in the Optimizely attack?",
+      id: "what-happened-in-the-optimizely-attack",
     },
     {
       type: "p",
@@ -140,6 +144,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "How the malicious JavaScript reached trusted websites",
+      id: "how-the-malicious-javascript-reached-trusted-websites",
     },
     {
       type: "p",
@@ -173,6 +178,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "This was a trust failure, not an HTTPS failure",
+      id: "this-was-a-trust-failure-not-an-https-failure",
     },
     {
       type: "p",
@@ -198,6 +204,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "What could the malware do?",
+      id: "what-could-the-malware-do",
     },
     {
       type: "p",
@@ -207,6 +214,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "1. Replace cryptocurrency addresses",
+      id: "replace-cryptocurrency-addresses",
     },
     {
       type: "p",
@@ -224,6 +232,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "2. Skim payment card data",
+      id: "skim-payment-card-data",
     },
     {
       type: "p",
@@ -241,6 +250,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "3. Access cookies and page information",
+      id: "access-cookies-and-page-information",
     },
     {
       type: "p",
@@ -254,6 +264,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "4. Capture screenshots",
+      id: "capture-screenshots",
     },
     {
       type: "p",
@@ -263,6 +274,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "5. Target some iOS devices",
+      id: "target-some-ios-devices",
     },
     {
       type: "p",
@@ -276,6 +288,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "Why this attack matters to enterprise security",
+      id: "why-this-attack-matters-to-enterprise-security",
     },
     {
       type: "p",
@@ -301,6 +314,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "The browser has privileges that attackers want",
+      id: "the-browser-has-privileges-that-attackers-want",
     },
     {
       type: "p",
@@ -318,6 +332,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "What is confirmed and what remains unclear",
+      id: "what-is-confirmed-and-what-remains-unclear",
     },
     {
       type: "table",
@@ -343,6 +358,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "What security teams should do now",
+      id: "what-security-teams-should-do-now",
     },
     {
       type: "p",
@@ -352,6 +368,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "1. Build an inventory of third-party JavaScript",
+      id: "build-an-inventory-of-third-party-javascript",
     },
     {
       type: "p",
@@ -373,6 +390,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "2. Remove scripts that no longer provide business value",
+      id: "remove-scripts-that-no-longer-provide-business-value",
     },
     {
       type: "p",
@@ -394,6 +412,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "3. Protect sensitive pages first",
+      id: "protect-sensitive-pages-first",
     },
     {
       type: "p",
@@ -411,6 +430,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "4. Use a strong Content Security Policy",
+      id: "use-a-strong-content-security-policy",
     },
     {
       type: "p",
@@ -436,6 +456,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "5. Use Subresource Integrity where it fits",
+      id: "use-subresource-integrity-where-it-fits",
     },
     {
       type: "p",
@@ -457,6 +478,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "6. Monitor what trusted scripts become",
+      id: "monitor-what-trusted-scripts-become",
     },
     {
       type: "p",
@@ -478,6 +500,7 @@ export const article: Article = {
     {
       type: "h3",
       text: "7. Harden access to third-party platforms",
+      id: "harden-access-to-third-party-platforms",
     },
     {
       type: "p",
@@ -504,6 +527,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "If your organisation uses Optimizely",
+      id: "if-your-organisation-uses-optimizely",
     },
     {
       type: "p",
@@ -533,6 +557,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "Do not confuse exposure with confirmed compromise",
+      id: "do-not-confuse-exposure-with-confirmed-compromise",
     },
     {
       type: "p",
@@ -564,6 +589,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "A practical CISO checklist",
+      id: "a-practical-ciso-checklist",
     },
     {
       type: "p",
@@ -597,6 +623,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "A realistic 30-day improvement plan",
+      id: "a-realistic-30-day-improvement-plan",
     },
     {
       type: "table",
@@ -639,6 +666,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "What should leadership ask?",
+      id: "what-should-leadership-ask",
     },
     {
       type: "p",
@@ -664,6 +692,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "Third-party risk has moved into the browser",
+      id: "third-party-risk-has-moved-into-the-browser",
     },
     {
       type: "p",
@@ -685,6 +714,7 @@ export const article: Article = {
     {
       type: "h2",
       text: "The real lesson from the Optimizely incident",
+      id: "the-real-lesson-from-the-optimizely-incident",
     },
     {
       type: "p",

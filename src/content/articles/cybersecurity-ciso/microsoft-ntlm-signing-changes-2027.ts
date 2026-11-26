@@ -4,7 +4,7 @@ import type { Article } from "../../types";
 export const article: Article = {
   slug: "microsoft-ntlm-signing-changes-2027",
   category: "cybersecurity-ciso",
-  contentType: "guide",
+  contentType: "explainer",
   subcategory: "Active Directory Security",
 
   title:
