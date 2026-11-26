@@ -29,10 +29,10 @@ function SearchPage() {
   const results = query ? searchArticles(query) : [];
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="headline text-3xl">Search</h1>
+    <div className="wrap py-8">
+      <h1 className="article-title">Search</h1>
 
-      <form method="get" action="/search" className="mt-6 flex gap-3">
+      <form method="get" action="/search" className="mt-5 flex max-w-[40rem] gap-3">
         <label htmlFor="q" className="sr-only">
           Search query
         </label>
@@ -41,38 +41,42 @@ function SearchPage() {
           name="q"
           type="search"
           defaultValue={query}
-          placeholder="Intune, Wi-Fi 7, conditional access…"
-          className="h-11 flex-1 rounded-lg border border-border bg-surface px-4 text-sm focus:border-brand focus:outline-none"
+          placeholder="Intune, conditional access, NTLM..."
+          className="h-11 flex-1 border border-input bg-background px-3 text-[0.9375rem]"
         />
         <button
           type="submit"
-          className="h-11 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand hover:text-brand-foreground"
+          className="h-11 bg-foreground px-6 text-[0.9375rem] font-semibold text-background transition-colors hover:bg-brand hover:text-brand-foreground"
         >
           Search
         </button>
       </form>
 
       {!query ? (
-        <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
+        <p className="measure mt-8 text-[0.9375rem] leading-relaxed text-muted-foreground">
           Search across article titles, keywords, tags and body text. Try a product name, an error
           condition, or a standard.
         </p>
       ) : results.length === 0 ? (
-        <div className="mt-10">
-          <p className="font-serif text-lg font-bold">No results for “{query}”</p>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        <div className="mt-8">
+          <p className="headline text-[1.25rem]">No results for &ldquo;{query}&rdquo;</p>
+          <p className="measure mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
             Nothing published matches that yet. Try a broader term, or browse a section directly.
           </p>
-          <Link to="/" className="mt-5 inline-block text-sm font-medium text-brand hover:underline">
-            Back to the homepage →
+          <Link
+            to="/"
+            className="mt-4 inline-block text-[0.9375rem] font-medium text-link hover:underline"
+          >
+            Back to the homepage &rarr;
           </Link>
         </div>
       ) : (
         <>
-          <p className="mt-8 text-sm text-muted-foreground">
-            {results.length} {results.length === 1 ? "result" : "results"} for “{query}”
+          <p className="mt-8 text-[0.9375rem] text-muted-foreground">
+            {results.length} {results.length === 1 ? "result" : "results"} for &ldquo;{query}
+            &rdquo;
           </p>
-          <div className="mt-2 divide-y divide-border">
+          <div className="mt-2 divide-y divide-border border-y border-border">
             {results.map((result) => (
               <ArticleCard key={result.article.slug} article={result.article} variant="row" />
             ))}

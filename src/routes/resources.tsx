@@ -42,26 +42,30 @@ const PLANNED = [
 
 function ResourcesPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <h1 className="headline text-3xl sm:text-4xl">Resources</h1>
-      <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-        Practical artefacts that accompany the articles: checklists, templates, decision matrices
-        and scripts.
-      </p>
-      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-        Nothing is published here yet. The list below is the queue, in the order it is being worked
-        on — it is not a set of downloads that already exist.
-      </p>
+    <div className="wrap py-8">
+      <div className="reading">
+        <h1 className="article-title">Resources</h1>
+        <p className="standfirst mt-3">
+          Practical artefacts that accompany the articles: checklists, templates, decision matrices
+          and scripts.
+        </p>
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
+          Nothing is published here yet. The list below is the queue, in the order it is being
+          worked on — it is not a set of downloads that already exist.
+        </p>
 
-      <ul className="mt-10 divide-y divide-border border-y border-border">
-        {PLANNED.map((item) => (
-          <li key={item.title} className="py-5">
-            <p className="eyebrow text-muted-foreground">{item.kind} · In preparation</p>
-            <h2 className="mt-1.5 font-serif text-lg font-bold">{item.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.detail}</p>
-          </li>
-        ))}
-      </ul>
+        <ul className="mt-8 divide-y divide-border border-y border-border">
+          {PLANNED.map((item) => (
+            <li key={item.title} className="py-5">
+              <p className="eyebrow text-muted-foreground">{item.kind} &middot; In preparation</p>
+              <h2 className="headline mt-1 text-[1.25rem]">{item.title}</h2>
+              <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                {item.detail}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
