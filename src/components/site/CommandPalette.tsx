@@ -147,16 +147,16 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
       role="presentation"
       onClick={onClose}
     >
-      <div className="fixed inset-0 bg-foreground/25 backdrop-blur-[2px]" aria-hidden="true" />
+      <div className="fixed inset-0 bg-foreground/30" aria-hidden="true" />
 
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Search articles"
-        className="glass-strong animate-fade relative w-full max-w-xl overflow-hidden rounded-xl"
+        className="animate-fade relative w-full max-w-xl overflow-hidden border border-foreground bg-background"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-center gap-3 border-b hairline px-4">
+        <div className="flex items-center gap-3 border-b border-hairline px-4">
           <Search className="size-4 shrink-0 text-ink-faint" aria-hidden="true" />
           <label htmlFor="palette-input" className="sr-only">
             Search articles
@@ -197,7 +197,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                     aria-selected={i === active}
                     onMouseEnter={() => setActive(i)}
                     onClick={() => go(hit.path)}
-                    className={`flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-left transition-colors ${
+                    className={`flex min-h-11 w-full items-start gap-3 px-3 py-2.5 text-left transition-colors ${
                       i === active ? "bg-accent text-accent-foreground" : "text-foreground"
                     }`}
                   >
@@ -218,7 +218,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
           )}
         </div>
 
-        <div className="flex items-center justify-between border-t hairline px-4 py-2.5">
+        <div className="flex items-center justify-between border-t border-hairline px-4 py-2.5">
           <button
             type="button"
             onClick={submit}

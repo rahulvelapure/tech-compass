@@ -18,9 +18,9 @@ export const Route = createFileRoute("/terms")({
 
 function TermsPage() {
   return (
-    <div className="mx-auto max-w-editorial px-4 py-14 sm:px-6">
-      <h1 className="headline text-3xl sm:text-4xl">Terms of use</h1>
-      <div className="article-prose mt-8">
+    <div className="mx-auto max-w-[48rem] px-5 py-8 sm:px-8">
+      <h1 className="article-title">Terms of use</h1>
+      <div className="article-prose mt-6">
         <h2 id="use">Use of this site</h2>
         <p>
           The site is provided for reading and reference. You may link to articles and quote short

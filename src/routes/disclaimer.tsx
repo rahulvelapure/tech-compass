@@ -18,9 +18,9 @@ export const Route = createFileRoute("/disclaimer")({
 
 function DisclaimerPage() {
   return (
-    <div className="mx-auto max-w-editorial px-4 py-14 sm:px-6">
-      <h1 className="headline text-3xl sm:text-4xl">Disclaimer</h1>
-      <div className="article-prose mt-8">
+    <div className="mx-auto max-w-[48rem] px-5 py-8 sm:px-8">
+      <h1 className="article-title">Disclaimer</h1>
+      <div className="article-prose mt-6">
         <h2 id="guidance">Technical guidance</h2>
         <p>
           Articles describe how systems behave in general. They are not tailored to any particular

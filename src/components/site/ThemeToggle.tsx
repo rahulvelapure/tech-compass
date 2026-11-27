@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
 
 const STORAGE_KEY = "rv-theme";
 
@@ -19,13 +18,8 @@ export function ThemeToggle() {
     window.localStorage.setItem(STORAGE_KEY, next);
 
     /*
-     * Suppress transitions across the swap.
-     *
-     * The theme rewrites inherited custom properties. An element with a
-     * `color` transition then interpolates from its old value and never
-     * re-resolves the new one, stranding it on the previous theme's colour —
-     * see the .theme-switching rule in styles.css. Two frames is the minimum
-     * that reliably covers the class landing and the repaint.
+     * The class is added for two frames so colour transitions do not run
+     * across the swap (see .theme-switching in styles.css).
      */
     const root = document.documentElement;
     root.classList.add("theme-switching");
@@ -40,19 +34,15 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-      className="flex size-9 items-center justify-center rounded-md text-ink-faint transition-colors hover:bg-accent hover:text-foreground"
+      className="inline-flex min-h-11 items-center px-2 text-[0.9375rem] font-medium text-ink-soft transition-colors hover:text-foreground sm:min-h-0 sm:py-2"
     >
-      {ready && theme === "dark" ? (
-        <Sun className="h-4 w-4" aria-hidden="true" />
-      ) : (
-        <Moon className="h-4 w-4" aria-hidden="true" />
-      )}
+      {ready && theme === "dark" ? "Light" : "Dark"}
     </button>
   );
 }
 
-/**
- * Applies the stored theme before paint so light/dark does not flash.
- * Kept as a string so it can be injected once, pre-hydration.
+/*
+ * Runs before first paint (inlined in the document head) so a stored dark
+ * choice never flashes light.
  */
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("${STORAGE_KEY}");if(t==="dark")document.documentElement.classList.add("dark");}catch(e){}})();`;
