@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { canonical, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -42,26 +43,26 @@ const PLANNED = [
 
 function ResourcesPage() {
   return (
-    <div className="wrap py-8">
+    <div className="wrap py-8 lg:py-12">
       <div className="reading">
-        <h1 className="article-title">Resources</h1>
+        <Breadcrumbs items={[{ name: "Resources" }]} />
+        <p className="kicker mt-5">Working artefacts</p>
+        <h1 className="article-title mt-2">Resources</h1>
         <p className="standfirst mt-3">
-          Practical artefacts that accompany the articles: checklists, templates, decision matrices
+          Practical artefacts that accompany the articles: checklists, templates, decision matrices,
           and scripts.
         </p>
         <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
-          Nothing is published here yet. The list below is the queue, in the order it is being
-          worked on — it is not a set of downloads that already exist.
+          Nothing is published here yet. The list below is the editorial queue in the order it is
+          being prepared — not downloads that already exist.
         </p>
 
-        <ul className="mt-8 divide-y divide-border border-y border-border">
+        <ul className="mt-8 divide-y divide-hairline border-y border-hairline">
           {PLANNED.map((item) => (
             <li key={item.title} className="py-5">
               <p className="eyebrow text-muted-foreground">{item.kind} &middot; In preparation</p>
-              <h2 className="headline mt-1 text-[1.25rem]">{item.title}</h2>
-              <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground">
-                {item.detail}
-              </p>
+              <h2 className="headline mt-1.5 text-[1.2rem]">{item.title}</h2>
+              <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-soft">{item.detail}</p>
             </li>
           ))}
         </ul>

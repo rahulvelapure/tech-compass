@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { canonical, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -18,8 +19,12 @@ export const Route = createFileRoute("/privacy")({
 
 function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-[48rem] px-5 py-8 sm:px-8">
-      <h1 className="article-title">Privacy</h1>
+    <div className="wrap py-8 lg:py-12">
+      <div className="reading">
+        <Breadcrumbs items={[{ name: "Privacy" }]} />
+        <p className="kicker mt-5">Legal &amp; data practices</p>
+        <h1 className="article-title mt-2">Privacy</h1>
+      </div>
 
       <div className="article-prose mt-6">
         <p>
@@ -126,12 +131,18 @@ function PrivacyPage() {
           reader profile.
         </p>
 
-        <h2 id="reactions">Article reactions</h2>
+        <h2 id="reactions">Article views and reactions</h2>
 
         <p>
-          Articles may provide a useful / not useful control. When you select a reaction, the site
-          stores a small cookie containing a random identifier. It does not contain your name or
-          email address.
+          Published articles maintain an aggregate visit counter. Recording an article view does not
+          create a browser cookie or store personal reader details; an IP address may be hashed
+          temporarily in memory solely to limit automated request floods.
+        </p>
+
+        <p>
+          Articles may also provide a useful / not useful control. When you select a reaction, the
+          site stores a small cookie containing a random identifier. It does not contain your name
+          or email address.
         </p>
 
         <p>

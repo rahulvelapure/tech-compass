@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { canonical, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -18,8 +19,13 @@ export const Route = createFileRoute("/terms")({
 
 function TermsPage() {
   return (
-    <div className="mx-auto max-w-[48rem] px-5 py-8 sm:px-8">
-      <h1 className="article-title">Terms of use</h1>
+    <div className="wrap py-8 lg:py-12">
+      <div className="reading">
+        <Breadcrumbs items={[{ name: "Terms of use" }]} />
+        <p className="kicker mt-5">Legal</p>
+        <h1 className="article-title mt-2">Terms of use</h1>
+      </div>
+
       <div className="article-prose mt-6">
         <h2 id="use">Use of this site</h2>
         <p>

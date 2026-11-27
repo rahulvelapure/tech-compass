@@ -48,15 +48,15 @@ function AuthorPage() {
     .filter((category): category is NonNullable<typeof category> => Boolean(category));
 
   return (
-    <div className="wrap">
-      <div className="border-b border-border py-6">
+    <div className="wrap py-8 lg:py-12">
+      <header className="border-b border-hairline pb-8">
         <Breadcrumbs items={[{ name: author.name }]} />
-        <h1 className="article-title mt-4">{author.name}</h1>
-        <p className="eyebrow mt-2 text-muted-foreground">{author.role}</p>
-        <p className="measure mt-4 text-[1.0625rem] leading-relaxed text-ink-soft">{author.bio}</p>
+        <p className="kicker mt-5">{author.role}</p>
+        <h1 className="article-title mt-2">{author.name}</h1>
+        <p className="standfirst mt-3 max-w-[40rem]">{author.bio}</p>
         {sections.length > 0 && (
-          <p className="mt-4 text-[0.9375rem] text-muted-foreground">
-            Writes about{" "}
+          <p className="mt-4 max-w-[44rem] text-[0.90625rem] leading-relaxed text-muted-foreground">
+            Publishes across{" "}
             {sections.map((category, index) => (
               <span key={category.slug}>
                 {index > 0 && ", "}
@@ -72,25 +72,24 @@ function AuthorPage() {
             .
           </p>
         )}
-      </div>
+      </header>
 
-      <section className="py-8">
-        <h2 className="kicker mb-3">
-          {articles.length} {articles.length === 1 ? "article" : "articles"}
+      <section className="py-10">
+        <h2 className="kicker mb-4 tabular-nums">
+          {articles.length} published {articles.length === 1 ? "article" : "articles"}
         </h2>
-        <div className="divide-y divide-border border-y border-border">
+        <div className="divide-y divide-hairline border-y border-hairline">
           {articles.map((article) => (
             <ArticleCard key={article.slug} article={article} variant="row" />
           ))}
         </div>
       </section>
 
-      <p className="measure border-t border-border py-8 text-[0.9375rem] leading-relaxed text-muted-foreground">
+      <p className="measure border-t border-hairline pt-8 text-[0.875rem] leading-relaxed text-muted-foreground">
         This publication does not publish personal contact details or employer information. For what
         it covers and how articles are researched, see{" "}
-        {/* Underlined so the link does not rely on colour alone (WCAG 1.4.1). */}
-        <Link to="/about" className="underline underline-offset-2 hover:text-foreground">
-          About
+        <Link to="/about" className="text-link underline underline-offset-2 hover:decoration-2">
+          About this publication
         </Link>
         .
       </p>

@@ -67,12 +67,102 @@ export interface D1Database {
 export function reactionDb(): D1Database | null {
   const env = (globalThis as { __env__?: Record<string, unknown> }).__env__;
   const binding = env?.["REACTIONS_DB"];
-  if (!binding || typeof binding !== "object") return null;
-  const candidate = binding as Partial<D1Database>;
-  if (typeof candidate.prepare !== "function" || typeof candidate.batch !== "function") {
-    return null;
+  if (binding && typeof binding === "object") {
+    const candidate = binding as Partial<D1Database>;
+    if (typeof candidate.prepare === "function" && typeof candidate.batch === "function") {
+      return candidate as D1Database;
+    }
   }
-  return candidate as D1Database;
+  if (process.env["NODE_ENV"] === "development") {
+    return getDevReactionDb();
+  }
+  return null;
+}
+
+/*
+ * Local `vite dev` fallback only (dead-code-eliminated in production builds
+ * and inactive under `NODE_ENV === "test"`). Lets local UI previews exercise
+ * the exact same server-function and cookie flow without requiring Wrangler.
+ */
+let devDbInstance: D1Database | undefined;
+
+function getDevReactionDb(): D1Database {
+  if (devDbInstance) return devDbInstance;
+
+  const totals = new Map<string, { likes: number; dislikes: number }>();
+  const votes = new Map<string, Reaction>();
+
+  devDbInstance = {
+    prepare(query: string) {
+      return {
+        bind(...values: unknown[]) {
+          return { query, values } as unknown as D1PreparedStatement;
+        },
+      };
+    },
+    async batch<T>(statements: D1PreparedStatement[]): Promise<D1Result<T>[]> {
+      return statements.map((raw) => {
+        const { query, values } = raw as unknown as { query: string; values: unknown[] };
+
+        if (query === SELECT_LIKES) {
+          const slug = String(values[0]);
+          const row = totals.get(slug);
+          return {
+            results: (row ? [{ genuine_likes: row.likes }] : []) as unknown as T[],
+          };
+        }
+
+        if (query === SELECT_VOTE) {
+          const key = `${String(values[0])}:${String(values[1])}`;
+          const vote = votes.get(key);
+          return {
+            results: (vote ? [{ reaction: vote }] : []) as unknown as T[],
+          };
+        }
+
+        if (query.startsWith("UPDATE article_reaction_totals")) {
+          const slug = String(values[1]);
+          const visitorId = String(values[3]);
+          const key = `${slug}:${visitorId}`;
+          const prev = votes.get(key);
+          const cur = totals.get(slug) ?? { likes: 0, dislikes: 0 };
+          if (query.includes("reaction = 'like'") && prev === "like") {
+            totals.set(slug, { ...cur, likes: Math.max(0, cur.likes - 1) });
+          } else if (query.includes("reaction = 'dislike'") && prev === "dislike") {
+            totals.set(slug, { ...cur, dislikes: Math.max(0, cur.dislikes - 1) });
+          }
+          return { results: [] };
+        }
+
+        if (query === UPSERT_VOTE) {
+          const key = `${String(values[0])}:${String(values[1])}`;
+          votes.set(key, values[2] as Reaction);
+          return { results: [] };
+        }
+
+        if (query === DELETE_VOTE) {
+          const key = `${String(values[0])}:${String(values[1])}`;
+          votes.delete(key);
+          return { results: [] };
+        }
+
+        if (query === APPLY_TOTAL) {
+          const slug = String(values[0]);
+          const next = values[1] as Reaction;
+          const cur = totals.get(slug) ?? { likes: 0, dislikes: 0 };
+          totals.set(slug, {
+            likes: cur.likes + (next === "like" ? 1 : 0),
+            dislikes: cur.dislikes + (next === "dislike" ? 1 : 0),
+          });
+          return { results: [] };
+        }
+
+        return { results: [] };
+      });
+    },
+  };
+
+  return devDbInstance;
 }
 
 /* ------------------------------------------------------------------ */

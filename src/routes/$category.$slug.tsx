@@ -2,6 +2,7 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 
 import { ArticleBody } from "@/components/article/ArticleBody";
 import { ArticleReactions } from "@/components/article/ArticleReactions";
+import { ArticleViews } from "@/components/article/ArticleViews";
 import { ShareLinks } from "@/components/article/ShareLinks";
 import { ArticleCard, ArticleMeta } from "@/components/site/ArticleCard";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
@@ -14,6 +15,7 @@ import {
 } from "@/components/monetization/AdSlot";
 import { AffiliateDisclosure } from "@/components/monetization/AffiliateDisclosure";
 import {
+  allArticles,
   articleNeighbours,
   articlePath,
   formatDate,
@@ -96,81 +98,115 @@ function ArticlePage() {
   const { previous, next } = articleNeighbours(article);
   const url = absoluteUrl(articlePath(article));
 
+  const parentPillar = article.pillarSlug
+    ? allArticles.find((candidate) => candidate.slug === article.pillarSlug)
+    : undefined;
+
   return (
-    <div className="wrap">
-      <div className="reading">
-        <div className="py-6">
+    <div className="wrap py-8 lg:py-12">
+      <article>
+        {/* Centered 42rem editorial header aligned flush to body prose */}
+        <div className="reading">
           <Breadcrumbs
-            items={[
-              { name: category?.title ?? article.category, categorySlug: article.category },
-              { name: article.title },
-            ]}
+            items={[{ name: category?.title ?? article.category, categorySlug: article.category }]}
           />
-        </div>
 
-        {article.draft && (
-          <p
-            role="status"
-            className="mb-6 border-l-2 border-warn-foreground/50 bg-warn px-4 py-3 text-[0.9375rem] text-warn-foreground"
-          >
-            <strong className="font-semibold">Draft.</strong> This article is unfinished and is not
-            listed or indexed. It is reachable by direct link only.
-          </p>
-        )}
+          {article.draft && (
+            <p
+              role="status"
+              className="mt-5 rounded-r-md border-l-2 border-warn-foreground bg-warn px-4 py-3 text-[0.90625rem] text-warn-foreground"
+            >
+              <strong className="font-semibold">Draft.</strong> This article is unfinished and is
+              not listed or indexed. It is reachable by direct link only.
+            </p>
+          )}
 
-        <article>
-          <header>
-            <p className="eyebrow">
+          <header className="mt-6">
+            <p className="eyebrow flex flex-wrap items-center gap-x-1.5">
               <Link
                 to="/$category"
                 params={{ category: article.category }}
-                className="text-link hover:underline"
+                className="inline-flex min-h-6 min-w-6 items-center text-link transition-colors hover:underline"
               >
-                {category?.label}
+                {category?.label ?? article.category}
               </Link>
               {article.subcategory && (
-                <span className="text-muted-foreground"> / {article.subcategory}</span>
+                <span className="font-normal text-muted-foreground">
+                  &middot; {article.subcategory}
+                </span>
               )}
             </p>
-            <h1 className="article-title mt-3">{article.title}</h1>
+
+            <h1 className="article-title mt-2.5">{article.title}</h1>
             <p className="standfirst mt-4">{article.standfirst}</p>
-            <ArticleMeta article={article} className="mt-5" />
-            {article.updatedAt && article.updatedAt !== article.publishedAt && (
-              <p className="mt-1 text-[0.8125rem] text-muted-foreground">
-                Last updated {formatDate(article.updatedAt)}
+
+            {parentPillar && (
+              <p className="mt-4 text-[0.8125rem] text-muted-foreground">
+                Part of{" "}
+                <Link
+                  to={articlePath(parentPillar)}
+                  className="font-medium text-link underline underline-offset-2 hover:decoration-2"
+                >
+                  {parentPillar.pillar ?? parentPillar.title}
+                </Link>
               </p>
             )}
+
+            {/* Engagement placement #1: views & likes inline beside author, date & reading time */}
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2.5 border-y border-hairline py-3">
+              <div>
+                <ArticleMeta article={article} />
+                {article.updatedAt && article.updatedAt !== article.publishedAt && (
+                  <p className="mt-0.5 text-[0.75rem] tabular-nums text-muted-foreground">
+                    Updated {formatDate(article.updatedAt)}
+                  </p>
+                )}
+              </div>
+              {!article.draft && (
+                <div className="flex items-center gap-2">
+                  <ArticleViews slug={article.slug} />
+                  <ArticleReactions slug={article.slug} />
+                </div>
+              )}
+            </div>
           </header>
+        </div>
 
-          {article.heroImage && (
-            <figure className="mt-7">
-              <img
-                src={article.heroImage}
-                alt={article.heroImageAlt ?? ""}
-                width={1200}
-                height={630}
-                className="block aspect-[1200/630] h-auto w-full bg-surface-2 object-cover"
-                loading="eager"
-                fetchPriority="high"
-              />
-            </figure>
-          )}
+        {/* Hero figure aligned flush to the 42rem reading column */}
+        {article.heroImage && (
+          <figure className="reading mt-8 overflow-hidden rounded-[3px] bg-surface-2 ring-1 ring-inset ring-black/6 dark:ring-white/10">
+            <img
+              src={article.heroImage}
+              alt={article.heroImageAlt ?? ""}
+              width={1200}
+              height={675}
+              className="block h-auto w-full"
+              loading="eager"
+              fetchPriority="high"
+            />
+          </figure>
+        )}
 
-          <div className="mt-8">
-            <ArticleBody body={article.body} />
-          </div>
+        {/* Long-form prose and technical blocks aligned on the same 42rem measure */}
+        <div className="mt-8">
+          <ArticleBody body={article.body} />
+        </div>
 
+        {/* Post-article dossier, reactions #2, share, author & prev/next */}
+        <div className="reading">
           <ArticleAdSlot />
           <AffiliateDisclosure className="my-8" />
 
           {article.faq && article.faq.length > 0 && (
-            <section className="mt-12 border-t border-border pt-6">
-              <h2 className="headline text-[1.5rem]">Frequently asked questions</h2>
-              <dl className="mt-4 divide-y divide-border">
+            <section className="mt-12 border-t border-hairline pt-8">
+              <h2 className="display-2">Frequently asked questions</h2>
+              <dl className="mt-5 divide-y divide-hairline">
                 {article.faq.map((entry) => (
-                  <div key={entry.question} className="py-4">
-                    <dt className="font-semibold">{entry.question}</dt>
-                    <dd className="measure mt-1.5 text-[0.9375rem] leading-relaxed text-ink-soft">
+                  <div key={entry.question} className="py-4 first:pt-0 last:pb-0">
+                    <dt className="text-[0.96875rem] font-semibold text-foreground [overflow-wrap:anywhere]">
+                      {entry.question}
+                    </dt>
+                    <dd className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-soft [overflow-wrap:anywhere]">
                       {entry.answer}
                     </dd>
                   </div>
@@ -179,17 +215,22 @@ function ArticlePage() {
             </section>
           )}
 
-          {(article.methodology || article.sources) && (
-            <section className="mt-12 border-t border-border pt-6">
+          {(article.methodology || (article.sources && article.sources.length > 0)) && (
+            <section
+              aria-label="Research and sources"
+              className="mt-10 rounded-md border border-hairline bg-surface-2/40 p-5 sm:p-6 [overflow-wrap:anywhere]"
+            >
               <h2 className="kicker">How this article was researched</h2>
-              <p className="measure mt-3 text-[0.9375rem] leading-relaxed text-ink-soft">
-                Basis of assessment: {reviewStatusLabel[article.reviewStatus]}.{" "}
+              <p className="mt-2.5 text-[0.875rem] leading-relaxed text-ink-soft">
+                <strong className="font-medium text-foreground">
+                  Basis of assessment: {reviewStatusLabel[article.reviewStatus]}.
+                </strong>{" "}
                 {article.methodology}
               </p>
               {article.sources && article.sources.length > 0 && (
-                <>
-                  <h3 className="eyebrow mt-5 text-muted-foreground">Sources</h3>
-                  <ul className="mt-2 space-y-1.5 text-[0.9375rem]">
+                <div className="mt-4 border-t border-hairline pt-4">
+                  <h3 className="kicker mb-2">Primary sources</h3>
+                  <ul className="space-y-1.5 text-[0.875rem]">
                     {article.sources.map((source) => (
                       <li key={source.url}>
                         <a
@@ -204,29 +245,38 @@ function ArticlePage() {
                       </li>
                     ))}
                   </ul>
-                </>
+                </div>
               )}
             </section>
           )}
 
-          <div className="mt-10 border-t border-border pt-5">
-            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[0.9375rem]">
+          {article.tags.length > 0 && (
+            <ul aria-label="Article topics" className="mt-10 flex flex-wrap gap-2">
               {article.tags.map((tag) => (
                 <li key={tag}>
                   <Link
                     to="/tag/$tag"
                     params={{ tag: tagSlug(tag) }}
-                    className="text-ink-soft underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-foreground"
+                    className="inline-flex min-h-7 items-center rounded border border-hairline bg-surface-2/60 px-2.5 text-[0.75rem] font-medium text-ink-soft transition-colors hover:border-border hover:text-foreground"
                   >
                     {tag}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-y border-border py-3">
-              {!article.draft ? <ArticleReactions slug={article.slug} /> : <span />}
-              <ShareLinks url={url} title={article.title} />
-            </div>
+          )}
+
+          {/* Engagement placement #2: views & likes paired alongside Share controls */}
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2.5 border-y border-hairline py-3">
+            {!article.draft ? (
+              <div className="flex items-center gap-2">
+                <ArticleViews slug={article.slug} />
+                <ArticleReactions slug={article.slug} />
+              </div>
+            ) : (
+              <span />
+            )}
+            <ShareLinks url={url} title={article.title} />
           </div>
 
           <div className="mt-8">
@@ -235,60 +285,62 @@ function ArticlePage() {
 
           <AfterArticleAdSlot />
 
-          <nav
-            aria-label="Article navigation"
-            className="mt-8 grid gap-x-8 gap-y-5 border-t border-border pt-5 sm:grid-cols-2"
-          >
-            {previous && (
-              <Link
-                to="/$category/$slug"
-                params={{ category: previous.category, slug: previous.slug }}
-                className="group block"
-              >
-                <span className="eyebrow text-muted-foreground">&larr; Previous</span>
-                <span className="headline mt-1 block text-[1.1rem] group-hover:text-link">
-                  {previous.title}
-                </span>
-              </Link>
-            )}
-            {next && (
-              <Link
-                to="/$category/$slug"
-                params={{ category: next.category, slug: next.slug }}
-                className="group block sm:col-start-2 sm:text-right"
-              >
-                <span className="eyebrow text-muted-foreground">Next &rarr;</span>
-                <span className="headline mt-1 block text-[1.1rem] group-hover:text-link">
-                  {next.title}
-                </span>
-              </Link>
-            )}
-          </nav>
-        </article>
+          {(previous || next) && (
+            <nav
+              aria-label="Article navigation"
+              className="mt-8 grid gap-x-8 gap-y-6 border-t border-hairline pt-6 sm:grid-cols-2"
+            >
+              {previous && (
+                <Link
+                  to="/$category/$slug"
+                  params={{ category: previous.category, slug: previous.slug }}
+                  className="group block"
+                >
+                  <span className="kicker block">&larr; Previous</span>
+                  <span className="headline mt-1.5 block text-[1.0625rem] transition-colors group-hover:text-link">
+                    {previous.title}
+                  </span>
+                </Link>
+              )}
+              {next && (
+                <Link
+                  to="/$category/$slug"
+                  params={{ category: next.category, slug: next.slug }}
+                  className="group block sm:col-start-2 sm:text-right"
+                >
+                  <span className="kicker block">Next &rarr;</span>
+                  <span className="headline mt-1.5 block text-[1.0625rem] transition-colors group-hover:text-link">
+                    {next.title}
+                  </span>
+                </Link>
+              )}
+            </nav>
+          )}
+        </div>
+      </article>
 
-        {related.length > 0 && (
-          <section className="mt-12 border-t-2 border-foreground pt-5">
-            <h2 className="kicker mb-4">Related reading</h2>
-            <div className="divide-y divide-border">
-              {related.map((item) => (
-                <ArticleCard key={item.slug} article={item} variant="index" />
-              ))}
-            </div>
-            <BeforeRelatedAdSlot />
-            <p className="mt-5 text-[0.9375rem]">
-              <Link
-                to="/$category"
-                params={{ category: article.category }}
-                className="font-medium text-link hover:underline"
-              >
-                All {category?.label} articles &rarr;
-              </Link>
-            </p>
-          </section>
-        )}
-      </div>
+      {related.length > 0 && (
+        <section className="mt-14 border-t border-hairline pt-10">
+          <div className="mb-6 flex flex-wrap items-baseline justify-between gap-4">
+            <h2 className="display-2">Related reading</h2>
+            <Link
+              to="/$category"
+              params={{ category: article.category }}
+              className="inline-flex min-h-6 items-center text-[0.875rem] font-medium text-link hover:underline"
+            >
+              All {category?.label ?? article.category} articles &rarr;
+            </Link>
+          </div>
+          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((item) => (
+              <ArticleCard key={item.slug} article={item} variant="column" />
+            ))}
+          </div>
+          <BeforeRelatedAdSlot />
+        </section>
+      )}
 
-      <div className="mt-12 border-t border-border py-10">
+      <div className="reading mt-14">
         <NewsletterCTA variant="inline" />
       </div>
     </div>

@@ -20,25 +20,27 @@ import { ldScript, personSchema, websiteSchema } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
-    <div className="mx-auto flex max-w-2xl flex-col items-start px-4 py-28 sm:px-6">
-      <p className="eyebrow text-brand">404</p>
-      <h1 className="headline mt-3 text-3xl">This page does not exist</h1>
-      <p className="mt-3 text-muted-foreground">
-        The address may have changed, or the article may not be published yet.
-      </p>
-      <div className="mt-8 flex gap-3">
-        <Link
-          to="/"
-          className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand hover:text-brand-foreground"
-        >
-          Go to the homepage
-        </Link>
-        <Link
-          to="/search"
-          className="rounded-md border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
-        >
-          Search articles
-        </Link>
+    <div className="wrap py-20 sm:py-28">
+      <div className="reading">
+        <p className="eyebrow text-link">404</p>
+        <h1 className="article-title mt-3">This page does not exist</h1>
+        <p className="standfirst mt-4 max-w-[34rem]">
+          The address may have changed, or the article may not be published yet.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <Link
+            to="/"
+            className="inline-flex h-10 items-center rounded-md bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-brand hover:text-brand-foreground"
+          >
+            Return to homepage
+          </Link>
+          <Link
+            to="/search"
+            className="inline-flex h-10 items-center rounded-md border border-border bg-surface px-4 text-sm font-medium text-foreground transition-colors hover:border-foreground/30 hover:bg-surface-2"
+          >
+            Search articles
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -49,27 +51,31 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-28 sm:px-6">
-      <h1 className="headline text-2xl">This page didn't load</h1>
-      <p className="mt-3 text-sm text-muted-foreground">
-        Something went wrong. You can try again or return to the homepage.
-      </p>
-      <div className="mt-8 flex flex-wrap gap-3">
-        <button
-          onClick={() => {
-            router.invalidate();
-            reset();
-          }}
-          className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand hover:text-brand-foreground"
-        >
-          Try again
-        </button>
-        <a
-          href="/"
-          className="rounded-md border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
-        >
-          Go home
-        </a>
+    <div className="wrap py-20 sm:py-28">
+      <div className="reading">
+        <p className="eyebrow text-muted-foreground">Error</p>
+        <h1 className="article-title mt-3">This page could not load</h1>
+        <p className="standfirst mt-4 max-w-[34rem]">
+          Something went wrong while loading this page. You can retry or return to the front page.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+            className="inline-flex h-10 cursor-pointer items-center rounded-md bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-brand hover:text-brand-foreground"
+          >
+            Try again
+          </button>
+          <a
+            href="/"
+            className="inline-flex h-10 items-center rounded-md border border-border bg-surface px-4 text-sm font-medium text-foreground transition-colors hover:border-foreground/30 hover:bg-surface-2"
+          >
+            Return to homepage
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -82,18 +88,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: `${site.name} — ${site.metaTagline}` },
       { name: "description", content: site.description },
-      // Resolved from the author record so the published name lives in exactly
-      // one place; hard-coding it here is how a byline drifts out of step.
       { name: "author", content: getAuthor(defaultAuthorId).name },
       { property: "og:site_name", content: site.name },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "referrer", content: "strict-origin-when-cross-origin" },
-      // Matches --background in styles.css, which is a warm off-white rather
-      // than pure white. A mismatched theme-color shows as a seam above the
-      // page in mobile browsers that tint their chrome.
-      { name: "theme-color", content: "#fbfaf6" },
+      { name: "theme-color", content: "#fdfcfa" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -105,10 +106,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap",
       },
-      // Our own mark — generated by scripts/generate-favicon.mjs from the
-      // OKLCH tokens in styles.css. Ships 16/32/48 in one .ico.
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon", sizes: "16x16 32x32 48x48" },
       { rel: "alternate", type: "application/rss+xml", href: "/rss.xml" },
     ],
@@ -149,14 +148,13 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-background"
       >
         Skip to content
       </a>
       <div className="flex min-h-dvh flex-col">
         <Header />
-        <main id="main" className="flex-1">
-          {/* Required: nested routes render here. */}
+        <main id="main" className="min-w-0 flex-1">
           <Outlet />
         </main>
         <Footer />

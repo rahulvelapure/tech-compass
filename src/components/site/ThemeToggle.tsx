@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 
 const STORAGE_KEY = "rv-theme";
 
-export function ThemeToggle() {
+export function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [ready, setReady] = useState(false);
 
@@ -17,10 +18,6 @@ export function ThemeToggle() {
     setTheme(next);
     window.localStorage.setItem(STORAGE_KEY, next);
 
-    /*
-     * The class is added for two frames so colour transitions do not run
-     * across the swap (see .theme-switching in styles.css).
-     */
     const root = document.documentElement;
     root.classList.add("theme-switching");
     root.classList.toggle("dark", next === "dark");
@@ -29,20 +26,30 @@ export function ThemeToggle() {
     });
   }
 
+  const isDark = ready && theme === "dark";
+
   return (
     <button
       type="button"
       onClick={toggle}
-      aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-      className="inline-flex min-h-11 items-center px-2 text-[0.9375rem] font-medium text-ink-soft transition-colors hover:text-foreground sm:min-h-0 sm:py-2"
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      className={
+        showLabel
+          ? "inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md px-2.5 text-sm font-medium text-ink-soft transition-colors hover:bg-surface-2 hover:text-foreground"
+          : "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-md text-ink-soft transition-colors hover:bg-surface-2 hover:text-foreground sm:min-h-9 sm:min-w-9"
+      }
     >
-      {ready && theme === "dark" ? "Light" : "Dark"}
+      {isDark ? (
+        <Sun className="size-4" aria-hidden="true" />
+      ) : (
+        <Moon className="size-4" aria-hidden="true" />
+      )}
+      {showLabel && <span>{isDark ? "Light appearance" : "Dark appearance"}</span>}
     </button>
   );
 }
 
 /*
- * Runs before first paint (inlined in the document head) so a stored dark
- * choice never flashes light.
+ * Inlined in <head> before first paint so a stored dark preference never flashes.
  */
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("${STORAGE_KEY}");if(t==="dark")document.documentElement.classList.add("dark");}catch(e){}})();`;

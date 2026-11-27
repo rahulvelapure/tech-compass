@@ -1,12 +1,12 @@
 import { Linkedin } from "lucide-react";
 
 const shareLink =
-  "inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] text-ink-soft transition-colors hover:text-foreground sm:min-h-0";
+  "inline-flex min-h-9 min-w-7 items-center justify-center gap-1.5 rounded-md px-2 text-[0.8125rem] font-medium text-ink-soft transition-colors hover:bg-surface-2 hover:text-foreground sm:min-h-8";
 
 export function ShareLinks({ url, title }: { url: string; title: string }) {
   return (
-    <div className="flex items-center gap-4">
-      <span className="eyebrow text-muted-foreground">Share</span>
+    <div className="flex items-center gap-1.5">
+      <span className="mr-1 text-[0.8125rem] text-muted-foreground">Share</span>
       <a
         href={`https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
         target="_blank"
@@ -23,7 +23,7 @@ export function ShareLinks({ url, title }: { url: string; title: string }) {
         aria-label="Share on LinkedIn"
         className={shareLink}
       >
-        <Linkedin className="h-4 w-4" aria-hidden="true" />
+        <Linkedin className="size-3.5" aria-hidden="true" />
         <span>LinkedIn</span>
       </a>
     </div>

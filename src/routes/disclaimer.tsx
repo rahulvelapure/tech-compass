@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { canonical, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -18,8 +19,13 @@ export const Route = createFileRoute("/disclaimer")({
 
 function DisclaimerPage() {
   return (
-    <div className="mx-auto max-w-[48rem] px-5 py-8 sm:px-8">
-      <h1 className="article-title">Disclaimer</h1>
+    <div className="wrap py-8 lg:py-12">
+      <div className="reading">
+        <Breadcrumbs items={[{ name: "Disclaimer" }]} />
+        <p className="kicker mt-5">Legal</p>
+        <h1 className="article-title mt-2">Disclaimer</h1>
+      </div>
+
       <div className="article-prose mt-6">
         <h2 id="guidance">Technical guidance</h2>
         <p>
@@ -41,9 +47,9 @@ function DisclaimerPage() {
         </p>
         <h2 id="commercial">Advertising and affiliate links</h2>
         <p>
-          There is currently no advertising or affiliate content on this site. If either is
-          introduced, it will be disclosed on the pages that carry it, and it will not influence
-          editorial conclusions.
+          There is currently no sponsored editorial content on this site. Where advertising or
+          affiliate links appear, they are disclosed on the pages that carry them, and they do not
+          influence editorial conclusions.
         </p>
         <h2 id="external">External links</h2>
         <p>

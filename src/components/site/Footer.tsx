@@ -1,45 +1,74 @@
 import { Link } from "@tanstack/react-router";
 
-import { primaryNav } from "@/content/categories";
+import { footerColumns, getCategory } from "@/content/categories";
+import { articlesForCategory } from "@/lib/content";
 import { site } from "@/lib/site";
 
-const footLink = "text-[0.9375rem] text-ink-soft transition-colors hover:text-foreground";
+const footLink =
+  "inline-flex min-h-6 min-w-6 items-center text-[0.875rem] text-ink-soft transition-colors hover:text-foreground";
 
 export function Footer() {
   const year = new Date().getFullYear();
 
+  /*
+   * Only link to categories that currently carry published work. Empty sections
+   * are marked noindex and are excluded from the sitemap for the same reason.
+   */
+  const populatedColumns = footerColumns
+    .map((col) => ({
+      heading: col.heading,
+      items: col.slugs
+        .map((slug) => getCategory(slug))
+        .filter(
+          (category): category is NonNullable<typeof category> =>
+            category !== undefined && articlesForCategory(category).length > 0,
+        ),
+    }))
+    .filter((col) => col.items.length > 0);
+
   return (
-    <footer className="mt-20 border-t-[3px] border-foreground">
-      <div className="wrap py-10">
-        <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <Link to="/" className="t-masthead inline-block text-foreground">
+    <footer className="mt-20 border-t border-hairline bg-background">
+      <div className="wrap py-12 lg:py-16">
+        <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <Link
+              to="/"
+              className="t-masthead inline-flex min-h-7 items-center text-foreground transition-opacity hover:opacity-80"
+            >
               {site.name}
             </Link>
-            <p className="mt-3 max-w-sm text-[0.9375rem] leading-relaxed text-muted-foreground">
+            <p className="mt-3 max-w-xs text-[0.875rem] leading-relaxed text-muted-foreground">
               {site.description}
             </p>
           </div>
 
-          <nav aria-label="Topics" className="lg:col-span-4">
-            <h2 className="eyebrow mb-3 text-muted-foreground">Topics</h2>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5">
-              {primaryNav.map((item) => (
-                <li key={item.slug}>
-                  <Link to="/$category" params={{ category: item.slug }} className={footLink}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="grid gap-x-8 gap-y-8 sm:grid-cols-3 lg:col-span-6">
+            {populatedColumns.map((col) => (
+              <nav key={col.heading} aria-label={col.heading}>
+                <h2 className="kicker mb-3">{col.heading}</h2>
+                <ul className="space-y-1.5">
+                  {col.items.map((category) => (
+                    <li key={category.slug}>
+                      <Link
+                        to="/$category"
+                        params={{ category: category.slug }}
+                        className={footLink}
+                      >
+                        {category.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+          </div>
 
-          <nav aria-label="Publication" className="lg:col-span-3">
-            <h2 className="eyebrow mb-3 text-muted-foreground">Publication</h2>
+          <nav aria-label="Publication" className="lg:col-span-2">
+            <h2 className="kicker mb-3">Publication</h2>
             <ul className="space-y-1.5">
               <li>
                 <Link to="/about" className={footLink}>
-                  About
+                  About &amp; methodology
                 </Link>
               </li>
               <li>
@@ -53,31 +82,45 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/search" className={footLink}>
+                  Search archive
+                </Link>
+              </li>
+              <li>
                 <a href="/rss.xml" className={footLink}>
-                  RSS
+                  RSS feed
                 </a>
               </li>
             </ul>
           </nav>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-hairline pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.8125rem] text-muted-foreground">
-            &copy; {year} {site.name}. {site.domain}
+            &copy; {year} {site.name} &middot; {site.domain}
           </p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[0.8125rem] text-muted-foreground">
             <li>
-              <Link to="/privacy" className="hover:text-foreground">
+              <Link
+                to="/privacy"
+                className="inline-flex min-h-6 items-center transition-colors hover:text-foreground"
+              >
                 Privacy
               </Link>
             </li>
             <li>
-              <Link to="/terms" className="hover:text-foreground">
+              <Link
+                to="/terms"
+                className="inline-flex min-h-6 items-center transition-colors hover:text-foreground"
+              >
                 Terms
               </Link>
             </li>
             <li>
-              <Link to="/disclaimer" className="hover:text-foreground">
+              <Link
+                to="/disclaimer"
+                className="inline-flex min-h-6 items-center transition-colors hover:text-foreground"
+              >
                 Disclaimer
               </Link>
             </li>

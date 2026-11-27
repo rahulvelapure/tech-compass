@@ -4,9 +4,8 @@ import { Link } from "@tanstack/react-router";
 import type { Block } from "@/content/types";
 
 /*
- * Inline markup used in article text: [label](url), **bold**, *italic*,
- * `code`. Internal links (starting with "/") use the router; everything else
- * opens in a new tab.
+ * Inline markup used in article text: [label](url), **bold**, *italic*, `code`.
+ * Internal links (starting with "/") use the router; external links open in a new tab.
  */
 const INLINE_PATTERN = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*([^*]+)\*\*|\*([^*\n]+)\*|`([^`\n]+)`/g;
 
@@ -59,9 +58,9 @@ const scrollFocus =
 
 function CodeBlock({ language, filename, code, command }: Extract<Block, { type: "code" }>) {
   return (
-    <figure className="my-7 font-sans">
-      <figcaption className="flex items-center justify-between gap-4 border-b border-hairline bg-surface-2 px-4 py-2">
-        <span className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+    <figure className="reading my-7 overflow-hidden rounded-md border border-hairline bg-code-bg font-sans">
+      <figcaption className="flex items-center justify-between gap-4 border-b border-hairline bg-surface-2/80 px-4 py-2">
+        <span className="text-[0.75rem] font-medium text-muted-foreground">
           {command ? "Command" : language}
         </span>
         {filename && (
@@ -70,18 +69,13 @@ function CodeBlock({ language, filename, code, command }: Extract<Block, { type:
           </span>
         )}
       </figcaption>
-      {/*
-        Long lines scroll horizontally, so the region must be reachable by
-        keyboard (WCAG 2.1.1). tabIndex makes it focusable; the label says what
-        has been focused rather than announcing an anonymous scroll area.
-      */}
       <pre
         tabIndex={0}
         role="region"
         aria-label={filename ?? `${command ? "Command" : language} code sample`}
-        className={`overflow-x-auto bg-code-bg px-4 py-4 ${scrollFocus}`}
+        className={`overflow-x-auto px-4 py-4 ${scrollFocus}`}
       >
-        <code className="font-mono text-[0.8125rem] leading-relaxed text-code-fg">{code}</code>
+        <code className="font-mono text-[0.8125rem] leading-[1.65] text-code-fg">{code}</code>
       </pre>
     </figure>
   );
@@ -94,7 +88,10 @@ function Callout({ variant, title, text }: Extract<Block, { type: "callout" }>) 
       : { wrap: "border-brand bg-note", head: "text-note-foreground" };
 
   return (
-    <div role="note" className={`measure my-7 border-l-2 px-5 py-4 font-sans ${tone.wrap}`}>
+    <div
+      role="note"
+      className={`reading my-7 rounded-r-md border-l-2 px-5 py-4 font-sans ${tone.wrap}`}
+    >
       <p className={`eyebrow ${tone.head}`}>{title}</p>
       <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-foreground">
         <RichText text={text} />
@@ -104,35 +101,45 @@ function Callout({ variant, title, text }: Extract<Block, { type: "callout" }>) 
 }
 
 function DataTable({ caption, head, rows }: Extract<Block, { type: "table" }>) {
+  const isTwoCol = head.length === 2;
+
   return (
-    <figure className="my-7 font-sans">
+    <figure className="reading my-7 font-sans">
       <div
         tabIndex={0}
         role="region"
         aria-label={caption ?? "Table"}
-        className={`overflow-x-auto ${scrollFocus}`}
+        className={`overflow-x-auto rounded-md border border-hairline bg-surface ${scrollFocus}`}
       >
-        <table className="w-full min-w-[32rem] border-collapse text-left text-[0.9375rem]">
+        <table
+          className={`w-full border-collapse text-left text-[0.875rem] ${
+            isTwoCol ? "" : "min-w-[32rem]"
+          }`}
+        >
           <thead>
-            <tr>
-              {head.map((cell) => (
+            <tr className="border-b border-border bg-surface-2/60">
+              {head.map((cell, idx) => (
                 <th
                   key={cell}
                   scope="col"
-                  className="border-b-2 border-foreground px-3 py-2 align-bottom text-[0.8125rem] font-semibold"
+                  className={`px-4 py-2.5 align-bottom text-[0.8125rem] font-semibold text-foreground ${
+                    isTwoCol && idx === 0 ? "sm:w-[30%]" : ""
+                  }`}
                 >
                   {cell}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-hairline">
             {rows.map((row, i) => (
-              <tr key={i} className="border-b border-border">
+              <tr key={i}>
                 {row.map((cell, j) => (
                   <td
                     key={j}
-                    className={`px-3 py-2.5 align-top leading-snug ${j === 0 ? "font-medium text-foreground" : "text-ink-soft"}`}
+                    className={`px-4 py-3 align-top leading-relaxed ${
+                      j === 0 ? "font-medium text-foreground" : "text-ink-soft"
+                    }`}
                   >
                     <RichText text={cell} />
                   </td>
@@ -151,27 +158,31 @@ function DataTable({ caption, head, rows }: Extract<Block, { type: "table" }>) {
 
 function Diagram({ title, ascii, caption }: Extract<Block, { type: "diagram" }>) {
   return (
-    <figure className="my-7 font-sans">
-      <figcaption className="border-b border-hairline bg-surface-2 px-4 py-2 text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+    <figure className="reading my-7 overflow-hidden rounded-md border border-hairline bg-code-bg font-sans">
+      <figcaption className="border-b border-hairline bg-surface-2/80 px-4 py-2 text-[0.75rem] font-medium text-muted-foreground">
         {title}
       </figcaption>
       <pre
         tabIndex={0}
         role="region"
         aria-label={title}
-        className={`overflow-x-auto bg-code-bg px-4 py-4 font-mono text-[0.75rem] leading-relaxed text-code-fg ${scrollFocus}`}
+        className={`overflow-x-auto px-4 py-4 font-mono text-[0.75rem] leading-relaxed text-code-fg ${scrollFocus}`}
       >
         {ascii}
       </pre>
-      {caption && <p className="mt-2 text-[0.8125rem] text-muted-foreground">{caption}</p>}
+      {caption && (
+        <p className="border-t border-hairline bg-surface px-4 py-2.5 text-[0.8125rem] text-muted-foreground">
+          {caption}
+        </p>
+      )}
     </figure>
   );
 }
 
 function Figure({ title, svg, alt, caption }: Extract<Block, { type: "figure" }>) {
   return (
-    <figure className="my-7 font-sans">
-      <figcaption className="mb-2 text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+    <figure className="reading my-7 rounded-md border border-hairline bg-surface p-4 sm:p-6 font-sans">
+      <figcaption className="mb-3 text-[0.8125rem] font-semibold text-foreground">
         {title}
       </figcaption>
       <div
@@ -180,7 +191,11 @@ function Figure({ title, svg, alt, caption }: Extract<Block, { type: "figure" }>
         className="text-foreground [&>svg]:h-auto [&>svg]:w-full [&>svg]:max-w-full"
         dangerouslySetInnerHTML={{ __html: svg }}
       />
-      {caption && <p className="mt-2 text-[0.8125rem] text-muted-foreground">{caption}</p>}
+      {caption && (
+        <p className="mt-3 border-t border-hairline pt-2.5 text-[0.8125rem] text-muted-foreground">
+          {caption}
+        </p>
+      )}
     </figure>
   );
 }
@@ -242,11 +257,11 @@ export function ArticleBody({ body }: { body: Block[] }) {
             return (
               <blockquote
                 key={index}
-                className="measure my-7 border-l-2 border-brand pl-5 text-[1.3rem] italic leading-snug"
+                className="my-8 border-l-2 border-brand pl-5 font-display text-[1.25rem] italic leading-relaxed text-foreground"
               >
                 {block.text}
                 {block.attribution && (
-                  <footer className="mt-2 font-sans text-[0.9375rem] not-italic text-muted-foreground">
+                  <footer className="mt-2 font-sans text-[0.875rem] not-italic text-muted-foreground">
                     &mdash; {block.attribution}
                   </footer>
                 )}

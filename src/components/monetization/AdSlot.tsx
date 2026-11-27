@@ -45,9 +45,9 @@ function AdSlot({ placement, label }: { placement: Placement; label?: string }) 
     <aside
       data-ad-placement={placement}
       aria-label={label ?? "Advertisement"}
-      className="my-10 w-full overflow-hidden border-y border-hairline py-3"
+      className="my-10 w-full overflow-hidden border-y border-hairline bg-surface-2/35 px-3 py-4"
     >
-      <p className="ad-label mb-2 text-center">Advertisement</p>
+      <p className="ad-label mb-2.5 text-center">Advertisement</p>
       <ins
         className="adsbygoogle"
         style={{

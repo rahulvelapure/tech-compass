@@ -31,7 +31,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
         if (!result.configured) setStatus("unavailable");
       })
       .catch(() => {
-        // The token is optional here; a failed request surfaces on submit.
+        // Optional pre-flight; submit handles any failure gracefully.
       });
   }
 
@@ -75,20 +75,30 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
   return (
     <section
       aria-label="Newsletter"
-      className={inline ? "border-y border-border py-8" : "border-t-2 border-foreground"}
+      className={
+        inline
+          ? "rounded-lg border border-hairline bg-surface-2/45 p-6 sm:p-8"
+          : "border-t border-hairline bg-surface-2/35"
+      }
     >
-      <div className={inline ? "" : "wrap grid gap-x-12 gap-y-6 py-10 lg:grid-cols-12"}>
+      <div className={inline ? "" : "wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-12 lg:py-14"}>
         <div className={inline ? "" : "lg:col-span-5"}>
-          <h2 className="kicker">The newsletter</h2>
-          <p className="display-3 mt-3">{site.newsletter.pitch}</p>
+          <h2 className="kicker">Newsletter</h2>
+          <p className="display-2 mt-2">{site.newsletter.pitch}</p>
           <p
-            className={`mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
+            className={`mt-2.5 text-[0.9375rem] leading-relaxed text-ink-soft ${inline ? "max-w-xl" : ""}`}
           >
             {site.newsletter.detail}
           </p>
         </div>
 
-        <div className={inline ? "mt-5" : "lg:col-span-7 lg:border-l lg:border-border lg:pl-10"}>
+        <div
+          className={
+            inline
+              ? "mt-6"
+              : "lg:col-span-7 lg:flex lg:flex-col lg:justify-center lg:border-l lg:border-hairline lg:pl-10"
+          }
+        >
           {status === "done" || status === "unavailable" ? (
             <p className="text-[0.9375rem] font-medium text-foreground" role="status">
               {status === "done"
@@ -99,7 +109,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
             <form
               onSubmit={onSubmit}
               onFocusCapture={primeToken}
-              className="relative flex flex-col gap-3 sm:flex-row"
+              className="relative flex flex-col gap-2.5 sm:flex-row sm:max-w-md"
             >
               <label htmlFor={fieldId} className="sr-only">
                 Email address
@@ -115,15 +125,10 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
                 aria-describedby={`${fieldId}-status ${fieldId}-consent`}
-                className="h-11 w-full border border-input bg-background px-3 text-[0.9375rem] placeholder:text-muted-foreground sm:w-72"
+                className="h-11 w-full rounded-md border border-input bg-surface px-3.5 text-[0.9375rem] text-foreground placeholder:text-ink-faint focus:border-brand focus:outline-none sm:flex-1"
               />
 
-              {/*
-                Honeypot. Hidden from sight, from the tab order and from the
-                accessibility tree, so no real reader can reach it, but it is a
-                normal text input in the DOM, which is what form-filling bots
-                see. Not display:none, because some bots skip those.
-              */}
+              {/* Honeypot field: hidden from sight, keyboard, and assistive tech */}
               <div
                 aria-hidden="true"
                 className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
@@ -145,7 +150,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="h-11 shrink-0 bg-foreground px-6 text-[0.9375rem] font-semibold text-background transition-colors hover:bg-brand hover:text-brand-foreground disabled:opacity-60"
+                className="h-11 shrink-0 cursor-pointer rounded-md bg-foreground px-5 text-[0.875rem] font-semibold text-background transition-colors hover:bg-brand hover:text-brand-foreground disabled:opacity-60"
               >
                 {status === "loading" ? "Sending…" : "Subscribe"}
               </button>
@@ -156,7 +161,7 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
             id={`${fieldId}-status`}
             role="status"
             aria-live="polite"
-            className={`mt-3 text-[0.9375rem] ${status === "error" ? "text-destructive" : "text-muted-foreground"}`}
+            className={status === "error" ? "mt-2.5 text-[0.875rem] text-destructive" : "sr-only"}
           >
             {status === "error" ? message : ""}
           </p>
@@ -164,14 +169,14 @@ export function NewsletterCTA({ variant = "panel" }: { variant?: "panel" | "inli
           {status !== "done" && status !== "unavailable" && (
             <p
               id={`${fieldId}-consent`}
-              className={`mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : ""}`}
+              className={`mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground ${inline ? "max-w-xl" : "max-w-lg"}`}
             >
-              We send a confirmation email first — you are only added to the list once you click the
-              link in it. Unsubscribe from any email. See the{" "}
-              <Link to="/privacy" className="underline hover:text-foreground">
+              Confirmed opt-in: we send one verification email before adding your address.
+              Unsubscribe in one click from any issue. Read the{" "}
+              <Link to="/privacy" className="underline underline-offset-2 hover:text-foreground">
                 privacy policy
               </Link>
-              . No tracking pixels. No sponsored sends.
+              . No tracking pixels or sponsored sends.
             </p>
           )}
         </div>

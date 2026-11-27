@@ -48,7 +48,7 @@ export function reactionSecret(): string | null {
     process.env["REACTIONS_COOKIE_SECRET"] ||
     process.env["NEWSLETTER_FORM_SECRET"] ||
     process.env["BREVO_API_KEY"] ||
-    null
+    (process.env["NODE_ENV"] === "development" ? "substrate-local-dev-reaction-secret" : null)
   );
 }
 
