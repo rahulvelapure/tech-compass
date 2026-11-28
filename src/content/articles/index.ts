@@ -60,6 +60,7 @@ import { article as purviewAdaptiveProtectionDlp } from "./cybersecurity-ciso/pu
 import { article as ransomwareRecoveryBackupsImmutableAdForest } from "./cybersecurity-ciso/ransomware-recovery-backups-immutable-ad-forest";
 import { article as samlFederationSecurityRisksTrustBoundaries } from "./cybersecurity-ciso/saml-federation-security-risks-trust-boundaries";
 import { article as thirdPartyJavascriptSupplyChainAttack } from "./cybersecurity-ciso/third-party-javascript-supply-chain-attack";
+import { article as whenExploitsMoveFasterThanPatches } from "./cybersecurity-ciso/when-exploits-move-faster-than-patches";
 import { article as graphqlVsRestVsGrpcApiGatewayPerformance } from "./development/graphql-vs-rest-vs-grpc-api-gateway-performance";
 import { article as javaVsGoGarbageCollectionPerformanceTuning } from "./development/java-vs-go-garbage-collection-performance-tuning";
 import { article as nodejsReleaseScheduleChange } from "./development/nodejs-release-schedule-change";
@@ -203,6 +204,7 @@ export const articles: Article[] = [
   ransomwareRecoveryBackupsImmutableAdForest,
   samlFederationSecurityRisksTrustBoundaries,
   thirdPartyJavascriptSupplyChainAttack,
+  whenExploitsMoveFasterThanPatches,
   graphqlVsRestVsGrpcApiGatewayPerformance,
   javaVsGoGarbageCollectionPerformanceTuning,
   nodejsReleaseScheduleChange,
