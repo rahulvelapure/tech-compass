@@ -5,7 +5,31 @@ import type { Article, Block, Category, ContentType } from "@/content/types";
 
 export { articles, categories, getCategory, getAuthor, authors };
 
-const byDateDesc = (a: Article, b: Article) => b.publishedAt.localeCompare(a.publishedAt);
+/**
+ * Newest publication first.
+ *
+ * publishedAt is intentionally date-only. When two articles share the same
+ * date, the generated article barrel provides the publication tie-breaker.
+ * The barrel itself is deterministic, and later entries win an equal-date
+ * comparison so a newly added same-day article does not disappear behind an
+ * earlier article.
+ */
+const articleOrder = new Map(
+  articles.map((article, index) => [article.slug, index]),
+);
+
+const byDateDesc = (a: Article, b: Article): number => {
+  const dateOrder = b.publishedAt.localeCompare(a.publishedAt);
+
+  if (dateOrder !== 0) {
+    return dateOrder;
+  }
+
+  return (
+    (articleOrder.get(b.slug) ?? -1) -
+    (articleOrder.get(a.slug) ?? -1)
+  );
+};
 
 /**
  * Everything published, newest first.
