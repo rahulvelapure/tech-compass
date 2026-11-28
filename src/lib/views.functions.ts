@@ -7,13 +7,14 @@ import type { Article } from "@/content/types";
 
 import { sign, toBase64Url } from "./hmac";
 import { incrementArticleView, readAllArticleViews, readArticleViews, viewDb } from "./views.db";
-import { seededViewCount } from "./views.seed";
+import { currentBaselineViewCount } from "./views.seed";
 
 /**
  * Real-time article visit counters and Most Visited ranking.
  *
- * Each published article starts at its deterministic baseline in [2,000, 8,000]
- * (`seededViewCount`) and increments by +1 in real time on every visit in D1
+ * Each published article starts at its deterministic baseline in [2,000, 8,000],
+ * accrues smooth 3.00000000%–5.00000000% monthly per-article growth from
+ * `VIEW_GROWTH_ANCHOR_MS`, and adds +1 in real time on every visit in D1
  * (`article_view_totals`) with `cache-control: private, no-store`.
  * No cookies or reader identifiers are created when recording a view.
  */
@@ -37,20 +38,21 @@ function isPublishedSlug(slug: string): boolean {
 }
 
 /**
- * Ranks published articles by total visits (`seededViewCount + genuine_views`),
+ * Ranks published articles by total visits (`currentBaselineViewCount + genuine_views`),
  * breaking ties by newest publication date first.
  */
 export function rankMostVisited(
   publishedArticles: Pick<Article, "slug" | "publishedAt" | "draft">[],
   genuineBySlug: Readonly<Record<string, number>> = {},
   limit = 5,
+  nowMs = Date.now(),
 ): RankedArticleView[] {
   return publishedArticles
     .filter((article) => !article.draft)
     .map((article) => ({
       slug: article.slug,
       publishedAt: article.publishedAt,
-      viewTotal: seededViewCount(article.slug) + (genuineBySlug[article.slug] ?? 0),
+      viewTotal: currentBaselineViewCount(article.slug, nowMs) + (genuineBySlug[article.slug] ?? 0),
     }))
     .sort((a, b) => b.viewTotal - a.viewTotal || b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, limit)
@@ -103,7 +105,7 @@ export const recordArticleView = createServerFn({ method: "POST" })
 
     setResponseHeader("cache-control", "private, no-store");
 
-    const baseline = seededViewCount(data.slug);
+    const baseline = currentBaselineViewCount(data.slug);
     const db = viewDb();
     if (!db) {
       return UNAVAILABLE;
@@ -132,17 +134,18 @@ export const getMostVisitedArticles = createServerFn({ method: "GET" }).handler(
   async (): Promise<RankedArticleView[]> => {
     setResponseHeader("cache-control", "private, no-store");
 
+    const nowMs = Date.now();
     const published = articles.filter((a) => !a.draft);
     const db = viewDb();
     if (!db) {
-      return rankMostVisited(published, {}, 5);
+      return rankMostVisited(published, {}, 5, nowMs);
     }
 
     try {
       const genuineBySlug = await readAllArticleViews(db);
-      return rankMostVisited(published, genuineBySlug, 5);
+      return rankMostVisited(published, genuineBySlug, 5, nowMs);
     } catch {
-      return rankMostVisited(published, {}, 5);
+      return rankMostVisited(published, {}, 5, nowMs);
     }
   },
 );
