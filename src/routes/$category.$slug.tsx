@@ -1,6 +1,7 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 
 import { ArticleBody } from "@/components/article/ArticleBody";
+import { ArticleComments } from "@/components/article/ArticleComments";
 import { ArticleReactions } from "@/components/article/ArticleReactions";
 import { ArticleViews } from "@/components/article/ArticleViews";
 import { ShareLinks } from "@/components/article/ShareLinks";
@@ -282,6 +283,8 @@ function ArticlePage() {
           <div className="mt-8">
             <AuthorBox authorId={article.authorId} />
           </div>
+
+          {!article.draft && <ArticleComments slug={article.slug} />}
 
           <AfterArticleAdSlot />
 

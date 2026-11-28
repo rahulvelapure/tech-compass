@@ -161,6 +161,28 @@ function PrivacyPage() {
           articles readers find useful rather than to build individual reader profiles.
         </p>
 
+        <h2 id="comments">Article comments</h2>
+
+        <p>
+          Published articles provide a comment section where readers can post plain-text remarks and
+          replies using a display name of their choice without registering an account or providing
+          an email address.
+        </p>
+
+        <p>
+          When you publish or upvote a comment, the site uses the same random browser cookie
+          identifier described above so that duplicate helpful votes are prevented and so that you
+          can delete a comment you recently submitted from the same browser. That random identifier
+          is not published alongside your comment.
+        </p>
+
+        <p>
+          Comment submissions pass through automated spam, link-count and rate-limit checks. A
+          hashed form of your IP address may be held briefly in server memory to prevent automated
+          floods, and comments that match automated spam patterns or site moderation rules may be
+          hidden or removed.
+        </p>
+
         <h2 id="cookies">Cookies and similar technologies</h2>
 
         <p>
