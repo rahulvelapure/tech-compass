@@ -39,6 +39,7 @@ import { article as postgresqlPitrWalArchivingLsnMechanics } from "./cloud/postg
 import { article as redisClusterVsSentinelArchitecture } from "./cloud/redis-cluster-vs-sentinel-architecture";
 import { article as agenticAiGithubSecretsCloudCompromise } from "./cybersecurity-ciso/agentic-ai-github-secrets-cloud-compromise";
 import { article as backupRestoreTesting } from "./cybersecurity-ciso/backup-restore-testing";
+import { article as credentialedAgentInsiderThreat } from "./cybersecurity-ciso/credentialed-agent-insider-threat";
 import { article as defenderAsrAuditToBlock } from "./cybersecurity-ciso/defender-asr-audit-to-block";
 import { article as fido2DiscoverableCredentialsResidentKeys } from "./cybersecurity-ciso/fido2-discoverable-credentials-resident-keys";
 import { article as iso27001Microsoft365Mapping } from "./cybersecurity-ciso/iso-27001-microsoft-365-mapping";
@@ -181,6 +182,7 @@ export const articles: Article[] = [
   redisClusterVsSentinelArchitecture,
   agenticAiGithubSecretsCloudCompromise,
   backupRestoreTesting,
+  credentialedAgentInsiderThreat,
   defenderAsrAuditToBlock,
   fido2DiscoverableCredentialsResidentKeys,
   iso27001Microsoft365Mapping,
